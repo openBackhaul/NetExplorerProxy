@@ -1,0 +1,18 @@
+@startuml 100_ProvideMacTablesOfAllDevices
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingAllMacTablesCausesReadingMacTables
+
+participant external
+participant "NEP://v1/provide-mac-table-of-all-devices" as nep
+participant "MATR://v1/provide-mac-table-of-all-devices" as matr
+
+external -> nep: (apiKeyAuth)
+
+nep -> matr
+matr --> nep: {list-of(MountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)}
+
+nep --> external: {list-of(MountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)}
+
+
+@enduml
