@@ -57,7 +57,7 @@ servers:
           uuid: nep-1-0-0-op-s-is-001
   http-server:
     own-application-name: NetExplorerProxy
-    own-release-number:
+    own-release-number: 1.0.0
     uuid: nep-1-0-0-http-s-000
   tcp-server:
     - description: Without TLS layer
@@ -249,3 +249,24 @@ clients:
       service:
         basic:
         individual:
+
+  - http-client:
+      application-name: MacAddressTableRecorder
+      release-number: 1.0.0
+      uuid: nep-1-0-0-http-c-matr-1-0-0-000
+    tcp-client:
+      remote-protocol: http
+      ip-address: 1.1.4.5
+      tcp-port: 4005
+      uuid: nep-1-0-0-tcp-c-matr-1-0-0-000
+    operation-clients:
+      own-oam:
+        basic:
+        individual:
+      service:
+        basic:
+        individual:
+          - operation-name: /v1/provide-mac-table-of-all-devices
+            uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
+          - operation-name: /v1/provide-mac-table-of-specific-device
+            uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
