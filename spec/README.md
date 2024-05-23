@@ -1,23 +1,23 @@
-# ApplicationPattern Specification
+# NetExplorerProxy Specification
 
 ### Diagrams  
 - [Collection of Diagrams](./diagrams)
 
 ### ServiceList
-- [ApplicationPattern+services](./ApplicationPattern+services.yaml)
+- [NetExplorerProxy+services](./NetExplorerProxy+services.yaml)
 
 ### ProfileList and ProfileInstanceList
-- [ApplicationPattern+profiles](./ApplicationPattern+profiles.yaml)
-- [ApplicationPattern+profileInstances](./ApplicationPattern+profileInstances.yaml)
+- [NetExplorerProxy+profiles](./NetExplorerProxy+profiles.yaml)
+- [NetExplorerProxy+profileInstances](./NetExplorerProxy+profileInstances.yaml)
 
 ### ForwardingList
-- [ApplicationPattern+forwardings](./ApplicationPattern+forwardings.yaml)
+- [NetExplorerProxy+forwardings](./NetExplorerProxy+forwardings.yaml)
 
 ### Open API specification (Swagger)
-- [ApplicationPattern](./ApplicationPattern.yaml)
+- [NetExplorerProxy](./NetExplorerProxy.yaml)
 
 ### CONFIGfile (JSON)
-- [ApplicationPattern+config](./ApplicationPattern+config.json)
+- [NetExplorerProxy+config](./NetExplorerProxy+config.json)
 
 ### Comments
 ./.
