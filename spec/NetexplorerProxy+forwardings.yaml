@@ -110,7 +110,10 @@ forwardings:
         uuid: nep-1-0-0-op-s-bs-004
       - server-name: /docs
         uuid: nep-1-0-0-op-s-bs-005
-      ## TODO: All service requests to be complemented
+      - server-name: /v1/provide-mac-table-of-all-devices
+        uuid: nep-1-0-0-op-s-is-000
+      - server-name: /v1/provide-mac-table-of-specific-device
+        uuid: nep-1-0-0-op-s-is-001
     consequent-requests:
       - client-name: ExecutionAndTraceLog://v1/record-service-request
         uuid: nep-1-0-0-op-c-bs-eatl-2-1-0-000
@@ -154,14 +157,6 @@ forwardings:
     consequent-requests:
       - client-name: AccessAdministration://v1/approve-basic-auth-request
         uuid: nep-1-0-0-op-c-bs-aa-2-1-0-000
-
-## TODO: Potentially add Forwardings for configuring INDIVIDUAL subscriptions on NewRelease
-
-## TODO: Add Forwardings for transferring data to NewRelease
-
-## TODO: Potentially add Forwardings for creating INDIVIDUAL subscriptions to NewRelease
-
-## TODO: Potentially add Forwardings for ending INDIVIDUAL subscriptions to OldRelease
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
     uuid: nep-1-0-0-op-fc-bm-105
@@ -255,7 +250,6 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-015
       - server-name: /v1/bequeath-your-data-and-die
         uuid: nep-1-0-0-op-s-im-000
-      ## TODO: All INDIVIDUAL service requests, which are updating an LTP, to be complemented
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-001
@@ -275,7 +269,6 @@ forwardings:
     initiating-requests:
       - server-name: /v1/dispose-remainders-of-deregistered-application
         uuid: nep-1-0-0-op-s-bm-013
-      ## TODO: All INDIVIDUAL service requests, which are deleting an LTP, to be complemented
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-002
@@ -293,7 +286,6 @@ forwardings:
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
-      ## TODO: All INDIVIDUAL service requests, which are updating an FC, to be complemented
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-003
@@ -311,7 +303,6 @@ forwardings:
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
-      ## TODO: All INDIVIDUAL service requests, which are updating an FC-Port, to be complemented
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-004
@@ -331,7 +322,6 @@ forwardings:
     initiating-requests:
       - server-name: /v1/end-subscription
         uuid: nep-1-0-0-op-s-bm-004
-      ## TODO: All INDIVIDUAL service requests, which are deleting an FC-Port, to be complemented
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
@@ -421,4 +411,32 @@ forwardings:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
 
-  ## TODO: Potential INDIVIDUAL Forwardings to be added
+  - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTables
+    uuid: nep-1-0-0-op-fc-is-000
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-mac-table-of-all-devices
+        uuid: nep-1-0-0-op-s-is-000
+    consequent-requests:
+      - client-name: MATR://v1/provide-mac-table-of-all-devices
+        uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
+
+  - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTables
+    uuid: nep-1-0-0-op-fc-is-000
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-mac-table-of-specific-device
+        uuid: nep-1-0-0-op-s-is-001
+    consequent-requests:
+      - client-name: MATR://v1/provide-mac-table-of-specific-device
+        uuid: nep-1-0-0-op-c-is-matr-1-0-0-001

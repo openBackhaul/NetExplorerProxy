@@ -27,22 +27,6 @@ profile-instances:
     configuration:
       consequent-operation-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-bs-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name'
 
-  - profile-name: 'ActionProfile'
-    uuid: 'nep-1-0-0-action-p-???'
-    capability:
-      operation-name: ## TODO: Add generic representation operation that shall result in a new button and potentially new input fields
-      label: ## TODO: Add label of the new button
-      input-value-list:
-        - field-name: ## TODO: Potentially add label of a field for providing input to the request that gets called by pushing the button
-          unit: ## TODO: Potentially add unit that shall be represented aside the input field
-        ## TODO: Potentially add further input fields
-      display-in-new-browser-window: ## TODO: Set on true, if result of pushing the button has to be represented in a new browser window
-    configuration:
-      consequent-operation-reference: ## TODO: Reference operation that shall be used, as soon as button gets pushed
-
-  ## TODO: Potentially add further instances of ActionProfile
-
-
   - profile-name: 'GenericResponseProfile'
     uuid: 'nep-1-0-0-response-p-000'
     capability:
@@ -122,55 +106,3 @@ profile-instances:
       datatype: string
     configuration:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=0/changes'
-
-  - profile-name: 'GenericResponseProfile'
-    uuid: 'nep-1-0-0-response-p-???'
-    capability:
-      operation-name: ## TODO: Add generic representation operation that shall provide this response
-      static-field-name: ## TODO: Add the concrete name of the field as it shall be respresented in the GUI EXOR a reference from which the name of the field shall be taken. ...
-      field-name-reference: ## TODO: ... Delete either the static-field-name or the field-name-reference attribute from the Instance of GenericResponseProfile.
-      description: ## TODO: Add some description for your own reference
-      datatype: ## TODO: Add the datatype of the value
-    configuration:
-      static-value: ## TODO: Add the current, concrete value of the field EXOR a reference from which the field shall be filled. ...
-      value-reference: ## TODO: ... Delete either the static-value or the reference attribute from the Instance of GenericResponseProfile.
-
-  ## TODO: Potentially add further instances of GenericResponseProfile (e.g. to represent further release in the history)
-
-
-  - profile-name: 'FileProfile'
-    uuid: 'nep-1-0-0-file-p-???'
-    capability:
-      file-identifier: ## TODO: Add invariant identifier of the referenced file
-      file-description: ## TODO: Add a description of the content of the referenced file
-    configuration:
-      file-path: ## TODO: Add file name, like e.g. '../application-data/application-data.json'
-      operation: ## TODO: Choose from read/write/off
-
-  ## TODO: Potentially add further instances of FileProfile
-
-
-  - profile-name: 'IntegerProfile'
-    uuid: 'nep-1-0-0-integer-p-???'
-    capability:
-      integer-name: ## TODO: Add name of the Integer attribute
-      purpose: ## TODO: Potentially add description of the Integer attribute
-      unit: ## TODO: Potentially add unit of the Integer attribute
-      minimum: ## TODO: Potentially add minimum value that is to be accepted, while configuration
-      maximum: ## TODO: Potentially add maximum value that is to be accepted, while configuration
-    configuration:
-      integer-value: ## TODO: Add current value of the attribute
-
-  ## TODO: Potentially add further instances of IntegerProfile
-
-
-  - profile-name: 'StringProfile'
-    uuid: 'nep-1-0-0-string-p-???'
-    capability:
-      string-name: ## TODO: Add name of the String attribute
-      enumeration: ## TODO: Potentially add a set of allowed values in cornered brackets
-      pattern: ## TODO: Potentially add a regex for validating configuration values
-    configuration:
-      string-value: ## TODO: Add current value of the attribute
-
-  ## TODO: Potentially add further instances of StringProfile
