@@ -1,0 +1,18 @@
+@startuml 101_ProvideMacTableOfSpecificDevice
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingMacTablesOfSpecificDeviceCausesReadingMacTable
+
+participant external
+participant "NEP://v1/provide-mac-table-of-specific-device" as nep
+participant "MATR://v1/provide-mac-table-of-specific-device" as matr
+
+external -> nep: {mount-name}(apiKeyAuth)
+
+nep -> matr: {mount-name}
+matr --> nep: {list-of(MountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)}
+
+nep --> external: {list-of(MountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)}
+
+
+@enduml
