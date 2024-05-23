@@ -1,6 +1,6 @@
 ﻿openapi: 3.0.0
 info:
-  title: ApplicationName
+  title: NetExplorerProxy
   version: 1.0.0
 
 x-gui-paths:
