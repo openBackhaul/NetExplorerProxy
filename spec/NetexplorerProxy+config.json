@@ -783,6 +783,30 @@
         ]
       },
       {
+        "uuid": "nep-1-0-0-op-s-is-002",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [
+        ],
+        "server-ltp": [
+          "nep-1-0-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-list-of-connected-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
         "uuid": "nep-1-0-0-http-s-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [
@@ -809,7 +833,8 @@
           "nep-1-0-0-op-s-bs-004",
           "nep-1-0-0-op-s-bs-005",
           "nep-1-0-0-op-s-is-000",
-          "nep-1-0-0-op-s-is-001"
+          "nep-1-0-0-op-s-is-001",
+          "nep-1-0-0-op-s-is-002"
         ],
         "server-ltp": [
           "nep-1-0-0-tcp-s-000"
@@ -1750,6 +1775,79 @@
             }
           }
         ]
+      },
+      {
+        "uuid": "nep-1-0-0-op-c-is-mwdi-1-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+        ],
+        "server-ltp": [
+          "nep-1-0-0-http-c-mwdi-1-1-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-client-interface-1-0:operation-client-interface-pac": {
+              "operation-client-interface-configuration": {
+                "operation-name": "/v1/provide-list-of-connected-devices",
+                "operation-key": "Operation key not yet provided."
+              },
+              "operation-client-interface-status": {
+                "operational-state": "operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED",
+                "life-cycle-state": "operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-0-0-http-c-mwdi-1-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "nep-1-0-0-op-c-is-mwdi-1-1-2-000"
+        ],
+        "server-ltp": [
+          "nep-1-0-0-tcp-c-mwdi-1-1-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
+            "http-client-interface-1-0:http-client-interface-pac": {
+              "http-client-interface-configuration": {
+                "application-name": "MicroWaveDeviceInventory",
+                "release-number": "1.1.2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-0-0-tcp-c-mwdi-1-1-2-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "nep-1-0-0-http-c-mwdi-1-1-2-000"
+        ],
+        "server-ltp": [
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
+            "tcp-client-interface-1-0:tcp-client-interface-pac": {
+              "tcp-client-interface-configuration": {
+                "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
+                "remote-address": {
+                  "ip-address": {
+                    "ipv-4-address": "1.1.4.15"
+                  }
+                },
+                "remote-port": 4015
+              }
+            }
+          }
+        ]
       }
     ],
     "forwarding-domain": [
@@ -2483,6 +2581,31 @@
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
                 "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-001"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-0-0-op-fc-is-002",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-0-0-op-s-is-002"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-0-0-op-c-is-mwdi-1-1-2-000"
               }
             ]
           }
