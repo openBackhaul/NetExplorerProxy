@@ -1,0 +1,19 @@
+@startuml 102_ReadCurrentMacTableFromDevice
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
+
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/read-current-mac-table-from-device" as nep
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+
+external -> nep: {mountName}(BasicAuth)
+activate nep
+nep -> matr: {mountName, own_IpAddress, own_TcpPort, own_responseServiceName} (apiAuthKey)
+
+
+deactivate nep
+
+
+@enduml
