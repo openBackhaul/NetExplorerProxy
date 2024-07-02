@@ -411,7 +411,7 @@ forwardings:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
 
-  - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTables
+  - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache
     uuid: nep-1-0-0-op-fc-is-000
     forwarding-type: InvariantProcessSnippet
     management-requests:
@@ -426,8 +426,8 @@ forwardings:
       - client-name: MATR://v1/provide-mac-table-of-all-devices
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
 
-  - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTable
-    uuid: nep-1-0-0-op-fc-is-000
+  - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache
+    uuid: nep-1-0-0-op-fc-is-001
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:

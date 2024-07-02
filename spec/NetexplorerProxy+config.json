@@ -2543,7 +2543,7 @@
               },
               {
                 "value-name": "ForwardingName",
-                "value": "PromptForProvidingAllMacTablesCausesReadingMacTables"
+                "value": "PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache"
               }
             ],
             "fc-port": [
@@ -2560,7 +2560,7 @@
             ]
           },
           {
-            "uuid": "nep-1-0-0-op-fc-is-003",
+            "uuid": "nep-1-0-0-op-fc-is-001",
             "name": [
               {
                 "value-name": "ForwardingKind",
@@ -2568,7 +2568,7 @@
               },
               {
                 "value-name": "ForwardingName",
-                "value": "PromptForProvidingAllMacTablesCausesReadingMacTables"
+                "value": "PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache"
               }
             ],
             "fc-port": [
@@ -2585,7 +2585,7 @@
             ]
           },
           {
-            "uuid": "nep-1-0-0-op-fc-is-002",
+            "uuid": "nep-1-0-0-op-fc-is-003",
             "name": [
               {
                 "value-name": "ForwardingKind",
