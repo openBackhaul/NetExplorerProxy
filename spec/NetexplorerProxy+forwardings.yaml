@@ -451,7 +451,7 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/provide-list-of-connected-devices
-        uuid: nep-1-0-0-op-s-is-002
+        uuid: nep-1-0-0-op-s-is-003
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-connected-devices
         uuid: nep-1-0-0-op-c-is-mwdi-1-1-2-000

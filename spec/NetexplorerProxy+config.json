@@ -783,7 +783,7 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-s-is-002",
+        "uuid": "nep-1-0-0-op-s-is-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [
         ],
@@ -834,7 +834,7 @@
           "nep-1-0-0-op-s-bs-005",
           "nep-1-0-0-op-s-is-000",
           "nep-1-0-0-op-s-is-001",
-          "nep-1-0-0-op-s-is-002"
+          "nep-1-0-0-op-s-is-003"
         ],
         "server-ltp": [
           "nep-1-0-0-tcp-s-000"
@@ -2600,7 +2600,7 @@
               {
                 "local-id": "100",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-0-0-op-s-is-002"
+                "logical-termination-point": "nep-1-0-0-op-s-is-003"
               },
               {
                 "local-id": "200",
