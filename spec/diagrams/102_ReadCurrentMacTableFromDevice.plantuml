@@ -1,5 +1,8 @@
 @startuml 102_ReadCurrentMacTableFromDevice
 skinparam responseMessageBelowArrow true
+skinparam legendFontSize 12
+skinparam LegendBackgroundColor #LightCyan
+
 
 title PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
 
@@ -10,10 +13,48 @@ participant "MATR://v1/read-current-mac-table-from-device" as matr
 
 external -> nep: {mountName}(BasicAuth)
 activate nep
-nep -> matr: {mountName, own_IpAddress, own_TcpPort, own_responseServiceName} (apiAuthKey)
 
+== IF (Too many parallel requests): error response ==
+note over nep
+  IF (numParallelRequests > maxNumAllowed)
+  THEN
+    <u>Response</u> and exit
+end note
+nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests" </i>
+
+
+== ELSE: read MacAddress data from device ==
+note over nep
+  <u>ReadCurrentMacTableViaMatr</u>
+    As reading MacAddressd data from device can take a while,
+    at first MATR returns a requestId for matching the response later on.
+end note
+nep -> matr: {mountName, own_IpAddress, own_TcpPort, own_responseServiceName} (apiAuthKey)
+matr --> nep: {requestId} (no security)
+
+note over nep
+  After data retrieval from device, 
+  MATR returns MacAddress data together with requestId.
+end note
+matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+
+note over nep
+  Response is matched to the respective request via requestId
+  and related MacAddress data is returned to external requestor.
+
+  (<i>If MATR did not return data, NEP will respond with a </i>meaningful 
+  <i>error message instead to indicate that NEP processed the request</i>
+  <i>successfully</i>.)
+end note
+nep -> external: {mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
 
 deactivate nep
 
+
+legend left
+<b>Used parameters</b>:
+- <b>numParallelRequests</b> = number of parallel executed requests NEP://v1/read-current-mac-table-from-device
+- <b>maxNumAllowed</b> = maximum number of allowed parallel read-current-mac-table requests, from integer profile nep-1-0-0-integer-p-000
+endlegend
 
 @enduml

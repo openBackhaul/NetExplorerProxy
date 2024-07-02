@@ -4,6 +4,10 @@
 ![PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache](./100_ProvideMacTablesOfAllDevices.png)  
 .  
 .  
-![PromptForProvidingMacTablesOfSpecificDeviceCausesReadingMacTable](./101_ProvideMacTableOfSpecificDevice.png)  
+![PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache](./101_ProvideMacTableOfSpecificDevice.png)  
 .  
 .  
+![PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice](./102_ReadCurrentMacTableFromDevice.png)  
+.  
+.  
+![PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList](./103_ProvideListOfConnectedDevices.png)  
