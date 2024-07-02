@@ -441,7 +441,7 @@ forwardings:
       - client-name: MATR://v1/provide-mac-table-of-specific-device
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
 
-  - forwarding-name: PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTable
+  - forwarding-name: PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
     uuid: nep-1-0-0-op-fc-is-002
     forwarding-type: InvariantProcessSnippet
     management-requests:
