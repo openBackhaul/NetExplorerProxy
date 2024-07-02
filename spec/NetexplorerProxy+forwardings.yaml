@@ -442,7 +442,7 @@ forwardings:
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
 
   - forwarding-name: PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList
-    uuid: nep-1-0-0-op-fc-is-001
+    uuid: nep-1-0-0-op-fc-is-003
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
