@@ -569,6 +569,21 @@ paths:
                               type: string
                             time-stamp-of-data:
                               type: string
+                      example:
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "01:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                        - mount-name: "30525999"
+                          own-mac-address: "FF:00:11:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "01:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
 
   /v1/provide-mac-table-of-specific-device:
     post:
@@ -723,6 +738,21 @@ paths:
                               type: string
                             time-stamp-of-data:
                               type: string
+                      example:
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "01:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "FF:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
 
   /v1/provide-list-of-connected-devices:
     parameters:
