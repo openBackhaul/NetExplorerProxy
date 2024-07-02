@@ -110,8 +110,8 @@ profile-instances:
   - profile-name: 'IntegerProfile'
     uuid: 'nep-1-0-0-integer-p-000'
     capability:
-      integer-name: 'maxNumberOfParallelReadCurrentMacTableRequests'
-      purpose: 'Maximum number of allowed parallel requests to read the current mac table of a device'
+      integer-name: 'maxNumberOfParallelReadCurrentMacTableFromDeviceRequests'
+      purpose: 'Maximum number of allowed parallel requests to read the current mac table from a device'
       minimum: 1
       maximum: 50
     configuration:

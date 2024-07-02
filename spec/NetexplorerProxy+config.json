@@ -202,6 +202,21 @@
               }
             }
           }
+        },
+        {
+          "uuid": "nep-1-0-0-integer-p-000",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
+              "integer-name": "maxNumberOfParallelReadCurrentMacTableFromDeviceRequests",
+              "purpose": "Maximum number of allowed parallel requests to read the current mac table from a device",
+              "minimum": 1,
+              "maximum": 50
+            },
+            "integer-profile-configuration": {
+              "integer-value": 10
+            }
+          }
         }
       ]
     },
@@ -783,6 +798,30 @@
         ]
       },
       {
+        "uuid": "nep-1-0-0-op-s-is-002",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [
+        ],
+        "server-ltp": [
+          "nep-1-0-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/read-current-mac-table-from-device"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
         "uuid": "nep-1-0-0-op-s-is-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [
@@ -834,6 +873,7 @@
           "nep-1-0-0-op-s-bs-005",
           "nep-1-0-0-op-s-is-000",
           "nep-1-0-0-op-s-is-001",
+          "nep-1-0-0-op-s-is-002",
           "nep-1-0-0-op-s-is-003"
         ],
         "server-ltp": [
@@ -1732,7 +1772,8 @@
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
           "nep-1-0-0-op-c-is-matr-1-0-0-000",
-          "nep-1-0-0-op-c-is-matr-1-0-0-001"
+          "nep-1-0-0-op-c-is-matr-1-0-0-001",
+          "nep-1-0-0-op-c-is-matr-1-0-0-002"
         ],
         "server-ltp": [
           "nep-1-0-0-tcp-c-matr-1-0-0-000"
@@ -2581,6 +2622,31 @@
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
                 "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-001"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-0-0-op-fc-is-002",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTable"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-0-0-op-s-is-002"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-002"
               }
             ]
           },
