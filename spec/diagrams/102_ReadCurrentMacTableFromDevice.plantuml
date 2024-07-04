@@ -1,0 +1,74 @@
+@startuml 102_ReadCurrentMacTableFromDevice
+skinparam responseMessageBelowArrow true
+skinparam legendFontSize 12
+skinparam LegendBackgroundColor #LightCyan
+
+
+title 
+  PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
+  PromptForProvidingCurrentMacTableOfDeviceCausesReturningFoundMacAddressDataToExternalReceiveOperation
+end title
+
+participant "external \n(Netexplorer)" as external
+participant "external \n(Netexplorer) \nreceiveService" as receiver
+participant "NEP://v1/read-current-mac-table-from-device" as nep
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+
+external -> nep: {mountName, receiverIpAddress, receiverTcpPort, receiverResponseServiceName} (BasicAuth)
+activate nep
+
+== IF (Too many parallel requests): error response ==
+note over nep
+  IF (numParallelRequests > maxNumAllowed)
+  THEN
+    <u>Response</u> and exit
+end note
+nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests" </i>
+
+
+'=============================================================================================================================
+== ELSE: read MacAddress data from device ==
+group #FFFAF0 Return requestId to Netexplorer caller service 
+
+  note over nep
+    <u>ReadCurrentMacTableViaMatr</u>
+      As reading MacAddressd data from device can take a while,
+      MATR only returns a requestId to the caller (or immediate error responses).
+      (The actual read address data will later be addressed to the external receiveService.)
+  end note
+  nep -> matr: {mountName, receiverIpAddress, receiverTcpPort, receiverResponseServiceName} (apiAuthKey)
+  matr --> nep: {requestId} (no security)
+  nep --> external: {requestId | errorResponses} (no security)
+
+end
+
+'-----------------------------------------------------------------------------------------------------------------------------
+group #FFFAF0 Return MacAddressData to Netexplorer receiver service
+  note over nep
+    After data retrieval from device, 
+    MATR returns MacAddress data together with requestId.
+  end note
+  matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+
+  note over nep
+    <u>ReturnAddressDataToExternalReceiver</u>
+      Response is matched to the respective request via requestId
+      and related MacAddress data is returned to external requestor.
+
+      (<i>If MATR did not return data, NEP will respond with a </i>meaningful 
+      <i>error message instead to indicate that NEP processed the request</i>
+      <i>successfully</i>.)
+  end note
+  nep -> receiver: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+end
+
+deactivate nep
+
+
+legend left
+<b>Used parameters</b>:
+- <b>numParallelRequests</b> = number of parallel executed requests NEP://v1/read-current-mac-table-from-device
+- <b>maxNumAllowed</b> = maximum number of allowed parallel read-current-mac-table requests, from integer profile nep-1-0-0-integer-p-000
+endlegend
+
+@enduml

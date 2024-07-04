@@ -51,12 +51,16 @@ servers:
         - operation-name: /docs
           uuid: nep-1-0-0-op-s-bs-005
       individual:
+        # mac address data from cache (000,001) and live data (002) (MATR)
         - operation-name: /v1/provide-mac-table-of-all-devices
           uuid: nep-1-0-0-op-s-is-000
         - operation-name: /v1/provide-mac-table-of-specific-device
           uuid: nep-1-0-0-op-s-is-001
-        - operation-name: /v1/provide-list-of-connected-devices
+        - operation-name: /v1/read-current-mac-table-from-device
           uuid: nep-1-0-0-op-s-is-002
+        # list of devices connected to the Controller (MWDI)
+        - operation-name: /v1/provide-list-of-connected-devices
+          uuid: nep-1-0-0-op-s-is-003
   http-server:
     own-application-name: NetExplorerProxy
     own-release-number: 1.0.0
@@ -272,6 +276,8 @@ clients:
             uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
           - operation-name: /v1/provide-mac-table-of-specific-device
             uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
+          - operation-name: /v1/read-current-mac-table-from-device
+            uuid: nep-1-0-0-op-c-is-matr-1-0-0-002
 
   - http-client:
       application-name: MicroWaveDeviceInventory

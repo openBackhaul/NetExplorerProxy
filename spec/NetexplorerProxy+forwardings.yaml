@@ -411,7 +411,7 @@ forwardings:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
         uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
 
-  - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTables
+  - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache
     uuid: nep-1-0-0-op-fc-is-000
     forwarding-type: InvariantProcessSnippet
     management-requests:
@@ -426,8 +426,8 @@ forwardings:
       - client-name: MATR://v1/provide-mac-table-of-all-devices
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
 
-  - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTable
-    uuid: nep-1-0-0-op-fc-is-000
+  - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache
+    uuid: nep-1-0-0-op-fc-is-001
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -441,8 +441,23 @@ forwardings:
       - client-name: MATR://v1/provide-mac-table-of-specific-device
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
 
+  - forwarding-name: PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
+    uuid: nep-1-0-0-op-fc-is-002
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/read-current-mac-table-from-device
+        uuid: nep-1-0-0-op-s-is-002
+    consequent-requests:
+      - client-name: MATR://v1/read-current-mac-table-from-device
+        uuid: nep-1-0-0-op-c-is-matr-1-0-0-002
+
   - forwarding-name: PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList
-    uuid: nep-1-0-0-op-fc-is-001
+    uuid: nep-1-0-0-op-fc-is-003
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -451,7 +466,7 @@ forwardings:
       operation-client-deletion:
     initiating-requests:
       - server-name: /v1/provide-list-of-connected-devices
-        uuid: nep-1-0-0-op-s-is-002
+        uuid: nep-1-0-0-op-s-is-003
     consequent-requests:
       - client-name: MWDI://v1/provide-list-of-connected-devices
         uuid: nep-1-0-0-op-c-is-mwdi-1-1-2-000

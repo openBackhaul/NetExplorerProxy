@@ -1,0 +1,249 @@
+  /v1/read-current-mac-table-from-device:
+    parameters:
+      - $ref: "#/components/parameters/user"
+      - $ref: "#/components/parameters/originator"
+      - $ref: "#/components/parameters/x-correlator"
+      - $ref: "#/components/parameters/trace-indicator"
+      - $ref: "#/components/parameters/customer-journey"
+    post:
+      operationId: readCurrentMacTableFromDevice
+      summary: "Responses with the current MAC table of a specific device."
+      tags:
+        - IndividualServices
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - description: "update of elasticsearch and response to the requestor"
+                  type: object
+                  required:
+                    - mount-name
+                    - requestor-protocol
+                    - requestor-address
+                    - requestor-port
+                    - requestor-receive-operation
+                  properties:
+                    mount-name:
+                      type: string
+                      description: >
+                        'Mount-name of the device, from which the current MAC table content shall be retrieved'
+                    requestor-protocol:
+                      type: string
+                      description: >
+                        'HTTP or HTTPs protocol for sending the response to the requestor'
+                      enum:
+                        - "HTTP"
+                        - "HTTPS"
+                    requestor-address:
+                      type: object
+                      minProperties: 1
+                      maxProperties: 1
+                      additionalProperties: false
+                      properties:
+                        ip-address:
+                          type: object
+                          minProperties: 1
+                          additionalProperties: false
+                          properties:
+                            ipv-4-address:
+                              type: string
+                              pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+                              description: >
+                                'IP address for sending the response to the requestor'
+                        domain-name:
+                          type: string
+                          pattern: '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$'
+                          description: >
+                            'Domain name for sending the response to the requestor'
+                    requestor-port:
+                      type: integer
+                      description: >
+                        'TCP port for sending the response to the requestor'
+                    requestor-receive-operation:
+                      type: string
+                      description: "Operation at the requestor for receiving the response"
+              example:
+                mount-name: "305251234"
+                requestor-protocol: "HTTP"
+                requestor-address:
+                  ip-address:
+                    ipv-4-address: "1.1.4.1"
+                requestor-port: 4001
+                requestor-receive-operation: "/v1/receive-requested-mac-address-table"
+      responses:
+        "200":
+          description: "Request for current MAC table received, response request will be sent after collecting all data."
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - request-id
+                properties:
+                  request-id:
+                    type: string
+                    description: "Identifier of the request for a current MAC table"
+                example:
+                  request-id: "305251234-101120-1400"
+          headers:
+            x-correlator:
+              schema:
+                type: string
+                example: "550e8400-e29b-11d4-a716-446655440000"
+              description: "UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request"
+            exec-time:
+              schema:
+                type: integer
+                example: 1100
+              description: "Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds"
+            backend-time:
+              schema:
+                type: integer
+                example: 850
+              description: "Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds"
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - "EXPERIMENTAL"
+                  - "OPERATIONAL"
+                  - "DEPRECATED"
+                  - "OBSOLETE"
+                  - "UNKNOWN"
+                  - "NOT_YET_DEFINED"
+                example: "EXPERIMENTAL"
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=matr-1-0-0-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        "400":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "401":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "403":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "404":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "500":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        default:
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+      callbacks:
+        PromptForUpdatingMacTableFromDeviceCausesSendingAnswerToRequestor:
+          url: #[{$request.body#requestor-protocol}]://[{$request.body#requestor-address.ip-address.ipv-4-address} or {$request.body#requestor-address.domain-name}]:[{$request.body#requestor-port}][{$request.body#requestor-receive-operation}]
+            post:
+              parameters:
+                - $ref: "#/components/parameters/user"
+                - $ref: "#/components/parameters/originator"
+                - $ref: "#/components/parameters/x-correlator"
+                - $ref: "#/components/parameters/trace-indicator"
+                - $ref: "#/components/parameters/customer-journey"
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          request-id:
+                            type: string
+                            description: >
+                              'Identifier of the request for a current mac-table
+                              from {$response.body#request-id}'
+                          mount-name:
+                            type: string
+                            description: >
+                              'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
+                              from {$request.body#mount-name}'
+                          own-mac-address:
+                            type: string
+                            description: >
+                              'MAC address of the device that holds the MAC address table
+                              from {$PromptForUpdatingMacTableFromDeviceCausesUuidOfMacFdBeingSearchedAndManagementMacAddressBeingReadFromMwdi.response.body#core-model-1-4:control-construct=mount-name/forwarding-domain=uuid/mac-fd-1-0:mac-fd-pac/mac-fd-status/mac-address-cur}'
+                          egress-ltp-uuid:
+                            type: string
+                            description: >
+                              'UUID of the MacInterface towards the listed remote MAC addresses
+                              all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#mount-name}.concat("+", {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.egress-ltp})'
+                          original-ltp-name:
+                            type: string
+                            description: >
+                              'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
+                              from {$PromptForUpdatingMacTableFromDeviceCausesLtpUuidBeingTranslatedIntoLtpNameBasedOnMwdi.response.body#ltp-augment-1-0:ltp-augment-pac.original-ltp-name}'
+                          vlan-id:
+                            type: integer
+                            description: >
+                              'VLAN that connects the listed remote MAC addresses
+                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.vlan-id}'
+                          remote-mac-address:
+                            type: string
+                            description: >
+                              'Remote MAC address that can be reached at the egress interface and inside the VLAN
+                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.mac-address}'
+                          time-stamp-of-data:
+                            type: string
+                            pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
+                            description: >
+                              'Date and time when the data has been retrieved from the device'
+                      example:
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "01:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "FF:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+              responses:
+                "204":
+                  description: "MAC table has been received."
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: "550e8400-e29b-11d4-a716-446655440000"
+                      description: "UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request"
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: "Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds"
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: "Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds"
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - "EXPERIMENTAL"
+                          - "OPERATIONAL"
+                          - "DEPRECATED"
+                          - "OBSOLETE"
+                          - "UNKNOWN"
+                          - "NOT_YET_DEFINED"
+                        example: "EXPERIMENTAL"
+                      description: "Life cycle state of the consumed service"
+                "400":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "401":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "403":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "404":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "500":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                default:
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
