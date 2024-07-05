@@ -5,9 +5,8 @@ title
   RequestForReceivingCurrentMacTableOfDeviceCausesReturningFoundMacAddressDataToExternalReceiveOperation
 end title
 
-
-participant "netexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
 participant "MATR://v1/read-current-mac-table-from-device" as matr
+participant "netexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
 participant "NEP://v1/receive-current-mac-table-of-device" as nep
 
 activate nep
@@ -17,7 +16,6 @@ note over matr
   MATR calls receive operation of NEP
   with requestId
 end note
-[-> matr
 matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
 
   
