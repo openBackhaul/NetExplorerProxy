@@ -1,0 +1,39 @@
+@startuml 003_ReceiveCurrentMacTableOfDevice
+skinparam responseMessageBelowArrow true
+
+title 
+  RequestForReceivingCurrentMacTableOfDeviceCausesReturningFoundMacAddressDataToExternalReceiveOperation
+end title
+
+
+participant "netexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+participant "NEP://v1/receive-current-mac-table-of-device" as nep
+
+activate nep
+
+note over matr
+  After data retrieval from device, 
+  MATR calls receive operation of NEP
+  with requestId
+end note
+[-> matr
+matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+
+  
+note over nep
+  <u>ReturnMacDataToExternalReceiver</u>
+    The NEP receive operation calls the 
+    Netexplorer receive operation and hands over
+    the current MAC address data from MATR.
+    The Netexplorer's address data and receive operation
+    are retrieved from NEP memory with requestId as 
+    lookup key.
+end note
+nep -> receiver: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+
+
+deactivate nep
+
+
+@enduml

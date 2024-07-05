@@ -1,0 +1,42 @@
+@startuml 002_ReadCurrentMacTableFromDevice
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/read-current-mac-table-from-device" as nep
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+
+external -> nep: {mountName, \n netexplorerReceiverIpAddress, \n netexplorerReceiverTcpPort, \n netexplorerReceiveResponseServiceName} (BasicAuth)
+activate nep
+
+== IF (Too many parallel requests): error response ==
+note over nep
+  WITH 
+    - <b>numParallelRequests</b> = number of parallel executed requests 
+                                            NEP://v1/read-current-mac-table-from-device
+    - <b>maxNumAllowed</b> = maximum number of allowed parallel requests,
+                                     from integer profile nep-1-0-0-integer-p-000
+
+  IF (numParallelRequests > maxNumAllowed)
+  THEN
+    <u>Response</u> and exit
+end note
+nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests" </i>
+
+'=============================================================================================================================
+== ELSE: read MacAddress data from device ==
+
+  note over nep
+    <u>ReadCurrentMacTableViaMatr</u>
+      As reading MacAddressd data from device can take a while,
+      MATR only returns a requestId to the caller (or immediate error responses).
+      (The actual read address data will later be addressed to the external receiveService.)
+  end note
+  nep -> matr: {mountName, \n nepIp, \n nepTcpPort, \n nepReceiveOperation=<i>/v1/receive-current-mac-table-of-device</i>} (apiAuthKey)
+  matr -> nep: {requestId} (no security)
+  nep -> external: {requestId \n or immediateErrorResponse} (no security)
+
+
+
+@enduml
