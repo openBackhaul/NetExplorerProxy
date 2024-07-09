@@ -6,15 +6,17 @@ title
 end title
 
 participant "MATR://v1/read-current-mac-table-from-device" as matr
-participant "netexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
+participant "(Netexplorer) \nnetexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
 participant "NEP://v1/receive-current-mac-table-of-device" as nep
 
 activate nep
 
 note over matr
-  After data retrieval from device, 
-  MATR calls receive operation of NEP
-  with requestId
+  NEP initiates retrieval from MATR.
+
+  After MATR has retrieved the data from the device, 
+  it calls the receive operation of NEP 
+  (with requestId)
 end note
 matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
 
