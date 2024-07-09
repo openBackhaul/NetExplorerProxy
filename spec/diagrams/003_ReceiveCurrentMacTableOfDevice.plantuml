@@ -2,7 +2,7 @@
 skinparam responseMessageBelowArrow true
 
 title 
-  RequestForReceivingCurrentMacTableOfDeviceCausesReturningFoundMacAddressDataToExternalReceiveOperation
+  RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor
 end title
 
 participant "MATR://v1/read-current-mac-table-from-device" as matr

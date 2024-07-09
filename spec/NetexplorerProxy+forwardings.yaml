@@ -114,6 +114,12 @@ forwardings:
         uuid: nep-1-0-0-op-s-is-000
       - server-name: /v1/provide-mac-table-of-specific-device
         uuid: nep-1-0-0-op-s-is-001
+      - server-name: /v1/read-current-mac-table-from-device
+        uuid: nep-1-0-0-op-s-is-002
+      - server-name: /v1/receive-current-mac-table-of-device
+        uuid: nep-1-0-0-op-s-is-003
+      - server-name: /v1/provide-list-of-connected-devices
+        uuid: nep-1-0-0-op-s-is-020
     consequent-requests:
       - client-name: ExecutionAndTraceLog://v1/record-service-request
         uuid: nep-1-0-0-op-c-bs-eatl-2-1-0-000
@@ -456,8 +462,24 @@ forwardings:
       - client-name: MATR://v1/read-current-mac-table-from-device
         uuid: nep-1-0-0-op-c-is-matr-1-0-0-002
 
-  - forwarding-name: PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList
+  - forwarding-name: RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor
     uuid: nep-1-0-0-op-fc-is-003
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/receive-current-mac-table-of-device
+        uuid: nep-1-0-0-op-s-is-003
+    consequent-requests:
+      - client-name: PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice#requestor-receive-operation
+        uuid: n.a.
+
+
+  - forwarding-name: PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList
+    uuid: nep-1-0-0-op-fc-is-020
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:

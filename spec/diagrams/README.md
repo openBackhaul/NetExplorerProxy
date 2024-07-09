@@ -10,7 +10,7 @@
 ![PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice](./002_ReadCurrentMacTableFromDevice.png)  
 .  
 .  
-![RequestForReceivingCurrentMacTableOfDeviceCausesReturningFoundMacAddressDataToExternalReceiveOperation](./003_ReceiveCurrentMacTableOfDevice.png)  
+![RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor](./003_ReceiveCurrentMacTableOfDevice.png)  
 .  
 .  
 ![PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList](./120_ProvideListOfConnectedDevices.png)  
