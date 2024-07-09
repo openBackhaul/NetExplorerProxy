@@ -18,7 +18,7 @@ note over matr
   it calls the receive operation of NEP 
   (with requestId)
 end note
-matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+matr -> nep: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
 
   
 note over nep
@@ -30,7 +30,7 @@ note over nep
     are retrieved from NEP memory with requestId as 
     lookup key.
 end note
-nep -> receiver: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+nep -> receiver: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
 
 
 deactivate nep

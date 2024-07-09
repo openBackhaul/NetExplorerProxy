@@ -811,7 +811,7 @@ paths:
                   ip-address:
                     ipv-4-address: "1.1.1.1"
                 requestor-port: 8080
-                requestor-receive-operation: "/netexplorer-current-mac-table-of-device-receive-operation"
+                requestor-receive-operation: "/receive-current-mac-table-of-device"
       responses:
         "200":
           description: "Request for current MAC table received, response request will be sent after collecting all data."
@@ -897,6 +897,58 @@ paths:
           $ref: "#/components/responses/responseForErroredServiceRequests"
         "404":
           $ref: "#/components/responses/responseForErroredServiceRequests"
+        "429":
+          description: "Response in case of errored service requests due to too many parallel requests."
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    enum:
+                      - 429
+                  message:
+                    type: string
+                    enum:
+                      - "Too many requests. The maximum amount of requests that can executed in parallel has been reached"
+                example:
+                 code: 429
+                 enum: "Too many requests. The maximum amount of requests that can executed in parallel has been reached"
+          headers:
+            x-correlator:
+              schema:
+                type: string
+                example: "550e8400-e29b-11d4-a716-446655440000"
+              description: "UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request"
+            exec-time:
+              schema:
+                type: integer
+                example: 1100
+              description: "Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds"
+            backend-time:
+              schema:
+                type: integer
+                example: 850
+              description: "Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds"
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - "EXPERIMENTAL"
+                  - "OPERATIONAL"
+                  - "DEPRECATED"
+                  - "OBSOLETE"
+                  - "UNKNOWN"
+                  - "NOT_YET_DEFINED"
+                example: "EXPERIMENTAL"
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
         "500":
           $ref: "#/components/responses/responseForErroredServiceRequests"
         default:
@@ -962,7 +1014,7 @@ paths:
                           ip-address:
                             ipv-4-address: "1.1.1.1"
                         requestor-port: 8080
-                        requestor-receive-operation: "/netexplorer-current-mac-table-of-device-receive-operation"
+                        requestor-receive-operation: "/receive-current-mac-table-of-device"
               responses:
                 "200":
                   description: "Request for current MAC table received, response request will be sent after collecting all data."
@@ -1022,6 +1074,197 @@ paths:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
 
 
+  /v1/receive-current-mac-table-of-device:
+    post:
+      operationId: receiveCurrentMacTableOfDevice
+      summary: 'Receives the current mac table of device from MATR and sends answer to requestor'
+      tags:
+        - IndividualServices
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - request-id
+                  - mount-name
+                  - own-mac-address
+                  - egress-ltp-uuid
+                  - original-ltp-name
+                  - vlan-id
+                  - remote-mac-address
+                  - time-stamp-of-data
+                properties:
+                  request-id:
+                    type: string
+                    description: 'Identifier of the request for a current mac-table'
+                  mount-name:
+                    type: string
+                    description: 'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany'
+                  own-mac-address:
+                    type: string
+                    description: 'MAC address of the device that holds the MAC address table'
+                  egress-ltp-uuid:
+                    type: string
+                    description: >
+                      'UUID of the MacInterface towards the listed remote MAC addresses
+                      all UUIDs being complemented by MountName as a prefix'
+                  original-ltp-name:
+                    type: string
+                    description: 'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor'
+                  vlan-id:
+                    type: integer
+                    description: 'VLAN that connects the listed remote MAC addresses'
+                  remote-mac-address:
+                    type: string
+                    description: 'Remote MAC address that can be reached at the egress interface and inside the VLAN'
+                  time-stamp-of-data:
+                    type: string
+                    pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
+                    description: 'Date and time when the data has been retrieved from the device'
+                example:
+                  - mount-name: "305251234"
+                    own-mac-address: "00:00:00:00:00:00"
+                    egress-ltp-uuid: "305251234+mac-inf-1234"
+                    original-ltp-name: "eth-1-0-3"
+                    vlan-id: 17
+                    remote-mac-address: "01:01:01:01:01:01"
+                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                  - mount-name: "305251234"
+                    own-mac-address: "00:00:00:00:00:00"
+                    egress-ltp-uuid: "305251234+mac-inf-1234"
+                    original-ltp-name: "eth-1-0-3"
+                    vlan-id: 17
+                    remote-mac-address: "FF:01:01:01:01:01"
+                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+
+
+
+
+
+
+      responses:
+        '200':
+          description: 'List of connected devices provided'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - mount-name-list
+                properties:
+                  mount-name-list:
+                    type: array
+                    items:
+                      type: string
+                      description: >
+                        'MountName of devices in connected state at the Controller
+                        from {$PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList.response.body#/mount-name-list}'
+              example:
+                mount-name-list:
+                  - '305251234'
+                  - '105258888'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - "EXPERIMENTAL"
+                  - "OPERATIONAL"
+                  - "DEPRECATED"
+                  - "OBSOLETE"
+                  - "UNKNOWN"
+                  - "NOT_YET_DEFINED"
+                example: "EXPERIMENTAL"
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-is-020/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        "400":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "401":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "403":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "404":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        "500":
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+        default:
+          $ref: "#/components/responses/responseForErroredServiceRequests"
+      callbacks:
+        PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList:
+          URL: #[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-c-is-mwdi-1-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            post:
+              parameters:
+                - $ref: "#/components/parameters/user"
+                - $ref: "#/components/parameters/originator"
+                - $ref: "#/components/parameters/x-correlator"
+                - $ref: "#/components/parameters/trace-indicator"
+                - $ref: "#/components/parameters/customer-journey"
+              responses:
+                "200":
+                  description: "List of connected devices provided"
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - mount-name-list
+                        properties:
+                          mount-name-list:
+                            type: array
+                            items:
+                              type: string
+                              description: 'MountName of devices in connected tate at the Controller'
+                      example:
+                        mount-name-list:
+                          - "305251234"
+                          - "105258888"
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: "550e8400-e29b-11d4-a716-446655440000"
+                      description: "UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request"
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: "Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds"
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: "Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds"
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - "EXPERIMENTAL"
+                          - "OPERATIONAL"
+                          - "DEPRECATED"
+                          - "OBSOLETE"
+                          - "UNKNOWN"
+                          - "NOT_YET_DEFINED"
+                        example: "EXPERIMENTAL"
+                      description: "Life cycle state of the consumed service"
+                "400":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "401":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "403":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "404":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                "500":
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
+                default:
+                  $ref: "#/components/responses/responseForErroredServiceRequests"
 
 
 
