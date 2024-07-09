@@ -1142,33 +1142,9 @@ paths:
                     vlan-id: 17
                     remote-mac-address: "FF:01:01:01:01:01"
                     time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-
-
-
-
-
-
       responses:
-        '200':
-          description: 'List of connected devices provided'
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - mount-name-list
-                properties:
-                  mount-name-list:
-                    type: array
-                    items:
-                      type: string
-                      description: >
-                        'MountName of devices in connected state at the Controller
-                        from {$PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList.response.body#/mount-name-list}'
-              example:
-                mount-name-list:
-                  - '305251234'
-                  - '105258888'
+        '204':
+          description: 'Current MAC table received, will be sent to requestor by calling receive-operation'
           headers:
             life-cycle-state:
               schema:
@@ -1183,7 +1159,7 @@ paths:
                 example: "EXPERIMENTAL"
               description: >
                 'Life cycle state of the consumed service
-                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-is-020/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-is-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
         "400":
           $ref: "#/components/responses/responseForErroredServiceRequests"
         "401":
@@ -1197,8 +1173,11 @@ paths:
         default:
           $ref: "#/components/responses/responseForErroredServiceRequests"
       callbacks:
-        PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList:
-          URL: #[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-c-is-mwdi-1-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+        RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor:
+
+
+
+          url: #[{$request.body#requestor-protocol}]://[{$request.body#requestor-address.ip-address.ipv-4-address} or {$request.body#requestor-address.domain-name}]:[{$request.body#requestor-port}][{$request.body#requestor-receive-operation}]
             post:
               parameters:
                 - $ref: "#/components/parameters/user"
@@ -1206,25 +1185,72 @@ paths:
                 - $ref: "#/components/parameters/x-correlator"
                 - $ref: "#/components/parameters/trace-indicator"
                 - $ref: "#/components/parameters/customer-journey"
-              responses:
-                "200":
-                  description: "List of connected devices provided"
-                  content:
-                    application/json:
-                      schema:
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
                         type: object
-                        required:
-                          - mount-name-list
                         properties:
-                          mount-name-list:
-                            type: array
-                            items:
-                              type: string
-                              description: 'MountName of devices in connected tate at the Controller'
+                          request-id:
+                            type: string
+                            description: >
+                              'Identifier of the request for a current mac-table
+                              from {$response.body#request-id}'
+                          mount-name:
+                            type: string
+                            description: >
+                              'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
+                              from {$request.body#mount-name}'
+                          own-mac-address:
+                            type: string
+                            description: >
+                              'MAC address of the device that holds the MAC address table
+                              from {$PromptForUpdatingMacTableFromDeviceCausesUuidOfMacFdBeingSearchedAndManagementMacAddressBeingReadFromMwdi.response.body#core-model-1-4:control-construct=mount-name/forwarding-domain=uuid/mac-fd-1-0:mac-fd-pac/mac-fd-status/mac-address-cur}'
+                          egress-ltp-uuid:
+                            type: string
+                            description: >
+                              'UUID of the MacInterface towards the listed remote MAC addresses
+                              all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#mount-name}.concat("+", {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.egress-ltp})'
+                          original-ltp-name:
+                            type: string
+                            description: >
+                              'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
+                              from {$PromptForUpdatingMacTableFromDeviceCausesLtpUuidBeingTranslatedIntoLtpNameBasedOnMwdi.response.body#ltp-augment-1-0:ltp-augment-pac.original-ltp-name}'
+                          vlan-id:
+                            type: integer
+                            description: >
+                              'VLAN that connects the listed remote MAC addresses
+                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.vlan-id}'
+                          remote-mac-address:
+                            type: string
+                            description: >
+                              'Remote MAC address that can be reached at the egress interface and inside the VLAN
+                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.mac-address}'
+                          time-stamp-of-data:
+                            type: string
+                            pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
+                            description: >
+                              'Date and time when the data has been retrieved from the device'
                       example:
-                        mount-name-list:
-                          - "305251234"
-                          - "105258888"
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "01:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                        - mount-name: "305251234"
+                          own-mac-address: "00:00:00:00:00:00"
+                          egress-ltp-uuid: "305251234+mac-inf-1234"
+                          original-ltp-name: "eth-1-0-3"
+                          vlan-id: 17
+                          remote-mac-address: "FF:01:01:01:01:01"
+                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+              responses:
+                "204":
+                  description: "MAC table has been received."
                   headers:
                     x-correlator:
                       schema:
@@ -1265,6 +1291,7 @@ paths:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
                 default:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
+
 
 
 

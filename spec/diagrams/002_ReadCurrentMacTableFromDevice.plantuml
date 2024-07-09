@@ -35,6 +35,23 @@ nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requ
   end note
   nep -> matr: {mountName, \n nepIp, \n nepTcpPort, \n nepReceiveOperation=<i>/v1/receive-current-mac-table-of-device</i>} (apiAuthKey)
   matr -> nep: {requestId} (no security)
+
+  note over nep
+    <i><b>receiver-info in-memory lookup table</b></i>
+    * NEP keeps a lookup table for matching requestId and receiver information.
+       Columns are:
+         - key = requestId
+         - value = (netexplorerReceiverIpAddress, netexplorerReceiverTcpPort, 
+                       netexplorerReceiveResponseServiceName)
+                  
+    * The current key-value-pair is added to the table after requestId has 
+       been received from MATR
+       (once the receive operation has returned the answer via calling Netexplorer
+       receive operation, the key-value-pair for the requestId is deleted from the 
+       lookup table).
+  end note
+
+
   nep -> external: {requestId \n or immediateErrorResponse} (no security)
 
 
