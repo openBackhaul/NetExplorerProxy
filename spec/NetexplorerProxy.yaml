@@ -1174,10 +1174,7 @@ paths:
           $ref: "#/components/responses/responseForErroredServiceRequests"
       callbacks:
         RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor:
-
-
-
-          url: #[{$request.body#requestor-protocol}]://[{$request.body#requestor-address.ip-address.ipv-4-address} or {$request.body#requestor-address.domain-name}]:[{$request.body#requestor-port}][{$request.body#requestor-receive-operation}]
+          url: #[{lookupTable(requestId)#requestor-protocol}]://[{lookupTable(requestId)#requestor-ipv-4-address}]:[{lookupTable(requestId)#requestor-port}][{lookupTable(requestId)#requestor-receive-operation}]
             post:
               parameters:
                 - $ref: "#/components/parameters/user"
@@ -1186,6 +1183,7 @@ paths:
                 - $ref: "#/components/parameters/trace-indicator"
                 - $ref: "#/components/parameters/customer-journey"
               requestBody:
+              # ab hier TODO --> anpassen
                 content:
                   application/json:
                     schema:
