@@ -18,19 +18,21 @@ note over matr
   it calls the receive operation of NEP 
   (with requestId)
 end note
-matr -> nep: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+matr -> nep: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
 
   
 note over nep
   <u>ReturnMacDataToExternalReceiver</u>
-    The NEP receive operation calls the 
-    Netexplorer receive operation and hands over
+    The NEP receive operation calls the Netexplorer receive operation and hands over
     the current MAC address data from MATR.
-    The Netexplorer's address data and receive operation
-    are retrieved from NEP memory with requestId as 
-    lookup key.
+
+    The Netexplorer's address data and receive operation are retrieved from NEP's
+    in-memory lookup table with requestId as lookup key.
+
+    (After the netexplorer receive operation has been called, the entry for the requestId is deleted
+    from the lookup table.)
 end note
-nep -> receiver: {requestId, mountName, macAddressCur, egressLtpUuid, originalLtpName, vlanId, macAddresses, timestampOfRpc} (no security)
+nep -> receiver: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
 
 
 deactivate nep
