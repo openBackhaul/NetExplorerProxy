@@ -36,7 +36,7 @@ nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requ
   nep -> matr: {mountName, \n nepIp, \n nepTcpPort, \n nepReceiveOperation=<i>/v1/receive-current-mac-table-of-device</i>} (apiAuthKey)
   matr -> nep: {requestId} (no security)
 
-  note over nep
+  note over nep #bisque
     <i><b>receiver-info in-memory lookup table</b></i>
     * NEP keeps a lookup table for matching requestId and receiver information.
        Columns are:
