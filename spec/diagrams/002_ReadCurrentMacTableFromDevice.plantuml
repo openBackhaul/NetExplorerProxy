@@ -41,14 +41,19 @@ nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requ
     * NEP keeps a lookup table for matching requestId and receiver information.
        Columns are:
          - key = requestId
-         - value = (netexplorerReceiverIpAddress, netexplorerReceiverTcpPort, 
-                       netexplorerReceiveResponseServiceName)
+         - value = addressInfo = (netexplorerReceiverIpAddress, netexplorerReceiverTcpPort, 
+                                            netexplorerReceiveResponseServiceName)
+         - timestamp
                   
-    * The current key-value-pair is added to the table after requestId has 
-       been received from MATR
-       (once the receive operation has returned the answer via calling Netexplorer
-       receive operation, the key-value-pair for the requestId is deleted from the 
-       lookup table).
+    * <i>put</i>: 
+        - the current key-value-pair is added to the table after requestId has 
+          been received from MATR
+        - with timestamp being the time when the requestId was received
+    * <i>delete</i>: 
+        - once the receive operation has returned the answer via calling Netexplorer
+          receive operation, the key-value-pair for the requestId is deleted from the 
+          lookup table
+        - remaining requestIds older than 1 hour can also be deleted
   end note
 
 
