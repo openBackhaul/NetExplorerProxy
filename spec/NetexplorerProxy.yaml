@@ -1183,7 +1183,6 @@ paths:
                 - $ref: "#/components/parameters/trace-indicator"
                 - $ref: "#/components/parameters/customer-journey"
               requestBody:
-              # ab hier TODO --> anpassen
                 content:
                   application/json:
                     schema:
@@ -1205,27 +1204,27 @@ paths:
                             type: string
                             description: >
                               'MAC address of the device that holds the MAC address table
-                              from {$PromptForUpdatingMacTableFromDeviceCausesUuidOfMacFdBeingSearchedAndManagementMacAddressBeingReadFromMwdi.response.body#core-model-1-4:control-construct=mount-name/forwarding-domain=uuid/mac-fd-1-0:mac-fd-pac/mac-fd-status/mac-address-cur}'
+                              from {$request.body#own-mac-address}'
                           egress-ltp-uuid:
                             type: string
                             description: >
                               'UUID of the MacInterface towards the listed remote MAC addresses
-                              all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#mount-name}.concat("+", {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.egress-ltp})'
+                              all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#egress-ltp-uuid})'
                           original-ltp-name:
                             type: string
                             description: >
                               'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
-                              from {$PromptForUpdatingMacTableFromDeviceCausesLtpUuidBeingTranslatedIntoLtpNameBasedOnMwdi.response.body#ltp-augment-1-0:ltp-augment-pac.original-ltp-name}'
+                              from {$request.body#original-ltp-name}'
                           vlan-id:
                             type: integer
                             description: >
                               'VLAN that connects the listed remote MAC addresses
-                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.vlan-id}'
+                              from {$request.body#vlan-id}'
                           remote-mac-address:
                             type: string
                             description: >
                               'Remote MAC address that can be reached at the egress interface and inside the VLAN
-                              from {$PromptForUpdatingMacTableFromDeviceCausesMacTableBeingRetrievedFromDevice.response.body#mac-table-entry-list.mac-address}'
+                              from {$request.body#remote-mac-address}'
                           time-stamp-of-data:
                             type: string
                             pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
