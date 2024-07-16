@@ -1124,56 +1124,57 @@ paths:
                 type: object
                 required:
                   - request-id
-                  - mount-name
-                  - own-mac-address
-                  - egress-ltp-uuid
-                  - original-ltp-name
-                  - vlan-id
-                  - remote-mac-address
-                  - time-stamp-of-data
+                  - mac-address-data
                 properties:
                   request-id:
                     type: string
                     description: 'Identifier of the request for a current mac-table'
-                  mount-name:
-                    type: string
-                    description: 'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany'
-                  own-mac-address:
-                    type: string
-                    description: 'MAC address of the device that holds the MAC address table'
-                  egress-ltp-uuid:
-                    type: string
-                    description: >
-                      'UUID of the MacInterface towards the listed remote MAC addresses
-                      all UUIDs being complemented by MountName as a prefix'
-                  original-ltp-name:
-                    type: string
-                    description: 'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor'
-                  vlan-id:
-                    type: integer
-                    description: 'VLAN that connects the listed remote MAC addresses'
-                  remote-mac-address:
-                    type: string
-                    description: 'Remote MAC address that can be reached at the egress interface and inside the VLAN'
-                  time-stamp-of-data:
-                    type: string
-                    pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
-                    description: 'Date and time when the data has been retrieved from the device'
+                  mac-address-data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        mount-name:
+                          type: string
+                          description: 'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany'
+                        own-mac-address:
+                          type: string
+                          description: 'MAC address of the device that holds the MAC address table'
+                        egress-ltp-uuid:
+                          type: string
+                          description: >
+                            'UUID of the MacInterface towards the listed remote MAC addresses
+                            all UUIDs being complemented by MountName as a prefix'
+                        original-ltp-name:
+                          type: string
+                          description: 'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor'
+                        vlan-id:
+                          type: integer
+                          description: 'VLAN that connects the listed remote MAC addresses'
+                        remote-mac-address:
+                          type: string
+                          description: 'Remote MAC address that can be reached at the egress interface and inside the VLAN'
+                        time-stamp-of-data:
+                          type: string
+                          pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
+                          description: 'Date and time when the data has been retrieved from the device'
                 example:
-                  - mount-name: "305251234"
-                    own-mac-address: "00:00:00:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
-                    vlan-id: 17
-                    remote-mac-address: "01:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-                  - mount-name: "305251234"
-                    own-mac-address: "00:00:00:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
-                    vlan-id: 17
-                    remote-mac-address: "FF:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                  request-id: "121251092-1721120567127"
+                  mac-address-data:
+                    - mount-name: "305251234"
+                      own-mac-address: "00:00:00:00:00:00"
+                      egress-ltp-uuid: "305251234+mac-inf-1234"
+                      original-ltp-name: "eth-1-0-3"
+                      vlan-id: 17
+                      remote-mac-address: "01:01:01:01:01:01"
+                      time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                    - mount-name: "305251234"
+                      own-mac-address: "00:00:00:00:00:00"
+                      egress-ltp-uuid: "305251234+mac-inf-1234"
+                      original-ltp-name: "eth-1-0-3"
+                      vlan-id: 17
+                      remote-mac-address: "FF:01:01:01:01:01"
+                      time-stamp-of-data: "2010-11-20T14:00:00+01:00"
       responses:
         '204':
           description: 'Current MAC table received, will be sent to requestor by calling receive-operation'
@@ -1218,65 +1219,70 @@ paths:
                 content:
                   application/json:
                     schema:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          request-id:
-                            type: string
-                            description: >
-                              'Identifier of the request for a current mac-table
-                              from {$response.body#request-id}'
-                          mount-name:
-                            type: string
-                            description: >
-                              'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
-                              from {$request.body#mount-name}'
-                          own-mac-address:
-                            type: string
-                            description: >
-                              'MAC address of the device that holds the MAC address table
-                              from {$request.body#own-mac-address}'
-                          egress-ltp-uuid:
-                            type: string
-                            description: >
-                              'UUID of the MacInterface towards the listed remote MAC addresses
-                              all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#egress-ltp-uuid})'
-                          original-ltp-name:
-                            type: string
-                            description: >
-                              'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
-                              from {$request.body#original-ltp-name}'
-                          vlan-id:
-                            type: integer
-                            description: >
-                              'VLAN that connects the listed remote MAC addresses
-                              from {$request.body#vlan-id}'
-                          remote-mac-address:
-                            type: string
-                            description: >
-                              'Remote MAC address that can be reached at the egress interface and inside the VLAN
-                              from {$request.body#remote-mac-address}'
-                          time-stamp-of-data:
-                            type: string
-                            pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
-                            description: >
-                              'Date and time when the data has been retrieved from the device'
+                      type: object
+                      properties:
+                        request-id:
+                          type: string
+                          description: >
+                            'Identifier of the request for a current mac-table
+                            from {$response.body#request-id}'
+                        mac-address-data:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              mount-name:
+                                type: string
+                                description: >
+                                  'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
+                                  from {$request.body#mount-name}'
+                              own-mac-address:
+                                type: string
+                                description: >
+                                  'MAC address of the device that holds the MAC address table
+                                  from {$request.body#own-mac-address}'
+                              egress-ltp-uuid:
+                                type: string
+                                description: >
+                                  'UUID of the MacInterface towards the listed remote MAC addresses
+                                  all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#egress-ltp-uuid})'
+                              original-ltp-name:
+                                type: string
+                                description: >
+                                  'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
+                                  from {$request.body#original-ltp-name}'
+                              vlan-id:
+                                type: integer
+                                description: >
+                                  'VLAN that connects the listed remote MAC addresses
+                                  from {$request.body#vlan-id}'
+                              remote-mac-address:
+                                type: string
+                                description: >
+                                  'Remote MAC address that can be reached at the egress interface and inside the VLAN
+                                  from {$request.body#remote-mac-address}'
+                              time-stamp-of-data:
+                                type: string
+                                pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
+                                description: >
+                                  'Date and time when the data has been retrieved from the device'
                       example:
-                        - mount-name: "305251234"
-                          own-mac-address: "00:00:00:00:00:00"
-                          egress-ltp-uuid: "305251234+mac-inf-1234"
-                          original-ltp-name: "eth-1-0-3"
-                          vlan-id: 17
-                          remote-mac-address: "01:01:01:01:01:01"
-                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-                        - mount-name: "305251234"
-                          own-mac-address: "00:00:00:00:00:00"
-                          egress-ltp-uuid: "305251234+mac-inf-1234"
-                          original-ltp-name: "eth-1-0-3"
-                          vlan-id: 17
-                          remote-mac-address: "FF:01:01:01:01:01"
-                          time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                        request-id: "121251092-1721120567127"
+                        mac-address-data:
+                          - mount-name: "305251234"
+                            own-mac-address: "00:00:00:00:00:00"
+                            egress-ltp-uuid: "305251234+mac-inf-1234"
+                            original-ltp-name: "eth-1-0-3"
+                            vlan-id: 17
+                            remote-mac-address: "01:01:01:01:01:01"
+                            time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                          - mount-name: "305251234"
+                            own-mac-address: "00:00:00:00:00:00"
+                            egress-ltp-uuid: "305251234+mac-inf-1234"
+                            original-ltp-name: "eth-1-0-3"
+                            vlan-id: 17
+                            remote-mac-address: "FF:01:01:01:01:01"
+                            time-stamp-of-data: "2010-11-20T14:00:00+01:00"
               responses:
                 "204":
                   description: "MAC table has been received."
@@ -1320,9 +1326,6 @@ paths:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
                 default:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
-
-
-
 
   /v1/provide-list-of-connected-devices:
     post:
