@@ -35,6 +35,7 @@ This service is called by MATR when a set of current mac table data for a device
 If no errors are observed the obtained data is sent back to the requestor (i.e. Netexplorer)
 together with the related requestId.  
 Again, MATR is the only direct dependency.  
+
 ![receiveCurrentMacTable](./sources/receiveCurrentMacTableOfDevice.png)  
 
 
