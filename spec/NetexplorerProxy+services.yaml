@@ -73,12 +73,11 @@ servers:
     - description: Without TLS layer
       local-protocol: http
       own-ip-address: 127.0.0.1
-      own-tcp-port: TODO_PORT
+      own-tcp-port: 4018
       uuid: nep-1-0-0-tcp-s-000
 
 
 clients:
-
   - http-client:
       application-name: OldRelease
       release-number:
