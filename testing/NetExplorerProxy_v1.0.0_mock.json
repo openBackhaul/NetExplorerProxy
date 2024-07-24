@@ -1,0 +1,1041 @@
+{
+    "uuid": "7ff25fa7-368c-4a06-a29d-d00c961adcf2",
+    "lastMigration": 32,
+    "name": "NEP Mock",
+    "endpointPrefix": "",
+    "latency": 0,
+    "port": 3004,
+    "hostname": "",
+    "folders": [],
+    "routes": [
+        {
+            "uuid": "fd5bd410-0830-4d61-b3ac-82b8f55a7c53",
+            "type": "http",
+            "documentation": "Provides list of devices that are connected to the controller",
+            "method": "post",
+            "endpoint": "v1/provide-list-of-connected-devices",
+            "responses": [
+                {
+                    "uuid": "97ecbc47-de41-44dc-b6fd-4fde3dd1671f",
+                    "body": "{\n  \"mount-name-list\": [\n    \"305251234\",\n    \"100250002\",\n    \"513250004\",\n    \"305251234\",\n    \"513250007\"\n  ]\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "List of connected devices provided",
+                    "headers": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "51f3cdff-7ced-44b7-a6ef-1e693d671091",
+                    "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "Response in case of errored service requests",
+                    "headers": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "backend-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "exec-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "x-correlator",
+                            "value": "d2CcDDcD-8fB2-DfCC-1602-6Dd98F175557"
+                        }
+                    ],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "a7d9b076-468e-4f39-84ae-a678c53677d2",
+            "type": "http",
+            "documentation": "Returns administrative information",
+            "method": "post",
+            "endpoint": "v1/inform-about-application",
+            "responses": [
+                {
+                    "uuid": "dd9cd852-39ee-4552-9cfd-80c1eca76c27",
+                    "body": "{\n  \"application-name\": \"NetExplorerProxy\",\n  \"application-purpose\": \"purpose goes here\",\n  \"data-update-period\": \"manual\",\n  \"owner-email-address\": \"someEmailAddress\",\n  \"owner-name\": \"KMO\",\n  \"release-number\": \"1.0.0\"\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "Administrative information provided",
+                    "headers": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "backend-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "exec-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "life-cycle-state",
+                            "value": "EXPERIMENTAL"
+                        },
+                        {
+                            "key": "x-correlator",
+                            "value": "<string>"
+                        }
+                    ],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "aa5e0154-6cb4-4fac-87b4-db011dc05100",
+                    "body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\"\n}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "Response in case of errored service requests",
+                    "headers": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        {
+                            "key": "backend-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "exec-time",
+                            "value": "<integer>"
+                        },
+                        {
+                            "key": "x-correlator",
+                            "value": "4D5D7452-Cffe-E0A1-2A15-004cab07703D"
+                        }
+                    ],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "e7e0f133-c063-4aff-99e9-572d2b6e64ca",
+            "type": "http",
+            "documentation": "Returns entire data tree",
+            "method": "get",
+            "endpoint": "core-model-1-4:control-construct",
+            "responses": [
+                {
+                    "uuid": "4cfa99d5-00ff-4242-acb9-4a0ccc075b80",
+                    "body": "{\r\n  \"core-model-1-4:control-construct\": {\r\n    \"uuid\": \"nep-1-0-0\",\r\n    \"profile-collection\": {\r\n      \"profile\": [\r\n        {\r\n          \"uuid\": \"nep-1-0-0-action-p-000\",\r\n          \"profile-name\": \"action-profile-1-0:PROFILE_NAME_TYPE_ACTION_PROFILE\",\r\n          \"action-profile-1-0:action-profile-pac\": {\r\n            \"action-profile-capability\": {\r\n              \"operation-name\": \"/v1/start-application-in-generic-representation\",\r\n              \"label\": \"Inform about Application\",\r\n              \"input-value-list\": [\r\n              ],\r\n              \"display-in-new-browser-window\": false\r\n            },\r\n            \"action-profile-configuration\": {\r\n              \"consequent-operation-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-action-p-001\",\r\n          \"profile-name\": \"action-profile-1-0:PROFILE_NAME_TYPE_ACTION_PROFILE\",\r\n          \"action-profile-1-0:action-profile-pac\": {\r\n            \"action-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"label\": \"Release History\",\r\n              \"input-value-list\": [\r\n              ],\r\n              \"display-in-new-browser-window\": false\r\n            },\r\n            \"action-profile-configuration\": {\r\n              \"consequent-operation-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-bs-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-action-p-002\",\r\n          \"profile-name\": \"action-profile-1-0:PROFILE_NAME_TYPE_ACTION_PROFILE\",\r\n          \"action-profile-1-0:action-profile-pac\": {\r\n            \"action-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"label\": \"API Documentation\",\r\n              \"input-value-list\": [\r\n              ],\r\n              \"display-in-new-browser-window\": true\r\n            },\r\n            \"action-profile-configuration\": {\r\n              \"consequent-operation-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-op-s-bs-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name\"\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-000\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/start-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"applicationName\"\r\n              },\r\n              \"description\": \"Own application name\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-001\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"applicationName\"\r\n              },\r\n              \"description\": \"Name of this application\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-002\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"releaseNumber\"\r\n              },\r\n              \"description\": \"Number of this release\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-003\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"applicationPurpose\"\r\n              },\r\n              \"description\": \"Purpose of this application\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-purpose\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-004\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"dataUpdatePeriod\"\r\n              },\r\n              \"description\": \"Period of updating the data inside this application\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/data-update-period\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-005\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"ownerName\"\r\n              },\r\n              \"description\": \"Name of the ApplicationOwner\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-name\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-006\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-application-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"static-field-name\": \"ownerEmailAddress\"\r\n              },\r\n              \"description\": \"Email address of the ApplicationOwner\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-email-address\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-response-p-007\",\r\n          \"profile-name\": \"response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE\",\r\n          \"response-profile-1-0:response-profile-pac\": {\r\n            \"response-profile-capability\": {\r\n              \"operation-name\": \"/v1/inform-about-release-history-in-generic-representation\",\r\n              \"field-name\": {\r\n                \"field-name-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=0/release-number\"\r\n              },\r\n              \"description\": \"Represents the first entry in the list of releases\",\r\n              \"datatype\": \"string\"\r\n            },\r\n            \"response-profile-configuration\": {\r\n              \"value\": {\r\n                \"value-reference\": \"/core-model-1-4:control-construct/logical-termination-point=nep-1-0-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=0/changes\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"uuid\": \"nep-1-0-0-integer-p-000\",\r\n          \"profile-name\": \"integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE\",\r\n          \"integer-profile-1-0:integer-profile-pac\": {\r\n            \"integer-profile-capability\": {\r\n              \"integer-name\": \"maxNumberOfParallelReadCurrentMacTableFromDeviceRequests\",\r\n              \"purpose\": \"Maximum number of allowed parallel requests to read the current mac table from a device\",\r\n              \"minimum\": 1,\r\n              \"maximum\": 50\r\n            },\r\n            \"integer-profile-configuration\": {\r\n              \"integer-value\": 10\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"logical-termination-point\": [\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/register-yourself\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/embed-yourself\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-002\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/redirect-service-request-information\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-003\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/redirect-oam-request-information\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-004\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/end-subscription\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-005\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inquire-oam-request-approvals\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_DEPRECATED\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-007\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/update-client\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-008\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/list-ltps-and-fcs\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-009\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/redirect-topology-change-information\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-010\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/update-operation-key\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-011\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/update-operation-client\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-012\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inquire-basic-auth-approvals\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-013\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/dispose-remainders-of-deregistered-application\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-014\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inform-about-preceding-release\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bm-015\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/update-client-of-subsequent-release\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-im-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/bequeath-your-data-and-die\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/start-application-in-generic-representation\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inform-about-application\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-002\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inform-about-application-in-generic-representation\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-003\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inform-about-release-history\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-004\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/inform-about-release-history-in-generic-representation\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-bs-005\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/docs\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-is-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/provide-mac-table-of-all-devices\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-is-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/provide-mac-table-of-specific-device\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-is-002\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/read-current-mac-table-from-device\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-is-003\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/receive-current-mac-table-of-device\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-s-is-020\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-server-interface-1-0:operation-server-interface-pac\": {\r\n              \"operation-server-interface-capability\": {\r\n                \"operation-name\": \"/v1/provide-list-of-connected-devices\"\r\n              },\r\n              \"operation-server-interface-configuration\": {\r\n                \"life-cycle-state\": \"operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL\",\r\n                \"operation-key\": \"n.a.\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-s-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-s-bm-000\",\r\n          \"nep-1-0-0-op-s-bm-001\",\r\n          \"nep-1-0-0-op-s-bm-002\",\r\n          \"nep-1-0-0-op-s-bm-003\",\r\n          \"nep-1-0-0-op-s-bm-004\",\r\n          \"nep-1-0-0-op-s-bm-005\",\r\n          \"nep-1-0-0-op-s-bm-007\",\r\n          \"nep-1-0-0-op-s-bm-008\",\r\n          \"nep-1-0-0-op-s-bm-009\",\r\n          \"nep-1-0-0-op-s-bm-010\",\r\n          \"nep-1-0-0-op-s-bm-011\",\r\n          \"nep-1-0-0-op-s-bm-012\",\r\n          \"nep-1-0-0-op-s-bm-013\",\r\n          \"nep-1-0-0-op-s-bm-014\",\r\n          \"nep-1-0-0-op-s-bm-015\",\r\n          \"nep-1-0-0-op-s-im-000\",\r\n          \"nep-1-0-0-op-s-bs-000\",\r\n          \"nep-1-0-0-op-s-bs-001\",\r\n          \"nep-1-0-0-op-s-bs-002\",\r\n          \"nep-1-0-0-op-s-bs-003\",\r\n          \"nep-1-0-0-op-s-bs-004\",\r\n          \"nep-1-0-0-op-s-bs-005\",\r\n          \"nep-1-0-0-op-s-is-000\",\r\n          \"nep-1-0-0-op-s-is-001\",\r\n          \"nep-1-0-0-op-s-is-002\",\r\n          \"nep-1-0-0-op-s-is-003\",\r\n          \"nep-1-0-0-op-s-is-020\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-s-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-server-interface-1-0:http-server-interface-pac\": {\r\n              \"http-server-interface-capability\": {\r\n                \"application-name\": \"NetExplorerProxy\",\r\n                \"release-number\": \"1.0.0\",\r\n                \"application-purpose\": \"The application is the interface towards the NetExplorer\",\r\n                \"data-update-period\": \"http-server-interface-1-0:DATA_UPDATE_PERIOD_TYPE_REAL_TIME\",\r\n                \"owner-name\": \"Katharina Mohr\",\r\n                \"owner-email-address\": \"Katharina.Mohr.external@telefonica.de\",\r\n                \"release-list\": [\r\n                  {\r\n                    \"local-id\": \"0\",\r\n                    \"release-number\": \"1.0.0\",\r\n                    \"release-date\": \"30.06.2024\",\r\n                    \"changes\": \"Initial version\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-s-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SOURCE\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-s-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-server-interface-1-0:tcp-server-interface-pac\": {\r\n              \"tcp-server-interface-configuration\": {\r\n                \"description\": \"Without TLS layer\",\r\n                \"local-protocol\": \"tcp-server-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"local-address\": {\r\n                  \"ipv-4-address\": \"127.0.0.1\"\r\n                },\r\n                \"local-port\": -1\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-or-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-or-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/bequeath-your-data-and-die\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-or-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bm-or-1-0-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-or-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"OldRelease\",\r\n                \"release-number\": \"1.0.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-or-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-or-1-0-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3001\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-nr-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-nr-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"NewRelease\",\r\n                \"release-number\": \"1.0.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-nr-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-nr-1-0-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3001\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-ro-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-ro-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v2/register-application\",\r\n                \"operation-key\": \"n.a.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-ro-2-1-0-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-ro-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/relay-server-replacement\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-ro-2-1-0-002\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-ro-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/deregister-application\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-ro-2-1-0-003\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-ro-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/relay-operation-update\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-ro-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bm-ro-2-1-0-000\",\r\n          \"nep-1-0-0-op-c-bm-ro-2-1-0-001\",\r\n          \"nep-1-0-0-op-c-bm-ro-2-1-0-002\",\r\n          \"nep-1-0-0-op-c-bm-ro-2-1-0-003\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-ro-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"RegistryOffice\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-ro-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-ro-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3024\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-tar-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-tar-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"TypeApprovalRegister\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-tar-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-tar-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3025\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bs-eatl-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-eatl-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/record-service-request\",\r\n                \"operation-key\": \"Operation key not yet provided.\",\r\n                \"detailed-logging-is-on\": false\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-eatl-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bs-eatl-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-eatl-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"ExecutionAndTraceLog\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-eatl-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-eatl-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3026\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bs-ol-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-ol-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/record-oam-request\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-ol-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bs-ol-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-ol-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"OamLog\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-ol-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-ol-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3027\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bs-aa-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-aa-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/approve-oam-request\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-aa-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bs-aa-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-aa-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"AccessAdministration\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-aa-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-aa-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3028\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/update-all-ltps-and-fcs\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/update-ltp\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-002\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/delete-ltp-and-dependents\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-003\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/update-fc\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-004\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/update-fc-port\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-bm-alt-2-1-0-005\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/delete-fc-port\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-alt-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-000\",\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-001\",\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-002\",\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-003\",\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-004\",\r\n          \"nep-1-0-0-op-c-bm-alt-2-1-0-005\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-alt-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"ApplicationLayerTopology\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-alt-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-alt-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3029\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-okm-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-okm-2-1-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"OperationKeyManagement\",\r\n                \"release-number\": \"2.1.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-okm-2-1-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-okm-2-1-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"127.0.0.1\"\r\n                  }\r\n                },\r\n                \"remote-port\": 3030\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-is-matr-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-matr-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/provide-mac-table-of-all-devices\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-is-matr-1-0-0-001\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-matr-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/provide-mac-table-of-specific-device\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-matr-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-is-matr-1-0-0-000\",\r\n          \"nep-1-0-0-op-c-is-matr-1-0-0-001\",\r\n          \"nep-1-0-0-op-c-is-matr-1-0-0-002\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-matr-1-0-0-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"MacAddressTableRecorder\",\r\n                \"release-number\": \"1.0.0\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-matr-1-0-0-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-matr-1-0-0-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"1.1.4.5\"\r\n                  }\r\n                },\r\n                \"remote-port\": 4005\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-c-is-mwdi-1-1-2-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-http-c-mwdi-1-1-2-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER\",\r\n            \"operation-client-interface-1-0:operation-client-interface-pac\": {\r\n              \"operation-client-interface-configuration\": {\r\n                \"operation-name\": \"/v1/provide-list-of-connected-devices\",\r\n                \"operation-key\": \"Operation key not yet provided.\"\r\n              },\r\n              \"operation-client-interface-status\": {\r\n                \"operational-state\": \"operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED\",\r\n                \"life-cycle-state\": \"operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-http-c-mwdi-1-1-2-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-op-c-is-mwdi-1-1-2-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n          \"nep-1-0-0-tcp-c-mwdi-1-1-2-000\"\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER\",\r\n            \"http-client-interface-1-0:http-client-interface-pac\": {\r\n              \"http-client-interface-configuration\": {\r\n                \"application-name\": \"MicroWaveDeviceInventory\",\r\n                \"release-number\": \"1.1.2\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"uuid\": \"nep-1-0-0-tcp-c-mwdi-1-1-2-000\",\r\n        \"ltp-direction\": \"core-model-1-4:TERMINATION_DIRECTION_SINK\",\r\n        \"client-ltp\": [\r\n          \"nep-1-0-0-http-c-mwdi-1-1-2-000\"\r\n        ],\r\n        \"server-ltp\": [\r\n        ],\r\n        \"layer-protocol\": [\r\n          {\r\n            \"local-id\": \"0\",\r\n            \"layer-protocol-name\": \"tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER\",\r\n            \"tcp-client-interface-1-0:tcp-client-interface-pac\": {\r\n              \"tcp-client-interface-configuration\": {\r\n                \"remote-protocol\": \"tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP\",\r\n                \"remote-address\": {\r\n                  \"ip-address\": {\r\n                    \"ipv-4-address\": \"1.1.4.15\"\r\n                  }\r\n                },\r\n                \"remote-port\": 4015\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"forwarding-domain\": [\r\n      {\r\n        \"uuid\": \"nep-1-0-0-op-fd-000\",\r\n        \"forwarding-construct\": [\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-999\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForRegisteringCausesRegistrationRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-ro-2-1-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-000\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForRegisteringCausesRegistrationRequest2\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-ro-2-1-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-001\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForEmbeddingCausesRequestForBequeathingData\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-or-1-0-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-002\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesLoggingRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-002\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"101\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"102\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-002\"\r\n              },\r\n              {\r\n                \"local-id\": \"103\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-003\"\r\n              },\r\n              {\r\n                \"local-id\": \"104\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-004\"\r\n              },\r\n              {\r\n                \"local-id\": \"105\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-005\"\r\n              },\r\n              {\r\n                \"local-id\": \"107\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-007\"\r\n              },\r\n              {\r\n                \"local-id\": \"108\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-008\"\r\n              },\r\n              {\r\n                \"local-id\": \"109\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"110\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-010\"\r\n              },\r\n              {\r\n                \"local-id\": \"111\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-011\"\r\n              },\r\n              {\r\n                \"local-id\": \"112\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-012\"\r\n              },\r\n              {\r\n                \"local-id\": \"113\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-013\"\r\n              },\r\n              {\r\n                \"local-id\": \"114\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-014\"\r\n              },\r\n              {\r\n                \"local-id\": \"115\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-015\"\r\n              },\r\n              {\r\n                \"local-id\": \"130\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-im-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"150\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"151\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"152\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-002\"\r\n              },\r\n              {\r\n                \"local-id\": \"153\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-003\"\r\n              },\r\n              {\r\n                \"local-id\": \"154\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-004\"\r\n              },\r\n              {\r\n                \"local-id\": \"155\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bs-005\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bs-eatl-2-1-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-003\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesLoggingRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-003\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bs-ol-2-1-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-005\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"BasicAuthRequestCausesInquiryForAuthentication\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-012\"\r\n              },\r\n              {\r\n                \"local-id\": \"001\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-005\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bs-aa-2-1-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-105\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-im-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-ro-2-1-0-001\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-106\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-im-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-ro-2-1-0-002\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-107\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-007\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-ro-2-1-0-003\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-006\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesLtpUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"101\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"102\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-002\"\r\n              },\r\n              {\r\n                \"local-id\": \"103\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-003\"\r\n              },\r\n              {\r\n                \"local-id\": \"105\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-005\"\r\n              },\r\n              {\r\n                \"local-id\": \"107\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-007\"\r\n              },\r\n              {\r\n                \"local-id\": \"109\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"111\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-011\"\r\n              },\r\n              {\r\n                \"local-id\": \"112\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-012\"\r\n              },\r\n              {\r\n                \"local-id\": \"115\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-015\"\r\n              },\r\n              {\r\n                \"local-id\": \"130\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-im-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-001\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-007\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesLtpDeletionRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-013\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-002\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-008\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesFcUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-003\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-009\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesFcPortUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-004\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-010\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"ServiceRequestCausesFcPortDeletionRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-004\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-005\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-011\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesLtpUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-001\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-012\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesLtpDeletionRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-002\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-013\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesFcUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-003\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-014\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesFcPortUpdateRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-004\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-bm-015\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"OamRequestCausesFcPortDeletionRequest\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"000\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_MANAGEMENT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-bm-009\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-bm-alt-2-1-0-005\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-is-000\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-is-000\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-is-matr-1-0-0-000\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-is-001\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-is-001\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-is-matr-1-0-0-001\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-is-002\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-is-002\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-is-matr-1-0-0-002\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-is-003\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-is-003\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"n.a.\"\r\n              }\r\n            ]\r\n          },\r\n\r\n\r\n\r\n          {\r\n            \"uuid\": \"nep-1-0-0-op-fc-is-020\",\r\n            \"name\": [\r\n              {\r\n                \"value-name\": \"ForwardingKind\",\r\n                \"value\": \"core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET\"\r\n              },\r\n              {\r\n                \"value-name\": \"ForwardingName\",\r\n                \"value\": \"PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList\"\r\n              }\r\n            ],\r\n            \"fc-port\": [\r\n              {\r\n                \"local-id\": \"100\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_INPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-s-is-020\"\r\n              },\r\n              {\r\n                \"local-id\": \"200\",\r\n                \"port-direction\": \"core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT\",\r\n                \"logical-termination-point\": \"nep-1-0-0-op-c-is-mwdi-1-1-2-000\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "ControlConstruct provided - NEP complete cc",
+                    "headers": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "466e4295-41ee-461e-bb14-c7a0f94ac7d6",
+                    "body": "{\n  \"code\": 500,\n  \"message\": \"internal server error\"\n}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "default (error) response",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "c86c3b42-1b66-42a5-ad04-f1eeedf88ffe",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "v1/provide-mac-table-of-all-devices",
+            "responses": [
+                {
+                    "uuid": "71075c83-b45f-4409-9567-dacf4c6b2518",
+                    "body": "[\r\n  {\r\n    \"mount-name\": \"305251234\",\r\n    \"own-mac-address\": \"00:00:00:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"01:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  },\r\n  {\r\n    \"mount-name\": \"30525999\",\r\n    \"own-mac-address\": \"FF:00:11:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"01:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  }\r\n]",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "1e712f16-bad9-40f0-95bf-8bad87d9121b",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "5dd3c660-832a-4fed-8952-d6783311e266",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "v1/provide-mac-table-of-specific-device",
+            "responses": [
+                {
+                    "uuid": "01023a0f-c70e-45cc-b73b-8d4c14ce7948",
+                    "body": "[\r\n  {\r\n    \"mount-name\": \"305251234\",\r\n    \"own-mac-address\": \"00:00:00:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"01:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  },\r\n  {\r\n    \"mount-name\": \"305251234\",\r\n    \"own-mac-address\": \"00:00:00:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"FF:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  }\r\n]",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "mac table for mount-name = 305251234",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "8d0e1e9b-dac1-4ec8-8191-097121ada023",
+                    "body": "[\r\n  {\r\n    \"mount-name\": \"305251234\",\r\n    \"own-mac-address\": \"00:00:00:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"01:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  },\r\n  {\r\n    \"mount-name\": \"305251234\",\r\n    \"own-mac-address\": \"00:00:00:00:00:00\",\r\n    \"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\r\n    \"original-ltp-name\": \"eth-1-0-3\",\r\n    \"vlan-id\": 17,\r\n    \"remote-mac-address\": \"FF:01:01:01:01:01\",\r\n    \"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"\r\n  }\r\n]",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "requestBody with additional (not specifcied) attribute, mountName=305251234",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\",\"some-attribute\": \"xyz\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "9af198dd-6e5d-4e4b-ac25-c33ddbf9f607",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "missing requestBody",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "054eedbe-9eeb-404e-b5c4-16cb4fcbef80",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "missing required attribute in requestBody",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "65bd3b50-cead-43e8-836b-5d80912183ab",
+                    "body": "{\n  \"code\": 404,\n  \"message\": \"not found\"\n}",
+                    "latency": 0,
+                    "statusCode": 404,
+                    "label": "device unknown",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "404",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"someUnknownDevice\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "261f629a-8803-4398-abc5-9baa73880fd3",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "134cd485-53bf-4b7b-afca-b5616d3c0219",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "v1/read-current-mac-table-from-device",
+            "responses": [
+                {
+                    "uuid": "9dd771f2-c33d-40a3-b42d-3a3489655701",
+                    "body": "{\n  \"request-id\": \"305251234-100000123\"\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "valid request",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": 127.0.0.1\",\"requestor-port\": 3005,\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "6b303b67-9468-4abb-9e48-21c89d33315d",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "(1) missing attribute",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-port\": 3005,\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "212bb3cd-2685-4ef3-89b8-cea463926509",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "(2) wrong attribute type",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": 127.0.0.1\",\"requestor-port\": \"3005\",\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "856fe43a-f062-4b82-80fe-97c06ea69a9c",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "(3) requestor address ip wrong format",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": \"xyz\",\"requestor-port\": \"3005\",\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "f30b800a-ca1b-47da-aede-b26acb9cca5b",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "(4) missing requestBody",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "00b20194-1531-4667-b386-edfb00f61299",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 404,
+                    "label": "unknown device",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"mount-name\": \"dummyMountName\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": 127.0.0.1\",\"requestor-port\": 3005,\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "404",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "b61d4c89-c572-4a0d-ac7c-3bf852751b62",
+                    "body": "{\n  \"request-id\": \"305251234-100000123\"\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "additional attributes",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"some-attribute\": \"xyz\",\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": 127.0.0.1\",\"requestor-port\": 3005,\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "45a5b3e0-bde1-4693-b783-07b578565043",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "ff6b9302-3187-453a-a070-194de0b1c472",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "v1/receive-current-mac-table-of-device",
+            "responses": [
+                {
+                    "uuid": "8e94e777-47ce-44ca-8249-13422cb5140e",
+                    "body": "{\n  \"code\": 204,\n  \"message\": \"Current MAC table received, will be sent to requestor by calling receive-operation\"\n}",
+                    "latency": 0,
+                    "statusCode": 204,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "204",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"request-id\": \"305251234-100000123\",\"macAddressData\": [{\"mount-name\": \"305251234\",\"own-mac-address\": \"00:00:00:00:00:00\",\"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\"original-ltp-name\": \"eth-1-0-3\",\"vlan-id\": 17,\"remote-mac-address\": \"01:01:01:01:01:01\",\"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"}]}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "6a3fcc83-9b35-4ddb-b549-9fc2d7095ea5",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"Bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "missing requestId",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"macAddressData\": [{\"mount-name\": \"101250001\",\"own-mac-address\": \"00:00:00:00:00:00\",\"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\"original-ltp-name\": \"eth-1-0-3\",\"vlan-id\": 17,\"remote-mac-address\": \"01:01:01:01:01:01\",\"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"}]}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "6f79dd71-356a-45fc-aea0-2ea971ee8b73",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"Bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "missing nested attribute (mountName)",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"request-id\": \"101250001-12341234\",\"macAddressData\": [{\"own-mac-address\": \"00:00:00:00:00:00\",\"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\"original-ltp-name\": \"eth-1-0-3\",\"vlan-id\": 17,\"remote-mac-address\": \"01:01:01:01:01:01\",\"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"}]}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "e99e6783-e4fe-4511-b694-0e3e81ec7313",
+                    "body": "{\n  \"code\": 400,\n  \"message\": \"Bad request\"\n}",
+                    "latency": 0,
+                    "statusCode": 400,
+                    "label": "missing requestBody",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "400",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "7be4a039-da4a-472f-8a3c-cd98f36616c8",
+                    "body": "{\n  \"code\": 500,\n  \"message\": \"unknown requestId\"\n}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "unknown requestId",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "500",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "body",
+                            "modifier": "",
+                            "value": "{\"request-id\": \"1234\",\"macAddressData\": [{\"mount-name\": \"101250001\",\"own-mac-address\": \"00:00:00:00:00:00\",\"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\"original-ltp-name\": \"eth-1-0-3\",\"vlan-id\": 17,\"remote-mac-address\": \"01:01:01:01:01:01\",\"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"}]}",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "6f6c5353-10f7-49dc-a07e-ce17ad951175",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 500,
+                    "label": "default",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        }
+    ],
+    "rootChildren": [
+        {
+            "type": "route",
+            "uuid": "e7e0f133-c063-4aff-99e9-572d2b6e64ca"
+        },
+        {
+            "type": "route",
+            "uuid": "a7d9b076-468e-4f39-84ae-a678c53677d2"
+        },
+        {
+            "type": "route",
+            "uuid": "fd5bd410-0830-4d61-b3ac-82b8f55a7c53"
+        },
+        {
+            "type": "route",
+            "uuid": "c86c3b42-1b66-42a5-ad04-f1eeedf88ffe"
+        },
+        {
+            "type": "route",
+            "uuid": "5dd3c660-832a-4fed-8952-d6783311e266"
+        },
+        {
+            "type": "route",
+            "uuid": "134cd485-53bf-4b7b-afca-b5616d3c0219"
+        },
+        {
+            "type": "route",
+            "uuid": "ff6b9302-3187-453a-a070-194de0b1c472"
+        }
+    ],
+    "proxyMode": false,
+    "proxyHost": "",
+    "proxyRemovePrefix": false,
+    "tlsOptions": {
+        "enabled": false,
+        "type": "CERT",
+        "pfxPath": "",
+        "certPath": "",
+        "keyPath": "",
+        "caPath": "",
+        "passphrase": ""
+    },
+    "cors": true,
+    "headers": [
+        {
+            "key": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+        },
+        {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+        },
+        {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+        }
+    ],
+    "proxyReqHeaders": [
+        {
+            "key": "",
+            "value": ""
+        }
+    ],
+    "proxyResHeaders": [
+        {
+            "key": "",
+            "value": ""
+        }
+    ],
+    "data": [],
+    "callbacks": []
+}
