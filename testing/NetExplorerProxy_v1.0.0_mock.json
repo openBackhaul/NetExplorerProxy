@@ -38,9 +38,50 @@
                             "value": "200",
                             "invert": false,
                             "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": true,
+                            "operator": "null"
                         }
                     ],
-                    "rulesOperator": "OR",
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "60f85c5a-cb8f-4a6e-a3ec-53a59d32fec7",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 401,
+                    "label": "Authorization code missing",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "401",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        }
+                    ],
+                    "rulesOperator": "AND",
                     "disableTemplating": false,
                     "fallbackTo404": false,
                     "default": false,
@@ -266,9 +307,50 @@
                             "value": "200",
                             "invert": false,
                             "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": true,
+                            "operator": "null"
                         }
                     ],
-                    "rulesOperator": "OR",
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "085d07de-01c4-4726-b2cd-6c9b2a35a581",
+                    "body": "{\n code: 401,\n message: \"unauthorized\"\n}",
+                    "latency": 0,
+                    "statusCode": 401,
+                    "label": "Authorization missing",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "401",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        }
+                    ],
+                    "rulesOperator": "AND",
                     "disableTemplating": false,
                     "fallbackTo404": false,
                     "default": false,
@@ -329,6 +411,40 @@
                             "value": "{\"mount-name\": \"305251234\"}",
                             "invert": false,
                             "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "eb959fec-cd73-4d44-832c-7cb5b9240008",
+                    "body": "{\n code: 401,\n message: \"unauthorized\"\n}",
+                    "latency": 0,
+                    "statusCode": 401,
+                    "label": "authorizationCode missing",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "401",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
                         }
                     ],
                     "rulesOperator": "AND",
@@ -526,6 +642,40 @@
                             "target": "header",
                             "modifier": "x-mock-response-code",
                             "value": "200",
+                            "invert": false,
+                            "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "3115756c-e0da-4f39-b899-6c15b4079493",
+                    "body": "{\n code: 401,\n message: \"unauthorized\"\n}",
+                    "latency": 0,
+                    "statusCode": 401,
+                    "label": "AuthorizationCode missing",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "Authorization",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "401",
                             "invert": false,
                             "operator": "equals"
                         }
@@ -795,6 +945,40 @@
                             "value": "{\"request-id\": \"305251234-100000123\",\"macAddressData\": [{\"mount-name\": \"305251234\",\"own-mac-address\": \"00:00:00:00:00:00\",\"egress-ltp-uuid\": \"305251234+mac-inf-1234\",\"original-ltp-name\": \"eth-1-0-3\",\"vlan-id\": 17,\"remote-mac-address\": \"01:01:01:01:01:01\",\"time-stamp-of-data\": \"2010-11-20T14:00:00+01:00\"}]}",
                             "invert": false,
                             "operator": "equals"
+                        }
+                    ],
+                    "rulesOperator": "AND",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": false,
+                    "crudKey": "id",
+                    "callbacks": []
+                },
+                {
+                    "uuid": "3c7dc41c-e5eb-440b-b318-bee1e679e850",
+                    "body": "{\n code: 401,\n message: \"unauthorized\"\n}",
+                    "latency": 0,
+                    "statusCode": 401,
+                    "label": "operationKey missing",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [
+                        {
+                            "target": "header",
+                            "modifier": "x-mock-response-code",
+                            "value": "401",
+                            "invert": false,
+                            "operator": "equals"
+                        },
+                        {
+                            "target": "header",
+                            "modifier": "operation-key",
+                            "value": "",
+                            "invert": false,
+                            "operator": "null"
                         }
                     ],
                     "rulesOperator": "AND",
