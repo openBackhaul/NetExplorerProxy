@@ -770,7 +770,7 @@
                         {
                             "target": "body",
                             "modifier": "",
-                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": \"xyz\",\"requestor-port\": \"3005\",\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
+                            "value": "{\"mount-name\": \"305251234\",\"requestor-protocol\": \"HTTP\",\"requestor-address\": \"xyz\",\"requestor-port\": 3005,\"requestor-receive-operation\": \"receive-current-mac-table-of-device\"}",
                             "invert": false,
                             "operator": "equals"
                         },
