@@ -858,7 +858,7 @@ paths:
         "404":
           $ref: "#/components/responses/responseForErroredServiceRequests"
         "429":
-          description: "Response in case of errored service requests due to too many parallel requests."
+          description: "Response in case of errored service requests due to too many parallel requests or too many requests per minute."
           content:
             application/json:
               schema:
@@ -875,10 +875,10 @@ paths:
                   message:
                     type: string
                     enum:
-                      - "Too many requests. The maximum amount of requests that can executed in parallel has been reached"
+                      - "Too many requests. The maximum amount of requests that can executed in parallel or per minute has been reached"
                 example:
                  code: 429
-                 enum: "Too many requests. The maximum amount of requests that can executed in parallel has been reached"
+                 message: "Too many requests. The maximum amount of requests that can executed in parallel or per minute has been reached"
           headers:
             x-correlator:
               schema:
