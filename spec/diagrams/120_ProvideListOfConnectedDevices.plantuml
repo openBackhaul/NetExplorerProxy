@@ -1,0 +1,19 @@
+@startuml 120_ProvideListOfConnectedDevices
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-list-of-connected-devices" as nep
+participant "MWDI://v1/provide-list-of-connected-devices" as mwdi
+
+external -> nep: (BasicAuth)
+activate nep
+
+nep -> mwdi: (apiAuthKey)
+mwdi --> nep: {list-of(mountName)} (no security)
+
+nep --> external: {list-of(mountName)} (no security)
+
+deactivate nep
+@enduml

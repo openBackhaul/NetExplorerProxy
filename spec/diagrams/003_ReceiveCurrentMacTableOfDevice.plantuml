@@ -1,0 +1,41 @@
+@startuml 003_ReceiveCurrentMacTableOfDevice
+skinparam responseMessageBelowArrow true
+
+title 
+  RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor
+end title
+
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+participant "(Netexplorer) \nnetexplorerReceiverIpAddress:\netexplorerReceiverTcpPort://\nnetexplorerReceiveResponseServiceName" as receiver
+participant "NEP://v1/receive-current-mac-table-of-device" as nep
+
+activate nep
+
+note over matr
+  NEP initiates retrieval from MATR.
+
+  After MATR has retrieved the data from the device, 
+  it calls the receive operation of NEP 
+  (with requestId)
+end note
+matr -> nep: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
+
+  
+note over nep
+  <u>ReturnMacDataToExternalReceiver</u>
+    The NEP receive operation calls the Netexplorer receive operation and hands over
+    the current MAC address data from MATR.
+
+    The Netexplorer's address data and receive operation are retrieved from NEP's
+    in-memory lookup table with requestId as lookup key.
+
+    (After the netexplorer receive operation has been called, the entry for the requestId is deleted
+    from the lookup table.)
+end note
+nep -> receiver: {requestId, listOf(mountName, ownMacAddress, egressLtpUuid, originalLtpName, vlanId, remoteMacAddresses, timestampOfRpc)} (no security)
+
+
+deactivate nep
+
+
+@enduml

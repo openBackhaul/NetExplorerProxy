@@ -1,0 +1,20 @@
+@startuml 001_ProvideMacTableOfSpecificDevice
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-mac-table-of-specific-device" as nep
+participant "MATR://v1/provide-mac-table-of-specific-device" as matr
+
+external -> nep: {mountName}(BasicAuth)
+activate nep
+
+nep -> matr: {mountName} (apiAuthKey)
+matr --> nep: {list-of(mountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)} (no security)
+
+nep --> external: {list-of(mountName, macAddressCur, egressLtpUUid, originalLtpName, vlanId, macAddresses, timeStampOfRpc)} (no security)
+
+deactivate nep
+
+@enduml

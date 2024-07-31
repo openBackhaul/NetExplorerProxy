@@ -1,0 +1,84 @@
+@startuml 002_ReadCurrentMacTableFromDevice
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/read-current-mac-table-from-device" as nep
+participant "MATR://v1/read-current-mac-table-from-device" as matr
+
+external -> nep: {mountName, \n netexplorerReceiverIpAddress, \n netexplorerReceiverTcpPort, \n netexplorerReceiveResponseServiceName} (BasicAuth)
+activate nep
+
+== IF (Too many parallel requests): error response ==
+note over nep
+  WITH 
+    - <b>numParallelRequests</b> = number of parallel executed requests 
+                                            NEP://v1/read-current-mac-table-from-device
+    - <b>maxParallelNumAllowed</b> = maximum number of allowed parallel requests,
+                                     from integer profile nep-1-0-0-integer-p-000
+    - <b>numRequestsPerMin</b> = number of requests executed per minute
+    - <b>maxNumAllowedPerMin</b> = maximum number of allowed requests per minute,
+                                    from integer profile nep-1-0-0-integer-p-001
+
+  IF (numParallelRequests > maxParallelNumAllowed)
+  THEN
+    <u>Response</u> and exit
+  ELSE IF (numRequestsPerMin > maxNumAllowedPerMin)
+  THEN
+    <u>Response</u> and exit
+end note
+nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests/to many requests per minute" </i>
+
+'=============================================================================================================================
+== ELSE: send request for reading current MAC data from device to MATR ==
+
+  note over nep
+    <u>ReadCurrentMacTableViaMatr</u>
+      As reading MacAddressd data from device can take a while,
+      MATR only returns a requestId to the caller (or immediate error responses).
+      (The actual read address data will later be addressed to the external receiveService.)
+  end note
+  nep -> matr: {mountName, \n nepIp, \n nepTcpPort, \n nepReceiveOperation=<i>/v1/receive-current-mac-table-of-device</i>} (apiAuthKey)
+  matr -> nep: {requestId \n or immediateErrorResponse} (no security)
+
+== case1: MountName not found at MATR ==
+  note over nep
+    <b>immediateErrorResponse:</b>
+
+    IF (MATR.response.body#code == 500) &&
+        (MATR.response.body#message == "(<i>mountName</i>: Request failed with status code 404"))
+    THEN
+      <u>Response</u> and exit
+  end note
+  nep -> external: <i>not found: [404]</i>
+
+== case2: mountName was found at MATR ==
+
+
+  note over nep #bisque
+    <i><b>receiver-info in-memory lookup table</b></i>
+    * NEP keeps a lookup table for matching requestId and receiver information.
+       Columns are:
+         - key = requestId
+         - value = addressInfo = (netexplorerReceiverIpAddress, netexplorerReceiverTcpPort, 
+                                            netexplorerReceiveResponseServiceName)
+         - timestamp
+                  
+    * <i>put</i>: 
+        - the current key-value-pair is added to the table after requestId has 
+          been received from MATR
+        - with timestamp being the time when the requestId was received
+    * <i>delete</i>: 
+        - once the receive operation has returned the answer via calling Netexplorer
+          receive operation, the key-value-pair for the requestId is deleted from the 
+          lookup table
+        - remaining requestIds older than 1 hour can also be deleted
+  end note
+
+
+  nep -> external: {requestId} (no security)
+
+
+
+@enduml
