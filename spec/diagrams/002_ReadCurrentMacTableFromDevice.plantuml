@@ -15,14 +15,20 @@ note over nep
   WITH 
     - <b>numParallelRequests</b> = number of parallel executed requests 
                                             NEP://v1/read-current-mac-table-from-device
-    - <b>maxNumAllowed</b> = maximum number of allowed parallel requests,
+    - <b>maxParallelNumAllowed</b> = maximum number of allowed parallel requests,
                                      from integer profile nep-1-0-0-integer-p-000
+    - <b>numRequestsPerMin</b> = number of requests executed per minute
+    - <b>maxNumAllowedPerMin</b> = maximum number of allowed requests per minute,
+                                    from integer profile nep-1-0-0-integer-p-001
 
-  IF (numParallelRequests > maxNumAllowed)
+  IF (numParallelRequests > maxParallelNumAllowed)
+  THEN
+    <u>Response</u> and exit
+  ELSE IF (numRequestsPerMin > maxNumAllowedPerMin)
   THEN
     <u>Response</u> and exit
 end note
-nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests" </i>
+nep -> external: <i>NEP currently busy:</i>\n<i>  [429], "too many parallel requests/to many requests per minute" </i>
 
 '=============================================================================================================================
 == ELSE: send request for reading current MAC data from device to MATR ==
