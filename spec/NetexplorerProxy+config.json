@@ -217,6 +217,21 @@
               "integer-value": 10
             }
           }
+        },
+        {
+          "uuid": "nep-1-0-0-integer-p-001",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
+              "integer-name": "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerMinute",
+              "purpose": "Maximum number of allowed requests to read the current mac table from a device per minute",
+              "minimum": 0,
+              "maximum": 20
+            },
+            "integer-profile-configuration": {
+              "integer-value": 20
+            }
+          }
         }
       ]
     },
