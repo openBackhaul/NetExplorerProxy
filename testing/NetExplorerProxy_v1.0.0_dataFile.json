@@ -1,6 +1,7 @@
- [
+[
 	{
 		"mode": "debug",
+		"targetCollectionName": "NetExplorerProxyBasicTest",		
 		"serverList": [
 			{
 				"serverName": "dummy",
@@ -9,7 +10,7 @@
 			{
 				"serverName": "nep",
 				"server": "http://localhost:3004",
-				"authorizationCode": "Basic YWRtaW46YWRtaW5AMTIz",
+				"authorizationCode": "Basic xyz",
 				"operationKey": "Operation key not yet provided.",
 				"userName": "KMO",
 				"originator": "Postman-Netexplorer_TestcaseCollection",
@@ -21,6 +22,17 @@
 				"serverName": "mwdi",
 				"server": "http://10.118.127.11:3008",
 				"authorizationCode": "Basic YWRtaW46YWRtaW5AMTIz",
+				"operationKey": "Operation key not yet provided.",
+				"userName": "KMO",
+				"originator": "Postman-Netexplorer_TestcaseCollection",
+				"xCorrelator": "00000000-0000-0000-0000-000000000532",
+				"traceIndicator": "1",
+				"customerJourney": "CustomerJourney not yet defined."
+			},
+			{
+				"serverName": "matr",
+				"server": "http://localhost:3006",
+				"authorizationCode": "Basic abcdefgh",
 				"operationKey": "Operation key not yet provided.",
 				"userName": "KMO",
 				"originator": "Postman-Netexplorer_TestcaseCollection",
@@ -73,7 +85,30 @@
 						}
 					}
 				]
-			}
+			},
+			{
+				"collectionName": "MacAddressTableRecorderBasicTest",
+				"serverToBeApplied": "matr",
+				"serviceInputParameters": [
+					{
+						"serviceUnderTest": "/v1/provide-mac-table-of-specific-device",
+						"parameters": {
+							"mountName": "305251234"
+						}
+					},
+					{
+						"serviceUnderTest": "/v1/read-current-mac-table-from-device",
+						"parameters": {
+							"mountName": "305251234",
+							"requestorProtocol": "HTTP",
+							"requestorAddress": "127.0.0.1",
+							"requestorDomainName": "some-requestor-domain.de",
+							"requestorPort": 3005,
+							"requestorReceiveOperation": "receive-current-mac-table-of-device"
+						}
+					}
+				]
+			}			
 		]
 	}
 ]
