@@ -223,13 +223,13 @@
           "profile-name": "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
-              "integer-name": "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerMinute",
-              "purpose": "Maximum number of allowed requests to read the current mac table from a device per minute",
+              "integer-name": "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerDay",
+              "purpose": "Maximum number of allowed requests to read the current mac table from a device per day",
               "minimum": 0,
-              "maximum": 20
+              "maximum": 500
             },
             "integer-profile-configuration": {
-              "integer-value": 20
+              "integer-value": 100
             }
           }
         }
@@ -935,7 +935,7 @@
                   {
                     "local-id": "0",
                     "release-number": "1.0.0",
-                    "release-date": "30.06.2024",
+                    "release-date": "21.08.2024",
                     "changes": "Initial version"
                   }
                 ]
@@ -1036,7 +1036,7 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 4018
               }
             }
           }
@@ -1083,19 +1083,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3001
+                "remote-port": 4018
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-0-000",
+        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-ro-2-1-0-000"
+          "nep-1-0-0-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1115,12 +1115,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-0-001",
+        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-ro-2-1-0-000"
+          "nep-1-0-0-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1140,12 +1140,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-0-002",
+        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-ro-2-1-0-000"
+          "nep-1-0-0-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1165,12 +1165,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-0-003",
+        "uuid": "nep-1-0-0-op-c-bm-ro-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-ro-2-1-0-000"
+          "nep-1-0-0-http-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1190,16 +1190,16 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-ro-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-bm-ro-2-1-0-000",
-          "nep-1-0-0-op-c-bm-ro-2-1-0-001",
-          "nep-1-0-0-op-c-bm-ro-2-1-0-002",
-          "nep-1-0-0-op-c-bm-ro-2-1-0-003"
+          "nep-1-0-0-op-c-bm-ro-2-1-2-000",
+          "nep-1-0-0-op-c-bm-ro-2-1-2-001",
+          "nep-1-0-0-op-c-bm-ro-2-1-2-002",
+          "nep-1-0-0-op-c-bm-ro-2-1-2-003"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-ro-2-1-0-000"
+          "nep-1-0-0-tcp-c-ro-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1208,17 +1208,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "RegistryOffice",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-ro-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-ro-2-1-0-000"
+          "nep-1-0-0-http-c-ro-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1234,19 +1234,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3024
+                "remote-port": 3031
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-tar-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-tar-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-tar-2-1-0-000"
+          "nep-1-0-0-tcp-c-tar-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1255,17 +1255,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "TypeApprovalRegister",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-tar-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-tar-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-tar-2-1-0-000"
+          "nep-1-0-0-http-c-tar-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1281,19 +1281,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3025
+                "remote-port": 3032
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bs-eatl-2-1-0-000",
+        "uuid": "nep-1-0-0-op-c-bs-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-eatl-2-1-0-000"
+          "nep-1-0-0-http-c-eatl-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1314,13 +1314,13 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-eatl-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-bs-eatl-2-1-0-000"
+          "nep-1-0-0-op-c-bs-eatl-2-1-2-000"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-eatl-2-1-0-000"
+          "nep-1-0-0-tcp-c-eatl-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1329,17 +1329,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "ExecutionAndTraceLog",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-eatl-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-eatl-2-1-0-000"
+          "nep-1-0-0-http-c-eatl-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1355,19 +1355,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3026
+                "remote-port": 3033
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bs-ol-2-1-0-000",
+        "uuid": "nep-1-0-0-op-c-bs-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-ol-2-1-0-000"
+          "nep-1-0-0-http-c-ol-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1387,13 +1387,13 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-ol-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-bs-ol-2-1-0-000"
+          "nep-1-0-0-op-c-bs-ol-2-1-2-000"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-ol-2-1-0-000"
+          "nep-1-0-0-tcp-c-ol-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1402,17 +1402,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "OamLog",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-ol-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-ol-2-1-0-000"
+          "nep-1-0-0-http-c-ol-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1428,19 +1428,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3027
+                "remote-port": 3034
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bs-aa-2-1-0-000",
+        "uuid": "nep-1-0-0-op-c-bs-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-aa-2-1-0-000"
+          "nep-1-0-0-http-c-aa-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1460,13 +1460,13 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-aa-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-bs-aa-2-1-0-000"
+          "nep-1-0-0-op-c-bs-aa-2-1-2-000"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-aa-2-1-0-000"
+          "nep-1-0-0-tcp-c-aa-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1475,17 +1475,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "AccessAdministration",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-aa-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-aa-2-1-0-000"
+          "nep-1-0-0-http-c-aa-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1501,19 +1501,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3028
+                "remote-port": 3035
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-000",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1533,12 +1533,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-001",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1558,12 +1558,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-002",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1583,12 +1583,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-003",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1608,12 +1608,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-004",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-004",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1633,12 +1633,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-0-005",
+        "uuid": "nep-1-0-0-op-c-bm-alt-2-1-2-005",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1658,18 +1658,18 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-alt-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-bm-alt-2-1-0-000",
-          "nep-1-0-0-op-c-bm-alt-2-1-0-001",
-          "nep-1-0-0-op-c-bm-alt-2-1-0-002",
-          "nep-1-0-0-op-c-bm-alt-2-1-0-003",
-          "nep-1-0-0-op-c-bm-alt-2-1-0-004",
-          "nep-1-0-0-op-c-bm-alt-2-1-0-005"
+          "nep-1-0-0-op-c-bm-alt-2-1-2-000",
+          "nep-1-0-0-op-c-bm-alt-2-1-2-001",
+          "nep-1-0-0-op-c-bm-alt-2-1-2-002",
+          "nep-1-0-0-op-c-bm-alt-2-1-2-003",
+          "nep-1-0-0-op-c-bm-alt-2-1-2-004",
+          "nep-1-0-0-op-c-bm-alt-2-1-2-005"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-alt-2-1-0-000"
+          "nep-1-0-0-tcp-c-alt-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1678,17 +1678,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "ApplicationLayerTopology",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-alt-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-alt-2-1-0-000"
+          "nep-1-0-0-http-c-alt-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1704,19 +1704,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3029
+                "remote-port": 3036
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-okm-2-1-0-000",
+        "uuid": "nep-1-0-0-http-c-okm-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-okm-2-1-0-000"
+          "nep-1-0-0-tcp-c-okm-2-1-2-000"
         ],
         "layer-protocol": [
           {
@@ -1725,17 +1725,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "OperationKeyManagement",
-                "release-number": "2.1.0"
+                "release-number": "2.1.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-okm-2-1-0-000",
+        "uuid": "nep-1-0-0-tcp-c-okm-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-okm-2-1-0-000"
+          "nep-1-0-0-http-c-okm-2-1-2-000"
         ],
         "server-ltp": [
         ],
@@ -1751,19 +1751,19 @@
                     "ipv-4-address": "127.0.0.1"
                   }
                 },
-                "remote-port": 3030
+                "remote-port": 3037
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-is-matr-1-0-0-000",
+        "uuid": "nep-1-0-0-op-c-is-matr-1-0-3-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-matr-1-0-0-000"
+          "nep-1-0-0-http-c-matr-1-0-3-000"
         ],
         "layer-protocol": [
           {
@@ -1783,12 +1783,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-op-c-is-matr-1-0-0-001",
+        "uuid": "nep-1-0-0-op-c-is-matr-1-0-3-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-0-http-c-matr-1-0-0-000"
+          "nep-1-0-0-http-c-matr-1-0-3-000"
         ],
         "layer-protocol": [
           {
@@ -1808,15 +1808,15 @@
         ]
       },
       {
-        "uuid": "nep-1-0-0-http-c-matr-1-0-0-000",
+        "uuid": "nep-1-0-0-http-c-matr-1-0-3-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-op-c-is-matr-1-0-0-000",
-          "nep-1-0-0-op-c-is-matr-1-0-0-001",
-          "nep-1-0-0-op-c-is-matr-1-0-0-002"
+          "nep-1-0-0-op-c-is-matr-1-0-3-000",
+          "nep-1-0-0-op-c-is-matr-1-0-3-001",
+          "nep-1-0-0-op-c-is-matr-1-0-3-002"
         ],
         "server-ltp": [
-          "nep-1-0-0-tcp-c-matr-1-0-0-000"
+          "nep-1-0-0-tcp-c-matr-1-0-3-000"
         ],
         "layer-protocol": [
           {
@@ -1825,17 +1825,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "MacAddressTableRecorder",
-                "release-number": "1.0.0"
+                "release-number": "1.0.3"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-0-tcp-c-matr-1-0-0-000",
+        "uuid": "nep-1-0-0-tcp-c-matr-1-0-3-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-0-http-c-matr-1-0-0-000"
+          "nep-1-0-0-http-c-matr-1-0-3-000"
         ],
         "server-ltp": [
         ],
@@ -1848,7 +1848,7 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.4.5"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
                 "remote-port": 4005
@@ -1921,7 +1921,7 @@
                 "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
                 "remote-address": {
                   "ip-address": {
-                    "ipv-4-address": "1.1.4.15"
+                    "ipv-4-address": "127.0.0.1"
                   }
                 },
                 "remote-port": 4015
@@ -1961,7 +1961,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-2-000"
               }
             ]
           },
@@ -1991,7 +1991,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-2-000"
               }
             ]
           },
@@ -2151,7 +2151,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bs-eatl-2-1-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-bs-eatl-2-1-2-000"
               }
             ]
           },
@@ -2176,7 +2176,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bs-ol-2-1-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-bs-ol-2-1-2-000"
               }
             ]
           },
@@ -2206,7 +2206,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bs-aa-2-1-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-bs-aa-2-1-2-000"
               }
             ]
           },
@@ -2236,7 +2236,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-0-001"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-2-001"
               }
             ]
           },
@@ -2266,7 +2266,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-0-002"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-2-002"
               }
             ]
           },
@@ -2296,7 +2296,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-0-003"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-ro-2-1-2-003"
               }
             ]
           },
@@ -2376,7 +2376,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-001"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-001"
               }
             ]
           },
@@ -2406,7 +2406,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-002"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-002"
               }
             ]
           },
@@ -2431,7 +2431,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-003"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-003"
               }
             ]
           },
@@ -2456,7 +2456,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-004"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-004"
               }
             ]
           },
@@ -2486,7 +2486,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-005"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-005"
               }
             ]
           },
@@ -2511,7 +2511,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-001"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-001"
               }
             ]
           },
@@ -2536,7 +2536,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-002"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-002"
               }
             ]
           },
@@ -2561,7 +2561,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-003"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-003"
               }
             ]
           },
@@ -2586,7 +2586,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-004"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-004"
               }
             ]
           },
@@ -2611,7 +2611,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-0-005"
+                "logical-termination-point": "nep-1-0-0-op-c-bm-alt-2-1-2-005"
               }
             ]
           },
@@ -2636,7 +2636,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-000"
+                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-3-000"
               }
             ]
           },
@@ -2661,7 +2661,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-001"
+                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-3-001"
               }
             ]
           },
@@ -2686,7 +2686,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-0-002"
+                "logical-termination-point": "nep-1-0-0-op-c-is-matr-1-0-3-002"
               }
             ]
           },

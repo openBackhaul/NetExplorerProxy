@@ -17,7 +17,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-000
     consequent-requests:
       - client-name: RegistryOffice://v2/register-application
-        uuid: nep-1-0-0-op-c-bm-ro-2-1-0-000
+        uuid: nep-1-0-0-op-c-bm-ro-2-1-2-000
 
   - forwarding-name: PromptForRegisteringCausesRegistrationRequest2
     uuid: nep-1-0-0-op-fc-bm-000
@@ -36,7 +36,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-000
     consequent-requests:
       - client-name: RegistryOffice://v2/register-application
-        uuid: nep-1-0-0-op-c-bm-ro-2-1-0-000
+        uuid: nep-1-0-0-op-c-bm-ro-2-1-2-000
 
   - forwarding-name: PromptForEmbeddingCausesRequestForBequeathingData
     uuid: nep-1-0-0-op-fc-bm-001
@@ -122,7 +122,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-is-020
     consequent-requests:
       - client-name: ExecutionAndTraceLog://v1/record-service-request
-        uuid: nep-1-0-0-op-c-bs-eatl-2-1-0-000
+        uuid: nep-1-0-0-op-c-bs-eatl-2-1-2-000
 
   - forwarding-name: OamRequestCausesLoggingRequest
     uuid: nep-1-0-0-op-fc-bm-003
@@ -140,7 +140,7 @@ forwardings:
       # [all oam requests]
     consequent-requests:
       - client-name: OamLog://v1/record-oam-request
-        uuid: nep-1-0-0-op-c-bs-ol-2-1-0-000
+        uuid: nep-1-0-0-op-c-bs-ol-2-1-2-000
 
   - forwarding-name: BasicAuthRequestCausesInquiryForAuthentication
     uuid: nep-1-0-0-op-fc-bm-005
@@ -162,7 +162,7 @@ forwardings:
       # [all oam requests]
     consequent-requests:
       - client-name: AccessAdministration://v1/approve-basic-auth-request
-        uuid: nep-1-0-0-op-c-bs-aa-2-1-0-000
+        uuid: nep-1-0-0-op-c-bs-aa-2-1-2-000
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForBroadcastingInfoAboutServerReplacement
     uuid: nep-1-0-0-op-fc-bm-105
@@ -181,7 +181,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-server-replacement
-        uuid: nep-1-0-0-op-c-bm-ro-2-1-0-001
+        uuid: nep-1-0-0-op-c-bm-ro-2-1-2-001
 
   - forwarding-name: PromptForBequeathingDataCausesRequestForDeregisteringOfOldRelease
     uuid: nep-1-0-0-op-fc-bm-106
@@ -200,7 +200,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: RegistryOffice://v1/deregister-application
-        uuid: nep-1-0-0-op-c-bm-ro-2-1-0-002
+        uuid: nep-1-0-0-op-c-bm-ro-2-1-2-002
 
   - forwarding-name: PromptingNewReleaseForUpdatingServerCausesRequestForBroadcastingInfoAboutBackwardCompatibleUpdateOfOperation
     uuid: nep-1-0-0-op-fc-bm-107
@@ -219,7 +219,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-007
     consequent-requests:
       - client-name: RegistryOffice://v1/relay-operation-update
-        uuid: nep-1-0-0-op-c-bm-ro-2-1-0-003
+        uuid: nep-1-0-0-op-c-bm-ro-2-1-2-003
 
   - forwarding-name: ServiceRequestCausesLtpUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-006
@@ -258,7 +258,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-im-000
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-001
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-001
 
   - forwarding-name: ServiceRequestCausesLtpDeletionRequest
     uuid: nep-1-0-0-op-fc-bm-007
@@ -277,7 +277,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-013
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-002
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-002
 
   - forwarding-name: ServiceRequestCausesFcUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-008
@@ -294,7 +294,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-003
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-003
 
   - forwarding-name: ServiceRequestCausesFcPortUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-009
@@ -311,7 +311,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-004
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-004
 
   - forwarding-name: ServiceRequestCausesFcPortDeletionRequest
     uuid: nep-1-0-0-op-fc-bm-010
@@ -330,7 +330,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-bm-004
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-005
 
   - forwarding-name: OamRequestCausesLtpUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-011
@@ -347,7 +347,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-ltp
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-001
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-001
 
   - forwarding-name: OamRequestCausesLtpDeletionRequest
     uuid: nep-1-0-0-op-fc-bm-012
@@ -364,7 +364,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-ltp-and-dependents
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-002
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-002
 
   - forwarding-name: OamRequestCausesFcUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-013
@@ -381,7 +381,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-003
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-003
 
   - forwarding-name: OamRequestCausesFcPortUpdateRequest
     uuid: nep-1-0-0-op-fc-bm-014
@@ -398,7 +398,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/update-fc-port
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-004
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-004
 
   - forwarding-name: OamRequestCausesFcPortDeletionRequest
     uuid: nep-1-0-0-op-fc-bm-015
@@ -415,7 +415,7 @@ forwardings:
     initiating-requests:
     consequent-requests:
       - client-name: ApplicationLayerTopology://v1/delete-fc-port
-        uuid: nep-1-0-0-op-c-bm-alt-2-1-0-005
+        uuid: nep-1-0-0-op-c-bm-alt-2-1-2-005
 
   - forwarding-name: PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache
     uuid: nep-1-0-0-op-fc-is-000
@@ -430,7 +430,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-is-000
     consequent-requests:
       - client-name: MATR://v1/provide-mac-table-of-all-devices
-        uuid: nep-1-0-0-op-c-is-matr-1-0-0-000
+        uuid: nep-1-0-0-op-c-is-matr-1-0-3-000
 
   - forwarding-name: PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache
     uuid: nep-1-0-0-op-fc-is-001
@@ -445,7 +445,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-is-001
     consequent-requests:
       - client-name: MATR://v1/provide-mac-table-of-specific-device
-        uuid: nep-1-0-0-op-c-is-matr-1-0-0-001
+        uuid: nep-1-0-0-op-c-is-matr-1-0-3-001
 
   - forwarding-name: PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
     uuid: nep-1-0-0-op-fc-is-002
@@ -460,7 +460,7 @@ forwardings:
         uuid: nep-1-0-0-op-s-is-002
     consequent-requests:
       - client-name: MATR://v1/read-current-mac-table-from-device
-        uuid: nep-1-0-0-op-c-is-matr-1-0-0-002
+        uuid: nep-1-0-0-op-c-is-matr-1-0-3-002
 
   - forwarding-name: RequestForReceivingCurrentMacTableOfDeviceCausesSendingAnswerToRequestor
     uuid: nep-1-0-0-op-fc-is-003
