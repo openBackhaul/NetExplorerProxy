@@ -120,9 +120,9 @@ profile-instances:
   - profile-name: 'IntegerProfile'
     uuid: 'nep-1-0-0-integer-p-001'
     capability:
-      integer-name: 'maxNumberOfReadCurrentMacTableFromDeviceRequestsPerMinute'
-      purpose: 'Maximum number of allowed requests to read the current mac table from a device per minute'
+      integer-name: 'maxNumberOfReadCurrentMacTableFromDeviceRequestsPerDay'
+      purpose: 'Maximum number of allowed requests to read the current mac table from a device per day'
       minimum: 0
-      maximum: 20
+      maximum: 500
     configuration:
-      integer-value: 20
+      integer-value: 100
