@@ -13,7 +13,7 @@ var appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommon
 var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
-appCommons.openApiValidatorOptions.validateSecurity = false;
+//appCommons.openApiValidatorOptions.validateSecurity = false;
 
 // swaggerRouter configuration
 var options = {
