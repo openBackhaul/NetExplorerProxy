@@ -1,0 +1,241 @@
+'use strict';
+
+const bequeathHandler = require('./individualServices/BequeathHandler');
+const requestHandler = require('./individualServices/RequestHandler');
+const {getLtpIfConfigFromUuid} = require("./individualServices/ControlConstructUtil");
+const responseCodeEnum = require("onf-core-model-ap/applicationPattern/rest/server/ResponseCode");
+const individualServicesUtility = require('./individualServices/IndividualServicesUtility');
+const requestUtil = require("./individualServices/RequestUtil");
+const restClient = require("./individualServices/RestClient");
+const logger = require('./LoggingService.js').getLogger();
+
+
+/**
+ * Initiates process of embedding a new release
+ *
+ * body V1_bequeathyourdataanddie_body
+ * user String User identifier from the system starting the service call
+ * originator String 'Identification for the system consuming the API, as defined in  [/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+ * xCorrelator String UUID for the service execution flow that allows to correlate requests and responses
+ * traceIndicator String Sequence of request numbers along the flow
+ * customerJourney String Holds information supporting customer’s journey to which the execution applies
+ * no response value expected for this operation
+ **/
+exports.bequeathYourDataAndDie = function(requestUrl,body,user,originator,xCorrelator,traceIndicator,customerJourney) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      let success = await bequeathHandler.handleRequest(body, requestUrl);
+
+      if (success) {
+        resolve();
+      } else {
+        reject(new Error("bequeathHandler.handleRequest failed."));
+      }
+    } catch (exception) {
+      logger.error(exception, "bequeath was not successful");
+      reject(exception);
+    }
+  });
+}
+
+
+/**
+ * Provides list of devices that are connected to the controller
+ * returns mount-name-list in ret.message
+ **/
+exports.provideListOfConnectedDevices = async function(requestUrl) {
+  const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
+
+  return ret;
+}
+
+
+/**
+ * Respond with a list of MAC tables of all connected devices.
+ *
+ * returns List in ret.message
+ **/
+exports.provideMacTableOfAllDevices = async function(requestUrl) {
+  const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache", {});
+
+  return ret;
+}
+
+
+/**
+ * Respond with the MAC table of a specific device.
+ *
+ * body V1_providemactableofspecificdevice_body 
+ * returns List in ret.message
+ **/
+exports.provideMacTableOfSpecificDevice = async function(requestUrl, body) {
+  const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache", body);
+
+  return ret;
+}
+
+
+let callHistory = [];
+
+// remove all calls before date from the callHistory
+function removeOldCalls(date) {
+  while(callHistory.length>0 && callHistory[0] < date) {
+    callHistory.shift();
+  }
+}
+
+
+// MAC table request map
+let requestMap = new Map();
+
+function cleanupRequestMap(date) {
+  for (const [key, value] of requestMap.entries()) {
+    if (value.timestamp < date) {
+      requestMap.delete(key);
+    }
+  }
+}
+
+
+/**
+ * Respond with the current MAC table of a specific device.
+ *
+ * returns request ID in ret.message
+ **/
+exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
+
+  // Throttling
+  let maxNumberOfParallelCcRequests = await individualServicesUtility.getIntegerProfileInstanceValue(
+    "maxNumberOfParallelReadCurrentMacTableFromDeviceRequests"); // Default 10
+  let maxNumberOfCcRequestsPerDay = await individualServicesUtility.getIntegerProfileInstanceValue(
+    "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerDay");  // Default 100
+
+  let now = new Date();
+  removeOldCalls(now-24*3600000); // 24*3600 s
+  callHistory.push(now);
+
+  // Remaining requests older than 1 hour can also be deleted.
+  cleanupRequestMap(now-3600000);
+
+  const numberOfParallelRequests = requestMap.size;
+  const numberOfRequestsPerDay = callHistory.length;
+
+  if (numberOfParallelRequests+1 > maxNumberOfParallelCcRequests) {
+    // rejection due to throttling
+    let requestHeader = requestUtil.createRequestHeader(undefined);
+    return {
+      code: 429,
+      message: "Too many requests. The maximum amount of requests that can executed in parallel or per day has been reached",
+      header: requestHeader
+    };
+  } else if (numberOfRequestsPerDay > maxNumberOfCcRequestsPerDay) {
+    // rejection due to too many requests per day
+    let requestHeader = requestUtil.createRequestHeader(undefined);
+    return {
+      code: 429,
+      message: "Too many requests. The maximum amount of requests that can executed in parallel or per day has been reached",
+      header: requestHeader
+    };
+  }
+
+  const mountName = body["mount-name"];
+
+  // read callback info from request body
+  const protocol = body["requestor-protocol"];
+  let address = body["requestor-address"];
+  const port = body["requestor-port"];
+  const operation = body["requestor-receive-operation"];
+
+  // write NEP callback info into the request body
+  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-0-tcp-s-000");
+
+  body["requestor-protocol"] = ifConfig["protocol"];
+  body["requestor-address"] = {"ip-address": ifConfig["ip-address"]};
+  body["requestor-port"] = ifConfig["port"];
+  body["requestor-receive-operation"] = "/v1/receive-current-mac-table-of-device";
+
+  const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache",
+                                                                body, "/v1/read-current-mac-table-from-device");
+
+  // check result code
+  if (ret.code === 200) {
+    // get the request ID out of the MATR response
+    const requestId = ret.message["request-id"];
+
+    if (requestId) {
+      if (requestMap.has(requestId)) {
+        logger.warn("Request ID already present in the request map: %s", requestId);
+      }
+
+      // store callback data of the caller by request ID in requestMap
+      const timestamp = new Date();
+      const request = {mountName, protocol, address, port, operation, timestamp};
+      requestMap.set(requestId, request);
+//      ++numberOfParallelRequests;
+    } else {
+      logger.error("Missing request ID in the MATR readCurrentMacTableFromDevice response, mountName="+mountName);
+    }
+  } else {
+    let message = ret.message?.message? ret.message.message: JSON.stringify(ret.message);
+    logger.error("Unexpected result code "+ret.code+" of MATR readCurrentMacTableFromDevice call: "+message);
+    ret.message = "MATR message: "+message;
+  }
+
+  return ret;
+}
+
+
+/**
+ * Receives the current mac table of device from MATR and sends answer to requestor
+ *
+ * body List 
+ * no response value expected for this operation
+ **/
+exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
+  let errorCode = undefined;
+  let errorMessage = undefined;
+
+  for (let entry of body) {
+    const requestId = entry["request-id"];
+
+    const request = requestMap.get(requestId);
+    if (request) {
+      const data = entry["mac-address-data"];
+
+      // forward received data to the requestor
+      let targetUrl = requestUtil.buildRequestTargetPath(request.protocol, request.address, request.port) + request.operation;
+
+      logger.debug("forwarding mac table data to '" + targetUrl + "'");
+
+      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, undefined);
+
+      if (ret.code === responseCodeEnum.code.OK || ret.code === responseCodeEnum.code.NO_CONTENT) {
+        // remove request map entry
+        requestMap.delete(requestId);
+
+        // if (--numberOfParallelRequests < 0) {
+        //   logger.warn("numberOfParallelRequests: %d", numberOfParallelRequests);
+        //   numberOfParallelRequests = 0;
+        // }
+      } else {
+        errorCode = ret.code;
+        errorMessage = "requestor callback result: " + ret.code + " - " + ret.message;
+      }
+    } else {
+      logger.warn("Unknown request ID in receiveCurrentMacTableOfDevice: %s", requestId);
+      errorMessage = "requestor info not found";
+    }
+  }
+
+  if (errorMessage) {
+    return {
+      code: errorCode ?? responseCodeEnum.code.INTERNAL_SERVER_ERROR,
+      message: {code: 500, message: errorMessage}
+    };
+  } else {
+    return {
+      code: responseCodeEnum.code.NO_CONTENT
+      // no message body and headers
+    };
+  }
+}
