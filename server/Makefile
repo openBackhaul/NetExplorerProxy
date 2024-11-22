@@ -1,9 +1,8 @@
-IMAGE = ndlp-1.0.0
+IMAGE = nep-1.0.0
 CONTAINER = NetExplorerProxy-1.0.0
 SERVER_PORT = 4018
 PORT = 4018
-#DOCKER_HOST = linkvis-ci-01
-DATAFILE = dataFile-linkvisci.json
+DATAFILE = NetExplorerProxy_v1.0.0_dataFile.json
 
 # Build docker image
 image:
