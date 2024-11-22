@@ -6,7 +6,7 @@ jest.mock('onf-core-model-ap/applicationPattern/onfModel/models/ProfileCollectio
 jest.mock('onf-core-model-ap/applicationPattern/databaseDriver/JSONDriver');
 
 const integerProfile = {
-	"uuid": "ndlp-2-0-1-integer-p-000",
+	"uuid": "nep-2-0-1-integer-p-000",
 	"profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
 	"integer-profile-1-0:integer-profile-pac": {
 		"integer-profile-capability": {
@@ -29,7 +29,7 @@ test("putIntegerProfileIntegerValue - 12345", async () => {
 	const input = {
 		"integer-profile-1-0:integer-value": 12345
 	};
-	await integerProfileService.putIntegerProfileIntegerValue(url, input, "ndlp-2-0-1-integer-p-000");
+	await integerProfileService.putIntegerProfileIntegerValue(url, input, "nep-2-0-1-integer-p-000");
 	expect(fileOperation.writeToDatabaseAsync).toBeCalledWith(url, input, false);
 });
 
@@ -38,7 +38,7 @@ test("putIntegerProfileIntegerValue - 23456", async () => {
 	const input = {
 		"integer-profile-1-0:integer-value": 23456
 	};
-	await integerProfileService.putIntegerProfileIntegerValue(url, input, "ndlp-2-0-1-integer-p-000");
+	await integerProfileService.putIntegerProfileIntegerValue(url, input, "nep-2-0-1-integer-p-000");
 	expect(fileOperation.writeToDatabaseAsync).toBeCalledWith(url, input, false);
 });
 
