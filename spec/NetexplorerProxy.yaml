@@ -454,6 +454,14 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - mount-name
+                    - own-mac-address
+                    - egress-ltp-uuid
+                    - original-ltp-uuid
+                    - vlan-id
+                    - remote-mac-address
+                    - time-stamp-of-data
                   properties:
                     mount-name:
                       type: string
@@ -614,6 +622,14 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - mount-name
+                    - own-mac-address
+                    - egress-ltp-uuid
+                    - original-ltp-name
+                    - vlan-id
+                    - remote-mac-address
+                    - time-stamp-of-data
                   properties:
                     mount-name:
                       type: string
@@ -1086,6 +1102,14 @@ paths:
                     type: array
                     items:
                       type: object
+                      required:
+                        - mount-name
+                        - own-mac-address
+                        - egress-ltp-uuid
+                        - original-ltp-name
+                        - vlan-id
+                        - remote-mac-address
+                        - time-stamp-of-data
                       properties:
                         mount-name:
                           type: string
