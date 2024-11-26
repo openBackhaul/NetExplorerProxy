@@ -1041,7 +1041,7 @@ paths:
                   $ref: "#/components/responses/responseForErroredServiceRequests"
                 "404":
                   $ref: "#/components/responses/responseForErroredServiceRequests"
-                "409":
+                "429":
                   description: 'Response in case of too many parallel requests.'
                   content:
                     application/json:
