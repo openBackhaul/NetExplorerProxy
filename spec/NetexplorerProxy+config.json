@@ -205,7 +205,7 @@
         },
         {
           "uuid": "nep-1-0-1-integer-p-000",
-          "profile-name": "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
               "integer-name": "maxNumberOfParallelReadCurrentMacTableFromDeviceRequests",
@@ -220,7 +220,7 @@
         },
         {
           "uuid": "nep-1-0-1-integer-p-001",
-          "profile-name": "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
               "integer-name": "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerDay",
