@@ -11,7 +11,7 @@ const ProfileCollection = require('onf-core-model-ap/applicationPattern/onfModel
 exports.getIntegerProfileInstanceValue = async function(expectedIntegerName) {
   let integerValue = "";
   try {
-    let integerProfileName = "integer-profile-1-0:PROFILE_NAME_INTEGER_PROFILE";
+    let integerProfileName = "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE";
     let integerProfileInstanceList = await ProfileCollection.getProfileListForProfileNameAsync(integerProfileName);
 
     for (let i = 0; i < integerProfileInstanceList.length; i++) {
