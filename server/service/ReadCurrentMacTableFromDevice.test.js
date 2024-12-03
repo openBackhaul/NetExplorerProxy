@@ -26,7 +26,7 @@ function getMockResultData(data)
 
 
 describe('readCurrentMacTableFromDevice', () => {
-    const mockRequestUrl = 'http://localhost:4018/v1/provide-inventory-data-of-device';
+    const mockRequestUrl = 'http://localhost:4018/v1/read-current-mac-table-from-device';
 
     it('should call postRequestDataFromOtherApp with correct arguments and return the result', async () => {
         const mockResult = {
