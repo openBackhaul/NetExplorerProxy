@@ -9,21 +9,21 @@ paths:
 ########################################################################################################################
   /v1/provide-mac-table-of-all-devices:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideMacTableOfAllDevices
-      summary: "Responses with a list of MAC tables of all connected devices."
+      summary: 'Responses with a list of MAC tables of all connected devices.'
       tags:
         - IndividualServices
       security:
         - apiKeyAuth: []
       responses:
-        "200":
-          description: "List of MAC tables of all connected devices provided."
+        '200':
+          description: 'List of MAC tables of all connected devices provided.'
           content:
             application/json:
               schema:
@@ -46,20 +46,20 @@ paths:
                     time-stamp-of-data:
                       type: string
                 example:
-                  - mount-name: "305251234"
-                    own-mac-address: "00:00:00:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
+                  - mount-name: '305251234'
+                    own-mac-address: '00:00:00:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
                     vlan-id: 17
-                    remote-mac-address: "01:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-                  - mount-name: "30525999"
-                    own-mac-address: "FF:00:11:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
+                  - mount-name: '30525999'
+                    own-mac-address: 'FF:00:11:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
                     vlan-id: 17
-                    remote-mac-address: "01:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
           headers:
             x-correlator:
               schema:
@@ -74,34 +74,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /v1/provide-mac-table-of-specific-device:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideMacTableOfSpecificDevice
-      summary: "Responses with the MAC table of a specific device."
+      summary: 'Responses with the MAC table of a specific device.'
       tags:
         - IndividualServices
       security:
@@ -118,8 +118,8 @@ paths:
                 mount-name:
                   type: string
       responses:
-        "200":
-          description: "MAC table for specific device provided."
+        '200':
+          description: 'MAC table for specific device provided.'
           content:
             application/json:
               schema:
@@ -142,20 +142,20 @@ paths:
                     time-stamp-of-data:
                       type: string
                 example:
-                  - mount-name: "305251234"
-                    own-mac-address: "00:00:00:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
+                  - mount-name: '305251234'
+                    own-mac-address: '00:00:00:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
                     vlan-id: 17
-                    remote-mac-address: "01:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-                  - mount-name: "305251234"
-                    own-mac-address: "00:00:00:00:00:00"
-                    egress-ltp-uuid: "305251234+mac-inf-1234"
-                    original-ltp-name: "eth-1-0-3"
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
+                  - mount-name: '305251234'
+                    own-mac-address: '00:00:00:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
                     vlan-id: 17
-                    remote-mac-address: "FF:01:01:01:01:01"
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
+                    remote-mac-address: 'FF:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
           headers:
             x-correlator:
               schema:
@@ -170,34 +170,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /v1/read-current-mac-table-from-device:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: readCurrentMacTableFromDevice
-      summary: "Responses with the current MAC table of a specific device."
+      summary: 'Responses with the current MAC table of a specific device.'
       tags:
         - IndividualServices
       security:
@@ -208,14 +208,14 @@ paths:
           application/json:
             schema:
               anyOf:
-                - description: "bare update of elasticsearch"
+                - description: 'bare update of elasticsearch'
                   type: object
                   required:
                     - mount-name
                   properties:
                     mount-name:
                       type: string
-                - description: "update of elasticsearch and response to the requestor"
+                - description: 'update of elasticsearch and response to the requestor'
                   type: object
                   required:
                     - mount-name
@@ -229,8 +229,8 @@ paths:
                     requestor-protocol:
                       type: string
                       enum:
-                        - "HTTP"
-                        - "HTTPS"
+                        - 'HTTP'
+                        - 'HTTPS'
                     requestor-address:
                       type: object
                       minProperties: 1
@@ -253,8 +253,8 @@ paths:
                     requestor-receive-operation:
                       type: string
       responses:
-        "200":
-          description: "Request for current MAC table received, response request will be sent after collecting all data."
+        '200':
+          description: 'Request for current MAC table received, response request will be sent after collecting all data.'
           content:
             application/json:
               schema:
@@ -265,7 +265,7 @@ paths:
                   request-id:
                     type: string
                 example:
-                  request-id: "305251234-101120-1400"
+                  request-id: '305251234-101120-1400'
           headers:
             x-correlator:
               schema:
@@ -280,14 +280,14 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "204":
-          description: "Request for current MAC table received, elasticsearch will be updated."
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '204':
+          description: 'Request for current MAC table received, elasticsearch will be updated.'
           headers:
             x-correlator:
               schema:
@@ -302,34 +302,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /v1/provide-list-of-network-element-interfaces-on-path:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideListOfNetworkElementInterfacesOnPath
-      summary: "Provides unsorted list of network element interfaces on path to specific MAC address."
+      summary: 'Provides unsorted list of network element interfaces on path to specific MAC address.'
       tags:
         - IndividualServices
       security:
@@ -345,10 +345,10 @@ paths:
               properties:
                 target-mac-address:
                   type: string
-                  pattern: "^[a-fA-F0-9]{2}(:[a-fA-F0-9]{2}){5}$"
+                  pattern: '^[a-fA-F0-9]{2}(:[a-fA-F0-9]{2}){5}$'
       responses:
-        "200":
-          description: "List of network element interfaces that lead to a specific MAC address provided."
+        '200':
+          description: 'List of network element interfaces that lead to a specific MAC address provided.'
           content:
             application/json:
               schema:
@@ -367,16 +367,16 @@ paths:
                     time-stamp-of-data:
                       type: string
                 example:
-                  - target-mac-address: "01:01:01:01:01:01"
-                    mount-name: "305251234"
-                    original-ltp-name: "eth-1-0-3"
+                  - target-mac-address: '01:01:01:01:01:01'
+                    mount-name: '305251234'
+                    original-ltp-name: 'eth-1-0-3'
                     vlan-id: 430
-                    time-stamp-of-data: "2010-11-20T14:00:00+01:00"
-                  - target-mac-address: "01:01:01:01:01:01"
-                    mount-name: "305259999"
-                    original-ltp-name: "eth-2-0-3"
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
+                  - target-mac-address: '01:01:01:01:01:01'
+                    mount-name: '305259999'
+                    original-ltp-name: 'eth-2-0-3'
                     vlan-id: 430
-                    time-stamp-of-data: "2010-11-20T14:30:00+01:00"
+                    time-stamp-of-data: '2010-11-20T14:30:00+01:00'
           headers:
             x-correlator:
               schema:
@@ -391,34 +391,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /v1/provide-list-of-network-element-interfaces-on-path-in-generic-representation:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideListOfNetworkElementInterfacesOnPathInGenericRepresentation
-      summary: "Provides unsorted list of network element interfaces on path to specific MAC address in generic representation."
+      summary: 'Provides unsorted list of network element interfaces on path to specific MAC address in generic representation.'
       tags:
         - IndividualServices
       requestBody:
@@ -443,17 +443,17 @@ paths:
                       field-value:
                         type: string
       responses:
-        "200":
-          description: "List of network element interfaces, that lead to a certain MAC address are provided in generic representation."
+        '200':
+          description: 'List of network element interfaces, that lead to a certain MAC address are provided in generic representation.'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/genericRepresentation"
+                $ref: '#/components/schemas/genericRepresentation'
                 example:
                   response-value-list:
-                    - field-name: "listOfNetworkElementInterfacesOnPath"
-                      value: "509251234:eth-1-0-3;509251234:EX-1-1;509253333:eth-1-3-3;509253333:EX-1-0"
-                      datatype: "string"
+                    - field-name: 'listOfNetworkElementInterfacesOnPath'
+                      value: '509251234:eth-1-0-3;509251234:EX-1-1;509253333:eth-1-3-3;509253333:EX-1-0'
+                      datatype: 'string'
                   consequent-action-list:
           headers:
             x-correlator:
@@ -469,24 +469,24 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
 
 
 ########################################################################################################################
@@ -494,21 +494,21 @@ paths:
 ########################################################################################################################
   /generic/v1/provide-mac-table-of-all-devices:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideMacTableOfAllDevices
-      summary: "Responses with a list of MAC tables of all connected devices."
+      summary: 'Responses with a list of MAC tables of all connected devices.'
       tags:
         - IndividualServices
       security:
         - apiKeyAuth: []
       responses:
-        "200":
-          description: "List of MAC tables of all connected devices provided."
+        '200':
+          description: 'List of MAC tables of all connected devices provided.'
           content:
             application/json:
               schema:
@@ -552,34 +552,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /generic/v1/provide-mac-table-of-specific-device:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideMacTableOfSpecificDevice
-      summary: "Responses with the MAC table of a specific device."
+      summary: 'Responses with the MAC table of a specific device.'
       tags:
         - IndividualServices
       security:
@@ -596,8 +596,8 @@ paths:
                 mount-name:
                   type: string
       responses:
-        "200":
-          description: "MAC table for specific device provided."
+        '200':
+          description: 'MAC table for specific device provided.'
           content:
             application/json:
               schema:
@@ -641,34 +641,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /generic/v1/read-current-mac-table-from-device:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: readCurrentMacTableFromDevice
-      summary: "Responses with the current MAC table of a specific device."
+      summary: 'Responses with the current MAC table of a specific device.'
       tags:
         - IndividualServices
       security:
@@ -679,14 +679,14 @@ paths:
           application/json:
             schema:
               anyOf:
-                - description: "bare update of elasticsearch"
+                - description: 'bare update of elasticsearch'
                   type: object
                   required:
                     - mount-name
                   properties:
                     mount-name:
                       type: string
-                - description: "update of elasticsearch and response to the requestor"
+                - description: 'update of elasticsearch and response to the requestor'
                   type: object
                   required:
                     - mount-name
@@ -700,8 +700,8 @@ paths:
                     requestor-protocol:
                       type: string
                       enum:
-                        - "HTTP"
-                        - "HTTPS"
+                        - 'HTTP'
+                        - 'HTTPS'
                     requestor-address:
                       type: object
                       minProperties: 1
@@ -724,8 +724,8 @@ paths:
                     requestor-receive-operation:
                       type: string
       responses:
-        "200":
-          description: "Request for current MAC table received, response request will be sent after collecting all data."
+        '200':
+          description: 'Request for current MAC table received, response request will be sent after collecting all data.'
           content:
             application/json:
               schema:
@@ -751,14 +751,14 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "204":
-          description: "Request for current MAC table received, elasticsearch will be updated."
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '204':
+          description: 'Request for current MAC table received, elasticsearch will be updated.'
           headers:
             x-correlator:
               schema:
@@ -773,34 +773,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /generic/v1/provide-list-of-network-element-interfaces-on-path:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideListOfNetworkElementInterfacesOnPath
-      summary: "Provides unsorted list of network element interfaces on path to specific MAC address."
+      summary: 'Provides unsorted list of network element interfaces on path to specific MAC address.'
       tags:
         - IndividualServices
       security:
@@ -816,10 +816,10 @@ paths:
               properties:
                 target-mac-address:
                   type: string
-                  pattern: "^[a-fA-F0-9]{2}(:[a-fA-F0-9]{2}){5}$"
+                  pattern: '^[a-fA-F0-9]{2}(:[a-fA-F0-9]{2}){5}$'
       responses:
-        "200":
-          description: "List of network element interfaces that lead to a specific MAC address provided."
+        '200':
+          description: 'List of network element interfaces that lead to a specific MAC address provided.'
           content:
             application/json:
               schema:
@@ -857,34 +857,34 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
   /generic/v1/provide-list-of-network-element-interfaces-on-path-in-generic-representation:
     parameters:
-      - $ref: "#/components/parameters/user"
-      - $ref: "#/components/parameters/originator"
-      - $ref: "#/components/parameters/x-correlator"
-      - $ref: "#/components/parameters/trace-indicator"
-      - $ref: "#/components/parameters/customer-journey"
+      - $ref: '#/components/parameters/user'
+      - $ref: '#/components/parameters/originator'
+      - $ref: '#/components/parameters/x-correlator'
+      - $ref: '#/components/parameters/trace-indicator'
+      - $ref: '#/components/parameters/customer-journey'
     post:
       operationId: provideListOfNetworkElementInterfacesOnPathInGenericRepresentation
-      summary: "Provides unsorted list of network element interfaces on path to specific MAC address in generic representation."
+      summary: 'Provides unsorted list of network element interfaces on path to specific MAC address in generic representation.'
       tags:
         - IndividualServices
       requestBody:
@@ -909,12 +909,12 @@ paths:
                       field-value:
                         type: string
       responses:
-        "200":
-          description: "List of network element interfaces, that lead to a certain MAC address are provided in generic representation."
+        '200':
+          description: 'List of network element interfaces, that lead to a certain MAC address are provided in generic representation.'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/genericRepresentation"
+                $ref: '#/components/schemas/genericRepresentation'
                 example:
                   response-value-list:
                     - field-name: 'string'
@@ -941,24 +941,24 @@ paths:
               schema:
                 type: string
                 enum:
-                  - "EXPERIMENTAL"
-                  - "OPERATIONAL"
-                  - "DEPRECATED"
-                  - "OBSOLETE"
-                  - "UNKNOWN"
-                  - "NOT_YET_DEFINED"
-        "400":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "401":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "403":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "404":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
-        "500":
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
         default:
-          $ref: "#/components/responses/responseForErroredServiceRequests"
+          $ref: '#/components/responses/responseForErroredServiceRequests'
 
 
 ########################################################################################################################
@@ -972,8 +972,8 @@ components:
       required: true
       schema:
         type: string
-        example: "User Name"
-      description: "User identifier from the system starting the service call"
+        example: 'User Name'
+      description: 'User identifier from the system starting the service call'
     originator:
       name: originator
       in: header
@@ -981,7 +981,7 @@ components:
       schema:
         type: string
         minLength: 3
-        example: "Resolver"
+        example: 'Resolver'
       description: >
         'Identification for the system consuming the API, as defined in
          [/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
@@ -991,10 +991,10 @@ components:
       required: true
       schema:
         type: string
-        pattern: "^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$"
-        description: "Empty string accepted from external applications."
-        example: "550e8400-e29b-11d4-a716-446655440000"
-      description: "UUID for the service execution flow that allows to correlate requests and responses"
+        pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+        description: 'Empty string accepted from external applications.'
+        example: '550e8400-e29b-11d4-a716-446655440000'
+      description: 'UUID for the service execution flow that allows to correlate requests and responses'
     trace-indicator:
       name: trace-indicator
       in: header
@@ -1002,47 +1002,47 @@ components:
       schema:
         type: string
         pattern: '^([0-9]+)(\.([0-9]+))*$'
-        description: "Empty string accepted from external applications."
-        example: "1.3.1"
-      description: "Sequence of request numbers along the flow"
+        description: 'Empty string accepted from external applications.'
+        example: '1.3.1'
+      description: 'Sequence of request numbers along the flow'
     customer-journey:
       name: customer-journey
       in: header
       required: true
       schema:
         type: string
-        example: "Unknown value"
-      description: "Holds information supporting customer’s journey to which the execution applies"
+        example: 'Unknown value'
+      description: 'Holds information supporting customer’s journey to which the execution applies'
   responses:
     responseForErroredServiceRequests:
-      description: "Response in case of errored service requests"
+      description: 'Response in case of errored service requests'
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/errorDescription"
+            $ref: '#/components/schemas/errorDescription'
       headers:
         x-correlator:
           schema:
             type: string
-            pattern: "^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$"
-            example: "550e8400-e29b-11d4-a716-446655440000"
-          description: "UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request"
+            pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+            example: '550e8400-e29b-11d4-a716-446655440000'
+          description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
         exec-time:
           schema:
             type: integer
             example: 1100
-          description: "Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds"
+          description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
         backend-time:
           schema:
             type: integer
             example: 850
-          description: "Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds"
+          description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
     responseForErroredOamRequests:
-      description: "Response in case of errored OaM requests"
+      description: 'Response in case of errored OaM requests'
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/errorDescription"
+            $ref: '#/components/schemas/errorDescription'
   schemas:
     errorDescription:
       type: object
@@ -1163,7 +1163,7 @@ components:
           maxItems: 1
           items:
             oneOf:
-              - description: "operation server"
+              - description: 'operation server'
                 type: object
                 required:
                   - local-id
@@ -1194,7 +1194,7 @@ components:
                         properties:
                           life-cycle-state:
                             type: string
-              - description: "http server"
+              - description: 'http server'
                 type: object
                 required:
                   - local-id
@@ -1223,7 +1223,7 @@ components:
                             type: string
                           data-update-period:
                             type: string
-              - description: "tcp server"
+              - description: 'tcp server'
                 type: object
                 required:
                   - local-id
@@ -1260,7 +1260,7 @@ components:
                                 type: string
                           local-port:
                             type: integer
-              - description: "operation client"
+              - description: 'operation client'
                 type: object
                 required:
                   - local-id
@@ -1294,7 +1294,7 @@ components:
                             type: string
                           life-cycle-state:
                             type: string
-              - description: "elasticsearch client"
+              - description: 'elasticsearch client'
                 type: object
                 required:
                   - local-id
@@ -1328,7 +1328,7 @@ components:
                             type: string
                           life-cycle-state:
                             type: string
-              - description: "http client"
+              - description: 'http client'
                 type: object
                 required:
                   - local-id
@@ -1354,7 +1354,7 @@ components:
                             type: string
                           release-number:
                             type: string
-              - description: "tcp client"
+              - description: 'tcp client'
                 type: object
                 required:
                   - local-id
