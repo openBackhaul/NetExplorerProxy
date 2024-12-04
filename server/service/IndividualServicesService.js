@@ -7,6 +7,7 @@ const responseCodeEnum = require("onf-core-model-ap/applicationPattern/rest/serv
 const individualServicesUtility = require('./individualServices/IndividualServicesUtility');
 const requestUtil = require("./individualServices/RequestUtil");
 const restClient = require("./individualServices/RestClient");
+const {HTTP_CODES} = require("./individualServices/RestClient");
 const logger = require('./LoggingService.js').getLogger();
 
 
@@ -223,7 +224,12 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
       }
     } else {
       logger.warn("Unknown request ID in receiveCurrentMacTableOfDevice: %s", requestId);
-      errorMessage = "requestor info not found";
+
+      // Response in case that the application wants to call a service specified by the requestor
+      // (e.g., to return data after a long taking data retrieval) during a service call to the application
+      // and the service information cannot be found.
+      errorCode = HTTP_CODES.REQUESTOR_NOT_FOUND; // 550
+      errorMessage = "Requestor information for callback execution not found.";
     }
   }
 
