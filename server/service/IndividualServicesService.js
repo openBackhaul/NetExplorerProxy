@@ -177,9 +177,14 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
       logger.error("Missing request ID in the MATR readCurrentMacTableFromDevice response, mountName="+mountName);
     }
   } else {
-    let message = ret.message?.message? ret.message.message: JSON.stringify(ret.message);
-    logger.error("Unexpected result code "+ret.code+" of MATR readCurrentMacTableFromDevice call: "+message);
-    ret.message = "MATR message: "+message;
+    if (ret.code === 500 && String(ret.message).includes("Request failed with status code 404")) {
+      // immediateErrorResponse
+      ret.code = 404;
+    } else {
+      let errorMessage  = ret.message?.message ? ret.message.message : JSON.stringify(ret.message);
+      logger.error(`Unexpected result code ${ret.code} for MATR readCurrentMacTableFromDevice call: ${errorMessage }`);
+      ret.message = `MATR message: ${errorMessage}`;
+    }
   }
 
   return ret;
