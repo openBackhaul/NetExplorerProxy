@@ -10,8 +10,7 @@
             "action-profile-capability": {
               "operation-name": "/v1/start-application-in-generic-representation",
               "label": "Inform about Application",
-              "input-value-list": [
-              ],
+              "input-value-list": [],
               "display-in-new-browser-window": false
             },
             "action-profile-configuration": {
@@ -26,8 +25,7 @@
             "action-profile-capability": {
               "operation-name": "/v1/inform-about-application-in-generic-representation",
               "label": "Release History",
-              "input-value-list": [
-              ],
+              "input-value-list": [],
               "display-in-new-browser-window": false
             },
             "action-profile-configuration": {
@@ -42,8 +40,7 @@
             "action-profile-capability": {
               "operation-name": "/v1/inform-about-application-in-generic-representation",
               "label": "API Documentation",
-              "input-value-list": [
-              ],
+              "input-value-list": [],
               "display-in-new-browser-window": true
             },
             "action-profile-configuration": {
@@ -239,8 +236,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -263,8 +259,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -287,8 +282,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -311,8 +305,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -335,8 +328,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-004",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -359,8 +351,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-005",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -383,8 +374,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-007",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -407,8 +397,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-008",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -431,8 +420,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-009",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -455,8 +443,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-010",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -479,8 +466,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-011",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -503,8 +489,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-012",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -527,8 +512,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-013",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -551,8 +535,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-014",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -575,8 +558,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bm-015",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -599,8 +581,7 @@
       {
         "uuid": "nep-1-0-1-op-s-im-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -623,8 +604,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -647,8 +627,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -671,8 +650,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -695,8 +673,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -719,8 +696,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-004",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -743,8 +719,7 @@
       {
         "uuid": "nep-1-0-1-op-s-bs-005",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -767,8 +742,7 @@
       {
         "uuid": "nep-1-0-1-op-s-is-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -791,8 +765,7 @@
       {
         "uuid": "nep-1-0-1-op-s-is-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -815,8 +788,7 @@
       {
         "uuid": "nep-1-0-1-op-s-is-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -839,8 +811,7 @@
       {
         "uuid": "nep-1-0-1-op-s-is-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -863,8 +834,7 @@
       {
         "uuid": "nep-1-0-1-op-s-is-020",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-s-000"
         ],
@@ -935,7 +905,7 @@
                   {
                     "local-id": "0",
                     "release-number": "1.0.1",
-                    "release-date": "06.12.2024",
+                    "release-date": "26.11.2024",
                     "changes": "Initial version"
                   }
                 ]
@@ -950,8 +920,7 @@
         "client-ltp": [
           "nep-1-0-1-http-s-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -972,8 +941,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-or-1-0-1-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-or-1-0-1-000"
         ],
@@ -1022,8 +990,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-or-1-0-1-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1045,8 +1012,7 @@
       {
         "uuid": "nep-1-0-1-http-c-nr-1-0-1-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-tcp-c-nr-1-0-1-000"
         ],
@@ -1069,8 +1035,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-nr-1-0-1-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1092,8 +1057,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-ro-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-ro-2-1-2-000"
         ],
@@ -1117,8 +1081,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-ro-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-ro-2-1-2-000"
         ],
@@ -1142,8 +1105,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-ro-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-ro-2-1-2-000"
         ],
@@ -1167,8 +1129,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-ro-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-ro-2-1-2-000"
         ],
@@ -1220,8 +1181,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-ro-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1243,8 +1203,7 @@
       {
         "uuid": "nep-1-0-1-http-c-tar-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-tcp-c-tar-2-1-2-000"
         ],
@@ -1267,8 +1226,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-tar-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1290,8 +1248,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bs-eatl-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-eatl-2-1-2-000"
         ],
@@ -1341,8 +1298,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-eatl-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1364,8 +1320,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bs-ol-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-ol-2-1-2-000"
         ],
@@ -1414,8 +1369,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-ol-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1437,8 +1391,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bs-aa-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-aa-2-1-2-000"
         ],
@@ -1487,8 +1440,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-aa-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1510,8 +1462,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1535,8 +1486,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1560,8 +1510,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1585,8 +1534,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-003",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1610,8 +1558,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-004",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1635,8 +1582,7 @@
       {
         "uuid": "nep-1-0-1-op-c-bm-alt-2-1-2-005",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
@@ -1690,8 +1636,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-alt-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1713,8 +1658,7 @@
       {
         "uuid": "nep-1-0-1-http-c-okm-2-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-tcp-c-okm-2-1-2-000"
         ],
@@ -1737,8 +1681,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-okm-2-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1760,8 +1703,7 @@
       {
         "uuid": "nep-1-0-1-op-c-is-matr-1-0-3-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-matr-1-0-3-000"
         ],
@@ -1785,8 +1727,7 @@
       {
         "uuid": "nep-1-0-1-op-c-is-matr-1-0-3-001",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-matr-1-0-3-000"
         ],
@@ -1810,8 +1751,7 @@
       {
         "uuid": "nep-1-0-1-op-c-is-matr-1-0-3-002",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-matr-1-0-3-000"
         ],
@@ -1862,8 +1802,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-matr-1-0-3-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -1885,8 +1824,7 @@
       {
         "uuid": "nep-1-0-1-op-c-is-mwdi-1-1-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
-        "client-ltp": [
-        ],
+        "client-ltp": [],
         "server-ltp": [
           "nep-1-0-1-http-c-mwdi-1-1-2-000"
         ],
@@ -1935,8 +1873,7 @@
         "client-ltp": [
           "nep-1-0-1-http-c-mwdi-1-1-2-000"
         ],
-        "server-ltp": [
-        ],
+        "server-ltp": [],
         "layer-protocol": [
           {
             "local-id": "0",
@@ -2740,9 +2677,6 @@
               }
             ]
           },
-
-
-
           {
             "uuid": "nep-1-0-1-op-fc-is-020",
             "name": [

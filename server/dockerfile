@@ -1,0 +1,21 @@
+FROM node:16
+
+# Create app directory
+WORKDIR /home/openbackhaul/NetExplorerProxy
+
+# Install and app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+# Only copy package.json to avoid copying package-lock.json with local registry paths
+#COPY package.json ./
+
+# install application by NPM
+RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
+EXPOSE 4018
+
+#Command to start the application
+CMD [ "node", "index.js" ]

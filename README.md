@@ -26,6 +26,10 @@ The NetExplorerProxy serves as a proxy to a planning and simulation tool for reg
 - [TestSuite](./testing/)
 - [Implementation](./server/)
 
+### Dependencies
+- [MacAddressTableRecorder](https://github.com/openBackhaul/MacAddressTableRecorder)  
+- [MicroWaveDeviceInventory](https://github.com/openBackhaul/MicroWaveDeviceInventory)  
+
 ### Comments
 ./.
 
