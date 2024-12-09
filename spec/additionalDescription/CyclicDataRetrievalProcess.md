@@ -55,6 +55,7 @@ As the fields filter can be just applied to properties but not properties values
 
 The time-xstates-list can contain lots of transmission mode entries where the time is 0.  
 The list shall be filtered, to only keep those transmission mode records, where time > 0.  
+
 See example:  
 ![qam-xstates](./pictures/qam_xstates_example.png)
 
