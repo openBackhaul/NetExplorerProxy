@@ -10,6 +10,8 @@ The NetExplorerProxy will maintain an own deviceList and retrieve filtered Contr
   - the data is kept for a configurable amount of time, after that time has passed, old data is deleted
   - note: there is no separate retrieval for 24h data (static device information) and 15min data (historical performance data), as the amount of 24h data is fairly small.
 
+---  
+
 ### Data retrieval intervals  
 The ControlConstruct data to be retrieved contains historical performances. Some device types only store historical performance data for the last 8 hours. Therefore, the data needs to be fetched from the MWDI before the data is overwritten.  
 Therefore, the retrieval for each device should be done periodically, with a configurable interval.
@@ -20,6 +22,8 @@ To allow for performance and load balancing optimizations two retrieval interval
 If there are devices with data older than the upper threshold, they shall be queried with priority. Apart from that the slidingWindow just goes over the devices in a cyclic manner and skips those, for which data is newer than configured in the lower threshold
 
 Updates due to notifications are out of scope for this release.
+
+---  
 
 ### Relevant profileInstances
 
@@ -40,6 +44,8 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
   - it is sufficient to delete on day granularity
 - `deviceRetention`
   - the number of days devices which are no longer connected are kept in the NEP deviceList before they are deleted
+
+---  
 
 ### Additional filtering off retrieved data
 When ControlConstruct data is retrieved from MWDI a fields filter is applied.
