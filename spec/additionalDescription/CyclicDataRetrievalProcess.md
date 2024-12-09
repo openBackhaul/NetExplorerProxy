@@ -41,7 +41,7 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
 - `deviceRetention`
   - the number of days devices which are no longer connected are kept in the NEP deviceList before they are deleted
 
-### Retrieved data
+### Additional filtering off retrieved data
 When ControlConstruct data is retrieved from MWDI a fields filter is applied.
 As the fields filter can be just applied to properties but not properties values, some unneeded data will be retrieved by that. This data can be deleted from the retrieved data, before it it written to the NEP cache.
 
