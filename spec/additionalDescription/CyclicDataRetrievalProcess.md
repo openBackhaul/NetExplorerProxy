@@ -21,7 +21,11 @@ To allow for performance and load balancing optimizations two retrieval interval
 
 If there are devices with data older than the upper threshold, they shall be queried with priority. Apart from that the slidingWindow just goes over the devices in a cyclic manner and skips those, for which data is newer than configured in the lower threshold
 
-Updates due to notifications are out of scope for this release.
+In case the data retrieval from MWDI fails for a device, retrieval retries shall be applied under consideration of the related retry profileInstances.
+
+#### Consideration of notifications
+MWDI offers notifications about device status changes and changes to stored ControlConstruct data.  
+However, for this NEP release updates due to notifications are out of scope.  
 
 ---  
 
@@ -34,6 +38,7 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
 - `slidingWindowSize`
 - `responseTimeout`
 - `maximumNumberOfRetries`
+- `waitingTimeBeforeRetry`
 - `deviceListSyncPeriod`
 - `ccRetrievalMinThresholdTime`
   - the lower threshold (hours)
