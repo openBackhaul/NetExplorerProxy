@@ -1,4 +1,4 @@
-@startuml 002_ReadCurrentMacTableFromDevice
+@startuml 012_ReadCurrentMacTableFromDevice
 skinparam responseMessageBelowArrow true
 
 title PromptForProvidingCurrentMacTableOfDeviceCausesReadingCurrentMacTableFromDevice
