@@ -107,6 +107,16 @@ profile-instances:
     configuration:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=0/changes'
 
+  - profile-name: 'GenericResponseProfile'
+    uuid: 'nep-1-1-0-response-p-008'
+    capability:
+      operation-name: '/v1/inform-about-release-history-in-generic-representation'
+      field-name-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=1/release-number'
+      description: 'Represents the second entry in the list of releases'
+      datatype: string
+    configuration:
+      value-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=1/changes'
+
   - profile-name: 'IntegerProfile'
     uuid: 'nep-1-1-0-integer-p-000'
     capability:
@@ -126,6 +136,104 @@ profile-instances:
       maximum: 500
     configuration:
       integer-value: 100
+
+# neue int profiles
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-002'
+    capability:
+      integer-name: 'slidingWindowSize'
+      purpose: 'Size of the sliding window for filtered ControlConstruct retrieval (i.e. parallel number of retrieval requests)'
+      minimum: 1
+      maximum: 5000
+    configuration:
+      integer-value: 50
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-003'
+    capability:
+      integer-name: 'responseTimeout'
+      purpose: 'Timeout for receiving the response of the filtered ControlConstruct retrieval from the MWDI'
+      unit: 'second'
+      minimum: 5
+      maximum: 2000
+    configuration:
+      integer-value: 900
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-004'
+    capability:
+      integer-name: 'maximumNumberOfRetries'
+      purpose: 'Maximum number of retries for retrieving the filtered ControlConstruct'
+      minimum: 0
+      maximum: 10
+    configuration:
+      integer-value: 1
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-005'
+    capability:
+      integer-name: 'waitingTimeBeforeRetry'
+      purpose: 'The waiting time before a retry to fetch filtered ControlConstruct data'
+      unit: 'minute'
+      minimum: 0
+      maximum: 120
+    configuration:
+      integer-value: 10
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-006'
+    capability:
+      integer-name: 'deviceListSyncPeriod'
+      purpose: 'Time period between the sync of NEP deviceList with list of connected devices from MWDI.'
+      unit: 'hour'
+      minimum: 1
+      maximum: 72
+    configuration:
+      integer-value: 1
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-007'
+    capability:
+      integer-name: 'ccRetrievalMinThresholdTime'
+      purpose: 'The lower threshold for retrieval of filtered ControlConstruct data; if device data is newer, retrieval is postponed.'
+      unit: 'hour'
+      minimum: 1
+      maximum: 12
+    configuration:
+      integer-value: 4
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-008'
+    capability:
+      integer-name: 'ccRetrievalMaxThresholdTime'
+      purpose: 'The upper threshold for retrieval of filtered ControlConstruct data; if data is older, retrieval should be prioritized.'
+      unit: 'hour'
+      minimum: 1
+      maximum: 12
+    configuration:
+      integer-value: 6
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-009'
+    capability:
+      integer-name: 'dataRetention'
+      purpose: 'The retention period for which filtered ControlConstruct data is kept.'
+      unit: 'day'
+      minimum: 1
+      maximum: 7
+    configuration:
+      integer-value: 2
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-010'
+    capability:
+      integer-name: 'deviceRetention'
+      purpose: 'The retention period for which no longer connected devices are kept.'
+      unit: 'day'
+      minimum: 1
+      maximum: 7
+    configuration:
+      integer-value: 2
 
   - profile-name: 'StringProfile'
     uuid: 'nep-1-1-0-string-p-000'
