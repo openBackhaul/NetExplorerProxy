@@ -1,0 +1,32 @@
+{
+  "uuid": "ETY-2134639491",
+  "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+  "layer-protocol": [
+      {
+          "local-id": "2134639491",
+          "wire-interface-2-0:wire-interface-pac": {
+              "wire-interface-status": {
+                  "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+                  "pmd-kind-cur": "NOT_YET_DEFINED"
+              },
+              "wire-interface-configuration": {
+                  "interface-name": "",
+                  "fixed-pmd-kind": "NOT_YET_DEFINED"
+              },
+              "wire-interface-capability": {
+                  "supported-pmd-kind-list": [
+                      {
+                          "pmd-name": "NOT_YET_DEFINED",
+                          "duplex": "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                          "speed": "NOT_YET_DEFINED"
+                      }
+                  ]
+              }
+          },
+          "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED"
+      }
+  ],
+  "ltp-augment-1-0:ltp-augment-pac": {
+      "original-ltp-name": "LAN 1/7/3"
+  }
+},

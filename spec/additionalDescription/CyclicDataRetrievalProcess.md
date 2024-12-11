@@ -186,3 +186,17 @@ The following snippet gives an example, all blocks which are not marked as to be
   }
 }
 ```
+
+### Mappings between input data and output services
+
+Notice that data is gathered on device basis, i.e. separately for each device.  
+How data will be stored internally in the NEP cache is up to the implementer, but it must be ensured that NEP provides sufficient performance.  
+
+However, the data exposed to Netexplorer, will not be on device basis, but aggregated across devices, and be rather separated by logical data classes. E.g. there will be multiple services to serve different parts of the gathered air interface data for all (desired) devices.  
+
+Detailed mapping descriptions can be found here:  
+- air interface: todo
+- ethernet container: todo
+- wire interface: todo
+- equipment: todo
+- general-device info: todo
