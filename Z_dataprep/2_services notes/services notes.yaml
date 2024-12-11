@@ -5,7 +5,7 @@
   # optional kann als input parameter eine Liste von devices angegeben werden?
 # 1.) Air Interface data
 # (A)
-/v1/provide-air-interface-non-pm-data-of-devices
+/v1/provide-air-interface-general-information-of-devices
 
 
 
@@ -30,7 +30,7 @@
 
 #-----------
 # (B) QAM Info für capa berechnung
-/v1/provide-air-interface-transmission-mode-list-of-devices
+/v1/provide-air-interface-transmission-mode-lists-of-devices
 
 # hier auch 
 - mount-name, timestamp, uuid, local-id (für's mapping), ggf. einen counter pro transmission-mode-list- Eintrag des devices (seqNum, starts with 0 for each new Interface)

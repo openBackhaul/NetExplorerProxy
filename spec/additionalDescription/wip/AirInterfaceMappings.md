@@ -14,13 +14,15 @@ The complete set of sample data will be given a the end of the document; for bet
 
 #### 1. General interface information
 
+Related service: */v1/provide-air-interface-general-information-of-devices*  
+
 The following data for all (target) devices should be gathered into the following columns:
 - general information:
   - `mount-name`
   - `uuid`: logical-termination-point/uuid
   - `operational-state`: logical-termination-point/operational-state
   - `local-id`: logical-termination-point/layer-protocol/uuid
-  - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache
+  - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
   - `administrative-state` 
   - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name
 - from air-interface-configuration:
@@ -47,13 +49,76 @@ mount-name;uuid;operational-state;local-id;timestamp;administrative-state;origin
 
 #### 2. Transmission mode information for capacity calculation
 
+Related service: */v1/provide-air-interface-transmission-mode-lists-of-devices*  
+
+The following columns is to be provided in the response:
+- general information:
+  - `mount-name`
+  - `uuid`
+  - `local-id`
+- from the air-interface-capability/transmission-mode-list
+  - `transmission-mode-name`
+  - `symbol-rate-reduction-factor`
+  - `modulation-schema-name-at-lct`
+  - `modulation-scheme`
+  - `code-rate`
+  - `channel-bandwidth`
+  - `xpic-is-avail`
+
+Again data for all air interfaces of the devices from NEP cache shall be aggregated in a single output.  
+For each transmission-mode-list record an interface has, a new line in the csv shall be generated.  
+
+See example for 100250001/RF-123456789/123456789:
+```
+  "transmission-mode-list": [
+      {
+          "transmission-mode-name": "56000-64-v0",
+          "symbol-rate-reduction-factor": 1,
+          "modulation-scheme-name-at-lct": "64 QAM",
+          "modulation-scheme": 64,
+          "code-rate": 97,
+          "channel-bandwidth": 56000,
+          "xpic-is-avail": true
+      },
+      {
+          "transmission-mode-name": "56000-256-v0",
+          "symbol-rate-reduction-factor": 1,
+          "modulation-scheme-name-at-lct": "256 QAM",
+          "modulation-scheme": 256,
+          "code-rate": 95,
+          "channel-bandwidth": 56000,
+          "xpic-is-avail": true
+      },
+      {
+          "transmission-mode-name": "56000-16-v0",
+          "symbol-rate-reduction-factor": 1,
+          "modulation-scheme-name-at-lct": "16 QAM",
+          "modulation-scheme": 16,
+          "code-rate": 97,
+          "channel-bandwidth": 56000,
+          "xpic-is-avail": true
+      }
+  ],
+```
+
+which translates into the following set of data:
+```
+mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail
+100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true
+100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true
+100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true
+```
+
 
 
 #### 3. Non-QAM performance data
 
+Related service: */v1/provide-air-interface-non-qam-pm-data-of-devices*  
+
 
 #### 4. QAM performance data
 
+Related service: */v1/provide-air-interface-qam-pm-data-of-devices*  
 
 
 ### Complete example data
