@@ -115,6 +115,78 @@ mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;mod
 
 Related service: */v1/provide-air-interface-non-qam-pm-data-of-devices*  
 
+As there can be multiple different qam records for each interval, the data to be returned by this service will not include the qam data.
+
+Instead the following columns shall be returned for each device and air interface, with a single record per time interval in the historical pm data list:
+- general information:
+  - `mount-name`
+  - `uuid`
+  - `local-id`
+  - `period-end-time`: from air-interface-historica-performances/historical-performance-data-list/period-end-time
+- from the historical-performance-data-list/performance-data for the given period-end-time
+  - `es`
+  - `ses`
+  - `ut`: unavailability
+  - `rx-level-min`
+  - `rx-level-max`
+  - `rx-level-avg`
+  - `tx-level-min`
+  - `tx-level-max`
+  - `tx-level-avg`
+  - `xpd-min`
+  - `xpd-max`
+  - `xpd-avg`
+  - `snir-min`
+  - `snir-max`
+  - `snir-avg`
+
+See example for 200250003/ltpB-1/ltpB-1-localId-1:
+```
+"air-interface-historical-performances": {
+    "historical-performance-data-list": [
+        {
+            "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+            "period-end-time": "2024-12-11T15:30:00+01:00",
+            "history-data-id": "History Data ID not defined.",
+            "performance-data": {
+                "es": 0,
+                "xpd-max": -99,
+                "tx-level-max": 15,
+                "ses": 10,
+                "rx-level-max": -40,
+                "snir-min": 38,
+                "snir-avg": -99,
+                "rx-level-avg": -45,
+                "unavailability": 90,
+                "time-xstates-list": [
+                    {
+                        "time-xstate-sequence-number": 2,
+                        "time": 100,
+                        "transmission-mode": "4QAM"
+                    },
+                    {
+                        "time-xstate-sequence-number": 1,
+                        "time": 700,
+                        "transmission-mode": "16QAM"
+                    }
+                ],
+                "rx-level-min": -50,
+                "xpd-min": -99,
+                "xpd-avg": -99,
+                "tx-level-min": 8,
+                "tx-level-avg": 20,
+                "snir-max": 39
+            }
+        }
+    ]
+},
+```
+
+which translates into:
+```
+mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
+200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99
+```
 
 #### 4. QAM performance data
 
