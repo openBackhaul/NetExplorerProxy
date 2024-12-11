@@ -1,82 +1,19 @@
-# AirInterface Data Output Mapping
 
-This document describes how the air interface data shall be mapped from cached data into the required output formats.  
-Air interface data provisioning to Netexplorer will be split across several services.
-
-### General information
-- The data will shall provided in csv format, with a header line
-  - therefore, data will be flattened
-- Each services will return data for all devices, not just for a single device
-  - optional filtering for a list of specific devices, will be supported via a related requestBody parameter
-
-### Mappings
-The complete set of sample data will be given a the end of the document; for better understandability, parts of the data are presented here separately.
-
-#### 1. General interface information
-
-The following data for all (target) devices should be gathered into the following columns:
-- general information:
-  - `mount-name`
-  - `uuid`: logical-termination-point/uuid
-  - `operational-state`: logical-termination-point/operational-state
-  - `local-id`: logical-termination-point/layer-protocol/uuid
-  - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache
-  - `administrative-state` 
-  - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name
-- from air-interface-configuration:
-  - `transmission-mode-min`
-  - `transmission-mode-max`
-  - `xpic-is-on`
-  - `power-is-on`
-  - `transmitter-is-on`
-- from air-interface-status
-  - `interface-status`: provide without the substring "air-interface-2-0:INTERFACE_STATUS_TYPE" substring"
-- from air-interface-capability:
-  - `type-of-equipment`
-
-Excerpt from sample data:  
-![air-if-mapping-raw1.png](./pictures/air-if-mapping-raw1.png)
-
-Compiled response data:  
-```
-mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
-100250001;RF-123456789;core-model-1-4:OPERATIONAL_STATE_ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
-100250001;RF-234234234;core-model-1-4:OPERATIONAL_STATE_ENABLED;234234234;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/3.1/1;56000-16-v0;56000-1024-v0;false;true;true;UP;RAU2 X 32/13 R3A
-200250003;ltpB-1;core-model-1-4:OPERATIONAL_STATE_ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A
-```
-
-#### 2. Transmission mode information for capacity calculation
-
-
-
-#### 3. Non-QAM performance data
-
-
-#### 4. QAM performance data
-
-
-
-### Complete example data
-Consider the following (made up from actual data and shortened!) sample data sets from two devices.
-
-Device A: 100250001
-```
 {
   "core-model-1-4:control-construct": {
       "logical-termination-point": [
           {
-              "uuid": "RF-123456789",
+              "uuid": "",
               "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
               "layer-protocol": [
                   {
-                      "local-id": "123456789",
-                      "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+
                       "air-interface-2-0:air-interface-pac": {
                           "air-interface-configuration": {
-                              "transmission-mode-min": "56000-16-v0",
-                              "power-is-on": true,
-                              "transmission-mode-max": "56000-256-v0",
-                              "xpic-is-on": false,
+                              "transmission-mode-min": "",
+                              "power-is-on": ,
+                              "transmission-mode-max": "",
+                              "xpic-is-on": ,
                               "transmitter-is-on": true
                           },
                           "air-interface-status": {
@@ -179,27 +116,27 @@ Device A: 100250001
                                       "xpic-is-avail": true
                                   }
                               ],
-                              "type-of-equipment": "RAU2 X 32/13 R3A"
+                              "type-of-equipment": ""
                           }
                       }
                   }
               ],
               "ltp-augment-1-0:ltp-augment-pac": {
-                  "original-ltp-name": "RF 1/2.1/1"
+                  "original-ltp-name": ""
               }
           },
           {
-            "uuid": "RF-234234234",
-            "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+            "uuid": "",
+            "operational-state": "",
             "layer-protocol": [
                 {
-                    "local-id": "234234234",
+                    "local-id": "",
                     "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
                     "air-interface-2-0:air-interface-pac": {
                         "air-interface-configuration": {
-                            "transmission-mode-min": "56000-16-v0",
+                            "transmission-mode-min": "",
                             "power-is-on": true,
-                            "transmission-mode-max": "56000-1024-v0",
+                            "transmission-mode-max": "",
                             "xpic-is-on": false,
                             "transmitter-is-on": true
                         },
@@ -274,13 +211,13 @@ Device A: 100250001
                                     "xpic-is-avail": true
                                 }
                             ],
-                            "type-of-equipment": "RAU2 X 32/13 R3A"
+                            "type-of-equipment": ""
                         }
                     }
                 }
             ],
             "ltp-augment-1-0:ltp-augment-pac": {
-                "original-ltp-name": "RF 1/3.1/1"
+                "original-ltp-name": ""
             }
         }
       ]
@@ -294,17 +231,17 @@ Device 2: 200250003
   "core-model-1-4:control-construct": {
       "logical-termination-point": [
           {
-              "uuid": "ltpB-1",
-              "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+              "uuid": "",
+              "operational-state": "",
               "layer-protocol": [
                   {
-                      "local-id": "ltpB-1-localId-1",
+                      "local-id": "",
                       "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
                       "air-interface-2-0:air-interface-pac": {
                           "air-interface-configuration": {
-                              "transmission-mode-min": "4QAM",
+                              "transmission-mode-min": "",
                               "power-is-on": true,
-                              "transmission-mode-max": "2048QAM",
+                              "transmission-mode-max": "",
                               "xpic-is-on": false,
                               "transmitter-is-on": true
                           },
@@ -370,13 +307,13 @@ Device 2: 200250003
                                       "xpic-is-avail": true
                                   }
                               ],
-                              "type-of-equipment": "RAU2 X 32/13 R3A"
+                              "type-of-equipment": ""
                           }
                       }
                   }
               ],
               "ltp-augment-1-0:ltp-augment-pac": {
-                  "original-ltp-name": "RF 1/5.1/1"
+                  "original-ltp-name": ""
               }
           }
         ]
