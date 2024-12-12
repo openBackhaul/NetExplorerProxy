@@ -56,7 +56,7 @@ exports.postRequestDataFromOtherApp = async function(requestUrl, callbackName, p
 
     let operationUrl = apiUrl ?? opData.operationName;
 
-    const targetUrl = buildTargetUrl(opData.protocol, opData.address, opData.port, opData.operationName);
+    const targetUrl = buildTargetUrl(opData.protocol, opData.address, opData.port, operationUrl);
 
     logger.debug(`Forwarding post data request to '${targetUrl}'`);
 
