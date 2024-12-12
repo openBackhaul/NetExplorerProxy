@@ -47,6 +47,8 @@ mount-name;uuid;operational-state;local-id;timestamp;administrative-state;origin
 200250003;ltpB-1;core-model-1-4:OPERATIONAL_STATE_ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A
 ```
 
+---
+
 #### 2. Transmission mode information for capacity calculation
 
 Related service: */v1/provide-air-interface-transmission-mode-lists-of-devices*  
@@ -109,7 +111,7 @@ mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;mod
 100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true
 ```
 
-
+---
 
 #### 3. Non-QAM performance data
 
@@ -117,7 +119,7 @@ Related service: */v1/provide-air-interface-non-qam-pm-data-of-devices*
 
 As there can be multiple different qam records for each interval, the data to be returned by this service will not include the qam data.
 
-Instead the following columns shall be returned for each device and air interface, with a single record per time interval in the historical pm data list:
+Instead the following columns shall be returned for each device, with an own line per combination of air interface and time interval from the historical pm data list.
 - general information:
   - `mount-name`
   - `uuid`
@@ -159,6 +161,47 @@ See example for 200250003/ltpB-1/ltpB-1-localId-1:
                 "rx-level-avg": -45,
                 "unavailability": 90,
                 "time-xstates-list": [
+                    ...
+                ],
+                "rx-level-min": -50,
+                "xpd-min": -99,
+                "xpd-avg": -99,
+                "tx-level-min": 8,
+                "tx-level-avg": 20,
+                "snir-max": 39
+            }
+        }
+    ]
+}, ...
+```
+
+which translates into:
+```
+mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
+200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99
+```
+
+---
+
+#### 4. QAM performance data
+
+Related service: */v1/provide-air-interface-qam-pm-data-of-devices*  
+
+The qam data shall be provided with a separate line per device, air-interface, period-end-time and record from the time-xstates-list.
+
+See example for 200250003/ltpB-1/ltpB-1-localId-1:
+```
+"air-interface-historical-performances": {
+    "historical-performance-data-list": [
+        {
+            "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+            "period-end-time": "2024-12-11T15:30:00+01:00",
+            "history-data-id": "History Data ID not defined.",
+            "performance-data": {
+                "es": 0,
+                ...
+                "unavailability": 90,
+                "time-xstates-list": [
                     {
                         "time-xstate-sequence-number": 2,
                         "time": 100,
@@ -171,10 +214,7 @@ See example for 200250003/ltpB-1/ltpB-1-localId-1:
                     }
                 ],
                 "rx-level-min": -50,
-                "xpd-min": -99,
-                "xpd-avg": -99,
-                "tx-level-min": 8,
-                "tx-level-avg": 20,
+                ...
                 "snir-max": 39
             }
         }
@@ -182,16 +222,14 @@ See example for 200250003/ltpB-1/ltpB-1-localId-1:
 },
 ```
 
-which translates into:
+Which results in the following output:
 ```
-mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
-200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99
+mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
+200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;2;100;4QAM
+200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;1;700;16QAM
 ```
 
-#### 4. QAM performance data
-
-Related service: */v1/provide-air-interface-qam-pm-data-of-devices*  
-
+---
 
 ### Complete example data
 Consider the following (made up from actual data and shortened!) sample data sets from two devices.
