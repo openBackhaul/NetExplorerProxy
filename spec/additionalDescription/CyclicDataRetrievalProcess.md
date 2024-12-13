@@ -187,14 +187,29 @@ The following snippet gives an example, all blocks which are not marked as to be
 }
 ```
 
-### Mappings between input data and output services
+### Data storage and mappings to output data
 
-Notice that data is gathered on device basis, i.e. separately for each device.  
-How data will be stored internally in the NEP cache is up to the implementer, but it must be ensured that NEP provides sufficient performance.  
+Information about gathered data
+- data is gathered on device basis, i.e. separately for each device
+- the data contains both non-performance data and performance data, which need to be handled differently
+  - non pm data:
+    - if the new filtered ControlConstruct data has been obtained from MWDI for a device, all non-pm data in the NEP cache for that device is overwritten with the new set of data
+    - the data shall be written to the NEP cache together with the timestamp from when the data was gathered
+  - pm data:
+    - historical performances data is provided for multiple 15min intervals
+    - therefore pm data must be stored with these timestamps
+    - if there is already data for a given timestamp for a given object (i.e. unique device/interface combination), the existing dataset is overwritten with the new one (this is expected to happen, as NEP shall pull data more often, than the data is updated in the devices, as to ensure that there are no data gaps)
 
-However, the data exposed to Netexplorer, will not be on device basis, but aggregated across devices, and be rather separated by logical data classes. E.g. there will be multiple services to serve different parts of the gathered air interface data for all (desired) devices.  
+Data retention applies to both types of data. All data for a given device which has expired, shall be deleted.
 
-Detailed mapping descriptions can be found here:  
+How data will be stored internally in the NEP cache is up to the implementer, but it must be ensured that NEP provides sufficient performance.For deciding on how to store the data take the following information into consideration:
+- NEP services will provide data to Netexplorer in csv format
+- NEP services will not provide data per device, but each new service will provide data for all (target) devices
+  - data provisioning is split logically into multiple services (e.g. provisioning of air interface data is distributed across multiple services)
+- also pm data will be provided for 15min intervals, whereas for non-pm data there will only be one set of records per device
+- it therefore might be advisable to directly store the data in a database table structure
+
+As data provisioning shall be distributed across multiple services for the "logical" data classes, detailed mapping descriptions can be found here:  
 - air interface: todo
 - ethernet container: todo
 - wire interface: todo
