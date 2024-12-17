@@ -8,6 +8,7 @@ Air interface data provisioning to Netexplorer will be split across several serv
   - therefore, data will be flattened
 - Each services will return data for all devices, not just for a single device
   - optional filtering for a list of specific devices, will be supported via a related requestBody parameter
+- Data
 
 ### Mappings
 The complete set of sample data will be given a the end of the document; for better understandability, parts of the data are presented here separately.
@@ -124,7 +125,7 @@ Instead the following columns shall be returned for each device, with an own lin
   - `mount-name`
   - `uuid`
   - `local-id`
-  - `period-end-time`: from air-interface-historica-performances/historical-performance-data-list/period-end-time
+  - `period-end-time`: from air-interface-historical-performances/historical-performance-data-list/period-end-time
 - from the historical-performance-data-list/performance-data for the given period-end-time
   - `es`
   - `ses`
@@ -558,3 +559,5 @@ Device 2: 200250003
   }
 }
 ```
+
+[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
