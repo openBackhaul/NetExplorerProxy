@@ -30,8 +30,8 @@ The following data for all (target) devices should be gathered into the followin
 - from ethernet-container-configuration:
   - `interface-name`
   - `bundling-is-on`
-- from air-interface-status
-  - `interface-status`: provide without the substring "ethernet-container-2-0:INTERFACE_STATUS_TYPE" substring"
+- from ethernet-container-status
+  - `interface-status`: provide without the substring "ethernet-container-2-0:INTERFACE_STATUS_TYPE"
 
 See example for 100250001:
 ```
@@ -67,7 +67,7 @@ mount-name;uuid;operational-state;local-id;timestamp;administrative-state;origin
 100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;LAN 1/7/2;false;UP
 ```
 
-#### 3. Ethernet performance data
+#### 2. Ethernet performance data
 
 Related service: */v1/provide-ethernet-container-pm-data-of-devices*  
 
