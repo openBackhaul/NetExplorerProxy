@@ -1,0 +1,56 @@
+See example for two devices:  
+Example for device 100250001
+```
+"equipment": [
+  {
+      "uuid": "1921273855"
+  },
+  {
+      "uuid": "1921282559",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1C",
+                  "description": "Removable Memory Module",
+                  "model-identifier": "RMM",
+                  "part-type-identifier": "RYS 110 243/1",
+                  "type-name": "RMM"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  }
+]
+```
+Example for device 200251234
+```
+"equipment": [
+    {
+        "uuid": "LAN-1 SFP",
+        "local-id": "LAN-1 SFP",
+        "actual-equipment": {
+            "manufactured-thing": {
+                "equipment-type": {
+                    "version": "V2.0",
+                    "description": "SFP module in LAN-1 SFP connector",
+                    "model-identifier": "Generic",
+                    "part-type-identifier": "AXGD-1354-0533",
+                    "type-name": "SFP module"
+                },
+                "manufacturer-properties": {
+                    "manufacturer-name": "Axcen Photonics",
+                    "manufacturer-identifier": ""
+                }
+            }
+        }
+    },
+    {
+        "uuid": "XGLAN-2 SFP",
+        "local-id": "XGLAN-2 SFP"
+    }
+]
+
+
+2024-12-11T16:00:00+01:00

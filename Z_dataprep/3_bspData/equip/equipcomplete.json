@@ -1,0 +1,221 @@
+"equipment": [
+  {
+      "uuid": "1921273855"
+  },
+  {
+      "uuid": "1921282559",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1C",
+                  "description": "Removable Memory Module",
+                  "model-identifier": "RMM",
+                  "part-type-identifier": "RYS 110 243/1",
+                  "type-name": "RMM"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921269759",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R3A",
+                  "description": "Modem Unit",
+                  "model-identifier": "MMU2 H",
+                  "part-type-identifier": "ROJ 208 1308/1",
+                  "type-name": "MMU2 H"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921277951"
+  },
+  {
+      "uuid": "1938292735",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "",
+                  "description": "Fan Unit",
+                  "model-identifier": "FAU2",
+                  "part-type-identifier": "ROJR 219 011/1",
+                  "type-name": "FAU2"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "",
+                  "description": "Access Module Magazine",
+                  "model-identifier": "AMM 6p C",
+                  "part-type-identifier": "BFD 599 030/3",
+                  "type-name": "AMM 6p C"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921257471",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1A",
+                  "description": "Power Filter Unit",
+                  "model-identifier": "PFU3 B",
+                  "part-type-identifier": "ROJR 219 014/1",
+                  "type-name": "PFU3 B"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921261567",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1A",
+                  "description": "Power Filter Unit",
+                  "model-identifier": "PFU3 B",
+                  "part-type-identifier": "ROJR 219 014/1",
+                  "type-name": "PFU3 B"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921286655"
+  },
+  {
+      "uuid": "1921282047"
+  },
+  {
+      "uuid": "1921290239",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R2B",
+                  "description": "Ethernet Termination Unit",
+                  "model-identifier": "ETU3",
+                  "part-type-identifier": "ROJR 211 007/1",
+                  "type-name": "ETU3"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921262079",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R3A",
+                  "description": "Radio Unit",
+                  "model-identifier": "RAU2 X 32/13",
+                  "part-type-identifier": "UKL40173/13",
+                  "type-name": "RAU2 X 32/13"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1913126911",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1C",
+                  "description": "Backplane",
+                  "model-identifier": "Backplane AMM 6p C",
+                  "part-type-identifier": "ROJR 609 006/1",
+                  "type-name": "Backplane AMM 6p C"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921286911"
+  },
+  {
+      "uuid": "1921265663",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R3A",
+                  "description": "Modem Unit",
+                  "model-identifier": "MMU2 H",
+                  "part-type-identifier": "ROJ 208 1308/1",
+                  "type-name": "MMU2 H"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921266175",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R3A",
+                  "description": "Radio Unit",
+                  "model-identifier": "RAU2 X 42/16",
+                  "part-type-identifier": "UKL40201/16",
+                  "type-name": "RAU2 X 42/16"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  },
+  {
+      "uuid": "1921286143",
+      "actual-equipment": {
+          "manufactured-thing": {
+              "equipment-type": {
+                  "version": "R1B",
+                  "description": "Node Processor Unit",
+                  "model-identifier": "NPU3 C",
+                  "part-type-identifier": "ROJR 211 006/2",
+                  "type-name": "NPU3 C"
+              },
+              "manufacturer-properties": {
+                  "manufacturer-name": "Ericsson"
+              }
+          }
+      }
+  }
+],

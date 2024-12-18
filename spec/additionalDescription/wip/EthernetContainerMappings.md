@@ -8,7 +8,6 @@ Data provisioning to Netexplorer will be split across several services.
   - therefore, data will be flattened
 - Each services will return data for all devices, not just for a single device
   - optional filtering for a list of specific devices, will be supported via a related requestBody parameter
-- Data
 
 ### Mappings
 
@@ -64,7 +63,7 @@ See example for 100250001:
 Compiled response data:  
 ```
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
-100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;LAN 1/7/2;false;UP
+100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP
 ```
 
 #### 2. Ethernet performance data
