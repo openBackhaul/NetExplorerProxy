@@ -100,3 +100,5 @@ mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-typ
 100250001;1921282559;;2024-12-11T16:00:00+01:00;R1C;Removable Memory Module;RRM;RYS 110 243/1;RRM;Ericsson;;
 200251234;LAN-1 SFP;LAN-1 SFP;2024-12-11T16:00:00+01:00;V2.0;SFP module in LAN-1 SFP connector;Generic;AXGD-1354-0533;SFP module;Axcen Photonics;;
 ```
+
+[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
