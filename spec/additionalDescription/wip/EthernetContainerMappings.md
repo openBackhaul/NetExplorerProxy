@@ -11,8 +11,6 @@ Data provisioning to Netexplorer will be split across several services.
 
 ### Mappings
 
-The complete set of sample data will be given a the end of the document; for better understandability, parts of the data are presented here separately.
-
 #### 1. General interface information
 
 Related service: */v1/provide-ethernet-container-general-information-of-devices*  

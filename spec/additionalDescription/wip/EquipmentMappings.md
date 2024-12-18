@@ -7,10 +7,10 @@ Data provisioning to Netexplorer will be split across several services.
 ### General information
 - The data will shall provided in csv format, with a header line
   - therefore, data will be flattened
-- Each services will return data for all devices, not just for a single device
+- The will return data for all devices, not just for a single device
   - optional filtering for a list of specific devices, will be supported via a related requestBody parameter
-### Mappings
 
+### Mappings
 
 #### 1. Relevant equipment info
 
@@ -37,6 +37,7 @@ Note:
 - equipment records shall be filtered for those, which contain an actual-equipment block
 - not all properties might be present for all data blocks; if this is the case leave the respective value in the output blank
 
+---  
 
 See example for two devices:  
 Example for device 100250001
@@ -96,20 +97,6 @@ Example for device 200251234
 Compiled response data:  
 ```
 mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-type-identifier;type-name;manufacturer-name;manufacturer-identifier
-100250001;1921282559;;
+100250001;1921282559;;2024-12-11T16:00:00+01:00;R1C;Removable Memory Module;RRM;RYS 110 243/1;RRM;Ericsson;;
+200251234;LAN-1 SFP;LAN-1 SFP;2024-12-11T16:00:00+01:00;V2.0;SFP module in LAN-1 SFP connector;Generic;AXGD-1354-0533;SFP module;Axcen Photonics;;
 ```
-
-
-  - `mount-name`
-  - `uuid`: equipment/uuid
-  - `local-id`: equipment/local-id
-  - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
-- from equipment/actual-equipment/manufactured-thing:
-  - `version`
-  - `description`
-  - `model-identifier`
-  - `part-type-identifier`
-  - `type-name`
-- from equipment/actual-equipment/manufacturer-properties
-  - `manufacturer-name`
-  - `manufacturer-identifier`
