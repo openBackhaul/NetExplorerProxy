@@ -74,4 +74,4 @@ mount-name;timestamp;external-label;device-model-name;system-name
 200259999;2024-12-11T18:00:00+01:00;20025999;MINI-LINK Traffic Node
 ```
 
-[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
+[go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)
