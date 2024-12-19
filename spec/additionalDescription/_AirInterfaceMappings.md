@@ -19,21 +19,21 @@ Related service: */v1/provide-air-interface-general-information-of-devices*
 The following data for all (target) devices should be gathered into the following columns:
 - general information:
   - `mount-name`
-  - `uuid`: logical-termination-point/uuid
-  - `operational-state`: logical-termination-point/operational-state
-  - `local-id`: logical-termination-point/layer-protocol/uuid
+  - `uuid`: *logical-termination-point/uuid*
+  - `operational-state`: *logical-termination-point/operational-state*
+  - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
   - `administrative-state` 
-  - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name
-- from air-interface-configuration:
+  - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
+- from *air-interface-configuration*:
   - `transmission-mode-min`
   - `transmission-mode-max`
   - `xpic-is-on`
   - `power-is-on`
   - `transmitter-is-on`
-- from air-interface-status
+- from *air-interface-status*
   - `interface-status`: provide without the substring "air-interface-2-0:INTERFACE_STATUS_TYPE"
-- from air-interface-capability:
+- from *air-interface-capability*:
   - `type-of-equipment`
 
 Excerpt from sample data:  
@@ -58,7 +58,7 @@ The following columns is to be provided in the response:
   - `mount-name`
   - `uuid`
   - `local-id`
-- from the air-interface-capability/transmission-mode-list
+- from the *air-interface-capability/transmission-mode-list*
   - `transmission-mode-name`
   - `symbol-rate-reduction-factor`
   - `modulation-schema-name-at-lct`
@@ -124,8 +124,8 @@ Instead the following columns shall be returned for each device, with an own lin
   - `mount-name`
   - `uuid`
   - `local-id`
-  - `period-end-time`: from air-interface-historical-performances/historical-performance-data-list/period-end-time
-- from the historical-performance-data-list/performance-data for the given period-end-time
+  - `period-end-time`: from *air-interface-historical-performances/historical-performance-data-list/period-end-time*
+- from the *historical-performance-data-list/performance-data* for the given period-end-time
   - `es`
   - `ses`
   - `ut`: unavailability
@@ -559,4 +559,4 @@ Device 2: 200250003
 }
 ```
 
-[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
+[go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)

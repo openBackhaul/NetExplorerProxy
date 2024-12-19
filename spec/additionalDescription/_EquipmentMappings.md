@@ -20,16 +20,16 @@ The following data for all (target) devices should be gathered into the followin
 
 - general information:
   - `mount-name`
-  - `uuid`: equipment/uuid
-  - `local-id`: equipment/local-id
+  - `uuid`: *equipment/uuid*
+  - `local-id`: *equipment/local-id*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
-- from equipment/actual-equipment/manufactured-thing:
+- from *equipment/actual-equipment/manufactured-thing*:
   - `version`
   - `description`
   - `model-identifier`
   - `part-type-identifier`
   - `type-name`
-- from equipment/actual-equipment/manufacturer-properties
+- from *equipment/actual-equipment/manufacturer-properties*
   - `manufacturer-name`
   - `manufacturer-identifier`
 
@@ -101,4 +101,4 @@ mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-typ
 200251234;LAN-1 SFP;LAN-1 SFP;2024-12-11T16:00:00+01:00;V2.0;SFP module in LAN-1 SFP connector;Generic;AXGD-1354-0533;SFP module;Axcen Photonics;;
 ```
 
-[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
+[go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)

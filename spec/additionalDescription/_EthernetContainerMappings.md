@@ -18,16 +18,16 @@ Related service: */v1/provide-ethernet-container-general-information-of-devices*
 The following data for all (target) devices should be gathered into the following columns:
 - general information:
   - `mount-name`
-  - `uuid`: logical-termination-point/uuid
-  - `operational-state`: logical-termination-point/operational-state
-  - `local-id`: logical-termination-point/layer-protocol/uuid
+  - `uuid`: *logical-termination-point/uuid*
+  - `operational-state`: *logical-termination-point/operational-state*
+  - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
   - `administrative-state` 
-  - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name
-- from ethernet-container-configuration:
+  - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
+- from *ethernet-container-configuration*:
   - `interface-name`
   - `bundling-is-on`
-- from ethernet-container-status
+- from *ethernet-container-status*
   - `interface-status`: provide without the substring "ethernet-container-2-0:INTERFACE_STATUS_TYPE"
 
 See example for 100250001:
@@ -71,10 +71,10 @@ Related service: */v1/provide-ethernet-container-pm-data-of-devices*
 The following data for all (target) devices should be gathered into the following columns:
 - general information:
   - `mount-name`
-  - `uuid`
-  - `local-id`
-  - `period-end-time`: from ethernet-container-historical-performances/historical-performance-data-list/period-end-time
-- from the historical-performance-data-list/performance-data for the given period-end-time
+  - `uuid`: *logical-termination-point/uuid*
+  - `local-id`: *logical-termination-point/layer-protocol/local-id*
+  - `period-end-time`: from *ethernet-container-historical-performances/historical-performance-data-list/period-end-time*
+- from the *historical-performance-data-list/performance-data for the given period-end-time*
   - `total-bytes-input`
   - `total-bytes-output`
   - `total-frames-input`
@@ -144,4 +144,4 @@ mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;to
 100250001;ETH-2134639490;2134639490;2024-12-10T07:45:00+01:00;73444;16016;-1;-1;899;0;0;0
 ```
 
-[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
+[go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)

@@ -26,19 +26,19 @@ The following data for all (target) devices should be gathered into the followin
   - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
   - `administrative-state` 
-  - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name
-- from wire-interface-configuration:
+  - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
+- from *wire-interface-configuration*:
   - `interface-name`
   - `fixed-pmd-kind`
-- from wire-interface-status:
+- from *wire-interface-status*:
   - `interface-status`: provide without the substring "wire-interface-2-0:INTERFACE_STATUS_TYPE"
   - `pmd-kind-cur`
-- from wire-interface-capability/supported-pmd-kind-list:
+- from *wire-interface-capability/supported-pmd-kind-list*:
   - `pmd-name`
   - `duplex`: the duplex mode without substring "wire-interface-2-0:DUPLEX_TYPE_"
   - `speed`
 
-Note that there shall be a single line for each record in wire-interface-capability/supported-pmd-kind-list
+Note that there shall be a single line for each record in *wire-interface-capability/supported-pmd-kind-list*
 
 See example for 100250001:
 ```
@@ -88,4 +88,4 @@ mount-name;uuid;operational-state;local-id;timestamp;administrative-state;origin
 100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;1000BASE_FD;FULL_DUPLEX;1000Mbit/s
 ```
 
-[go up to CyclicDataRetrievalMappings](./CyclicDataRetrievalMappings.md)
+[go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)
