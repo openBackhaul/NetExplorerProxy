@@ -202,7 +202,7 @@ Information about gathered data
 Data retention applies to both types of data. All data for a given device which has expired, shall be deleted. 
 If the device is no longer in connected state and there is no data newer than the allowed data retention, the device will be deleted from NEP.
 
-**Data storage inside NEP**
+**Data storage inside NEP**  
 How data will be stored internally in the NEP cache is up to the implementer, but it must be ensured that NEP provides sufficient performance. For deciding on how to store the data take the following information into consideration:
 - NEP services will provide data to Netexplorer in csv format
 - NEP services will not provide data per device, but each new service will provide data for all (target) devices
@@ -211,7 +211,7 @@ How data will be stored internally in the NEP cache is up to the implementer, bu
 - also pm data will be provided for 15min intervals, whereas for non-pm data there will only be one set of records per device
 - it therefore might be advisable to directly store the data in a database table structure
 
-**Data mapping**
+**Data mapping**  
 As data provisioning shall be distributed across multiple services for the "logical" data classes, detailed mapping descriptions can be found here:  
 - [general device information](./_GeneralDeviceInfoMappings.md)
 - [Air Interface](./_AirInterfaceMappings.md)
