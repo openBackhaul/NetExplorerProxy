@@ -65,6 +65,34 @@ servers:
         # list of devices connected to the Controller (MWDI)
         - operation-name: /v1/provide-list-of-connected-devices
           uuid: nep-1-1-0-op-s-is-020
+
+        # provide list of devices in NEP cache for non-MAC data provisioning
+        - operation-name: /v1/provide-list-of-devices-in-nep
+          uuid: nep-1-1-0-op-s-is-021
+
+        # services to provide non-MAC data from MWDI
+        - operation-name: /v1/provide-general-information-of-devices
+          uuid: nep-1-1-0-op-s-is-025
+        - operation-name: /v1/provide-actual-equipment-information-of-devices
+          uuid: nep-1-1-0-op-s-is-026
+
+        - operation-name: /v1/provide-air-interface-general-information-of-devices
+          uuid: nep-1-1-0-op-s-is-030
+        - operation-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
+          uuid: nep-1-1-0-op-s-is-031
+        - operation-name: /v1/provide-air-interface-non-qam-pm-data-of-devices
+          uuid: nep-1-1-0-op-s-is-032
+        - operation-name: /v1/provide-air-interface-qam-pm-data-of-devices
+          uuid: nep-1-1-0-op-s-is-033
+
+        - operation-name: /v1/provide-ethernet-container-general-information-of-devices
+          uuid: nep-1-1-0-op-s-is-040
+        - operation-name: /v1/provide-ethernet-container-pm-data-of-devices
+          uuid: nep-1-1-0-op-s-is-041
+
+        - operation-name: /v1/provide-wire-interface-general-information-of-devices
+          uuid: nep-1-1-0-op-s-is-045
+
   http-server:
     own-application-name: NetExplorerProxy
     own-release-number: 1.1.0
@@ -290,7 +318,7 @@ clients:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4015
-      uuid: nep-1-1-0-tcp-c-matr-1-0-3-000
+      uuid: nep-1-1-0-tcp-c-mwdi-1-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -300,3 +328,6 @@ clients:
         individual:
           - operation-name: /v1/provide-list-of-connected-devices
             uuid: nep-1-1-0-op-c-is-mwdi-1-1-2-000
+          # service to retrieve non-MAC-address data from MWDI, uses fields filter (nep-1-1-0-string-p-000)
+          - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mount-name}
+            uuid: nep-1-1-0-op-c-is-mwdi-1-1-2-001
