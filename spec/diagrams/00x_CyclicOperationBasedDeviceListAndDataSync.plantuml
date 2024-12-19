@@ -34,7 +34,7 @@ note over nep
    - <b><i>add</i></b> new devices from MWDI deviceList
    - <b><i>delete</i></b> devices from NEP deviceList, 
      not found in MWDI deviceList
-     if their retention has expired (<i>deviceRetention</i>)
+     if their retention has expired (<i>dataRetention</i>)
 end note
   nep -> mwdiDev
   mwdiDev --> nep: {list of-(mount-name)}

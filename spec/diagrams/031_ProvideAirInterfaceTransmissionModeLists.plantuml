@@ -1,0 +1,19 @@
+@startuml 031_ProvideAirInterfaceTransmissionModeLists
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingAirInterfaceTransmissionModeListsCausesReadingFromNepCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-air-interface-transmission-mode-lists-of-devices" as nep
+participant "ElasticSearch \n(or database)" as db
+
+external -> nep: {optional: mount-name-list (BasicAuth)}
+activate nep
+
+nep -> db: (apiAuthKey)
+db --> nep: {optional: mount-name-list} (no security)
+
+nep --> external: {(filtered) airInterfaceTransmissionModeLists} (no security)
+
+deactivate nep
+@enduml
