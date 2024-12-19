@@ -213,7 +213,7 @@ How data will be stored internally in the NEP cache is up to the implementer, bu
 
 **Data mapping**  
 As data provisioning shall be distributed across multiple services for the "logical" data classes, detailed mapping descriptions can be found here:  
-- [general device information](./_GeneralDeviceInfoMappings.md)
+- [General device information](./_GeneralDeviceInfoMappings.md)
 - [Air Interface](./_AirInterfaceMappings.md)
 - [Ethernet Container](./_EthernetContainerMappings.md)
 - [Wire Interface](./_WireInterfaceMappings.md)

@@ -11,7 +11,7 @@ Data provisioning to Netexplorer will be split across several services.
 
 ### Mappings
 
-The 15min PM data for wire interface is not required. Therefore a single service for delivering wire interface data is sufficient. (However, capability information could have also been delivered by a separate service to reduce data overhead. In case it is observed that there will be much overhead, the split can be done as part of a future release.)
+The 15min PM data for wire interface is not required. Therefore a single service for delivering wire interface data is sufficient. (However, capability information could have also been delivered by a separate service to reduce data overhead. In case it is observed that there will be much overhead, the split can be done as part of a future release.)  
 *Note that wire interface data is complemented by additional information from the equipment section of ControlConstruct data. The related service will be described in the EquipmentMappings document.*
 
 #### 1. General interface information
@@ -25,7 +25,7 @@ The following data for all (target) devices should be gathered into the followin
   - `operational-state`: *logical-termination-point/operational-state*
   - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
-  - `administrative-state` 
+  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*
   - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
 - from *wire-interface-configuration*:
   - `interface-name`

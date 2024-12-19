@@ -1,4 +1,4 @@
-# EthernetContainer Data Output Mapping
+# Ethernet Container Data Output Mapping
 
 This document describes how the ethernet container data shall be mapped from cached data into the required output formats.  
 Data provisioning to Netexplorer will be split across several services.
@@ -22,7 +22,7 @@ The following data for all (target) devices should be gathered into the followin
   - `operational-state`: *logical-termination-point/operational-state*
   - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
-  - `administrative-state` 
+  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*
   - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
 - from *ethernet-container-configuration*:
   - `interface-name`
