@@ -5,9 +5,9 @@ The NetExplorerProxy will maintain an own deviceList and retrieve filtered Contr
 ### Maintaining the deviceList and caching data  
 - The NEP will periodically retrieve the list of all connected devices from the MWDI.
   - if there are new devices in the MWDI deviceList, which are not yet included in the NEP deviceList, those devices will be added to the NEP deviceList
-  - devices which are no longer in connected state on the Controller, will also no longer be included in the MWDI deviceList, but those shall be kept in the NEP deviceList for a configurable retention period. This shall minimize data loss in case of devices which are disconnected, but become connected again shortly after.
+  - devices which are no longer in connected state on the Controller, will also no longer be included in the MWDI deviceList, but those shall be kept in the NEP deviceList for a configurable retention period (*dataRetention*). This shall minimize data loss in case of devices which are disconnected, but become connected again shortly after.
 - For each device in the NEP deviceList, filtered ControlConstruct data is queried from MWDI periodically and written to the NEP cache
-  - the data is kept for a configurable amount of time, after that time has passed, old data is deleted
+  - the data is kept for a configurable amount of time (*dataRetention*), after that time has passed, old data is deleted
   - note: there is no separate retrieval for 24h data (static device information) and 15min data (historical performance data), as the amount of 24h data is fairly small.
 
 ---  
@@ -46,9 +46,8 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
   - the upper threshold (hours)
 - `dataRetention`
   - the number of days for which old data shall be kept in NEP cache, before it is deleted
+  - also determines how long devices are kept in the NEP cache once they are no longer in connected state
   - it is sufficient to delete on day granularity
-- `deviceRetention`
-  - the number of days devices which are no longer connected are kept in the NEP deviceList before they are deleted
 
 ---  
 
@@ -186,3 +185,36 @@ The following snippet gives an example, all blocks which are not marked as to be
   }
 }
 ```
+
+### Data storage and mappings to output data
+
+Information about gathered data
+- data is gathered on device basis, i.e. separately for each device
+- the data contains both non-performance data and performance data, which need to be handled differently
+  - non pm data:
+    - if the new filtered ControlConstruct data has been obtained from MWDI for a device, all non-pm data in the NEP cache for that device is overwritten with the new set of data
+    - the data shall be written to the NEP cache together with the timestamp from when the data was gathered
+  - pm data:
+    - historical performances data is provided for multiple 15min intervals
+    - therefore pm data must be stored with these timestamps
+    - if there is already data for a given timestamp for a given object (i.e. unique device/interface combination), the existing dataset is overwritten with the new one (this is expected to happen, as NEP shall pull data more often, than the data is updated in the devices, as to ensure that there are no data gaps)
+
+Data retention applies to both types of data. All data for a given device which has expired, shall be deleted. 
+If the device is no longer in connected state and there is no data newer than the allowed data retention, the device will be deleted from NEP.
+
+**Data storage inside NEP**  
+How data will be stored internally in the NEP cache is up to the implementer, but it must be ensured that NEP provides sufficient performance. For deciding on how to store the data take the following information into consideration:
+- NEP services will provide data to Netexplorer in csv format
+- NEP services will not provide data per device, but each new service will provide data for all (target) devices
+  - data provisioning is split logically into multiple services (e.g. provisioning of air interface data is distributed across multiple services)
+  - optionally a list of device names can be provided in the requestBodies to filter output for those devices
+- also pm data will be provided for 15min intervals, whereas for non-pm data there will only be one set of records per device
+- it therefore might be advisable to directly store the data in a database table structure
+
+**Data mapping**  
+As data provisioning shall be distributed across multiple services for the "logical" data classes, detailed mapping descriptions can be found here:  
+- [General device information](./_GeneralDeviceInfoMappings.md)
+- [Air Interface](./_AirInterfaceMappings.md)
+- [Ethernet Container](./_EthernetContainerMappings.md)
+- [Wire Interface](./_WireInterfaceMappings.md)
+- [Equipment](./_EquipmentMappings.md)

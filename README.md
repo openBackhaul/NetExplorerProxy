@@ -32,7 +32,9 @@ For this release, the NEP shall fetch the required data into its cache in period
 All requests from Netexplorer, not related to Mac address data, shall be served using this cached data only,  
 i.e. there will be no retrieval of data on demand.
 
-Note: sync data has also been requested. It first has to be checked from Netexplorer side, if available sync data is sufficient.  
+*Scope*
+- Note: sync data has been requested by Netexplorer team, but sync data offered by SDN is not what is needed by Netexplorer and, therefore, sync is out of scope.
+- updates due to notifications from MWDI are out of scope for this release
 
 ### Relevance
 The NetExplorerProxy serves as a proxy to a planning and simulation tool for regular use.  
