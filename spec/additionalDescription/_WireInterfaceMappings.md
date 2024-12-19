@@ -21,9 +21,9 @@ Related service: */v1/provide-wire-interface-general-information-of-devices*
 The following data for all (target) devices should be gathered into the following columns:
 - general information:
   - `mount-name`
-  - `uuid`: logical-termination-point/uuid
-  - `operational-state`: logical-termination-point/operational-state
-  - `local-id`: logical-termination-point/layer-protocol/uuid
+  - `uuid`: *logical-termination-point/uuid*
+  - `operational-state`: *logical-termination-point/operational-state*
+  - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
   - `administrative-state` 
   - `original-ltp-name`: related ltp-augment-1-0:ltp-augment-pac/original-ltp-name

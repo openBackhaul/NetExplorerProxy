@@ -217,4 +217,4 @@ As data provisioning shall be distributed across multiple services for the "logi
 - [Air Interface](./_AirInterfaceMappings.md)
 - [Ethernet Container](./_EthernetContainerMappings.md)
 - [Wire Interface](./_WireInterfaceMappings.md)
-- [Equipment](./_Equipment.md)
+- [Equipment](./_EquipmentMappings.md)

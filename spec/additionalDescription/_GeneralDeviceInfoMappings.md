@@ -1,4 +1,4 @@
-# Wire Interface Data Output Mapping
+# General Device Data Output Mapping
 
 This document describes how the general device information shall be mapped from cached data into the required output formats.
 
@@ -19,11 +19,11 @@ The following data for all (target) devices should be gathered into the followin
 - general information:
   - `mount-name`
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
-- from core-model-1-4:control-construct/equipment-augment-1-0:control-construct-pac:
+- from *core-model-1-4:control-construct/equipment-augment-1-0:control-construct-pac*:
   - `external-label`: if set correctly, should be the same as the mount-name
   - `device-model-name`
-- from core-model-1-4:control-construct/equipment-augment-1-0:protocol-collection
-  - `system-name`: from protocol/lldp-1-0:lldp-pac/local-system-data (in case there are multiple lldp-pacs, there shall be a separate record line in the output for each lldp-pac/system-name)
+- from *core-model-1-4:control-construct/equipment-augment-1-0:protocol-collection*
+  - `system-name`: from *protocol/lldp-1-0:lldp-pac/local-system-data* (in case there are multiple lldp-pacs, there shall be a separate record line in the output for each lldp-pac/system-name)
 
 Note:  
 - not all properties might be present for all data blocks; if this is the case leave the respective value in the output blank
