@@ -106,6 +106,20 @@ servers:
 
 
 clients:
+
+  - http-client:
+      application-name: ElasticSearch
+      release-number: 1.0.0
+      uuid: nep-1-1-0-http-c-es-1-0-0-000
+    tcp-client:
+      remote-protocol: http
+      ip-address: 127.0.0.1
+      tcp-port: 3015
+      uuid: nep-1-1-0-tcp-c-es-1-0-0-000
+    elasticsearch-client:
+      uuid: nep-1-1-0-es-c-es-1-0-0-000
+      index-alias: 10
+
   - http-client:
       application-name: OldRelease
       release-number: 1.0.1
