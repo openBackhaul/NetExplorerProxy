@@ -1,0 +1,72 @@
+  /v1/provide-ethernet-container-general-information-of-devices:
+    post:
+      operationId: provideEthernetContainerGeneralInformationOfDevices
+      summary: 'Responses with general ethernetContainer information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Optional list of device names the reponse data shall be filtered for'
+              example:
+                mount-name-list: 
+                  - '305251234'
+                  - '100250001'
+      responses:
+        '200':
+          description: 'General ethernetContainer information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                description: >
+                  'The first line shall contain the following headers:
+                    mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
+                  There shall be a single line containing all relevant data per device and ethernetContainer (missing information is to be left blank)
+                  from the cache/ElasticSearch (ethernetContainerGeneralInfo)'
+              example:
+                mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
+                100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-s-is-040/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '502':
+          $ref: '#/components/responses/502'
+        '531':
+          $ref: '#/components/responses/531'
+        '532':
+          $ref: '#/components/responses/532'
+        default:
+          $ref: '#/components/responses/responseForErroredServiceRequests'
