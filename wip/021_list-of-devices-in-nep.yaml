@@ -1,0 +1,75 @@
+  /v1/provide-list-of-devices-in-nep:
+    post:
+      operationId: provideListOfDevicesInNep
+      summary: 'Responses with a list of devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: 'List of devices in the NetExplorerProxy cache.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - mount-name-list
+                properties:
+                  mount-name-list:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - mount-name
+                        - last-data-update-timestamp
+                      properties:
+                        mount-name:
+                          type: string
+                          description: >
+                            'Identifier of the device at the Controller
+                            from ElasticSearch'
+                        last-data-update-timestamp:
+                          type: string
+                          description: >
+                            'The timestamp when data in the NEP cache was updated the last time for this mount-name
+                            from ElasticSearch'
+              example:
+                mount-name-list:
+                  - mount-name: '305251234'
+                    last-data-update-timestamp: '2025-01-15T14:00:00+01:02'
+                  - mount-name: '105258888'
+                    last-data-update-timestamp: '2010-01-15T18:27:00+01:02'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-s-is-021/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '502':
+          $ref: '#/components/responses/502'
+        '531':
+          $ref: '#/components/responses/531'
+        '532':
+          $ref: '#/components/responses/532'
+        default:
+          $ref: '#/components/responses/responseForErroredServiceRequests'
