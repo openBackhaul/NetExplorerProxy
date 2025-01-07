@@ -218,3 +218,12 @@ As data provisioning shall be distributed across multiple services for the "logi
 - [Ethernet Container](./_EthernetContainerMappings.md)
 - [Wire Interface](./_WireInterfaceMappings.md)
 - [Equipment](./_EquipmentMappings.md)
+
+**No data found?**  
+The new services will only return data that is actually found in the NEP cache.  
+If no data is found, then
+- the service to retrieve the list of devices in the NEP will simply return an empty list
+- the services that return the csv data, will only return the respective csv header, without any data
+  - this also applies in case the services are called with a list of devices the output data should be filtered for
+
+I.e. in case there is no data found, there will be no error responses.
