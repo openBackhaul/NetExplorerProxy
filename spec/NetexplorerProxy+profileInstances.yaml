@@ -137,7 +137,6 @@ profile-instances:
     configuration:
       integer-value: 100
 
-# neue int profiles
   - profile-name: 'IntegerProfile'
     uuid: 'nep-1-1-0-integer-p-002'
     capability:
