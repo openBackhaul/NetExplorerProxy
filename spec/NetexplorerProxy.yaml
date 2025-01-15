@@ -1545,10 +1545,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'General device information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1618,10 +1624,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'Actual equipment information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1692,10 +1704,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'General air interface information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1766,10 +1784,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'Air interface transmission mode list information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1840,10 +1864,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'Air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1912,10 +1942,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'Air interface QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1986,10 +2022,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'General ethernetContainer information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -2058,10 +2100,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -2132,10 +2180,16 @@ paths:
                   items:
                     type: string
                     description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
+                data-age: 2
       responses:
         '200':
           description: 'General wireInterface information for all (target) devices in the NetExplorerProxy cache in csv format.'
