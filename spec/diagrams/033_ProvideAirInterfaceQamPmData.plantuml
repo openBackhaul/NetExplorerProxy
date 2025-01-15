@@ -7,11 +7,11 @@ participant "external \n(Netexplorer)" as external
 participant "NEP://v1/provide-air-interface-qam-pm-data-of-devices" as nep
 participant "ElasticSearch \n(or database)" as db
 
-external -> nep: {optional: mount-name-list (BasicAuth)}
+external -> nep: {optional: mount-name-list, data-age (BasicAuth)}
 activate nep
 
 nep -> db: (apiAuthKey)
-db --> nep: {optional: mount-name-list} (no security)
+db --> nep: {optional: mount-name-list, data-age} (no security)
 
 nep --> external: {(filtered) airInterfaceQamPmData} (no security)
 
