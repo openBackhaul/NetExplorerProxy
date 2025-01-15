@@ -31,7 +31,7 @@ The following data for all (target) devices should be gathered into the followin
   - `interface-name`
   - `fixed-pmd-kind`
 - from *wire-interface-status*:
-  - `interface-status`: provide without the substring "wire-interface-2-0:INTERFACE_STATUS_TYPE"
+  - `interface-status`: provide without the substring "wire-interface-2-0:INTERFACE_STATUS_TYPE_"
   - `pmd-kind-cur`
 - from *wire-interface-capability/supported-pmd-kind-list*:
   - `pmd-name`

@@ -32,7 +32,7 @@ The following data for all (target) devices should be gathered into the followin
   - `power-is-on`
   - `transmitter-is-on`
 - from *air-interface-status*
-  - `interface-status`: provide without the substring "air-interface-2-0:INTERFACE_STATUS_TYPE"
+  - `interface-status`: provide without the substring "air-interface-2-0:INTERFACE_STATUS_TYPE_"
 - from *air-interface-capability*:
   - `type-of-equipment`
 

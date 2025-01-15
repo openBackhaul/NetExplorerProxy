@@ -617,7 +617,6 @@ paths:
                   $ref: '#/components/responses/532'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-mac-table-of-specific-device:
     post:
       operationId: provideMacTableOfSpecificDevice
@@ -818,7 +817,6 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/read-current-mac-table-from-device:
     post:
       operationId: readCurrentMacTableFromDevice
@@ -1073,7 +1071,6 @@ paths:
                   $ref: '#/components/responses/533'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/receive-current-mac-table-of-device:
     post:
       operationId: receiveCurrentMacTableOfDevice
@@ -1401,7 +1398,7 @@ paths:
                             type: array
                             items:
                               type: string
-                              description: 'MountName of devices in connected tate at the Controller'
+                              description: 'MountName of device in connected state at the Controller'
                       example:
                         mount-name-list:
                           - '305251234'
@@ -1452,7 +1449,6 @@ paths:
                   $ref: '#/components/responses/532'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-list-of-devices-in-nep:
     post:
       operationId: provideListOfDevicesInNep
@@ -1602,7 +1598,6 @@ paths:
           $ref: '#/components/responses/532'
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-actual-equipment-information-of-devices:
     post:
       operationId: provideActualEquipmentInformationOfDevices
@@ -1751,7 +1746,6 @@ paths:
           $ref: '#/components/responses/532'
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-air-interface-transmission-mode-lists-of-devices:
     post:
       operationId: provideAirInterfaceTransmissionModeListsInformationOfDevices
@@ -1826,7 +1820,6 @@ paths:
           $ref: '#/components/responses/532'
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-air-interface-non-qam-pm-data-of-devices:
     post:
       operationId: provideAirInterfaceNonQamPmDataOfDevices
@@ -1899,7 +1892,6 @@ paths:
           $ref: '#/components/responses/532'
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-air-interface-qam-pm-data-of-devices:
     post:
       operationId: provideAirInterfaceQamPmDataOfDevices
@@ -2046,7 +2038,6 @@ paths:
           $ref: '#/components/responses/532'
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
-
   /v1/provide-ethernet-container-pm-data-of-devices:
     post:
       operationId: provideEthernetContainerGeneralInformationOfDevices
@@ -2979,6 +2970,601 @@ paths:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
                 default:
                   $ref: '#/components/responses/responseForErroredServiceRequests'
+        PromptForEmbeddingCausesCyclicLoadingOfDeviceListFromMwdi:
+          URL: #[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-c-is-mwdi-1-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            post:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+              responses:
+                '200':
+                  description: 'List of connected devices provided'
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        required:
+                          - mount-name-list
+                        properties:
+                          mount-name-list:
+                            type: array
+                            items:
+                              type: string
+                              description: 'MountName of device in connected state at the Controller'
+                      example:
+                        mount-name-list:
+                          - '305251234'
+                          - '105258888'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '502':
+                  $ref: '#/components/responses/502'
+                '531':
+                  $ref: '#/components/responses/531'
+                '532':
+                  $ref: '#/components/responses/532'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+        PromptForEmbeddingCausesCyclicDeviceDataRetrievalFromMwdi:
+          URL: #[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]://[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name or /core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]:[/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-tcp-c-mwdi-1-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port][/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-c-is-mwdi-1-1-2-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]
+            post:
+              parameters:
+                - $ref: '#/components/parameters/user'
+                - $ref: '#/components/parameters/originator'
+                - $ref: '#/components/parameters/x-correlator'
+                - $ref: '#/components/parameters/trace-indicator'
+                - $ref: '#/components/parameters/customer-journey'
+                - name: mountName
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                    example: '222250001'
+                  description: > 
+                    'The mountName of the device that is addressed by the request
+                    from cyclic processing of NEP deviceList'
+                - name: fields
+                  in: query
+                  required: false
+                  schema:
+                    type: string
+                  description: > 
+                    'Query parameter to filter ressources according to RFC8040 fields filter spec
+                    from string profile instance nep-1-1-0-string-p-000'
+              responses:
+                '200':
+                  description: 'Filtered ControlConstruct data of device provided'
+                  content:
+                    application/json:
+                      schema:
+                        description: 'Only relevant attributes listed, not all attributes are available for all devices'
+                        type: object
+                        required:
+                          - core-model-1-4:control-construct
+                        properties:
+                          core-model-1-4:control-construct:
+                            type: array
+                            items:
+                              type: object
+                              additionalProperties: true
+                              properties:
+                                #
+                                equipment-augment-1-0:control-construct-pac:
+                                  type: object
+                                  description: 'Data for generalDeviceInformation'
+                                  properties:
+                                    device-model-name:
+                                      type: string
+                                    external-label:
+                                      type: string
+                                #
+                                equipment-augment-1-0:protocol-collection:
+                                  type: object
+                                  properties:
+                                    protocol:
+                                      type: array
+                                      items:
+                                        type: object
+                                        additionalProperties: true
+                                        properties:
+                                          lldp-1-0:lldp-pac:
+                                            type: object
+                                            properties:
+                                              local-system-data:
+                                                type: object
+                                                properties:
+                                                  system-name:
+                                                    type: string
+                                                    description: 'Data for generalDeviceInformation'
+                                #
+                                equipment:
+                                  type: array
+                                  description: 'Data for actualEquipmentInfo'
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                      local-id:
+                                        type: string
+                                      actual-equipment:
+                                        type: object
+                                        properties:
+                                          manufactured-thing:
+                                            type: object
+                                            properties:
+                                              equipment-type:
+                                                type: object
+                                                properties:
+                                                  version:
+                                                    type: string
+                                                  description:
+                                                    type: string
+                                                  model-identifier:
+                                                    type: string
+                                                  part-type-identifier:
+                                                    type: string
+                                                  type-name:
+                                                    type: string
+                                              manufacturer-properties:
+                                                type: object
+                                                properties:
+                                                  manufacturer-name:
+                                                    type: string
+                                                  manufacturer-identifier:
+                                                    type: string
+                                #  
+                                logical-termination-point:
+                                  type: array
+                                  description: > 
+                                    'LTPs with no relevant data can be filtered out, before data is written to NEP cache.
+                                    I.e. only keep LTPs for the following interfaces: air-interface, ethernet-container, wire-interface'
+                                  items:
+                                    type: object
+                                    properties:
+                                      uuid:
+                                        type: string
+                                        description: 'Data for respective interface (layer protocol) generalInformation or specific datasets'
+                                      operational-state:
+                                        type: string
+                                        description: 'Data for respective interface (layer protocol) generalInformation'
+                                      ltp-augment-1-0:ltp-augment-pac:
+                                        type: object
+                                        properties:
+                                          original-ltp-name:
+                                            type: string
+                                            description: 'Data for respective interface (layer protocol) generalInformation'
+                                      layer-protocol:
+                                        type: array
+                                        items:
+                                          type: object
+                                          additionalProperties: true
+                                          properties:
+                                            local-id:
+                                              type: string
+                                              description: 'Data for respective interface (layer protocol) generalInformation or specific datasets'
+                                            administrative-state:
+                                              type: string
+                                              description: 'Data for respective interface (layer protocol) generalInformation'
+                                            # not all interfaces may be available at every device
+                                            # wire-interface
+                                            wire-interface-2-0:wire-interface-pac:
+                                              type: object
+                                              description: 'Data for wireInterfaceGeneralInformation'
+                                              properties:
+                                                wire-interface-status:
+                                                  type: object
+                                                  properties:
+                                                    interface-status:
+                                                      type: string
+                                                      description: 'Store in NEP cache without substring wire-interface-2-0:INTERFACE_STATUS_TYPE_'
+                                                    pmd-kind-cur:
+                                                      type: string
+                                                wire-interface-configuration:
+                                                  type: object
+                                                  properties:
+                                                    interface-name:
+                                                      type: string
+                                                    fixed-pmd-kind:
+                                                      type: string
+                                                wire-interface-capability:
+                                                  type: object
+                                                  properties:
+                                                    supported-pmd-kind-list:
+                                                      type: array
+                                                      items:
+                                                        type: object
+                                                        properties:
+                                                          pmd-name:
+                                                            type: string
+                                                          duplex:
+                                                            type: string
+                                                          speed:
+                                                            type: string
+                                            # ethernet-container
+                                            ethernet-container-2-0:ethernet-container-pac:
+                                              type: object
+                                              properties:
+                                                ethernet-container-historical-performances:
+                                                  type: object
+                                                  description: 'Data for ethernetContainerPmData'
+                                                  properties:
+                                                    historical-performance-data-list:
+                                                      type: array
+                                                      items:
+                                                        type: object
+                                                        properties:
+                                                          granularity-period:
+                                                            type: string
+                                                          period-end-time:
+                                                            type: string
+                                                          history-data-id:
+                                                            type: string
+                                                          performance-data:
+                                                            type: object
+                                                            properties:
+                                                              dropped-frames-input:
+                                                                type: integer
+                                                              dropped-frames-output:
+                                                                type: integer
+                                                              errored-frames-input:
+                                                                type: integer
+                                                              errored-frames-output:
+                                                                type: integer
+                                                              total-frames-input:
+                                                                type: string
+                                                              total-frames-output:
+                                                                type: string
+                                                              total-bytes-input:
+                                                                type: string
+                                                              total-bytes-output:
+                                                                type: string
+                                                ethernet-container-configuration:
+                                                  type: object
+                                                  description: 'Data for ethernetContainerGeneralInformation'
+                                                  properties:
+                                                    interface-name:
+                                                      type: string
+                                                    bundling-is-on:
+                                                      type: boolean
+                                                ethernet-container-status:
+                                                  type: object
+                                                  properties:
+                                                    interface-status:
+                                                      type: string
+                                                      description: 'Data for ethernetContainerGeneralInformation, store in NEP cache without substring ethernet-container-2-0:INTERFACE_STATUS_TYPE_'
+                                            # air-interface
+                                            air-interface-2-0:air-interface-pac:
+                                              type: object
+                                              properties:
+                                                air-interface-historical-performances:
+                                                  type: object
+                                                  properties:
+                                                    historical-performances-data-list:
+                                                      type: array
+                                                      items:
+                                                        type: object
+                                                        properties:
+                                                          granularity-period:
+                                                            type: string
+                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
+                                                          period-end-time:
+                                                            type: string
+                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
+                                                          history-data-id:
+                                                            type: string
+                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
+                                                          performance-data:
+                                                            type: object
+                                                            description: 'All properties except time-xstates-list are data for airInterfaceNonQamPmData'
+                                                            properties:
+                                                              ses:
+                                                                type: integer
+                                                              es: 
+                                                                type: integer
+                                                              unavailability:
+                                                                type: integer
+                                                              rx-level-min:
+                                                                type: integer
+                                                              rx-level-max:
+                                                                type: integer
+                                                              rx-level-avg:
+                                                                type: integer
+                                                              tx-level-min:
+                                                                type: integer
+                                                              tx-level-max:
+                                                                type: integer
+                                                              tx-level-avg:
+                                                                type: integer
+                                                              snir-min:
+                                                                type: integer
+                                                              snir-max:
+                                                                type: integer
+                                                              snir-avg:
+                                                                type: integer
+                                                              xpd-min:
+                                                                type: integer
+                                                              xpd-max:
+                                                                type: integer
+                                                              xpd-avg:
+                                                                type: integer
+                                                              time-xstates-list:
+                                                                type: array
+                                                                description: 'Data for airInterfaceQamPmData'
+                                                                items:
+                                                                  properties:
+                                                                    time:
+                                                                      type: integer
+                                                                    transmission-mode:
+                                                                      type: string
+                                                                  description: 'Filter for those array items, where time>0'
+                                                air-interface-configuration:
+                                                  type: object
+                                                  description: 'Data for airInterfaceGeneralInformation'
+                                                  properties:
+                                                    transmission-mode-min:
+                                                      type: string
+                                                    transmission-mode-max:
+                                                      type: string
+                                                    power-is-on:
+                                                      type: boolean
+                                                    transmitter-is-on:
+                                                      type: boolean
+                                                    xpic-is-on:
+                                                      type: boolean
+                                                air-interface-status:
+                                                  type: object
+                                                  properties:
+                                                    interface-status:
+                                                      type: string
+                                                      description: 'Data for airInterfaceGeneralInformation, store in NEP cache without air-interface-2-0:INTERFACE_STATUS_TYPE_'
+                                                air-interface-capability:
+                                                  type: object
+                                                  properties:
+                                                    type-of-equipment:
+                                                      type: string
+                                                      description: 'Data for airInterfaceGeneralInformation'
+                                                    transmission-mode-list:
+                                                      type: array
+                                                      description: 'Data for airInterfaceTransmissionModeLists'
+                                                      items:
+                                                        type: object
+                                                        properties:
+                                                          tryansmission-mode-name:
+                                                            type: string
+                                                          symbol-rate-reduction-factor:
+                                                            type: integer
+                                                          channel-bandwidth:
+                                                            type: integer
+                                                          xpic-is-avail:
+                                                            type: boolean
+                                                          modulation-scheme-name-at-lct:
+                                                            type: string
+                                                          modulation-scheme:
+                                                            type: integer
+                                                          code-rate:
+                                                            type: integer
+                      example:
+                        # example shows data like received from MWDI before filtering and processing on NEP side is applied
+                        core-model-1-4:control-construct:
+                        - equipment-augment-1-0:control-construct-pac:
+                            device-model-name: 'SomeDeviceType'
+                            external-label: '100250001'
+                          equipment-augment-1-0:protocol-collection:
+                            protocol:
+                              - uuid: 'PC-LLDP-5'
+                                lldp-1-0:lldp-pac:
+                                  local-system-data:
+                                    system-name: 'System xyz'
+                          logical-termination-point:
+                          - uuid: 'SYNC-1234567891'
+                            operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
+                            layer-protocol:
+                            - local-id: '1234567891'
+                              administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
+                            ltp-augment-1-0:ltp-augment-pac:
+                              original-ltp-name: 'E1 1/7/4D'
+                          - uuid: 'ETH-3456789123'
+                            operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
+                            layer-protocol:
+                            - local-id: '3456789123'
+                              ethernet-container-2-0:ethernet-container-pac:
+                                ethernet-container-status:
+                                  interface-status: 'ethernet-container-2-0:INTERFACE_STATUS_TYPE_UP'
+                                ethernet-container-historical-performances:
+                                  historical-performance-data-list:
+                                  - granularity-period: 'ethernet-container-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN'
+                                    period-end-time: '2025-01-07T22:00:00+01:00'
+                                    performance-data:
+                                      total-frames-input: -1
+                                      total-bytes-input: 75120
+                                      total-bytes-output: 15000
+                                      total-frames-output: -1
+                                      errored-frames-input: 0
+                                      dropped-frames-input: 900
+                                      dropped-frames-output: 0
+                                      errored-frames-output: 0
+                                    history-data-id: 'History Data ID not defined.'
+                                ethernet-container-configuration:
+                                  interface-name: '10PN1234_M2-2'
+                                  bundling-is-on: false
+                              administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
+                            ltp-augment-1-0:ltp-augment-pac:
+                              original-ltp-name: 'LAN 1/5/3'
+                          - uuid: 'RF-2223335555'
+                            operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
+                            layer-protocol:
+                            - local-id: '2223335555'
+                              air-interface-2-0:air-interface-pac:
+                                air-interface-configuration:
+                                  transmission-mode-min: '56000-16-v0'
+                                  transmitter-is-on: true
+                                  transmission-mode-max: '56000-256-v0'
+                                  xpic-is-on: false
+                                  power-is-on: true
+                                air-interface-status:
+                                  interface-status: 'air-interface-2-0:INTERFACE_STATUS_TYPE_UP'
+                                air-interface-historical-performances:
+                                  historical-performance-data-list:
+                                  - granularity-period: 'air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN'
+                                    period-end-time: '2025-01-07T08:30:00+01:00'
+                                    history-data-id: 'History Data ID not defined.'
+                                    performance-data:
+                                      es: 5
+                                      xpd-max: -99
+                                      tx-level-max: 12
+                                      ses: 10
+                                      rx-level-max: -50
+                                      snir-min: 40
+                                      snir-avg: -99
+                                      rx-level-avg: 99
+                                      unavailability: 20
+                                      time-xstates-list:
+                                      - time: 901
+                                        transmission-mode: '56000-32-v0'
+                                      - time: 0
+                                        transmission-mode: '56000-64-v0'
+                                      - time: 0
+                                        transmission-mode: '56000-4-v0'
+                                      - time: 0
+                                        transmission-mode: '56000-16-v0'
+                                      rx-level-min: -50
+                                      xpd-min: -99
+                                      xpd-avg: -99
+                                      tx-level-min: 8
+                                      tx-level-avg: 99
+                                      snir-max: 41
+                                air-interface-capability:
+                                  transmission-mode-list:
+                                  - transmission-mode-name: '56000-32-v0'
+                                    symbol-rate-reduction-factor: 1
+                                    channel-bandwidth: 56000
+                                    xpic-is-avail: true
+                                    modulation-scheme-name-at-lct: '32 QAM'
+                                    modulation-scheme: 32
+                                    code-rate: 97
+                                  type-of-equipment: 'RAU2 XYZ'
+                              administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
+                          - uuid: 'ETY-8888999912'
+                            operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
+                            layer-protocol:
+                            - local-id: '8888999912'
+                              wire-interface-2-0:wire-interface-pac:
+                                wire-interface-status:
+                                  interface-status: 'wire-interface-2-0:INTERFACE_STATUS_TYPE_UP'
+                                  pmd-kind-cur: '1000BASE_FD'
+                                wire-interface-configuration:
+                                  interface-name: '123790001A_ge2/0'
+                                  fixed-pmd-kind: '1000BASE_FD'
+                                wire-interface-capability:
+                                  supported-pmd-kind-list:
+                                  - pmd-name: '1000BASE_FD'
+                                    duplex: 'wire-interface-2-0:DUPLEX_TYPE_FULL_DUPLEX'
+                                    speed: '1000Mbit/s'
+                              administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
+                            ltp-augment-1-0:ltp-augment-pac:
+                              original-ltp-name: 'LAN 1/9/5'
+                          equipment:
+                          - uuid: '1919191919'
+                          - uuid: '1929394959'
+                            actual-equipment:
+                              manufactured-thing:
+                                equipment-type:
+                                  version: 'R1C'
+                                  description: 'Removable Memory Module'
+                                  model-identifier: 'RMM'
+                                  part-type-identifier: 'RYS 110 243/1'
+                                  type-name: 'RMM'
+                                manufacturer-properties:
+                                  manufacturer-name: 'SomeVendor'
+                  headers:
+                    x-correlator:
+                      schema:
+                        type: string
+                        example: '550e8400-e29b-11d4-a716-446655440000'
+                      description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+                    exec-time:
+                      schema:
+                        type: integer
+                        example: 1100
+                      description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+                    backend-time:
+                      schema:
+                        type: integer
+                        example: 850
+                      description: 'Value written by the service provider, reporting the elapsed time for data retrieval from the backend (service invocation, database access…). Expressed in milliseconds'
+                    life-cycle-state:
+                      schema:
+                        type: string
+                        enum:
+                          - 'EXPERIMENTAL'
+                          - 'OPERATIONAL'
+                          - 'DEPRECATED'
+                          - 'OBSOLETE'
+                          - 'UNKNOWN'
+                          - 'NOT_YET_DEFINED'
+                        example: 'EXPERIMENTAL'
+                      description: 'Life cycle state of the consumed service'
+                '400':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '401':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '403':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '404':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '460':
+                  $ref: '#/components/responses/460'
+                '500':
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+                '502':
+                  $ref: '#/components/responses/502'
+                '531':
+                  $ref: '#/components/responses/531'
+                '532':
+                  $ref: '#/components/responses/532'
+                default:
+                  $ref: '#/components/responses/responseForErroredServiceRequests'
+
   /v1/redirect-service-request-information:
     parameters:
       - $ref: '#/components/parameters/user'

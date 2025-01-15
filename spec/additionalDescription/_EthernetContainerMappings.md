@@ -28,7 +28,7 @@ The following data for all (target) devices should be gathered into the followin
   - `interface-name`
   - `bundling-is-on`
 - from *ethernet-container-status*
-  - `interface-status`: provide without the substring "ethernet-container-2-0:INTERFACE_STATUS_TYPE"
+  - `interface-status`: provide without the substring "ethernet-container-2-0:INTERFACE_STATUS_TYPE_"
 
 See example for 100250001:
 ```
