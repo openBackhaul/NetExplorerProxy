@@ -3156,7 +3156,7 @@ paths:
                                 logical-termination-point:
                                   type: array
                                   description: > 
-                                    'LTPs without relevant data can be filtered out, before data is written to NEP cache.
+                                    'LTPs with no relevant data can be filtered out, before data is written to NEP cache.
                                     I.e. only keep LTPs for the following interfaces: air-interface, ethernet-container, wire-interface'
                                   items:
                                     type: object
