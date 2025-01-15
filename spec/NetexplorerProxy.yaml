@@ -3059,14 +3059,17 @@ paths:
                   schema:
                     type: string
                     example: '222250001'
-                  description: 'The mountName of the device that is addressed by the request'
+                  description: > 
+                    'The mountName of the device that is addressed by the request
+                    from cyclic processing of NEP deviceList'
                 - name: fields
                   in: query
                   required: false
                   schema:
                     type: string
-                    example: 'node(node-id;netconf-node-topology:connection-status)'
-                  description: 'Query parameter to filter ressources according to RFC8040 fields filter spec'
+                  description: > 
+                    'Query parameter to filter ressources according to RFC8040 fields filter spec
+                    from string profile instance nep-1-1-0-string-p-000'
               responses:
                 '200':
                   description: 'Filtered ControlConstruct data of device provided'
@@ -3152,6 +3155,9 @@ paths:
                                 #  
                                 logical-termination-point:
                                   type: array
+                                  description: > 
+                                    'LTPs without relevant data can be filtered out, before data is written to NEP cache.
+                                    I.e. only keep LTPs for the following interfaces: air-interface, ethernet-container, wire-interface'
                                   items:
                                     type: object
                                     properties:
@@ -3190,6 +3196,7 @@ paths:
                                                   properties:
                                                     interface-status:
                                                       type: string
+                                                      description: 'Store in NEP cache without substring wire-interface-2-0:INTERFACE_STATUS_TYPE_'
                                                     pmd-kind-cur:
                                                       type: string
                                                 wire-interface-configuration:
@@ -3264,7 +3271,7 @@ paths:
                                                   properties:
                                                     interface-status:
                                                       type: string
-                                                      description: 'Data for ethernetContainerGeneralInformation'
+                                                      description: 'Data for ethernetContainerGeneralInformation, store in NEP cache without substring ethernet-container-2-0:INTERFACE_STATUS_TYPE_'
                                             # air-interface
                                             air-interface-2-0:air-interface-pac:
                                               type: object
@@ -3349,7 +3356,7 @@ paths:
                                                   properties:
                                                     interface-status:
                                                       type: string
-                                                      description: 'Data for airInterfaceGeneralInformation'
+                                                      description: 'Data for airInterfaceGeneralInformation, store in NEP cache without air-interface-2-0:INTERFACE_STATUS_TYPE_'
                                                 air-interface-capability:
                                                   type: object
                                                   properties:
@@ -3377,6 +3384,7 @@ paths:
                                                           code-rate:
                                                             type: integer
                       example:
+                        # example shows data like received from MWDI before filtering and processing on NEP side is applied
                         core-model-1-4:control-construct:
                         - equipment-augment-1-0:control-construct-pac:
                             device-model-name: 'SomeDeviceType'
