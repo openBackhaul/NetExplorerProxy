@@ -31,6 +31,7 @@ servers:
           uuid: nep-1-1-0-op-s-bm-013
         - operation-name: /v1/inform-about-preceding-release
           uuid: nep-1-1-0-op-s-bm-014
+          operation-key: n.a.
         - operation-name: /v1/update-client-of-subsequent-release
           uuid: nep-1-1-0-op-s-bm-015
       individual:
@@ -40,16 +41,22 @@ servers:
       basic:
         - operation-name: /v1/start-application-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-000
+          operation-key: n.a.
         - operation-name: /v1/inform-about-application
           uuid: nep-1-1-0-op-s-bs-001
+          operation-key: n.a.
         - operation-name: /v1/inform-about-application-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-002
+          operation-key: n.a.
         - operation-name: /v1/inform-about-release-history
           uuid: nep-1-1-0-op-s-bs-003
+          operation-key: n.a.
         - operation-name: /v1/inform-about-release-history-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-004
+          operation-key: n.a.
         - operation-name: /docs
           uuid: nep-1-1-0-op-s-bs-005
+          operation-key: n.a.
       individual:
         # mac address data from cache (000,001) and live data (002) (MATR)
         - operation-name: /v1/provide-mac-table-of-all-devices
@@ -151,7 +158,7 @@ clients:
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port:
+      tcp-port: 4018
       uuid: nep-1-1-0-tcp-c-or-1-0-1-000
     operation-clients:
       own-oam:
@@ -170,7 +177,7 @@ clients:
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port:
+      tcp-port: 4018
       uuid: nep-1-1-0-tcp-c-nr-1-1-0-000
     operation-clients:
       own-oam:
