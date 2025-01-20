@@ -31,6 +31,7 @@ servers:
           uuid: nep-1-1-0-op-s-bm-013
         - operation-name: /v1/inform-about-preceding-release
           uuid: nep-1-1-0-op-s-bm-014
+          operation-key: n.a.
         - operation-name: /v1/update-client-of-subsequent-release
           uuid: nep-1-1-0-op-s-bm-015
       individual:
@@ -40,24 +41,33 @@ servers:
       basic:
         - operation-name: /v1/start-application-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-000
+          operation-key: n.a.
         - operation-name: /v1/inform-about-application
           uuid: nep-1-1-0-op-s-bs-001
+          operation-key: n.a.
         - operation-name: /v1/inform-about-application-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-002
+          operation-key: n.a.
         - operation-name: /v1/inform-about-release-history
           uuid: nep-1-1-0-op-s-bs-003
+          operation-key: n.a.
         - operation-name: /v1/inform-about-release-history-in-generic-representation
           uuid: nep-1-1-0-op-s-bs-004
+          operation-key: n.a.
         - operation-name: /docs
           uuid: nep-1-1-0-op-s-bs-005
+          operation-key: n.a.
       individual:
         # mac address data from cache (000,001) and live data (002) (MATR)
         - operation-name: /v1/provide-mac-table-of-all-devices
           uuid: nep-1-1-0-op-s-is-000
+          operation-key: n.a.
         - operation-name: /v1/provide-mac-table-of-specific-device
           uuid: nep-1-1-0-op-s-is-001
+          operation-key: n.a.
         - operation-name: /v1/read-current-mac-table-from-device
           uuid: nep-1-1-0-op-s-is-002
+          operation-key: n.a.
         # receive operation for live MATR data
         - operation-name: /v1/receive-current-mac-table-of-device
           uuid: nep-1-1-0-op-s-is-003
@@ -65,38 +75,59 @@ servers:
         # list of devices connected to the Controller (MWDI)
         - operation-name: /v1/provide-list-of-connected-devices
           uuid: nep-1-1-0-op-s-is-020
+          operation-key: n.a.
 
         # provide list of devices in NEP cache for non-MAC data provisioning
         - operation-name: /v1/provide-list-of-devices-in-nep
           uuid: nep-1-1-0-op-s-is-021
+          operation-key: n.a.
 
         # services to provide non-MAC data from MWDI
         - operation-name: /v1/provide-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-025
+          operation-key: n.a.
         - operation-name: /v1/provide-actual-equipment-information-of-devices
           uuid: nep-1-1-0-op-s-is-026
+          operation-key: n.a.
 
         - operation-name: /v1/provide-air-interface-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-030
+          operation-key: n.a.
         - operation-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
           uuid: nep-1-1-0-op-s-is-031
+          operation-key: n.a.
         - operation-name: /v1/provide-air-interface-non-qam-pm-data-of-devices
           uuid: nep-1-1-0-op-s-is-032
+          operation-key: n.a.
         - operation-name: /v1/provide-air-interface-qam-pm-data-of-devices
           uuid: nep-1-1-0-op-s-is-033
+          operation-key: n.a.
 
         - operation-name: /v1/provide-ethernet-container-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-040
+          operation-key: n.a.
         - operation-name: /v1/provide-ethernet-container-pm-data-of-devices
           uuid: nep-1-1-0-op-s-is-041
+          operation-key: n.a.
 
         - operation-name: /v1/provide-wire-interface-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-045
+          operation-key: n.a.
 
   http-server:
     own-application-name: NetExplorerProxy
     own-release-number: 1.1.0
     uuid: nep-1-1-0-http-s-000
+    application-purpose: The application is the interface towards the NetExplorer
+    owner-name: Katharina Mohr
+    owner-email-address: Katharina.Mohr.external@telefonica.de
+    release-list:
+      - release-number: 1.0.1
+        release-date: 06.12.2024
+        changes: Initial version
+      - release-number: 1.1.0
+        release-date: 30.01.2025
+        changes: Adds provisioning of additional device data
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
@@ -127,7 +158,7 @@ clients:
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port:
+      tcp-port: 4018
       uuid: nep-1-1-0-tcp-c-or-1-0-1-000
     operation-clients:
       own-oam:
@@ -146,7 +177,7 @@ clients:
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
-      tcp-port:
+      tcp-port: 4018
       uuid: nep-1-1-0-tcp-c-nr-1-1-0-000
     operation-clients:
       own-oam:
@@ -215,6 +246,7 @@ clients:
         basic:
           - operation-name: /v1/record-service-request
             uuid: nep-1-1-0-op-c-bs-eatl-2-1-2-000
+            detailed-logging-is-on: false
         individual:
 
   - http-client:
