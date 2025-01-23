@@ -26,3 +26,7 @@ It only covers NEP services, not MWDI or MATR services.
 The NEP uses MATR services with the same name. The testcases for those, however, cannot be used to test the MATR services, because:  
 - the input to the NEP services is not the same as for the corresponding MATR service in all cases
 - there is a translation between MATR error responseCodes and NEP error responseCodes 
+
+### Note on applicability
+The testcase collection for 1.0.0 does not follow the approach agreed upon for simulators and validator.  
+Therefore its testcases are not applicable for newer releases.  
