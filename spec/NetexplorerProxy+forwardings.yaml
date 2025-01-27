@@ -738,7 +738,7 @@ forwardings:
         uuid: nep-1-1-0-op-c-is-mwdi-1-1-2-000
 
   - forwarding-name: PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetListOfNepDevices
-    uuid: nep-1-1-0-op-fc-is-052
+    uuid: nep-1-1-0-op-fc-is-051
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
@@ -753,7 +753,7 @@ forwardings:
         uuid: nep-1-1-0-op-c-is-nep-1-1-0-021
 
   - forwarding-name: PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetNepDataStatistics
-    uuid: nep-1-1-0-op-fc-is-053
+    uuid: nep-1-1-0-op-fc-is-052
     forwarding-type: InvariantProcessSnippet
     management-requests:
       operation-client-update:
