@@ -40,8 +40,6 @@ The following data for all (target) devices should be gathered into the followin
 Excerpt from sample data:  
 ![air-if-mapping-raw1.png](./pictures/air-if-mapping-raw1.png)
 
-**TODO**: im BIld fehlt beim ersten Link links das external-label (ergänzen: 100551233B)
-
 Compiled response data:  
 ```
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;external-label;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
