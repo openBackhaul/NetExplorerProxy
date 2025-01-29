@@ -38,7 +38,8 @@ db --> nep: {filtered recordCounts per data class} (no security)
 
 note over nep
   From GetListOfNepDevices get:
-  - numberOf
+  - numberOfAllDevicesInNepCache
+  - numberOfRecentlyUpdatedDevicesInNepCache (i.e. where the timestamp contains the date from today)
 end note
 nep --> external: {numberOfConnectedDevices, numberOfAllDevicesInNepCache, \nnumberOfRecentlyUpdatedDevicesInNepCache, \nrecordCountsPerDataClass} (no security)
 
