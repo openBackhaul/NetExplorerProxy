@@ -1548,7 +1548,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -1627,7 +1627,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -1707,7 +1707,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -1787,7 +1787,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -1867,7 +1867,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -1945,7 +1945,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -2025,7 +2025,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -2103,7 +2103,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
@@ -2183,7 +2183,7 @@ paths:
                 data-age:
                   type: integer
                   description: > 
-                    'Optional: if provided, found data is filtered for data that is not older than data-age days.
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
                     If not provided, all found data (for target devices) is returned.'
               example:
                 mount-name-list: 
