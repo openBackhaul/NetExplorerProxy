@@ -9,7 +9,7 @@ participant "MWDI://v1/provide-list-of-connected-devices" as mwdi
 participant "NEP://v1/provide-list-of-devices-in-nep" as nepDeviceList
 participant "ElasticSearch \n(or database)" as db
 
-external -> nep: (BasicAuth)
+external -> nep: {target-date (optional)}(BasicAuth)
 activate nep
 
 note over nep
@@ -28,10 +28,11 @@ nepDeviceList -> nep: {listOf(mountName, lastDataUpdateTimestamp)}
 
 note over nep
   <u>GetNepDataStatistics</u>
-  Read number of records where timestamp contains current day
+  Read number of records where timestamp contains either
+  day according to the target-date (if provided) or from today (if not provided)
   for the different data classes
 end note
-nep -> db: (apiAuthKey)
+nep -> db: {day-to-filter-for}(apiAuthKey)
 db --> nep: {filtered recordCounts per data class} (no security)
 
 
