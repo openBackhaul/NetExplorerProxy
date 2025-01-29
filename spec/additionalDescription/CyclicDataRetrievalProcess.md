@@ -227,3 +227,7 @@ If no data is found, then
   - this also applies in case the services are called with a list of devices the output data should be filtered for
 
 I.e. in case there is no data found, there will be no error responses.
+
+**Data availability statistics**  
+For the new services data statistics are provided.  
+They are to be applied on the level of the different data classes and reflect the data availability for the current day.  

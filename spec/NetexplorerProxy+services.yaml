@@ -114,6 +114,10 @@ servers:
           uuid: nep-1-1-0-op-s-is-045
           operation-key: n.a.
 
+        - operation-name: /v1/provide-nep-data-statistics
+          uuid: nep-1-1-0-op-s-is-050
+          operation-key: n.a.
+
   http-server:
     own-application-name: NetExplorerProxy
     own-release-number: 1.1.0
@@ -377,3 +381,22 @@ clients:
           # service to retrieve non-MAC-address data from MWDI, uses fields filter (nep-1-1-0-string-p-000)
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
             uuid: nep-1-1-0-op-c-is-mwdi-1-1-2-001
+
+  - http-client:
+      application-name: NetExplorerProxy
+      release-number: 1.1.0
+      uuid: nep-1-1-0-http-c-nep-1-1-0-000
+    tcp-client:
+      remote-protocol: http
+      ip-address: 127.0.0.1
+      tcp-port: 4018
+      uuid: nep-1-1-0-tcp-c-nep-1-1-0-000
+    operation-clients:
+      own-oam:
+        basic:
+        individual:
+      service:
+        basic:
+        individual:
+          - operation-name: /v1/provide-list-of-devices-in-nep
+            uuid: nep-1-1-0-op-c-is-nep-1-1-0-021

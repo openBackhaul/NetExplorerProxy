@@ -47,3 +47,6 @@
 .  
 .  
 ![PromptForProvidingWireInterfaceGeneralInfoCausesReadingFromNepCache](./045_ProvideWireInterfaceGeneralInfo.png)  
+.  
+.  
+![PromptForProvidingNepDataStatisticsCausesReadingFromNepCache](./050_ProvideNepDataStatistics.png)  
