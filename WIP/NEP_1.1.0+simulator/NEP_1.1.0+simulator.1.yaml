@@ -381,9 +381,9 @@ paths:
                     type: array
                     items:
                       type: string
-              example:
-                mount-name-list:
-                  - 'string'
+                example:
+                  mount-name-list:
+                    - 'string'
           headers:
             life-cycle-state:
               schema:
@@ -444,10 +444,10 @@ paths:
                           type: string
                         last-data-update-timestamp:
                           type: string
-              example:
-                mount-name-list:
-                  - mount-name: 'string'
-                    last-data-update-timestamp: 'string'
+                example:
+                  mount-name-list:
+                    - mount-name: 'string'
+                      last-data-update-timestamp: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -507,7 +507,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -567,7 +567,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -627,7 +627,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -687,7 +687,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -750,7 +750,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -809,7 +809,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -869,7 +869,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -929,7 +929,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -989,7 +989,7 @@ paths:
             text/csv:
               schema:
                 type: string
-              example: 'string'
+                example: 'string'
           headers:
             life-cycle-state:
               schema:
@@ -1083,22 +1083,22 @@ paths:
                             type: integer
                           wire-interface-general-info:
                             type: integer
-              example:
-                data-statistics:
-                  timestamp: 'string'
-                  number-of-connected-devices: 0
-                  number-of-devices-in-nep-cache: 0
-                  number-of-recently-update-devices-in-nep-cache: 0
-                  number-of-records-per-data-class:
-                    general-device-info: 0
-                    actual-equipment-info: 0
-                    air-interface-general-info: 0
-                    air-interface-transmission-mode-lists: 0
-                    air-interface-non-qam-pm-data: 0
-                    air-interface-qam-pm-data: 0
-                    ethernet-container-general-info: 0
-                    ethernet-container-pm-data: 0
-                    wire-interface-general-info: 0
+                example:
+                  data-statistics:
+                    timestamp: 'string'
+                    number-of-connected-devices: 0
+                    number-of-devices-in-nep-cache: 0
+                    number-of-recently-update-devices-in-nep-cache: 0
+                    number-of-records-per-data-class:
+                      general-device-info: 0
+                      actual-equipment-info: 0
+                      air-interface-general-info: 0
+                      air-interface-transmission-mode-lists: 0
+                      air-interface-non-qam-pm-data: 0
+                      air-interface-qam-pm-data: 0
+                      ethernet-container-general-info: 0
+                      ethernet-container-pm-data: 0
+                      wire-interface-general-info: 0
           headers:
             life-cycle-state:
               schema:
