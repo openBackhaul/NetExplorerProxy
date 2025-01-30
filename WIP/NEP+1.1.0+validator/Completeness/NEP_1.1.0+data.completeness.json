@@ -20,7 +20,7 @@
 			},
 			{
 				"serverName": "nepSimulator",
-				"server": "http://localhost:3001",
+				"server": "http://localhost:3003",
 				"pathToControlConstruct": "",
 				"authorizationCode": "Basic ????",
 				"operationKey": "Operation key not yet provided.",
