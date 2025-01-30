@@ -1554,7 +1554,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'General device information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1633,7 +1633,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'Actual equipment information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1713,7 +1713,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'General air interface information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1793,7 +1793,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'Air interface transmission mode list information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1873,7 +1873,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'Air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -1951,7 +1951,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'Air interface QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -2031,7 +2031,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'General ethernetContainer information for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -2109,7 +2109,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
@@ -2189,7 +2189,7 @@ paths:
                 mount-name-list: 
                   - '305251234'
                   - '100250001'
-                data-age: 2
+                data-age: 48
       responses:
         '200':
           description: 'General wireInterface information for all (target) devices in the NetExplorerProxy cache in csv format.'
