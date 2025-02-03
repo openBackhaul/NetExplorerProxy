@@ -63,6 +63,37 @@ The list shall be filtered, to only keep those transmission mode records, where 
 See example:  
 ![qam-xstates](./pictures/qam_xstates_example.png)
 
+#### AirInterface capability: transmission-mode-list
+The information from transmission-mode-list is required by Netexplorer for capacity computation.  
+The list can get fairly big, but not all of its entries may contain useful information.  
+
+I.e. all entries where the core-rate is -1 can be filtered out beforehand.  
+See the following example:  
+```
+"air-interface-capability": {
+    "transmission-mode-list": [
+        {   # this one is to be kept
+            "transmission-mode-name": "1360-56000-2048-Std",
+            "symbol-rate-reduction-factor": 1,
+            "channel-bandwidth": 56000,
+            "xpic-is-avail": true,
+            "modulation-scheme-name-at-lct": "2048 QAM",
+            "modulation-scheme": 2048,
+            "code-rate": 96
+        },
+        {   # this one is to be filtered out
+            "transmission-mode-name": "1359-40000-2048-Light",
+            "symbol-rate-reduction-factor": 1,
+            "channel-bandwidth": 56000,
+            "xpic-is-avail": true,
+            "modulation-scheme-name-at-lct": "2048 QAM Light",
+            "modulation-scheme": 2048,
+            "code-rate": -1
+        }
+    ]
+}
+```
+
 #### Ltp blocks
 The logical-termination-point list contains lots of ltps, for which no data is to be extracted. Those can be filtered out.
 I.e. only keep blocks which are related to one of the following interfaces:
