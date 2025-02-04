@@ -47,6 +47,7 @@ note over nep
   in case of failure, retry according to retry config,
   consider retrieval treshold times for prioritization;
   before writing to NEP cache apply further filtering
+  and preprocessing
 end note
   nep -> mwdiCC: {mount-name}
   mwdiCC --> nep: {filtered ControlConstruct}

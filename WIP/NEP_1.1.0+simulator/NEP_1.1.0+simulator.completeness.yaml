@@ -715,10 +715,10 @@ paths:
               schema:
                 type: string
                 example:
-                  'mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail
-                  100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true
-                  100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true
-                  100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true'
+                  'mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
+                  100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true;28340,9
+                  100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true;37008,7
+                  100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true;18893,9'
           headers:
             life-cycle-state:
               schema:
