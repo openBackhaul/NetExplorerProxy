@@ -67,7 +67,26 @@ The following columns is to be provided in the response:
   - `code-rate`
   - `channel-bandwidth`
   - `xpic-is-avail`
+- computed from properties in *air-interface-capability/transmission-mode-list*
+  - `capa-factor`: a precomputed factor, see formula below
 
+**Capa-factor**:  
+The capa-factor is to be computed by the formula used by the TrafficChecker, and to be divided by 1000 to directly get mbps values.  
+(In Netexplorer then needs to set the capa-factors in relation to the time the links were operating in the respective modulation scheme.)
+
+The capacity formula used by TrafficChecker, looks as follows:  
+![Image](https://github.com/user-attachments/assets/01b07158-2175-40ca-8ade-efe8638ab9f1)
+
+Consider the first record from the example given below ("56000-64-v0"):
+- channel-bandwidth = 56000
+- symbol-rate-reduction-factor = 1
+- with NumOfStates = modulation-scheme: log2(NumOfStates) = log2(64) = 6
+- code-rate = 97
+
+capa-factor = ((56000 / 1) * log2(64) * 97 * 1/1,15 kbps) / 1000 = 28.340,9 mbps
+
+
+**Example**  
 Again data for all air interfaces of the devices from NEP cache shall be aggregated in a single output.  
 For each transmission-mode-list record an interface has, a new line in the csv shall be generated.  
 
@@ -106,10 +125,10 @@ See example for 100250001/RF-123456789/123456789:
 
 which translates into the following set of data:
 ```
-mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail
-100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true
-100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true
-100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true
+mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
+100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true;28340,9
+100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true;37008,7
+100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true;18893,9
 ```
 
 ---
