@@ -1,0 +1,17 @@
+@startuml nep-completeness-components
+
+skinparam componentStyle rectangle
+
+title
+NetExplorerProxy+test.functional.completeness
+end title
+
+package "completeness" {
+  component [<u>Postman</u>\n\nNetExplorerProxy+test.completeness.json] as TCC #Orange 
+  component [<u>Application under Test</u>\n\nNetExplorerProxy] as AUT #LightBlue 
+
+  TCC -> AUT
+
+}
+
+@enduml

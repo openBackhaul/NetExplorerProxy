@@ -1,8 +1,13 @@
-# NetExplorerProxy Testing
+# Testing for Completeness
 
-The following testcase collection(s) target NetExplorerProxy v1.1.0.
+## Components
+![Components](./diagrams/nep-completeness-components.png)
 
-**Important note**:
+
+## v1.0.0 
+![Sequence](./v1.0.0/diagrams/NetExplorerProxy+diagram.completeness.png)
+
+## Additional notes
 Some of the services shall return their data not with application/json, but with text/csv format.  
 Unfortunately there (currently) seems to be an issue with the import into Mockoon, which leads to the  
 services being imported with their responseBodies being empty.  
@@ -21,4 +26,4 @@ The affected services are:
 - /v1/provide-wire-interface-general-information-of-devices
 
 For easier usage, the respective examples to be copied have also been provided in a separate file:  
-[NEP_1.1.0+examples.completeness](./NEP_1.1.0+simulator/NEP_1.1.0+examples.completeness.txt)  
+[NetExplorerProxy+simu.examples.completeness](./v1.0.0/simulators/NetExplorerProxy+simu.examples.txt)  

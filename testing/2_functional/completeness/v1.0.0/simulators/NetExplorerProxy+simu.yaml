@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: NEP_1.0.1+simulator.1
+  title: NEP_1.1.0+simulator.completeness
   version: 1.0.0
 
 paths:
 ########################################################################################################################
-#   Generic Simulator (generic examples, but all response codes)
+#   Service Layer - Individual part
 ########################################################################################################################
   /v1/provide-mac-table-of-all-devices:
     post:
@@ -28,7 +28,7 @@ paths:
                     - mount-name
                     - own-mac-address
                     - egress-ltp-uuid
-                    - original-ltp-uuid
+                    - original-ltp-name
                     - vlan-id
                     - remote-mac-address
                     - time-stamp-of-data
@@ -48,13 +48,20 @@ paths:
                     time-stamp-of-data:
                       type: string
                 example:
-                  - mount-name: 'string'
-                    own-mac-address: 'string'
-                    egress-ltp-uuid: 'string'
-                    original-ltp-name: 'string'
-                    vlan-id: 0
-                    remote-mac-address: 'string'
-                    time-stamp-of-data: 'string'
+                  - mount-name: '305251234'
+                    own-mac-address: '00:00:00:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
+                    vlan-id: 17
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
+                  - mount-name: '30525999'
+                    own-mac-address: 'FF:00:11:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
+                    vlan-id: 17
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
           headers:
             life-cycle-state:
               schema:
@@ -66,26 +73,6 @@ paths:
                   - 'OBSOLETE'
                   - 'UNKNOWN'
                   - 'NOT_YET_DEFINED'
-        '400':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '401':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '403':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '404':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '500':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '502':
-          $ref: '#/components/responses/502'
-        '530':
-          $ref: '#/components/responses/530'
-        '531':
-          $ref: '#/components/responses/531'
-        '532':
-          $ref: '#/components/responses/532'
-        default:
-          $ref: '#/components/responses/responseForErroredServiceRequests'
 
   /v1/provide-mac-table-of-specific-device:
     post:
@@ -139,13 +126,20 @@ paths:
                     time-stamp-of-data:
                       type: string
                 example:
-                  - mount-name: 'string'
-                    own-mac-address: 'string'
-                    egress-ltp-uuid: 'string'
-                    original-ltp-name: 'string'
-                    vlan-id: 0
-                    remote-mac-address: 'string'
-                    time-stamp-of-data: 'string'
+                  - mount-name: '305251234'
+                    own-mac-address: '00:00:00:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
+                    vlan-id: 17
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
+                  - mount-name: '30525999'
+                    own-mac-address: 'FF:00:11:00:00:00'
+                    egress-ltp-uuid: '305251234+mac-inf-1234'
+                    original-ltp-name: 'eth-1-0-3'
+                    vlan-id: 17
+                    remote-mac-address: '01:01:01:01:01:01'
+                    time-stamp-of-data: '2010-11-20T14:00:00+01:00'
           headers:
             life-cycle-state:
               schema:
@@ -157,28 +151,6 @@ paths:
                   - 'OBSOLETE'
                   - 'UNKNOWN'
                   - 'NOT_YET_DEFINED'
-        '400':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '401':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '403':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '404':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '460':
-          $ref: '#/components/responses/460'
-        '500':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '502':
-          $ref: '#/components/responses/502'
-        '530':
-          $ref: '#/components/responses/530'
-        '531':
-          $ref: '#/components/responses/531'
-        '532':
-          $ref: '#/components/responses/532'
-        default:
-          $ref: '#/components/responses/responseForErroredServiceRequests'
 
   /v1/read-current-mac-table-from-device:
     post:
@@ -228,7 +200,7 @@ paths:
                   request-id:
                     type: string
                 example:
-                  request-id: 'string'
+                  request-id: '305251234-101120-1400'
           headers:
             x-correlator:
               schema:
@@ -249,32 +221,6 @@ paths:
                   - 'OBSOLETE'
                   - 'UNKNOWN'
                   - 'NOT_YET_DEFINED'
-        '400':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '401':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '403':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '404':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '429':
-          $ref: '#/components/responses/429'
-        '460':
-          $ref: '#/components/responses/460'
-        '500':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '502':
-          $ref: '#/components/responses/502'
-        '530':
-          $ref: '#/components/responses/530'
-        '531':
-          $ref: '#/components/responses/531'
-        '532':
-          $ref: '#/components/responses/532'
-        '533':
-          $ref: '#/components/responses/533'
-        default:
-          $ref: '#/components/responses/responseForErroredServiceRequests'
 
   /v1/receive-current-mac-table-of-device:
     post:
@@ -340,24 +286,6 @@ paths:
                   - 'OBSOLETE'
                   - 'UNKNOWN'
                   - 'NOT_YET_DEFINED'
-        '400':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '401':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '403':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '404':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '500':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '502':
-          $ref: '#/components/responses/502'
-        '531':
-          $ref: '#/components/responses/531'
-        '550':
-          $ref: '#/components/responses/550'
-        default:
-          $ref: '#/components/responses/responseForErroredServiceRequests'
 
   /v1/provide-list-of-connected-devices:
     post:
@@ -381,9 +309,10 @@ paths:
                     type: array
                     items:
                       type: string
-              example:
-                mount-name-list:
-                  - 'string'
+                example:
+                  mount-name-list:
+                    - '305251234'
+                    - '105258888'
           headers:
             life-cycle-state:
               schema:
@@ -395,25 +324,557 @@ paths:
                   - 'OBSOLETE'
                   - 'UNKNOWN'
                   - 'NOT_YET_DEFINED'
-        '400':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '401':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '403':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '404':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '500':
-          $ref: '#/components/responses/responseForErroredServiceRequests'
-        '502':
-          $ref: '#/components/responses/502'
-        '531':
-          $ref: '#/components/responses/531'
-        '532':
-          $ref: '#/components/responses/532'
-        default:
-          $ref: '#/components/responses/responseForErroredServiceRequests'
 
+  /v1/provide-list-of-devices-in-nep:
+    post:
+      operationId: provideListOfDevicesInNep
+      summary: 'Responses with a list of devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: 'List of devices in the NetExplorerProxy cache.'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - mount-name-list
+                properties:
+                  mount-name-list:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - mount-name
+                        - last-data-update-timestamp
+                      properties:
+                        mount-name:
+                          type: string
+                        last-data-update-timestamp:
+                          type: string
+                example:
+                  mount-name-list:
+                    - mount-name: '305251234'
+                      last-data-update-timestamp: '2025-01-15T14:00:00+01:02'
+                    - mount-name: '105258888'
+                      last-data-update-timestamp: '2010-01-15T18:27:00+01:02'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-general-information-of-devices:
+    post:
+      operationId: provideGeneralInformationOfDevices
+      summary: 'Responses with general device information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General device information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;timestamp;external-label;device-model-name;system-name
+                  100254566;2024-12-11T16:00:00+01:00;100254566;OptiXRTN950;System xyz
+                  200259999;2024-12-11T18:00:00+01:00;20025999;MINI-LINK Traffic Node;'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-actual-equipment-information-of-devices:
+    post:
+      operationId: provideActualEquipmentInformationOfDevices
+      summary: 'Responses with actual equipment information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Actual equipment information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-type-identifier;type-name;manufacturer-name;manufacturer-identifier
+                  100250001;1921282559;;2024-12-11T16:00:00+01:00;R1C;Removable Memory Module;RRM;RYS 110 243/1;RRM;Ericsson;;
+                  200251234;LAN-1 SFP;LAN-1 SFP;2024-12-11T16:00:00+01:00;V2.0;SFP module in LAN-1 SFP connector;Generic;AXGD-1354-0533;SFP module;Axcen Photonics;;'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-general-information-of-devices:
+    post:
+      operationId: provideAirInterfaceGeneralInformationOfDevices
+      summary: 'Responses with general air interface information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General air interface information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
+                  100250001;RF-123456789;core-model-1-4:OPERATIONAL_STATE_ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
+                  100250001;RF-234234234;core-model-1-4:OPERATIONAL_STATE_ENABLED;234234234;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/3.1/1;56000-16-v0;56000-1024-v0;false;true;true;UP;RAU2 X 32/13 R3A
+                  200250003;ltpB-1;core-model-1-4:OPERATIONAL_STATE_ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-transmission-mode-lists-of-devices:
+    post:
+      operationId: provideAirInterfaceTransmissionModeListsInformationOfDevices
+      summary: 'Responses with air interface transmission mode lists information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface transmission mode list information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
+                  100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true;28340,9
+                  100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true;37008,7
+                  100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true;18893,9'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-s-is-031/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+
+  /v1/provide-air-interface-non-qam-pm-data-of-devices:
+    post:
+      operationId: provideAirInterfaceNonQamPmDataOfDevices
+      summary: 'Responses with air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-qam-pm-data-of-devices:
+    post:
+      operationId: provideAirInterfaceQamPmDataOfDevices
+      summary: 'Responses with air interface QAM PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;2;100;4QAM
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;1;700;16QAM'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-ethernet-container-general-information-of-devices:
+    post:
+      operationId: provideEthernetContainerGeneralInformationOfDevices
+      summary: 'Responses with general ethernetContainer information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General ethernetContainer information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
+                  100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-ethernet-container-pm-data-of-devices:
+    post:
+      operationId: provideEthernetContainerGeneralInformationOfDevices
+      summary: 'Responses with ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;total-frames-input;total-frames-output;errored-frames-input;errored-frames-output;dropped-frames-input;dropped-frames-output
+                  100250001;ETH-2134639490;2134639490;2024-12-10T08:30:00+01:00;74054;17333;-1;-1;899;0;0;0
+                  100250001;ETH-2134639490;2134639490;2024-12-10T07:45:00+01:00;73444;16016;-1;-1;899;0;0;0'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-wire-interface-general-information-of-devices:
+    post:
+      operationId: provideWireInterfaceGeneralInformationOfDevices
+      summary: 'Responses with general wireInterface information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General wireInterface information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
+                  100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;NOT_YET_DEFINED;NOT_YET_DEFINED;NOT_YET_DEFINED;
+                  100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;1000BASE_FD;FULL_DUPLEX;1000Mbit/s'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-nep-data-statistics:
+    post:
+      operationId: provideNepDataStatistics
+      summary: 'Provides (non-MAC) data availability statistics of the NEP cache for the current day'
+      tags:
+        - IndividualServices
+      security:
+        - apiKeyAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target-date:
+                  type: string
+                  enum:
+                    - 'today'
+                    - 'yesterday'
+      responses:
+        '200':
+          description: 'NEP data statistics provided'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data-statistics
+                properties:
+                  data-statistics:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                      number-of-connected-devices:
+                        type: integer
+                      number-of-devices-in-nep-cache:
+                        type: integer
+                      number-of-recently-update-devices-in-nep-cache:
+                        type: integer
+                      number-of-records-per-data-class:
+                        type: object
+                        properties:
+                          general-device-info:
+                            type: integer
+                          actual-equipment-info:
+                            type: integer
+                          air-interface-general-info:
+                            type: integer
+                          air-interface-transmission-mode-lists:
+                            type: integer
+                          air-interface-non-qam-pm-data:
+                            type: integer
+                          air-interface-qam-pm-data:
+                            type: integer
+                          ethernet-container-general-info:
+                            type: integer
+                          ethernet-container-pm-data:
+                            type: integer
+                          wire-interface-general-info:
+                            type: integer
+                example:
+                  data-statistics:
+                    timestamp: '2025-01-01T03:27:00+01:02'
+                    number-of-connected-devices: 37500
+                    number-of-devices-in-nep-cache: 40000
+                    number-of-recently-update-devices-in-nep-cache: 18000
+                    number-of-records-per-data-class:
+                      general-device-info: 10000
+                      actual-equipment-info: 25000
+                      air-interface-general-info: 20000
+                      air-interface-transmission-mode-lists: 29000
+                      air-interface-non-qam-pm-data: 90000
+                      air-interface-qam-pm-data: 180000
+                      ethernet-container-general-info: 50000
+                      ethernet-container-pm-data: 150000
+                      wire-interface-general-info: 30000
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-s-is-020/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
 
 ########################################################################################################################
 #   Common Components

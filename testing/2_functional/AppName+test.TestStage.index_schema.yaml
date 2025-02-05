@@ -1,0 +1,155 @@
+type: object
+required:
+  - testing-stage
+  - responsible-person-list
+  - release-list
+properties:
+  testing-stage:
+    type: string
+    enum:
+      - 'Unit Testing'
+      - 'Internal Integration Testing'
+      - 'Functional Testing'
+      - 'Performance Testing'
+      - 'Pre-prod Testing'
+      - 'First Office Application'
+    description: ''
+  responsible-person-list:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+        - name
+        - role
+        - email-address
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+            - 'Application Implementer'
+            - 'Application Owner'
+            - 'TinyApplicationController Owner'
+            - 'Operation Owner'
+            - 'System Tester'
+            - 'Application User'
+            - 'UserDemand Owner'
+            - 'Specification Support'
+        email-address:
+          type: string
+  release-list:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+        - specification-tag
+        - testcase-list
+      properties:
+        specification-tag:
+          type: string
+          pattern: '^v([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})_spec$'
+        testcase-list:
+          type: array
+          minItems: 1
+          items:
+            allOf:
+              - type: object
+                required:
+                  - testcase-name
+                  - type-of-testcase
+                properties:
+                  testcase-name:
+                    type: string
+                  type-of-testcase:
+                    type: string
+                    enum:
+                      - 'Postman Testcase Collection'
+              - oneOf:
+                - description: 'Postman Testcase Collection'
+                  type: object
+                  required:
+                    - postman-export-file
+                    - data-file
+                    - simulator-file-list
+                  properties:
+                    postman-export-file:
+                      type: string
+                    data-file:
+                      type: string
+                    simulator-file-list:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - simulator-file
+                          - simulated-application
+                          - temporary-address
+                        properties:
+                          simulator-file:
+                            type: string
+                          simulated-application:
+                            type: object
+                            required:
+                              - application-name
+                              - release-number
+                            properties:
+                              application-name:
+                                type: string
+                                pattern: '^([A-Z][a-z0-9]+){2,}$'
+                              release-number:
+                                type: string
+                                pattern: '^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,2})$'
+                          temporary-address:
+                            type: object
+                            required:
+                              - ipv-4-address
+                              - tcp-port
+                            properties:
+                              ipv-4-address:
+                                type: string
+                                pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+                              tcp-port:
+                                type: integer
+                                minimum: 0
+                                maximum: 65535
+example:
+  testing-stage: 'Functional Testing'
+  responsible-person-list:
+    - name: 'Thorsten Heinze'
+      role: 'Application Owner'
+      email-address: 'Thorsten.Heinze@telefonica.com'
+  release-list:
+    - specification-tag: 'v1.0.0_spec'
+      testcase-list:
+        - testcase-name: 'completeness.v1.0.0'
+          type-of-testcase: 'Postman Testcase Collection'
+          postman-export-file: './completeness/v1.0.0/testcases/ConnectionPreparation+test.completeness.json'
+          data-file: './completeness/v1.0.0/testcases/ConnectionPreparation+data.completeness.json'
+          simulator-file-list: []
+    - specification-tag: 'v1.0.1_spec'
+      testcase-list:
+        - testcase-name: 'completeness.v1.0.0'
+          type-of-testcase: 'Postman Testcase Collection'
+          postman-export-file: './completeness/v1.0.0/testcases/ConnectionPreparation+test.completeness.json'
+          data-file: './completeness/v1.0.0/testcases/ConnectionPreparation+data.completeness.json'
+          simulator-file-list: []
+        - testcase-name: 'alreadyOccupiedIp.v1.0.1'
+          type-of-testcase: 'Postman Testcase Collection'
+          postman-export-file: './alreadyOccupiedIp/v1.0.1/testcases/ConnectionPreparation+test.occupiedip.json'
+          data-file: './alreadyOccupiedIp/v1.0.1/testcases/ConnectionPreparation+data.occupiedip.json'
+          simulator-file-list: []
+        - testcase-name: 'hypotheticalInputTest'
+          type-of-testcase: 'Postman Testcase Collection'
+          postman-export-file: './alreadyOccupiedIp/v1.0.1/testcases/ConnectionPreparation+test.hypotheticalinput.json'
+          data-file: './alreadyOccupiedIp/v1.0.1/testcases/ConnectionPreparation+data.hypotheticalinput.json'
+          simulator-file-list:
+            - simulator-file: './alreadyOccupiedIp/v1.0.1/simulators/ConnectionPreparation+simu.hypotheticalinput.yaml'
+              simulated-application:
+                application-name: 'MWDI'
+                release-number: '1.1.2'
+              temporary-address:
+                ipv-4-address: 127.0.0.1
+                tcp-port: 5015
