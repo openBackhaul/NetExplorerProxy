@@ -1,0 +1,16 @@
+testing-stage: 'Functional Testing'
+responsible-person-list:
+  - name: 'Katharina Mohr'
+    role: 'Application Owner'
+    email-address: 'katharina.mohr.external@telefonica.com'
+  - name: 'Thorsten Heinze'
+    role: 'Specification Support'
+    email-address: 'thorsten.heinze@telefonica.com'
+release-list:
+  - specification-tag: 'v1.1.0_spec'
+    testcase-list:
+      - testcase-name: 'completeness.v1.0.0'
+        type-of-testcase: 'Postman Testcase Collection'
+        postman-export-file: './completeness/v1.0.0/testcases/NetExplorerProxy+test.completeness.json'
+        data-file: './completeness/v1.0.0/testcases/NetExplorerProxy+data.completeness.json'
+        simulator-file-list: []
