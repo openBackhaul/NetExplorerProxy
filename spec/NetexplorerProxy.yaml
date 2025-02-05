@@ -1566,7 +1566,13 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;timestamp;external-label;device-model-name;system-name
                   There shall be a single line containing all relevant data per device (missing information is to be left blank)
-                  from the cache/ElasticSearch (generalDeviceInformation)'
+                  from the cache/ElasticSearch (generalDeviceInformation).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - timestamp: the timestamp from when the data was gathered
+                    - external-label: if set correctly, also contains the mount-name; from equipment-augment
+                    - device-model-name: from equipment-augment
+                    - system-name: from equipment-augment protocol-collection'
                 example:
                   'mount-name;timestamp;external-label;device-model-name;system-name
                   100254566;2024-12-11T16:00:00+01:00;100254566;OptiXRTN950;System xyz
@@ -1645,7 +1651,19 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-type-identifier;type-name;manufacturer-name;manufacturer-identifier
                   There shall be a single line containing all relevant data per device and actualEquipment (missing information is to be left blank)
-                  from the cache/ElasticSearch (actualEquipmentInfo)'
+                  from the cache/ElasticSearch (actualEquipmentInfo).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the equipment uuid
+                    - local-id: the equipment local-id
+                    - timestamp: the timestamp from when the data was gathered
+                    - version: from actual-equipment/manufactured-thing
+                    - description: from actual-equipment/manufactured-thing
+                    - model-identifier: from actual-equipment/manufactured-thing
+                    - part-type-indentifier: from actual-equipment/manufactured-thing
+                    - type-name: from actual-equipment/manufactured-thing
+                    - manufacturer-name: from actual-equipment/manufacturer-properties
+                    - manufacturer-identifier: from actual-equipment/manufacturer-properties'
                 example:
                   'mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-type-identifier;type-name;manufacturer-name;manufacturer-identifier
                   100250001;1921282559;;2024-12-11T16:00:00+01:00;R1C;Removable Memory Module;RRM;RYS 110 243/1;RRM;Ericsson;;
@@ -1725,7 +1743,23 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;external-label;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
                   There shall be a single line containing all relevant data per device and air interface (missing information is to be left blank)
-                  from the cache/ElasticSearch (airInterfaceGeneralInfo)'
+                  from the cache/ElasticSearch (airInterfaceGeneralInfo).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - operational-state: the ltps operational state
+                    - local-id: the layer-protocol (i.e. interface) local-id; required for mapping of response data from other air-interface services 
+                    - timestamp: the timestamp from when the data was gathered
+                    - administrative-state: the layer protocols admininstrative state
+                    - original-ltp-name: from ltp-augment
+                    - external-label: from ltp-augment, contains the UnitID, from which linkID can be derived
+                    - transmission-mode-min: minimum configured transmission mode
+                    - transmission-mode-max: maximum configured transmission mode
+                    - xpic-is-on: indicates if xpic is turned on in configuration
+                    - power-is-on: indicates if power is turned on in configuration
+                    - transmitter-is-on: indicates if transmitter is turned on in configuration
+                    - interface-status: indicates if the interface is up or not
+                    - type-of-equipment: provides information about the equipment, from air-interface/capability'
                 example:
                   'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;external-label;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
                   100250001;RF-123456789;core-model-1-4:OPERATIONAL_STATE_ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;100551233B;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
@@ -1805,7 +1839,20 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
                   There shall be a single line containing all relevant data per device, air interface and transmission mode (missing information is to be left blank)
-                  from the cache/ElasticSearch (airInterfaceTransmissionModeLists)'
+                  from the cache/ElasticSearch (airInterfaceTransmissionModeLists)
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - local-id: the layer protocol (i.a. air-interface) id, to be used together with uuid as mapping key
+                    - transmission-mode-name: name of the supported transmission mode
+                    - symbol-rate-reduction-factor
+                    - modulation-scheme-at-lct: name of the modulation scheme as shown in LCT
+                    - modulation-scheme: indicates the modulation scheme withouth information about light, strong, etc., is the numberOfStates
+                    - code-rate
+                    - channel-bandwidth
+                    - xpic-is-avail: indicates if the modulation scheme supports xpic
+                    - capa-factor: capacity factor in mbps derived from above properties with formula
+                        (channel-bandwidth/symbol-rate-reduction-factor) * log2(modulation-scheme) * code-rate * 1/1,15 * 1/1000'
                 example:
                   'mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
                   100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true;28340,9
@@ -1885,7 +1932,27 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
                   There shall be a single line containing all relevant data per device, air interface and time interval (missing information is to be left blank)
-                  from the cache/ElasticSearch (airInterfaceNonQamPm)'
+                  from the cache/ElasticSearch (airInterfaceNonQamPm).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - local-id: the layer-protocol (i.e. interface) local-id; required for mapping of response data from other air-interface services 
+                    - period-end-time: timestamp of the 15 minute interval
+                    - es: errored seconds (sec)
+                    - ses: severely errored seconds (sec)
+                    - ut: unavailable time (sec)
+                    - rx-level-min: minimum receive level (dBm)
+                    - rx-level-max: maximum receive level (dBm)
+                    - rx-level-avg: average receive level (dBm)
+                    - tx-level-min: minimum transmit level (dBm)
+                    - tx-level-max: maximum transmit level (dBm)
+                    - tx-level-avg: average transmit level (dBm)
+                    - xpd-min: minimum xpd (= cross-polarization descrimination)
+                    - xpd-max: maximum xpd
+                    - xpd-avg: average xpd
+                    - snir-min: minimum snir (= signal-to-noise-and-interference ration)
+                    - snir-max: maximum snir
+                    - snir-avg: avgerage snir'
                 example:
                   'mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
                   200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99'
@@ -1963,7 +2030,15 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
                   There shall be a single line containing all relevant data per device, air interface and time interval (missing information is to be left blank)
-                  from the cache/ElasticSearch (airInterfaceQamPm)'
+                  from the cache/ElasticSearch (airInterfaceQamPm).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - local-id: the layer-protocol (i.e. interface) local-id; required for mapping of response data from other air-interface services 
+                    - period-end-time: timestamp of the 15 minute interval
+                    - time-xstate-sequence-number
+                    - time: the time the link was operating with this modulation scheme (seconds) during the 15min time interval
+                    - transmission-mode: this property contains the transmission-mode-name as found in the response data of /v1/provide-air-interface-transmission-mode-lists-of-devices'
                 example:
                   'mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
                   200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;2;100;4QAM
@@ -2043,7 +2118,18 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
                   There shall be a single line containing all relevant data per device and ethernetContainer (missing information is to be left blank)
-                  from the cache/ElasticSearch (ethernetContainerGeneralInfo)'
+                  from the cache/ElasticSearch (ethernetContainerGeneralInfo).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - operational-state: the ltps operational state
+                    - local-id: the layer-protocol (i.e. interface) local-id; required for mapping of response data from ethernet pm service
+                    - timestamp: the timestamp from when the data was gathered
+                    - administrative-state: the layer protocols admininstrative state
+                    - original-ltp-name: from ltp-augment
+                    - interface-name: indicates if the interface is up or not
+                    - bundling-is-on: indicates if bundling is activated
+                    - interface-status: indicates if the interface is up'
                 example:
                   'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
                   100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP'
@@ -2121,7 +2207,20 @@ paths:
                   'The first line shall contain the following headers:
                     mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;total-frames-input;total-frames-output;errored-frames-input;errored-frames-output;dropped-frames-input;dropped-frames-output
                   There shall be a single line containing all relevant data per device, ethernetContainer and time interval (missing information is to be left blank)
-                  from the cache/ElasticSearch (ethernetContainerPm)'
+                  from the cache/ElasticSearch (ethernetContainerPm).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - local-id: the layer-protocol (i.e. interface) local-id; required for mapping to ethernet container general information
+                    - period-end-time: timestamp of the 15 minute interval
+                    - total-bytes-input
+                    - total-bytes-output
+                    - total-frames-input
+                    - total-frames-output
+                    - errored-frames-input
+                    - errored-frames-output
+                    - dropped-frames-input
+                    - dropped-frames-output'
                 example:
                   'mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;total-frames-input;total-frames-output;errored-frames-input;errored-frames-output;dropped-frames-input;dropped-frames-output
                   100250001;ETH-2134639490;2134639490;2024-12-10T08:30:00+01:00;74054;17333;-1;-1;899;0;0;0
@@ -2199,9 +2298,25 @@ paths:
                 type: string
                 description: >
                   'The first line shall contain the following headers:
-                    mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
+                    mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
                   There shall be a single line containing all relevant data per device, wireInterface and supported-pmd-kind (missing information is to be left blank)
-                  from the cache/ElasticSearch (wireInterfaceGeneralInfo)'
+                  from the cache/ElasticSearch (wireInterfaceGeneralInfo).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - uuid: the ltp uuid
+                    - operational-state: the ltps operational state
+                    - local-id: the layer-protocol (i.e. interface) local-id
+                    - timestamp: the timestamp from when the data was gathered
+                    - administrative-state: the layer protocols admininstrative state
+                    - original-ltp-name: from ltp-augment
+                    - interface-name: interface name from wire-interface configuration
+                    - fixed-pmd-kind: pmd-kind info from wire-interface configuration
+                    - interface-status: indicates if the interface is up
+                    - pmd-kind-cur: current pmd-kind from wire-interface status
+                    - pmd-name: name of the supported pmd-kind from wire-interface capability/supported-pmd-kind-list
+                    - duplex: duplex type of the respective pmd-name
+                    - speed: speed of the respective pmd-name
+                    '
                 example:
                   'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
                   100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;NOT_YET_DEFINED;NOT_YET_DEFINED;NOT_YET_DEFINED;
