@@ -1,0 +1,121 @@
+@startuml NetExplorerProxy+diagram.csv_response_validity
+skinparam responseMessageBelowArrow true
+
+title
+NetExplorerProxy+test.csv_response_validity
+end title
+
+participant "Postman\n" as Postman #Orange 
+participant "Data\n" as Data
+participant "Collection\n" as Collection
+
+'device + equip info
+participant "/v1/provide-general-\n     information-of-devices" as devInfo #LightBlue
+participant "/v1/provide-actual-\n     equipment-of-devices" as equip #LightBlue
+'air-interface
+participant "/v1/provide-air-interface-\n     general-information-\n    of-devices" as air #LightBlue
+participant "/v1/provide-air-interface-\n     transmission-mode-lists-\n     of-devices" as airTml #LightBlue
+participant "/v1/provide-air-interface-\n     non-qam-pm-data-\n     of-devices" as airNonQam #LightBlue
+participant "/v1/provide-air-interface-\n     qam-pm-data-\n     of-devices" as airQam #LightBlue
+'ethernet-container
+participant "/v1/provide-ethernet-container-\n     general-information-\n     of-devices" as eth #LightBlue
+participant "/v1/provide-ethernet-container-\n     pm-data-\n     of-devices" as ethPm #LightBlue
+'wire-interface
+participant "/v1/provide-wire-interface-\n     general-information-\n     of-devices" as wire #LightBlue
+
+group Preparation
+  Data --\\o Postman : {servers, mount-name}
+  activate Postman
+  Postman --\\o Collection : {servers, mount-name}
+end
+
+'---- deviceInfo + equipmentInfo ----------------------------------------------------------------
+group /v1/provide-general-information-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> devInfo: {mount-name-list, data-age} (both optional)
+  Postman <-- devInfo: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+group /v1/provide-actual-equipment-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> equip: {mount-name-list, data-age} (both optional)
+  Postman <-- equip: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+'---- air-interface ----------------------------------------------------------------------------
+group /v1/provide-air-interface-general-information-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> air: {mount-name-list, data-age} (both optional)
+  Postman <-- air: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+group /v1/provide-air-interface-transmission-mode-lists-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> airTml: {mount-name-list, data-age} (both optional)
+  Postman <-- airTml: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+group /v1/provide-air-interface-non-qam-pm-data-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> airNonQam: {mount-name-list, data-age} (both optional)
+  Postman <-- airNonQam: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+group /v1/provide-air-interface-qam-pm-data-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> airQam: {mount-name-list, data-age} (both optional)
+  Postman <-- airQam: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+'---- ethernet-container ------------------------------------------------------------------------
+group /v1/provide-ethernet-container-general-information-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> eth: {mount-name-list, data-age} (both optional)
+  Postman <-- eth: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+group /v1/provide-ethernet-container-pm-data-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> ethPm: {mount-name-list, data-age} (both optional)
+  Postman <-- ethPm: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+'---- wire-interface ---------------------------------------------------------------------------
+group /v1/provide-wire-interface-general-information-of-devices
+  Collection --\\o Postman: {servers}
+  Postman -> wire: {mount-name-list, data-age} (both optional)
+  Postman <-- wire: ResponseCode, {ResponseBody: <i>csv</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
+end
+
+
+
+deactivate Postman
+
+@enduml

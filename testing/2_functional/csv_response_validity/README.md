@@ -5,7 +5,7 @@
 
 
 ## v1.0.0 
-![Sequence](./v1.0.0/diagrams/NetExplorerProxy+diagram.csv_response-validity.png)
+![Sequence](./v1.0.0/diagrams/NetExplorerProxy+diagram.csv_response_validity.png)
 
 ## Additional notes
 There are two types of services specified for NetExplorerProxy:
@@ -15,10 +15,12 @@ There are two types of services specified for NetExplorerProxy:
 For the first group, the completness checks also compare the responses against reference schemas, which contain all relevant properties of the responses.  
 For the txt/csv services, however, the reference schema is just simply a string (which could literally contain anything).  
 
-Therefore this testcase collection aims at providing at least a basic validity check for responses received from those services:
-- they shall always return at least the specified header line, even if there is no device data found in the NEP cache
+Therefore this testcase collection aims at providing at least a basic validity check for responses received from those services.  
+They shall always return at least the specified header line, even if there is no device data found in the NEP cache:
 - therefore the first line of the respective response is compared against the expected header line for the tested service
   - validity of the device data itself cannot be done here, as this data is not static. 
+- this includes also a test where an unknown dummy device and/or an too old data-age is provided as optional input parameters
+- tests fail, if the header line does not match the expected header or is missing at all
 
 The services to be tested are:
 - /v1/provide-general-information-of-devices
