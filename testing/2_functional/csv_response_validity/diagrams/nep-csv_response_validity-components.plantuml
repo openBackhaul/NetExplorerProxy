@@ -1,0 +1,17 @@
+@startuml nep-csv_response_validity-components
+
+skinparam componentStyle rectangle
+
+title
+NetExplorerProxy+test.functional.csv_response_validity
+end title
+
+package "csv_response-validity" {
+  component [<u>Postman</u>\n\nNetExplorerProxy+test.csv_response_validity.json] as TCC #Orange 
+  component [<u>Application under Test</u>\n\nNetExplorerProxy] as AUT #LightBlue 
+
+  TCC -> AUT
+
+}
+
+@enduml
