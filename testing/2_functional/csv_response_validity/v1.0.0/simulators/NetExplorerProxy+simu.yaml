@@ -1,0 +1,1103 @@
+openapi: 3.0.0
+info:
+  title: NEP_1.1.0+simulator.csv_response_validity
+  version: 1.0.0
+
+paths:
+########################################################################################################################
+#   Service Layer - Individual part
+########################################################################################################################
+  /v1/provide-general-information-of-devices:
+    post:
+      operationId: provideGeneralInformationOfDevices
+      summary: 'Responses with general device information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General device information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;timestamp;external-label;device-model-name;system-name
+                  100254566;2024-12-11T16:00:00+01:00;100254566;OptiXRTN950;System xyz
+                  200259999;2024-12-11T18:00:00+01:00;20025999;MINI-LINK Traffic Node;'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-actual-equipment-information-of-devices:
+    post:
+      operationId: provideActualEquipmentInformationOfDevices
+      summary: 'Responses with actual equipment information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Actual equipment information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;timestamp;version;description;model-identifier;part-type-identifier;type-name;manufacturer-name;manufacturer-identifier
+                  100250001;1921282559;;2024-12-11T16:00:00+01:00;R1C;Removable Memory Module;RRM;RYS 110 243/1;RRM;Ericsson;;
+                  200251234;LAN-1 SFP;LAN-1 SFP;2024-12-11T16:00:00+01:00;V2.0;SFP module in LAN-1 SFP connector;Generic;AXGD-1354-0533;SFP module;Axcen Photonics;;'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-general-information-of-devices:
+    post:
+      operationId: provideAirInterfaceGeneralInformationOfDevices
+      summary: 'Responses with general air interface information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General air interface information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
+                  100250001;RF-123456789;core-model-1-4:OPERATIONAL_STATE_ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
+                  100250001;RF-234234234;core-model-1-4:OPERATIONAL_STATE_ENABLED;234234234;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/3.1/1;56000-16-v0;56000-1024-v0;false;true;true;UP;RAU2 X 32/13 R3A
+                  200250003;ltpB-1;core-model-1-4:OPERATIONAL_STATE_ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-transmission-mode-lists-of-devices:
+    post:
+      operationId: provideAirInterfaceTransmissionModeListsInformationOfDevices
+      summary: 'Responses with air interface transmission mode lists information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface transmission mode list information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;modulation-scheme-at-lct;modulation-scheme;code-rate;channel-bandwidth;xpic-is-avail;capa-factor
+                  100250001;RF-123456789;123456789;56000-64-v0;1;64 QAM;64;97;56000;true;28340,9
+                  100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true;37008,7
+                  100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true;18893,9'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-1-0-op-s-is-031/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+
+  /v1/provide-air-interface-non-qam-pm-data-of-devices:
+    post:
+      operationId: provideAirInterfaceNonQamPmDataOfDevices
+      summary: 'Responses with air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface non-QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-air-interface-qam-pm-data-of-devices:
+    post:
+      operationId: provideAirInterfaceQamPmDataOfDevices
+      summary: 'Responses with air interface QAM PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'Air interface QAM PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;2;100;4QAM
+                  200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;1;700;16QAM'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-ethernet-container-general-information-of-devices:
+    post:
+      operationId: provideEthernetContainerGeneralInformationOfDevices
+      summary: 'Responses with general ethernetContainer information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General ethernetContainer information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
+                  100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-ethernet-container-pm-data-of-devices:
+    post:
+      operationId: provideEthernetContainerGeneralInformationOfDevices
+      summary: 'Responses with ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'ethernetContainer PM data for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;total-frames-input;total-frames-output;errored-frames-input;errored-frames-output;dropped-frames-input;dropped-frames-output
+                  100250001;ETH-2134639490;2134639490;2024-12-10T08:30:00+01:00;74054;17333;-1;-1;899;0;0;0
+                  100250001;ETH-2134639490;2134639490;2024-12-10T07:45:00+01:00;73444;16016;-1;-1;899;0;0;0'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+  /v1/provide-wire-interface-general-information-of-devices:
+    post:
+      operationId: provideWireInterfaceGeneralInformationOfDevices
+      summary: 'Responses with general wireInterface information for all (target) devices in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                data-age:
+                  type: integer
+      responses:
+        '200':
+          description: 'General wireInterface information for all (target) devices in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                example:
+                  'mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
+                  100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;NOT_YET_DEFINED;NOT_YET_DEFINED;NOT_YET_DEFINED;
+                  100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;1000BASE_FD;FULL_DUPLEX;1000Mbit/s'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+
+########################################################################################################################
+#   Common Components
+########################################################################################################################
+components:
+  parameters:
+    user:
+      name: user
+      in: header
+      required: true
+      schema:
+        type: string
+        example: 'User Name'
+      description: 'User identifier from the system starting the service call'
+    originator:
+      name: originator
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 3
+        example: 'Resolver'
+      description: >
+        'Identification for the system consuming the API, as defined in
+         [/core-model-1-4:control-construct/logical-termination-point={uuid}/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+    x-correlator:
+      name: x-correlator
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+        example: '550e8400-e29b-11d4-a716-446655440000'
+      description: 'UUID for the service execution flow that allows to correlate requests and responses'
+    trace-indicator:
+      name: trace-indicator
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^([0-9]+)(\.([0-9]+))*$'
+        example: '1.3.1'
+      description: 'Sequence of request numbers along the flow'
+    customer-journey:
+      name: customer-journey
+      in: header
+      required: true
+      schema:
+        type: string
+        example: 'Unknown value'
+      description: 'Holds information supporting customer’s journey to which the execution applies'
+  responses:
+    responseForErroredServiceRequests:
+      description: 'Response in case of errored service requests'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorDescription'
+      headers:
+        x-correlator:
+          schema:
+            type: string
+            pattern: '^[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$'
+            example: '550e8400-e29b-11d4-a716-446655440000'
+          description: 'UUID for the service execution flow that allows to correlate requests and responses. Its value must be identical at the response compared with its corresponding request'
+        exec-time:
+          schema:
+            type: integer
+            example: 1100
+          description: 'Value written by the service provider, reporting the total elapsed time for the execution, including all the additional processing needed to retrieve the data from the backend service. Expressed in milliseconds'
+    responseForErroredOamRequests:
+      description: 'Response in case of errored OaM requests'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorDescription'
+    '429':
+      description: 'Response in case too many requests need to be executed in parallel or too many requests have been received within a time period. The maximum number of parallel requests is defined in an IntegerProfile with the service name as a prefix and MaxNumberOfParallelRequests as a suffix. Some time period to elapse for throttling incomming requests is defined in an IntegerProfile with the service name as a prefix and ThrottlingPeriod as a suffix'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 429
+                maximum: 429
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Too many requests'
+    '460':
+      description: 'Response in case the mountName provided in the request is not found in the list of connected devices'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 460
+                maximum: 460
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Not connected. Requested device is currently not in connected state at the controller'
+    '461':
+      description: 'Response in case the (parent) topology object provided in the request (body or path) is not found in the cache.'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 461
+                maximum: 461
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Not available. The topology (parent) object is currently not found in the cache.'
+    '470':
+      description: 'Response in case the resource specified in the request does not exist within the connected device'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 470
+                maximum: 470
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Resource not existing. Device informs about addressed resource unknown'
+    '471':
+      description: 'Response in case the (child) topology object specified in the request (body or path) does not exist within the cache.'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 471
+                maximum: 471
+                format: int32
+              message:
+                type: string
+                enum:
+                  - '(Child) topology object not existing. Cache informs about addressed resource unknown.'
+    '502':
+      description: 'Response in case the server is acting as a gateway or proxy and received an invalid response from the upstream server (device or application providing a consumed service)'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 502
+                maximum: 502
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Bad Gateway'
+    '530':
+      description: 'Response in case the referenced resource exists (e.g. device connected and resource exists in internal datatree), but response data is either not available, lost during transmission, incomplete or corrupted'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 530
+                maximum: 530
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Data invalid. Response data not available, incomplete or corrupted'
+    '531':
+      description: 'Response in case the server is acting as a gateway or proxy and was unable to authenticate at the upstream server (device or application providing a consumed service)'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 531
+                maximum: 531
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Bad Gateway. Authentication at upstream server failed.'
+    '532':
+      description: 'Response in case the server is acting as a gateway or proxy and was unable to connect to the upstream server (device or application providing a consumed service)'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 532
+                maximum: 532
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Bad Gateway. Upstream server not responding.'
+    '533':
+      description: 'Response in case the referenced resource for an connected device does not exist at the controller.'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 533
+                maximum: 533
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Resource unknown. The resource for the connected device does not exist at the Controller.'
+    '550':
+      description: 'Response in case that the application wants to call a service specified by the requestor (e.g., to return data after a long taking  data retrieval) during a service call to the application and the service information cannot be found.'
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: integer
+                minimum: 550
+                maximum: 550
+                format: int32
+              message:
+                type: string
+                enum:
+                  - 'Requestor information for callback execution not found.'
+  schemas:
+    errorDescription:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    genericRepresentation:
+      type: object
+      required:
+        - response-value-list
+        - consequent-action-list
+      properties:
+        response-value-list:
+          type: array
+          items:
+            type: object
+            required:
+              - field-name
+              - value
+              - datatype
+            properties:
+              field-name:
+                type: string
+                description: >
+                  'Field name
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/field-name]'
+              value:
+                type: string
+                description: >
+                  'Field value
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-configuration/value]'
+              datatype:
+                type: string
+                description: >
+                  'Field datatype
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/datatype]'
+        consequent-action-list:
+          type: array
+          items:
+            type: object
+            required:
+              - label
+              - request
+              - display-in-new-browser-window
+            properties:
+              label:
+                type: string
+                description: >
+                  'Label that shall be presented on the button
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/label]'
+              request:
+                type: string
+                description: >
+                  'Request that shall be called, when button gets pressed
+                  from
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol}]
+                  ://
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address}
+                  or
+                  {/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name}]
+                  :
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port}]
+                  [{/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-configuration/consequent-operation-reference}]'
+              input-value-list:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - field-name
+                  properties:
+                    field-name:
+                      type: string
+                      description: >
+                        'Name of an input value required for executing the Request
+                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/name]'
+                    unit:
+                      type: string
+                      description: >
+                        'Unit of an input value required for executing the Request
+                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/unit]'
+              display-in-new-browser-window:
+                type: boolean
+                description: >
+                  'True in case Request shall be represented in a new browser window
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/display-in-new-browser-window]'
+    logicalTerminationPoint:
+      type: object
+      required:
+        - uuid
+        - ltp-direction
+        - client-ltp
+        - server-ltp
+        - layer-protocol
+      properties:
+        uuid:
+          type: string
+        ltp-direction:
+          type: string
+        client-ltp:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        server-ltp:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        layer-protocol:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            oneOf:
+              - description: 'operation server'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - operation-server-interface-1-0:operation-server-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  operation-server-interface-1-0:operation-server-interface-pac:
+                    type: object
+                    required:
+                      - operation-server-interface-capability
+                      - operation-server-interface-configuration
+                    properties:
+                      operation-server-interface-capability:
+                        type: object
+                        required:
+                          - operation-name
+                        properties:
+                          operation-name:
+                            type: string
+                      operation-server-interface-configuration:
+                        type: object
+                        required:
+                          - life-cycle-state
+                        properties:
+                          life-cycle-state:
+                            type: string
+              - description: 'http server'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - http-server-interface-1-0:http-server-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  http-server-interface-1-0:http-server-interface-pac:
+                    type: object
+                    required:
+                      - http-server-interface-capability
+                    properties:
+                      http-server-interface-capability:
+                        type: object
+                        required:
+                          - application-name
+                          - release-number
+                          - data-update-period
+                        properties:
+                          application-name:
+                            type: string
+                          release-number:
+                            type: string
+                          data-update-period:
+                            type: string
+              - description: 'tcp server'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - tcp-server-interface-1-0:tcp-server-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  tcp-server-interface-1-0:tcp-server-interface-pac:
+                    type: object
+                    required:
+                      - tcp-server-interface-configuration
+                    properties:
+                      tcp-server-interface-configuration:
+                        type: object
+                        required:
+                          - description
+                          - local-protocol
+                          - local-address
+                          - local-port
+                        properties:
+                          description:
+                            type: string
+                          local-protocol:
+                            type: string
+                          local-address:
+                            type: object
+                            properties:
+                              ipv-4-address:
+                                type: string
+                              domain-name:
+                                type: string
+                          local-port:
+                            type: integer
+              - description: 'operation client'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - operation-client-interface-1-0:operation-client-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  operation-client-interface-1-0:operation-client-interface-pac:
+                    type: object
+                    required:
+                      - operation-client-interface-configuration
+                      - operation-client-interface-status
+                    properties:
+                      operation-client-interface-configuration:
+                        type: object
+                        required:
+                          - operation-name
+                        properties:
+                          operation-name:
+                            type: string
+                      operation-client-interface-status:
+                        type: object
+                        required:
+                          - operational-state
+                          - life-cycle-state
+                        properties:
+                          operational-state:
+                            type: string
+                          life-cycle-state:
+                            type: string
+              - description: 'elasticsearch client'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - elasticsearch-client-interface-1-0:elasticsearch-client-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  elasticsearch-client-interface-1-0:elasticsearch-client-interface-pac:
+                    type: object
+                    required:
+                      - elasticsearch-client-interface-configuration
+                      - elasticsearch-client-interface-status
+                    properties:
+                      elasticsearch-client-interface-configuration:
+                        type: object
+                        required:
+                          - index-alias
+                        properties:
+                          index-alias:
+                            type: string
+                      elasticsearch-client-interface-status:
+                        type: object
+                        required:
+                          - operational-state
+                          - life-cycle-state
+                        properties:
+                          operational-state:
+                            type: string
+                          life-cycle-state:
+                            type: string
+              - description: 'http client'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - http-client-interface-1-0:http-client-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  http-client-interface-1-0:http-client-interface-pac:
+                    type: object
+                    required:
+                      - http-client-interface-configuration
+                    properties:
+                      http-client-interface-configuration:
+                        type: object
+                        required:
+                          - application-name
+                          - release-number
+                        properties:
+                          application-name:
+                            type: string
+                          release-number:
+                            type: string
+              - description: 'tcp client'
+                type: object
+                required:
+                  - local-id
+                  - layer-protocol-name
+                  - tcp-client-interface-1-0:tcp-client-interface-pac
+                properties:
+                  local-id:
+                    type: string
+                  layer-protocol-name:
+                    type: string
+                  tcp-client-interface-1-0:tcp-client-interface-pac:
+                    type: object
+                    required:
+                      - tcp-client-interface-configuration
+                    properties:
+                      tcp-client-interface-configuration:
+                        type: object
+                        required:
+                          - remote-protocol
+                          - remote-address
+                          - remote-port
+                        properties:
+                          remote-protocol:
+                            type: string
+                          remote-address:
+                            type: object
+                            properties:
+                              ip-address:
+                                type: object
+                                properties:
+                                  ipv-4-address:
+                                    type: string
+                              domain-name:
+                                type: string
+                          remote-port:
+                            type: integer
+    forwardingDomain:
+      type: object
+      required:
+        - uuid
+        - forwarding-construct
+      properties:
+        uuid:
+          type: string
+        forwarding-construct:
+          type: array
+          items:
+            type: object
+            required:
+              - uuid
+              - name
+              - fc-port
+            properties:
+              uuid:
+                type: string
+              name:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - value-name
+                    - value
+                  properties:
+                    value-name:
+                      type: string
+                    value:
+                      type: string
+              fc-port:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - local-id
+                    - port-direction
+                    - logical-termination-point
+                  properties:
+                    local-id:
+                      type: string
+                    port-direction:
+                      type: string
+                    logical-termination-point:
+                      type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: operation-key
+    basicAuth:
+      type: http
+      scheme: basic
