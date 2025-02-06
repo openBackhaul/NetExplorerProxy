@@ -63,7 +63,8 @@ group /v1/provide-air-interface-transmission-mode-lists-of-devices
   Postman -> airTml: {mount-name-list, data-age} (both optional)
   Postman <-- airTml: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for responseBody.getLine(0) == expected header
+    1) check for responseBody.getLine(0) == expected header
+    2) check that response does not contain records with code-rate < 0
   end note
 end
 
@@ -81,7 +82,8 @@ group /v1/provide-air-interface-qam-pm-data-of-devices
   Postman -> airQam: {mount-name-list, data-age} (both optional)
   Postman <-- airQam: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for responseBody.getLine(0) == expected header
+    1) check for responseBody.getLine(0) == expected header
+    2) check that response does not contain records with time <= 0
   end note
 end
 
