@@ -1,0 +1,29 @@
+{
+  "/v1/provide-general-information-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-actual-equipment-information-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-air-interface-general-information-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-air-interface-transmission-mode-lists-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-air-interface-non-qam-pm-data-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-air-interface-qam-pm-data-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-ethernet-container-general-information-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-ethernet-container-pm-data-of-devices": {
+    "type": "string"
+  },
+  "/v1/provide-wire-interface-general-information-of-devices": {
+    "type": "string"
+  }
+}
