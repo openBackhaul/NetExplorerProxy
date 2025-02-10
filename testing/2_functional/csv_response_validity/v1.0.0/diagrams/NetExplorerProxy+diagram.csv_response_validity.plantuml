@@ -9,6 +9,8 @@ participant "Postman\n" as Postman #Orange
 participant "Data\n" as Data
 participant "Collection\n" as Collection
 
+'interface-info
+participant "/v1/provide-list-of-\n     interfaces-per\n     device-in-nep" as ifList #LightBlue
 'device + equip info
 participant "/v1/provide-general-\n     information-of-devices" as devInfo #LightBlue
 participant "/v1/provide-actual-\n     equipment-of-devices" as equip #LightBlue
@@ -27,6 +29,16 @@ group Preparation
   Data --\\o Postman : {servers, mount-name}
   activate Postman
   Postman --\\o Collection : {servers, mount-name}
+end
+
+'---- interfaceInfo -----------------------------------------------------------------------------
+group /v1/provide-list-of-interfaces-per-device-in-nep
+  Collection --\\o Postman: {servers}
+  Postman -> ifList
+  Postman <-- ifList: ResponseCode, {ResponseBody: <i>interfaceList</i>}
+  note right Postman #Orange
+    check for responseBody.getLine(0) == expected header
+  end note
 end
 
 '---- deviceInfo + equipmentInfo ----------------------------------------------------------------

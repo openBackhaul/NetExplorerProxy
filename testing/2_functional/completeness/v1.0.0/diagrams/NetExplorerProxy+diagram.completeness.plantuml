@@ -17,6 +17,8 @@ participant "/v1/receive-current-mac-\n    table-of-device" as macRx #LightBlue
 'deviceLists
 participant "/v1/provide-list-of-\n     connected-devices" as devList #LightBlue
 participant "/v1/provide-list-of-\n     devices-in-nep" as nepList #LightBlue
+'interface-info
+participant "/v1/provide-list-of-\n     interfaces-per\n     device-in-nep" as ifList #LightBlue
 'device + equip info
 participant "/v1/provide-general-\n     information-of-devices" as devInfo #LightBlue
 participant "/v1/provide-actual-\n     equipment-of-devices" as equip #LightBlue
@@ -96,6 +98,17 @@ group /v1/provide-list-of-devices-in-nep
   Collection --\\o Postman: {servers}
   Postman -> nepList
   Postman <-- nepList: ResponseCode, {ResponseBody: <i>mount-name-list</i>}
+  note right Postman #Orange
+    check for ResponseCode == 200
+    check for ResponseBody matches reference schema
+  end note
+end
+
+'---- interfaceInfo -----------------------------------------------------------------------------
+group /v1/provide-list-of-interfaces-per-device-in-nep
+  Collection --\\o Postman: {servers}
+  Postman -> ifList
+  Postman <-- ifList: ResponseCode, {ResponseBody: <i>interfaceList</i>}
   note right Postman #Orange
     check for ResponseCode == 200
     check for ResponseBody matches reference schema

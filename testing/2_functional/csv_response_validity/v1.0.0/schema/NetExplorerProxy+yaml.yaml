@@ -1,4 +1,7 @@
 
+  /v1/provide-list-of-interfaces-per-device-in-nep:
+    type: string
+
   /v1/provide-general-information-of-devices:
     type: string
 
