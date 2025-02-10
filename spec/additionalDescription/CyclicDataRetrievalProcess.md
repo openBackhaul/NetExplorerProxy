@@ -262,3 +262,9 @@ I.e. in case there is no data found, there will be no error responses.
 **Data availability statistics**  
 For the new services data statistics are provided.  
 They are to be applied on the level of the different data classes and reflect the data availability for the current day.  
+
+**Interface info per device**  
+NEP also offers a service to retrieve information about which interfaces the NEP cache holds for the devices stored in the NEP cache.  
+The related information are taken from cached data class information in the NEP cache.  
+
+Detailed mapping: [InterfaceInfoPerDevice](./_InterfaceInfoPerDeviceMappings.md)  

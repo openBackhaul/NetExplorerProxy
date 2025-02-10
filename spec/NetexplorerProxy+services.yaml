@@ -81,6 +81,10 @@ servers:
         - operation-name: /v1/provide-list-of-devices-in-nep
           uuid: nep-1-1-0-op-s-is-021
           operation-key: n.a.
+        
+        - operation-name: /v1/provide-list-of-interfaces-per-device-in-nep
+          uuid: nep-1-1-0-op-s-is-022
+          operation-key: n.a.
 
         # services to provide non-MAC data from MWDI
         - operation-name: /v1/provide-general-information-of-devices
