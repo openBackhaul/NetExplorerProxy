@@ -18905,7 +18905,7 @@ components:
       required:
       - egress-ltp-uuid
       - mount-name
-      - original-ltp-uuid
+      - original-ltp-name
       - own-mac-address
       - remote-mac-address
       - time-stamp-of-data
