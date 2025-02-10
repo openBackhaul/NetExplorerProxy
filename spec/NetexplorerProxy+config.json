@@ -1294,6 +1294,7 @@
           "nep-1-1-0-op-s-is-003",
           "nep-1-1-0-op-s-is-020",
           "nep-1-1-0-op-s-is-021",
+          "nep-1-1-0-op-s-is-022",
           "nep-1-1-0-op-s-is-025",
           "nep-1-1-0-op-s-is-026",
           "nep-1-1-0-op-s-is-030",
@@ -2505,50 +2506,55 @@
               {
                 "local-id": "128",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-025"
+                "logical-termination-point": "nep-1-1-0-op-s-is-022"
               },
               {
                 "local-id": "129",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-026"
+                "logical-termination-point": "nep-1-1-0-op-s-is-025"
               },
               {
                 "local-id": "130",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-030"
+                "logical-termination-point": "nep-1-1-0-op-s-is-026"
               },
               {
                 "local-id": "131",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-031"
+                "logical-termination-point": "nep-1-1-0-op-s-is-030"
               },
               {
                 "local-id": "132",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-032"
+                "logical-termination-point": "nep-1-1-0-op-s-is-031"
               },
               {
                 "local-id": "133",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-033"
+                "logical-termination-point": "nep-1-1-0-op-s-is-032"
               },
               {
                 "local-id": "134",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-040"
+                "logical-termination-point": "nep-1-1-0-op-s-is-033"
               },
               {
                 "local-id": "135",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-041"
+                "logical-termination-point": "nep-1-1-0-op-s-is-040"
               },
               {
                 "local-id": "136",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
-                "logical-termination-point": "nep-1-1-0-op-s-is-045"
+                "logical-termination-point": "nep-1-1-0-op-s-is-041"
               },
               {
                 "local-id": "137",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-045"
+              },
+              {
+                "local-id": "138",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "nep-1-1-0-op-s-is-050"
               },
@@ -3261,6 +3267,31 @@
                 "local-id": "100",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "nep-1-1-0-op-s-is-021"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-022",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-022"
               },
               {
                 "local-id": "200",
