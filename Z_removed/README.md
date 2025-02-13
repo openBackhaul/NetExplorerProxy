@@ -23,7 +23,10 @@ The following performance criteria shall be kept:
 #### Additional device data (introduced with v1.1.0)
 With v1.0.0 additional data shall be provided:  
   - general device and interface information, including linkbundling information
-  - sfp data (wire-interface)
+  - air interface 15min performance data
+    - also adaptive modulation information that Netexplorer can use for capacity computation
+  - ethernet container 15min data
+  - sfp data
   
 For this release, the NEP shall fetch the required data into its cache in periodic intervals.  
 All requests from Netexplorer, not related to Mac address data, shall be served using this cached data only,  
@@ -32,10 +35,6 @@ i.e. there will be no retrieval of data on demand.
 *Scope*
 - Note: sync data has been requested by Netexplorer team, but sync data offered by SDN is not what is needed by Netexplorer and, therefore, sync is out of scope.
 - updates due to notifications from MWDI are out of scope for this release
-- PM data provisioning is also out of scope
-  - a new application will be introduced, which will gather the PM data from MWDI and cache it
-  - NEP and other applications (e.g. MycomButler) then can retrieve the data they need from this new application
-  - this application has not been specified, yet 
 
 ### Relevance
 The NetExplorerProxy serves as a proxy to a planning and simulation tool for regular use.  
