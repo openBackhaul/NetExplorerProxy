@@ -1,3 +1,41 @@
+
+  # removed -->
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-007'
+    capability:
+      integer-name: 'ccRetrievalMinThresholdTime'
+      purpose: 'The lower threshold for retrieval of filtered ControlConstruct data; if device data is newer, retrieval is postponed.'
+      unit: 'hour'
+      minimum: 1
+      maximum: 12
+    configuration:
+      integer-value: 4
+
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-008'
+    capability:
+      integer-name: 'ccRetrievalMaxThresholdTime'
+      purpose: 'The upper threshold for retrieval of filtered ControlConstruct data; if data is older, retrieval should be prioritized.'
+      unit: 'hour'
+      minimum: 1
+      maximum: 12
+    configuration:
+      integer-value: 6
+
+
+  # changed -->
+  - profile-name: 'IntegerProfile'
+    uuid: 'nep-1-1-0-integer-p-009'
+    capability:
+      integer-name: 'dataRetention'
+      purpose: 'The retention period for which filtered ControlConstruct data is kept.'
+      unit: 'day'
+      minimum: 1
+      maximum: 7
+    configuration:
+      integer-value: 2
+
+
   - profile-name: 'StringProfile'
     uuid: 'nep-1-1-0-string-p-000'
     capability:
