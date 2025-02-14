@@ -34,7 +34,6 @@
 ![PromptForProvidingAirInterfaceGeneralInfoCausesReadingFromNepCache](./030_ProvideAirInterfaceGeneralInfo.png)  
 .  
 .  
-!
 ![PromptForProvidingEthernetContainerGeneralInfoCausesReadingFromNepCache](./040_ProvideEthernetContainerGeneralInfo.png)  
 .  
 .  
