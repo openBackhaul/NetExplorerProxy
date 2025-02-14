@@ -97,6 +97,9 @@ servers:
         - operation-name: /v1/provide-air-interface-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-030
           operation-key: n.a.
+        - operation-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
+          uuid: nep-1-1-0-op-s-is-031
+          operation-key: n.a.
 
         - operation-name: /v1/provide-ethernet-container-general-information-of-devices
           uuid: nep-1-1-0-op-s-is-040
