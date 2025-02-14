@@ -641,6 +641,21 @@ forwardings:
       - client-name: ElasticSearch
         uuid: nep-1-1-0-es-c-es-1-0-0-000
 
+  - forwarding-name: PromptForProvidingAirInterfaceTransmissionModeListsCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-031
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
+        uuid: nep-1-1-0-op-s-is-031
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
   - forwarding-name: PromptForProvidingEthernetContainerGeneralInfoCausesReadingFromNepCache
     uuid: nep-1-1-0-op-fc-is-040
     forwarding-type: InvariantProcessSnippet
