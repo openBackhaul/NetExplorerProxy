@@ -1,0 +1,19 @@
+@startuml 040_ProvideEthernetContainerGeneralInfo
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingEthernetContainerGeneralInfoCausesReadingFromNepCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-ethernet-container-general-information-of-devices" as nep
+participant "ElasticSearch \n(or database)" as db
+
+external -> nep: {optional: mount-name-list, data-age (BasicAuth)}
+activate nep
+
+nep -> db: (apiAuthKey)
+db --> nep: {optional: mount-name-list, data-age} (no security)
+
+nep --> external: {(filtered) generalEthernetContainerInfo} (no security)
+
+deactivate nep
+@enduml

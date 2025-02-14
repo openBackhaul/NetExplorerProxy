@@ -1,0 +1,19 @@
+@startuml 022_ProvideGeneralDeviceInfo
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-list-of-interfaces-per-device-in-nep" as nep
+participant "ElasticSearch \n(or database)" as db
+
+external -> nep: {optional: mount-name-list, data-age (BasicAuth)}
+activate nep
+
+nep -> db: (apiAuthKey)
+db --> nep: (no security)
+
+nep --> external: {listOfInterfacesPerDevice} (no security)
+
+deactivate nep
+@enduml

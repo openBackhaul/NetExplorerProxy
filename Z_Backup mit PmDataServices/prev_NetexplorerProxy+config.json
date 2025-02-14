@@ -330,6 +330,38 @@
           "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
+              "integer-name": "ccRetrievalMinThresholdTime",
+              "purpose": "The lower threshold for retrieval of filtered ControlConstruct data; if device data is newer, retrieval is postponed.",
+              "unit": "hour",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "integer-profile-configuration": {
+              "integer-value": 4
+            }
+          }
+        },
+        {
+          "uuid": "nep-1-1-0-integer-p-008",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
+              "integer-name": "ccRetrievalMaxThresholdTime",
+              "purpose": "The upper threshold for retrieval of filtered ControlConstruct data; if data is older, retrieval should be prioritized.",
+              "unit": "hour",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "integer-profile-configuration": {
+              "integer-value": 6
+            }
+          }
+        },
+        {
+          "uuid": "nep-1-1-0-integer-p-009",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
               "integer-name": "dataRetention",
               "purpose": "The retention period for which filtered ControlConstruct data is kept.",
               "unit": "day",
@@ -337,7 +369,7 @@
               "maximum": 7
             },
             "integer-profile-configuration": {
-              "integer-value": 1
+              "integer-value": 2
             }
           }
         },
@@ -1001,29 +1033,6 @@
         ]
       },
       {
-        "uuid": "nep-1-1-0-op-s-is-022",
-        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
-        "client-ltp": [],
-        "server-ltp": [
-          "nep-1-1-0-http-s-000"
-        ],
-        "layer-protocol": [
-          {
-            "local-id": "0",
-            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
-            "operation-server-interface-1-0:operation-server-interface-pac": {
-              "operation-server-interface-capability": {
-                "operation-name": "/v1/provide-list-of-interfaces-per-device-in-nep"
-              },
-              "operation-server-interface-configuration": {
-                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
-                "operation-key": "n.a."
-              }
-            }
-          }
-        ]
-      },
-      {
         "uuid": "nep-1-1-0-op-s-is-025",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [],
@@ -1093,6 +1102,75 @@
         ]
       },
       {
+        "uuid": "nep-1-1-0-op-s-is-031",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-1-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-air-interface-transmission-mode-lists-of-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-1-0-op-s-is-032",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-1-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-air-interface-non-qam-pm-data-of-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-1-0-op-s-is-033",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-1-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-air-interface-qam-pm-data-of-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
         "uuid": "nep-1-1-0-op-s-is-040",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [],
@@ -1116,6 +1194,29 @@
         ]
       },
       {
+        "uuid": "nep-1-1-0-op-s-is-041",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-1-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-ethernet-container-pm-data-of-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
         "uuid": "nep-1-1-0-op-s-is-045",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
         "client-ltp": [],
@@ -1129,6 +1230,29 @@
             "operation-server-interface-1-0:operation-server-interface-pac": {
               "operation-server-interface-capability": {
                 "operation-name": "/v1/provide-wire-interface-general-information-of-devices"
+              },
+              "operation-server-interface-configuration": {
+                "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
+                "operation-key": "n.a."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-1-0-op-s-is-050",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SOURCE",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-1-0-http-s-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-server-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-server-interface-1-0:operation-server-interface-pac": {
+              "operation-server-interface-capability": {
+                "operation-name": "/v1/provide-nep-data-statistics"
               },
               "operation-server-interface-configuration": {
                 "life-cycle-state": "operation-server-interface-1-0:LIFE_CYCLE_STATE_TYPE_NOT_YET_DEFINED",
@@ -1174,8 +1298,13 @@
           "nep-1-1-0-op-s-is-025",
           "nep-1-1-0-op-s-is-026",
           "nep-1-1-0-op-s-is-030",
+          "nep-1-1-0-op-s-is-031",
+          "nep-1-1-0-op-s-is-032",
+          "nep-1-1-0-op-s-is-033",
           "nep-1-1-0-op-s-is-040",
-          "nep-1-1-0-op-s-is-045"
+          "nep-1-1-0-op-s-is-041",
+          "nep-1-1-0-op-s-is-045",
+          "nep-1-1-0-op-s-is-050"
         ],
         "server-ltp": [
           "nep-1-1-0-tcp-s-000"
@@ -2078,6 +2207,53 @@
             }
           }
         ]
+      },
+      {
+        "uuid": "nep-1-1-0-http-c-nep-1-1-0-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "nep-1-1-0-op-c-is-nep-1-1-0-021"
+        ],
+        "server-ltp": [
+          "nep-1-1-0-tcp-c-nep-1-1-0-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "http-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_HTTP_LAYER",
+            "http-client-interface-1-0:http-client-interface-pac": {
+              "http-client-interface-configuration": {
+                "application-name": "NetExplorerProxy",
+                "release-number": "1.1.0"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-1-0-tcp-c-nep-1-1-0-000",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [
+          "nep-1-1-0-http-c-nep-1-1-0-000"
+        ],
+        "server-ltp": [],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "tcp-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_TCP_LAYER",
+            "tcp-client-interface-1-0:tcp-client-interface-pac": {
+              "tcp-client-interface-configuration": {
+                "remote-protocol": "tcp-client-interface-1-0:PROTOCOL_TYPE_HTTP",
+                "remote-address": {
+                  "ip-address": {
+                    "ipv-4-address": "127.0.0.1"
+                  }
+                },
+                "remote-port": 4018
+              }
+            }
+          }
+        ]
       }
     ],
     "forwarding-domain": [
@@ -2348,14 +2524,39 @@
                 "logical-termination-point": "nep-1-1-0-op-s-is-030"
               },
               {
+                "local-id": "132",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-031"
+              },
+              {
+                "local-id": "133",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-032"
+              },
+              {
+                "local-id": "134",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-033"
+              },
+              {
                 "local-id": "135",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "nep-1-1-0-op-s-is-040"
               },
               {
+                "local-id": "136",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-041"
+              },
+              {
                 "local-id": "137",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "nep-1-1-0-op-s-is-045"
+              },
+              {
+                "local-id": "138",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-050"
               },
               {
                 "local-id": "200",
@@ -3175,6 +3376,81 @@
             ]
           },
           {
+            "uuid": "nep-1-1-0-op-fc-is-031",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingAirInterfaceTransmissionModeListsCausesReadingFromNepCache"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-031"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-032",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingAirInterfaceNonQamPmDataCausesReadingFromNepCache"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-032"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-033",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingAirInterfaceQamPmDataCausesReadingFromNepCache"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-033"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
             "uuid": "nep-1-1-0-op-fc-is-040",
             "name": [
               {
@@ -3200,6 +3476,31 @@
             ]
           },
           {
+            "uuid": "nep-1-1-0-op-fc-is-041",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingAirInterfacePmDataCausesReadingFromNepCache"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-041"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
             "uuid": "nep-1-1-0-op-fc-is-045",
             "name": [
               {
@@ -3216,6 +3517,81 @@
                 "local-id": "100",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
                 "logical-termination-point": "nep-1-1-0-op-s-is-045"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-es-c-es-1-0-0-000"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-050",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetConnectedDevices"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-050"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-op-c-is-mwdi-1-1-2-000"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-051",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetListOfNepDevices"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-050"
+              },
+              {
+                "local-id": "200",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
+                "logical-termination-point": "nep-1-1-0-op-c-is-nep-1-1-0-021"
+              }
+            ]
+          },
+          {
+            "uuid": "nep-1-1-0-op-fc-is-052",
+            "name": [
+              {
+                "value-name": "ForwardingKind",
+                "value": "core-model-1-4:FORWARDING_KIND_TYPE_INVARIANT_PROCESS_SNIPPET"
+              },
+              {
+                "value-name": "ForwardingName",
+                "value": "PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetNepDataStatistics"
+              }
+            ],
+            "fc-port": [
+              {
+                "local-id": "100",
+                "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_INPUT",
+                "logical-termination-point": "nep-1-1-0-op-s-is-050"
               },
               {
                 "local-id": "200",
