@@ -45,38 +45,13 @@ mount-name;uuid;local-id;transmission-mode-name;symbol-rate-reduction-factor;mod
 100250001;RF-123456789;123456789;56000-256-v0;1;256 QAM;256;95;56000;true;37008,7
 100250001;RF-123456789;123456789;56000-16-v0;1;16 QAM;16;97;56000;true;18893,9
 
-
----------------------------------------------------------------------------------------------------------
-/v1/provide-air-interface-non-qam-pm-data-of-devices:
----------------------------------------------------------------------------------------------------------
-mount-name;uuid;local-id;period-end-time;es;ses;ut;rx-level-min;rx-level-max;rx-level-avg;tx-level-min;tx-level-max;tx-level-avg;xpd-min;xpd-max;xpd-avg;snir-min;snir-max;snir-avg
-200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;0;10;90;-50;-40;-45;8;15;20;-99;-99;-99;38;39;-99
-
-
----------------------------------------------------------------------------------------------------------
-/v1/provide-air-interface-qam-pm-data-of-devices:
----------------------------------------------------------------------------------------------------------
-mount-name;uuid;local-id;period-end-time;time-xstate-sequence-number;time;transmission-mode
-200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;2;100;4QAM
-200250003;ltpB-1;ltpB-1-localId-1;2024-12-11T15:30:00+01:00;1;700;16QAM
-
-
 ---------------------------------------------------------------------------------------------------------
 /v1/provide-ethernet-container-general-information-of-devices:
 ---------------------------------------------------------------------------------------------------------
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;bundling-is-on;interface-status
 100250001;ETH-2134639490;core-model-1-4:OPERATIONAL_STATE_ENABLED;2134639490;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/2;15PN2855_M2-2;false;UP
 
-
----------------------------------------------------------------------------------------------------------
-/v1/provide-ethernet-container-pm-data-of-devices:
----------------------------------------------------------------------------------------------------------
-mount-name;uuid;local-id;period-end-time;total-bytes-input;total-bytes-output;total-frames-input;total-frames-output;errored-frames-input;errored-frames-output;dropped-frames-input;dropped-frames-output
-100250001;ETH-2134639490;2134639490;2024-12-10T08:30:00+01:00;74054;17333;-1;-1;899;0;0;0
-100250001;ETH-2134639490;2134639490;2024-12-10T07:45:00+01:00;73444;16016;-1;-1;899;0;0;0
-
-
----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
 /v1/provide-wire-interface-general-information-of-devices:
 ---------------------------------------------------------------------------------------------------------
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
