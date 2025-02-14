@@ -3193,40 +3193,6 @@ paths:
                                             ethernet-container-2-0:ethernet-container-pac:
                                               type: object
                                               properties:
-                                                ethernet-container-historical-performances:
-                                                  type: object
-                                                  description: 'Data for ethernetContainerPmData'
-                                                  properties:
-                                                    historical-performance-data-list:
-                                                      type: array
-                                                      items:
-                                                        type: object
-                                                        properties:
-                                                          granularity-period:
-                                                            type: string
-                                                          period-end-time:
-                                                            type: string
-                                                          history-data-id:
-                                                            type: string
-                                                          performance-data:
-                                                            type: object
-                                                            properties:
-                                                              dropped-frames-input:
-                                                                type: integer
-                                                              dropped-frames-output:
-                                                                type: integer
-                                                              errored-frames-input:
-                                                                type: integer
-                                                              errored-frames-output:
-                                                                type: integer
-                                                              total-frames-input:
-                                                                type: string
-                                                              total-frames-output:
-                                                                type: string
-                                                              total-bytes-input:
-                                                                type: string
-                                                              total-bytes-output:
-                                                                type: string
                                                 ethernet-container-configuration:
                                                   type: object
                                                   description: 'Data for ethernetContainerGeneralInformation'
@@ -3245,67 +3211,6 @@ paths:
                                             air-interface-2-0:air-interface-pac:
                                               type: object
                                               properties:
-                                                air-interface-historical-performances:
-                                                  type: object
-                                                  properties:
-                                                    historical-performances-data-list:
-                                                      type: array
-                                                      items:
-                                                        type: object
-                                                        properties:
-                                                          granularity-period:
-                                                            type: string
-                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
-                                                          period-end-time:
-                                                            type: string
-                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
-                                                          history-data-id:
-                                                            type: string
-                                                            description: 'Data for airInterfaceNonQamPmData and airInterfaceQamPmData'
-                                                          performance-data:
-                                                            type: object
-                                                            description: 'All properties except time-xstates-list are data for airInterfaceNonQamPmData'
-                                                            properties:
-                                                              ses:
-                                                                type: integer
-                                                              es: 
-                                                                type: integer
-                                                              unavailability:
-                                                                type: integer
-                                                              rx-level-min:
-                                                                type: integer
-                                                              rx-level-max:
-                                                                type: integer
-                                                              rx-level-avg:
-                                                                type: integer
-                                                              tx-level-min:
-                                                                type: integer
-                                                              tx-level-max:
-                                                                type: integer
-                                                              tx-level-avg:
-                                                                type: integer
-                                                              snir-min:
-                                                                type: integer
-                                                              snir-max:
-                                                                type: integer
-                                                              snir-avg:
-                                                                type: integer
-                                                              xpd-min:
-                                                                type: integer
-                                                              xpd-max:
-                                                                type: integer
-                                                              xpd-avg:
-                                                                type: integer
-                                                              time-xstates-list:
-                                                                type: array
-                                                                description: 'Data for airInterfaceQamPmData'
-                                                                items:
-                                                                  properties:
-                                                                    time:
-                                                                      type: integer
-                                                                    transmission-mode:
-                                                                      type: string
-                                                                  description: 'Filter for those array items, where time>0'
                                                 air-interface-configuration:
                                                   type: object
                                                   description: 'Data for airInterfaceGeneralInformation'
@@ -3379,20 +3284,6 @@ paths:
                               ethernet-container-2-0:ethernet-container-pac:
                                 ethernet-container-status:
                                   interface-status: 'ethernet-container-2-0:INTERFACE_STATUS_TYPE_UP'
-                                ethernet-container-historical-performances:
-                                  historical-performance-data-list:
-                                  - granularity-period: 'ethernet-container-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN'
-                                    period-end-time: '2025-01-07T22:00:00+01:00'
-                                    performance-data:
-                                      total-frames-input: -1
-                                      total-bytes-input: 75120
-                                      total-bytes-output: 15000
-                                      total-frames-output: -1
-                                      errored-frames-input: 0
-                                      dropped-frames-input: 900
-                                      dropped-frames-output: 0
-                                      errored-frames-output: 0
-                                    history-data-id: 'History Data ID not defined.'
                                 ethernet-container-configuration:
                                   interface-name: '10PN1234_M2-2'
                                   bundling-is-on: false
@@ -3412,36 +3303,6 @@ paths:
                                   power-is-on: true
                                 air-interface-status:
                                   interface-status: 'air-interface-2-0:INTERFACE_STATUS_TYPE_UP'
-                                air-interface-historical-performances:
-                                  historical-performance-data-list:
-                                  - granularity-period: 'air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN'
-                                    period-end-time: '2025-01-07T08:30:00+01:00'
-                                    history-data-id: 'History Data ID not defined.'
-                                    performance-data:
-                                      es: 5
-                                      xpd-max: -99
-                                      tx-level-max: 12
-                                      ses: 10
-                                      rx-level-max: -50
-                                      snir-min: 40
-                                      snir-avg: -99
-                                      rx-level-avg: 99
-                                      unavailability: 20
-                                      time-xstates-list:
-                                      - time: 901
-                                        transmission-mode: '56000-32-v0'
-                                      - time: 0
-                                        transmission-mode: '56000-64-v0'
-                                      - time: 0
-                                        transmission-mode: '56000-4-v0'
-                                      - time: 0
-                                        transmission-mode: '56000-16-v0'
-                                      rx-level-min: -50
-                                      xpd-min: -99
-                                      xpd-avg: -99
-                                      tx-level-min: 8
-                                      tx-level-avg: 99
-                                      snir-max: 41
                                 air-interface-capability:
                                   transmission-mode-list:
                                   - transmission-mode-name: '56000-32-v0'
