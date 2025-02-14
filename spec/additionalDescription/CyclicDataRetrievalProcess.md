@@ -90,7 +90,7 @@ I.e. only keep blocks which are related to one of the following interfaces:
 
 The following snippet gives an example, all blocks which are not marked as to be kept, can be filtered out.
 <details>
-    <summary><strong>Display example</strong></summary>
+    <summary><strong>(Un-)collapse example</strong></summary>
 
   ```json
   {
