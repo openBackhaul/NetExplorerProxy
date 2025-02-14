@@ -122,16 +122,22 @@ forwardings:
         uuid: nep-1-1-0-op-s-is-020
       - server-name: /v1/provide-list-of-devices-in-nep
         uuid: nep-1-1-0-op-s-is-021
-      - server-name: /v1/provide-list-of-interfaces-per-device-in-nep
-        uuid: nep-1-1-0-op-s-is-022
       - server-name: /v1/provide-general-information-of-devices
         uuid: nep-1-1-0-op-s-is-025
       - server-name: /v1/provide-actual-equipment-information-of-devices
         uuid: nep-1-1-0-op-s-is-026
       - server-name: /v1/provide-air-interface-general-information-of-devices
         uuid: nep-1-1-0-op-s-is-030
+      - server-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
+        uuid: nep-1-1-0-op-s-is-031
+      - server-name: /v1/provide-air-interface-non-qam-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-032
+      - server-name: /v1/provide-air-interface-qam-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-033
       - server-name: /v1/provide-ethernet-container-general-information-of-devices
         uuid: nep-1-1-0-op-s-is-040
+      - server-name: /v1/provide-ethernet-container-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-041
       - server-name: /v1/provide-wire-interface-general-information-of-devices
         uuid: nep-1-1-0-op-s-is-045
     consequent-requests:
@@ -581,21 +587,6 @@ forwardings:
       - client-name: ElasticSearch
         uuid: nep-1-1-0-es-c-es-1-0-0-000
 
-  - forwarding-name: PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache
-    uuid: nep-1-1-0-op-fc-is-022
-    forwarding-type: InvariantProcessSnippet
-    management-requests:
-      operation-client-update:
-      fc-port-update:
-      fc-port-deletion:
-      operation-client-deletion:
-    initiating-requests:
-      - server-name: /v1/provide-list-of-interfaces-per-device-in-nep
-        uuid: nep-1-1-0-op-s-is-022
-    consequent-requests:
-      - client-name: ElasticSearch
-        uuid: nep-1-1-0-es-c-es-1-0-0-000
-
   - forwarding-name: PromptForProvidingGeneralDeviceInfoCausesReadingFromNepCache
     uuid: nep-1-1-0-op-fc-is-025
     forwarding-type: InvariantProcessSnippet
@@ -641,6 +632,51 @@ forwardings:
       - client-name: ElasticSearch
         uuid: nep-1-1-0-es-c-es-1-0-0-000
 
+  - forwarding-name: PromptForProvidingAirInterfaceTransmissionModeListsCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-031
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
+        uuid: nep-1-1-0-op-s-is-031
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingAirInterfaceNonQamPmDataCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-032
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-air-interface-non-qam-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-032
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingAirInterfaceQamPmDataCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-033
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-air-interface-qam-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-033
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
   - forwarding-name: PromptForProvidingEthernetContainerGeneralInfoCausesReadingFromNepCache
     uuid: nep-1-1-0-op-fc-is-040
     forwarding-type: InvariantProcessSnippet
@@ -652,6 +688,81 @@ forwardings:
     initiating-requests:
       - server-name: /v1/provide-ethernet-container-general-information-of-devices
         uuid: nep-1-1-0-op-s-is-040
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingAirInterfacePmDataCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-041
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-ethernet-container-pm-data-of-devices
+        uuid: nep-1-1-0-op-s-is-041
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingWireInterfaceGeneralInfoCausesReadingFromNepCache
+    uuid: nep-1-1-0-op-fc-is-045
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-wire-interface-general-information-of-devices
+        uuid: nep-1-1-0-op-s-is-045
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-1-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetConnectedDevices
+    uuid: nep-1-1-0-op-fc-is-050
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-nep-data-statistics
+        uuid: nep-1-1-0-op-s-is-050
+    consequent-requests:
+      - client-name: MWDI://v1/provide-list-of-connected-devices
+        uuid: nep-1-1-0-op-c-is-mwdi-1-1-2-000
+
+  - forwarding-name: PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetListOfNepDevices
+    uuid: nep-1-1-0-op-fc-is-051
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-nep-data-statistics
+        uuid: nep-1-1-0-op-s-is-050
+    consequent-requests:
+      - client-name: NEP://v1/provide-list-of-devices-in-nep
+        uuid: nep-1-1-0-op-c-is-nep-1-1-0-021
+
+  - forwarding-name: PromptForProvidingNepDataStaticsticsCausesReadingFromNepCache.GetNepDataStatistics
+    uuid: nep-1-1-0-op-fc-is-052
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-nep-data-statistics
+        uuid: nep-1-1-0-op-s-is-050
     consequent-requests:
       - client-name: ElasticSearch
         uuid: nep-1-1-0-es-c-es-1-0-0-000

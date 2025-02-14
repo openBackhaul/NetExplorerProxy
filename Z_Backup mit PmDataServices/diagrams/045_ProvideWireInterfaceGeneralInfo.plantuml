@@ -1,0 +1,19 @@
+@startuml 045_ProvideWireInterfaceGeneralInfo
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingWireInterfaceGeneralInfoCausesReadingFromNepCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-wire-interface-general-information-of-devices" as nep
+participant "ElasticSearch \n(or database)" as db
+
+external -> nep: {optional: mount-name-list, data-age (BasicAuth)}
+activate nep
+
+nep -> db: (apiAuthKey)
+db --> nep: {optional: mount-name-list, data-age} (no security)
+
+nep --> external: {(filtered) generalWireInterfaceInfo} (no security)
+
+deactivate nep
+@enduml
