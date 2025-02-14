@@ -92,11 +92,121 @@ The following snippet gives an example, all blocks which are not marked as to be
 <details>
     <summary>display example </summary>
 
+  ```json
+  {
+    "core-model-1-4:control-construct": {
+      "logical-termination-point": [
+        {
+          "uuid": "LTP-TDMCONTAINER-TTP-4-29",
+          "layer-protocol": [
+            {
+              "local-id": "LP-TDMCONTAINER-TTP-4-29"
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91SP3D/4/29"
+          }
+        },
+        {
+          "uuid": "LTP-MACINTERFACE-TTP-6-4",
+          "layer-protocol": [
+            {
+              "local-id": "LP-MACINTERFACE-TTP-6-4"
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91EM6FA/6/4"
+          }
+        },
+        {
+          "uuid": "LTP-SSMEXTCLOCK-TTP-0-240-1",
+          "layer-protocol": [
+            {
+              "local-id": "LP-SSMEXTCLOCK-TTP-0-240-1"
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "CSH/0/240/1"
+          }
+        },
+        {
+          "uuid": "LTP-PURE-TTP-6-1",
+          "layer-protocol": [
+            {
+              "local-id": "LP-PURE-TTP-6-1"
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91EM6FA/6/1"
+          }
+        },
+        ### keep ###
+        {
+          "uuid": "LTP-ETHERNETCONTAINER-TTP-6-4",
+          "layer-protocol": [
+            {
+              "local-id": "LP-ETHERNETCONTAINER-TTP-6-4",
+              "ethernet-container-2-0:ethernet-container-pac": {
+                "ethernet-container-status": {
+                  "interface-status": "ethernet-container-2-0:INTERFACE_STATUS_TYPE_DOWN"
+                }
+              }
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91EM6FA/6/4"
+          }
+        },
+        {
+          "uuid": "LTP-TDMCONTAINER-TTP-4-32",
+          "layer-protocol": [
+            {
+              "local-id": "LP-TDMCONTAINER-TTP-4-32"
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91SP3D/4/32"
+          }
+        },
+        ### keep ###
+        {
+          "uuid": "LTP-MWPS-TTP-1-1",
+          "layer-protocol": [
+            {
+              "local-id": "LP-MWPS-TTP-1-1",
+              "air-interface-2-0:air-interface-pac": {
+                "air-interface-status": {
+                  "interface-status": "air-interface-2-0:INTERFACE_STATUS_TYPE_UP"
+                }
+              }
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91ISX2/1/1"
+          }
+        },
+        ### keep ###
+        {
+          "uuid": "LTP-WIREINTERFACE-TTP-6-4",
+          "layer-protocol": [
+            {
+              "local-id": "LP-WIREINTERFACE-TTP-6-4",
+              "wire-interface-2-0:wire-interface-pac": {
+                "wire-interface-status": {
+                  "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN"
+                }
+              }
+            }
+          ],
+          "ltp-augment-1-0:ltp-augment-pac": {
+            "original-ltp-name": "SL91EM6FA/6/4"
+          }
+        }
+        ...
+      ]
+    }
+  }
 ```
-{"core-model-1-4:control-construct":{"logical-termination-point":[{"uuid":"LTP-TDMCONTAINER-TTP-4-29","layer-protocol":[{"local-id":"LP-TDMCONTAINER-TTP-4-29"}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91SP3D/4/29"}},{"uuid":"LTP-MACINTERFACE-TTP-6-4","layer-protocol":[{"local-id":"LP-MACINTERFACE-TTP-6-4"}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91EM6FA/6/4"}},{"uuid":"LTP-SSMEXTCLOCK-TTP-0-240-1","layer-protocol":[{"local-id":"LP-SSMEXTCLOCK-TTP-0-240-1"}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"CSH/0/240/1"}},{"uuid":"LTP-PURE-TTP-6-1","layer-protocol":[{"local-id":"LP-PURE-TTP-6-1"}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91EM6FA/6/1"}},### keep ###{"uuid":"LTP-ETHERNETCONTAINER-TTP-6-4","layer-protocol":[{"local-id":"LP-ETHERNETCONTAINER-TTP-6-4","ethernet-container-2-0:ethernet-container-pac":{"ethernet-container-status":{"interface-status":"ethernet-container-2-0:INTERFACE_STATUS_TYPE_DOWN"}}}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91EM6FA/6/4"}},{"uuid":"LTP-TDMCONTAINER-TTP-4-32","layer-protocol":[{"local-id":"LP-TDMCONTAINER-TTP-4-32"}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91SP3D/4/32"}},### keep ###{"uuid":"LTP-MWPS-TTP-1-1","layer-protocol":[{"local-id":"LP-MWPS-TTP-1-1","air-interface-2-0:air-interface-pac":{"air-interface-status":{"interface-status":"air-interface-2-0:INTERFACE_STATUS_TYPE_UP"}}}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91ISX2/1/1"}},### keep ###{"uuid":"LTP-WIREINTERFACE-TTP-6-4","layer-protocol":[{"local-id":"LP-WIREINTERFACE-TTP-6-4","wire-interface-2-0:wire-interface-pac":{"wire-interface-status":{"interface-status":"wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN"}}}],"ltp-augment-1-0:ltp-augment-pac":{"original-ltp-name":"SL91EM6FA/6/4"}}...]}}
-```
-
-
 </details>
 
 ### Data storage and mappings to output data
