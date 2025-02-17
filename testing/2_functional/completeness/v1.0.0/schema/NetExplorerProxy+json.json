@@ -142,76 +142,10 @@
   "/v1/provide-air-interface-transmission-mode-lists-of-devices": {
     "type": "string"
   },
-  "/v1/provide-air-interface-non-qam-pm-data-of-devices": {
-    "type": "string"
-  },
-  "/v1/provide-air-interface-qam-pm-data-of-devices": {
-    "type": "string"
-  },
   "/v1/provide-ethernet-container-general-information-of-devices": {
-    "type": "string"
-  },
-  "/v1/provide-ethernet-container-pm-data-of-devices": {
     "type": "string"
   },
   "/v1/provide-wire-interface-general-information-of-devices": {
     "type": "string"
-  },
-  "/v1/provide-nep-data-statistics": {
-    "type": "object",
-    "required": [
-      "data-statistics"
-    ],
-    "properties": {
-      "data-statistics": {
-        "type": "object",
-        "properties": {
-          "timestamp": {
-            "type": "string"
-          },
-          "number-of-connected-devices": {
-            "type": "integer"
-          },
-          "number-of-devices-in-nep-cache": {
-            "type": "integer"
-          },
-          "number-of-recently-update-devices-in-nep-cache": {
-            "type": "integer"
-          },
-          "number-of-records-per-data-class": {
-            "type": "object",
-            "properties": {
-              "general-device-info": {
-                "type": "integer"
-              },
-              "actual-equipment-info": {
-                "type": "integer"
-              },
-              "air-interface-general-info": {
-                "type": "integer"
-              },
-              "air-interface-transmission-mode-lists": {
-                "type": "integer"
-              },
-              "air-interface-non-qam-pm-data": {
-                "type": "integer"
-              },
-              "air-interface-qam-pm-data": {
-                "type": "integer"
-              },
-              "ethernet-container-general-info": {
-                "type": "integer"
-              },
-              "ethernet-container-pm-data": {
-                "type": "integer"
-              },
-              "wire-interface-general-info": {
-                "type": "integer"
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }

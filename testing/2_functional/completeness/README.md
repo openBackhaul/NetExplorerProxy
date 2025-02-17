@@ -19,10 +19,7 @@ The affected services are:
 - /v1/provide-actual-equipment-information-of-devices
 - /v1/provide-air-interface-general-information-of-devices
 - /v1/provide-air-interface-transmission-mode-lists-of-devices
-- /v1/provide-air-interface-non-qam-pm-data-of-devices
-- /v1/provide-air-interface-qam-pm-data-of-devices
 - /v1/provide-ethernet-container-general-information-of-devices
-- /v1/provide-ethernet-container-pm-data-of-devices
 - /v1/provide-wire-interface-general-information-of-devices
 
 For easier usage, the respective examples to be copied have also been provided in a separate file:  

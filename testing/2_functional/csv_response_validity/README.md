@@ -29,10 +29,7 @@ The services to be tested are:
 - /v1/provide-actual-equipment-information-of-devices
 - /v1/provide-air-interface-general-information-of-devices
 - /v1/provide-air-interface-transmission-mode-lists-of-devices
-- /v1/provide-air-interface-non-qam-pm-data-of-devices
-- /v1/provide-air-interface-qam-pm-data-of-devices
 - /v1/provide-ethernet-container-general-information-of-devices
-- /v1/provide-ethernet-container-pm-data-of-devices
 - /v1/provide-wire-interface-general-information-of-devices
 
 **Responses contain only relevant data**
@@ -40,7 +37,6 @@ The raw data from the filtered ControlConstruct can contain irrelevant data, whi
 
 The following additional tests therefore are applied:
 - /v1/provide-air-interface-transmission-mode-lists-of-devices: must not contain any records where code-rate == -1
-- /v1/provide-air-interface-qam-pm-data-of-devices: must not contain any data where time <= 0
 
 Notes:
 - Note that there is a problem with the import to Mockoon, which requires the data to be returned to be copied manually into the Mockoon response bodies.  
