@@ -73,10 +73,10 @@ The following columns is to be provided in the response:
 
 ##### Capa-factor  
 The capa-factor is to be computed by the formula used by the TrafficChecker, and to be divided by 1000 to directly get mbps values.  
-(Netexplorer then needs to set the capa-factors in relation to the time the links were operating in the respective modulation scheme (once QAM PM data is made available).)
+(Netexplorer then needs to set the capa-factors in relation to the time the links were operating in the respective modulation scheme, once QAM PM data is made available.)
 
 The capacity formula used by TrafficChecker, looks as follows:  
-![Image](https://github.com/user-attachments/assets/01b07158-2175-40ca-8ade-efe8638ab9f1)
+![Image](./pictures/capaFactor.png)
 
 Consider the first record from the example given below ("56000-64-v0"):
 - channel-bandwidth = 56000
