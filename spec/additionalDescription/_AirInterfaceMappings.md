@@ -71,9 +71,9 @@ The following columns is to be provided in the response:
 - computed from properties in *air-interface-capability/transmission-mode-list*
   - `capa-factor`: a precomputed factor, see formula below
 
-##### **Capa-factor**  
+##### Capa-factor  
 The capa-factor is to be computed by the formula used by the TrafficChecker, and to be divided by 1000 to directly get mbps values.  
-(In Netexplorer then needs to set the capa-factors in relation to the time the links were operating in the respective modulation scheme.)
+(Netexplorer then needs to set the capa-factors in relation to the time the links were operating in the respective modulation scheme (once QAM PM data is made available).)
 
 The capacity formula used by TrafficChecker, looks as follows:  
 ![Image](https://github.com/user-attachments/assets/01b07158-2175-40ca-8ade-efe8638ab9f1)
