@@ -20,14 +20,14 @@
 - [NetExplorerProxy+config](./NetExplorerProxy+config.json)
 
 ### Comments
-Services added with v1.0.0:
+Services introduced with v1.0.0:
   - */v1/provide-mac-table-of-all-devices*
   - */v1/provide-mac-table-of-specific-device*
   - */v1/read-current-mac-table-from-device*
   - */v1/receive-current-mac-table-of-device*
   - */v1/provide-list-of-connected-devices*
 
-Services added with v1.1.0: 
+Services introduced with v1.1.0: 
 - */v1/provide-list-of-devices-in-nep*
 - */v1/provide-list-of-interfaces-per-device-in-nep*
 - */v1/provide-general-information-of-devices*
