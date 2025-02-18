@@ -213,7 +213,7 @@ The following snippet gives an example, all blocks which are not marked as to be
 
 Information about gathered data
 - data is gathered on device basis, i.e. separately for each device
-- the data contains only non-performance data and performance data, which needs to be handled as follows:
+- the data contains only non-performance data, which needs to be handled as follows:
     - if the new filtered ControlConstruct data has been obtained from MWDI for a device, all non-pm data in the NEP cache for that device is overwritten with the new set of data
     - the data shall be written to the NEP cache together with the timestamp from when the data was gathered
 
@@ -246,7 +246,7 @@ If no data is found, then
 I.e. in case there is no data found, there will be no error responses.
 
 **Interface info per device**  
-NEP also offers a service to retrieve information about which interfaces the NEP cache holds for the devices stored in the NEP cache.  
-The related information are taken from cached data class information in the NEP cache.  
+NEP also offers a service to retrieve information about which interfaces (limited to air-interface, ethernet-container and wire-interface) the NEP cache holds for the devices stored in the NEP cache.  
+The related information is taken from cached data class information in the NEP cache.  
 
 Detailed mapping: [InterfaceInfoPerDevice](./_InterfaceInfoPerDeviceMappings.md)  

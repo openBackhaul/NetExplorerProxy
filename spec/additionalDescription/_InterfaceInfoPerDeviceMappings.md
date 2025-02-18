@@ -7,7 +7,7 @@ This document describes how the interface information per device shall be mapped
   - therefore, data will be flattened
 - The service will return data for all devices, not just for a single device
 - Note that the NEP does not keep all interfaces in its cache:
-  - MAC interface information is retrieved on demand from MacAddressTableRecorder
+  - NEP also provides MAC interface information, but this information is retrieved on demand from MacAddressTableRecorder and stored in the NEP cache
   - from the retrieved and filtered ControlConstruct data is only kept for air-interface, ethernet-container and wire-interface 
 
 ### Mappings
