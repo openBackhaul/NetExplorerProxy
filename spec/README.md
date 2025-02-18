@@ -20,4 +20,12 @@
 - [NetExplorerProxy+config](./NetExplorerProxy+config.json)
 
 ### Comments
-./.
+
+#### Services
+The following table outlines, which services have been introduced with which spec version or which are to be planned for future releases currently.
+
+| Version | Services |
+|:---------|:------------------|
+| 1.0.0   | - */v1/provide-mac-table-of-all-devices*<br>- */v1/provide-mac-table-of-specific-device*<br>- */v1/read-current-mac-table-from-device*<br>- */v1/receive-current-mac-table-of-device*<br>- */v1/provide-list-of-connected-devices* |
+| 1.1.0   | - */v1/provide-list-of-devices-in-nep*<br>- */v1/provide-list-of-interfaces-per-device-in-nep*<br>- */v1/provide-general-information-of-devices*<br>- */v1/provide-actual-equipment-information-of-devices*<br>- */v1/provide-air-interface-general-information-of-devices*<br>- */v1/provide-air-interface-transmission-mode-lists-of-devices*<br>- */v1/provide-ethernet-container-general-information-of-devices*<br>- */v1/provide-wire-interface-general-information-of-devices* |
+| 1.2.0+  | (currently planned)<br>- */v1/provide-air-interface-non-qam-pm-data-of-devices*<br>- */v1/provide-air-interface-qam-pm-data-of-devices*<br>- */v1/provide-ethernet-container-pm-data-of-devices* |

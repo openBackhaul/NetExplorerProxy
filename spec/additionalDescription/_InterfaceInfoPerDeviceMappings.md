@@ -7,7 +7,7 @@ This document describes how the interface information per device shall be mapped
   - therefore, data will be flattened
 - The service will return data for all devices, not just for a single device
 - Note that the NEP does not keep all interfaces in its cache:
-  - MAC interface information is retrieved on demand from MacAddressTableRecorder
+  - NEP also provides MAC interface information, but this information is retrieved on demand from MacAddressTableRecorder and *not* stored in the NEP cache
   - from the retrieved and filtered ControlConstruct data is only kept for air-interface, ethernet-container and wire-interface 
 
 ### Mappings
@@ -18,10 +18,10 @@ Related service: */v1/provide-list-of-interfaces-per-device-in-nep*
 
 The following data for all devices should be gathered into the following columns:
 
-- from *generalDeviceInfo*  (1) (see description of ):
+- from *generalDeviceInfo* (1):
   - `mount-name`
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
-- from *airInterfaceGeneralInfo/ethernetContainerGeneralInfo/wireInterfaceGeneralInfo*:
+- from *airInterfaceGeneralInfo/ethernetContainerGeneralInfo/wireInterfaceGeneralInfo* (2):
   - `uuid`: this is the *logical-termination-point/uuid*
   - `local-id`: this is the *logical-termination-point/layer-protocol/uuid*
   - `original-ltp-name`: this is the valued from *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
