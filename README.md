@@ -45,14 +45,14 @@ i.e. there will be no retrieval of data on demand.
   - this application has not been specified, yet 
 
 *Newly added services*:  
-  - /v1/provide-list-of-devices-in-nep
-  - /v1/provide-list-of-interfaces-per-device-in-nep
-  - /v1/provide-general-information-of-devices
-  - /v1/provide-actual-equipment-information-of-devices
-  - /v1/provide-air-interface-general-information-of-devices
-  - /v1/provide-air-interface-transmission-mode-lists-of-devices
-  - /v1/provide-ethernet-container-general-information-of-devices
-  - /v1/provide-wire-interface-general-information-of-devices
+- /v1/provide-list-of-devices-in-nep
+- /v1/provide-list-of-interfaces-per-device-in-nep
+- /v1/provide-general-information-of-devices
+- /v1/provide-actual-equipment-information-of-devices
+- /v1/provide-air-interface-general-information-of-devices
+- /v1/provide-air-interface-transmission-mode-lists-of-devices
+- /v1/provide-ethernet-container-general-information-of-devices
+- /v1/provide-wire-interface-general-information-of-devices
 
 ### Relevance
 The NetExplorerProxy serves as a proxy to a planning and simulation tool for regular use.  
