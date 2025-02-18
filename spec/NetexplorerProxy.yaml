@@ -1,7 +1,7 @@
 ﻿openapi: 3.0.0
 info:
   title: NetExplorerProxy
-  version: 1.0.1
+  version: 1.1.0
 
 x-gui-paths:
 ########################################################################################################################
@@ -467,37 +467,44 @@ paths:
                       type: string
                       description: >
                         'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#mount-name}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#mount-name} if existing, 
+                        if not existing in callback data, fill with empty string'
                     own-mac-address:
                       type: string
                       description: >
                         'MAC address of the device that holds the MAC address table
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#own-mac-address}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#own-mac-address} if existing, 
+                        if not existing in callback data, fill with empty string'
                     egress-ltp-uuid:
                       type: string
                       description: >
                         'UUID of the MacInterface towards the listed remote MAC addresses
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#egress-ltp-uuid}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#egress-ltp-uuid} if existing, 
+                        if not existing in callback data, fill with empty string'
                     original-ltp-name:
                       type: string
                       description: >
                         'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#original-ltp-name}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#original-ltp-name} if existing, 
+                        if not existing in callback data, fill with empty string'
                     vlan-id:
                       type: integer
                       description: >
                         'VLAN that connects the listed remote MAC addresses
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#vlan-id}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#vlan-id} if existing, 
+                        if not existing in callback data, fill with empty string'
                     remote-mac-address:
                       type: string
                       description: >
                         'Remote MAC address that can be reached at the egress interface and inside the VLAN
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#remote-mac-address}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#remote-mac-address} if existing, 
+                        if not existing in callback data, fill with empty string'
                     time-stamp-of-data:
                       type: string
                       description: >
                         'Date and time when the data has been retrieved from the device
-                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#time-stamp-of-data}'
+                        from {PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache.response.body#time-stamp-of-data} if existing, 
+                        if not existing in callback data, fill with empty string'
                 example:
                   - mount-name: '305251234'
                     own-mac-address: '00:00:00:00:00:00'
@@ -662,37 +669,44 @@ paths:
                       type: string
                       description: >
                         'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#mount-name}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#mount-name} if existing, 
+                        if not existing in callback data, fill with empty string'
                     own-mac-address:
                       type: string
                       description: >
                         'MAC address of the device that holds the MAC address table
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#own-mac-address}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#own-mac-address} if existing, 
+                        if not existing in callback data, fill with empty string'
                     egress-ltp-uuid:
                       type: string
                       description: >
                         'UUID of the MacInterface towards the listed remote MAC addresses
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#egress-ltp-uuid}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#egress-ltp-uuid} if existing, 
+                        if not existing in callback data, fill with empty string'
                     original-ltp-name:
                       type: string
                       description: >
                         'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#original-ltp-name}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#original-ltp-name} if existing, 
+                        if not existing in callback data, fill with empty string'
                     vlan-id:
                       type: integer
                       description: >
                         'VLAN that connects the listed remote MAC addresses
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#vlan-id}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#vlan-id} if existing, 
+                        if not existing in callback data, fill with empty string'
                     remote-mac-address:
                       type: string
                       description: >
                         'Remote MAC address that can be reached at the egress interface and inside the VLAN
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#remote-mac-address}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#remote-mac-address} if existing, 
+                        if not existing in callback data, fill with empty string'
                     time-stamp-of-data:
                       type: string
                       description: >
                         'Date and time when the data has been retrieved from the device
-                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#time-stamp-of-data}'
+                        from {PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache.response.body#time-stamp-of-data} if existing, 
+                        if not existing in callback data, fill with empty string'
                 example:
                   - mount-name: '305251234'
                     own-mac-address: '00:00:00:00:00:00'
@@ -1098,14 +1112,6 @@ paths:
                     type: array
                     items:
                       type: object
-                      required:
-                        - mount-name
-                        - own-mac-address
-                        - egress-ltp-uuid
-                        - original-ltp-name
-                        - vlan-id
-                        - remote-mac-address
-                        - time-stamp-of-data
                       properties:
                         mount-name:
                           type: string
@@ -1214,37 +1220,44 @@ paths:
                                 type: string
                                 description: >
                                   'Identifier of the device in the controller, identical with NetworkElementID at Telefonica Germany
-                                  from {$request.body#mount-name}'
+                                  from {$request.body#mount-name} if exsting,
+                                  if not existing fill with empty string'
                               own-mac-address:
                                 type: string
                                 description: >
                                   'MAC address of the device that holds the MAC address table
-                                  from {$request.body#own-mac-address}'
+                                  from {$request.body#own-mac-address} if exsting,
+                                  if not existing fill with empty string'
                               egress-ltp-uuid:
                                 type: string
                                 description: >
                                   'UUID of the MacInterface towards the listed remote MAC addresses
-                                  all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#egress-ltp-uuid})'
+                                  all UUIDs being complemented by MountName as a prefix: uuid = {$request.body#egress-ltp-uuid}) if exsting,
+                                  if not existing fill with empty string'
                               original-ltp-name:
                                 type: string
                                 description: >
                                   'Name of the egress interface as it is represented on the Local Craft Terminal provided by the vendor
-                                  from {$request.body#original-ltp-name}'
+                                  from {$request.body#original-ltp-name} if exsting,
+                                  if not existing fill with empty string'
                               vlan-id:
                                 type: integer
                                 description: >
                                   'VLAN that connects the listed remote MAC addresses
-                                  from {$request.body#vlan-id}'
+                                  from {$request.body#vlan-id} if exsting,
+                                  if not existing fill with empty string'
                               remote-mac-address:
                                 type: string
                                 description: >
                                   'Remote MAC address that can be reached at the egress interface and inside the VLAN
-                                  from {$request.body#remote-mac-address}'
+                                  from {$request.body#remote-mac-address} if exsting,
+                                  if not existing fill with empty string'
                               time-stamp-of-data:
                                 type: string
                                 pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})$'
                                 description: >
-                                  'Date and time when the data has been retrieved from the device'
+                                  'Date and time when the data has been retrieved from the device if exsting,
+                                  if not existing fill with empty string'
                       example:
                         request-id: '121251092-1721120567127'
                         mac-address-data:
