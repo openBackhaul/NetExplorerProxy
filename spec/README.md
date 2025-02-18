@@ -22,7 +22,7 @@
 ### Comments
 
 #### Services
-The following section outlines, which services have been introduced with with spec version.  
+The following section outlines, which services have been introduced with which spec version.  
 
 Services introduced with v1.0.0:
 - */v1/provide-mac-table-of-all-devices*
