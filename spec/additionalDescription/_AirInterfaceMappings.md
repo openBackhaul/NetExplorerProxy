@@ -78,6 +78,8 @@ The capa-factor is to be computed by the formula used by the TrafficChecker, and
 The capacity formula used by TrafficChecker, looks as follows:  
 ![Image](./pictures/capaFactor.png)
 
+The capa-factor value shall be given with more than one decimal place.
+
 Consider the first record from the example given below ("56000-64-v0"):
 ```
 - channel-bandwidth = 56000
