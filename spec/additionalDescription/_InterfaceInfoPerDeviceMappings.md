@@ -18,10 +18,10 @@ Related service: */v1/provide-list-of-interfaces-per-device-in-nep*
 
 The following data for all devices should be gathered into the following columns:
 
-- from *generalDeviceInfo*  (1) (see description of ):
+- from *generalDeviceInfo* (1):
   - `mount-name`
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
-- from *airInterfaceGeneralInfo/ethernetContainerGeneralInfo/wireInterfaceGeneralInfo*:
+- from *airInterfaceGeneralInfo/ethernetContainerGeneralInfo/wireInterfaceGeneralInfo* (2):
   - `uuid`: this is the *logical-termination-point/uuid*
   - `local-id`: this is the *logical-termination-point/layer-protocol/uuid*
   - `original-ltp-name`: this is the valued from *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
