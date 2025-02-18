@@ -21,7 +21,7 @@
 
 ### Comments
 
-**Services**  
+#### Services
 The following section outlines, which services have been introduced with with spec version.  
 
 Services introduced with v1.0.0:
