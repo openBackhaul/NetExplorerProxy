@@ -20,6 +20,10 @@
 - [NetExplorerProxy+config](./NetExplorerProxy+config.json)
 
 ### Comments
+
+**Services**  
+The following section outlines, which services have been introduced with with spec version.  
+
 Services introduced with v1.0.0:
 - */v1/provide-mac-table-of-all-devices*
 - */v1/provide-mac-table-of-specific-device*
