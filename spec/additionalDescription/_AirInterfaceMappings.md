@@ -79,12 +79,14 @@ The capacity formula used by TrafficChecker, looks as follows:
 ![Image](./pictures/capaFactor.png)
 
 Consider the first record from the example given below ("56000-64-v0"):
+```
 - channel-bandwidth = 56000
 - symbol-rate-reduction-factor = 1
 - with NumOfStates = modulation-scheme: log2(NumOfStates) = log2(64) = 6
 - code-rate = 97
 
 capa-factor = ((56000 / 1) * log2(64) * 97 * 1/1,15 kbps) / 1000 = 28.340,9 mbps
+```
 
 **Example**  
 Again data for all air interfaces of the devices from NEP cache shall be aggregated in a single output.  
