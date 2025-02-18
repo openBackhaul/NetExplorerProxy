@@ -37,3 +37,7 @@ Services introduced with v1.1.0:
 - */v1/provide-ethernet-container-general-information-of-devices*
 - */v1/provide-wire-interface-general-information-of-devices*
 
+Outlook - services currently planned to be introduced with v1.2.0 or later:
+- */v1/provide-air-interface-non-qam-pm-data-of-devices*
+- */v1/provide-air-interface-qam-pm-data-of-devices*
+- */v1/provide-ethernet-container-pm-data-of-devices*
