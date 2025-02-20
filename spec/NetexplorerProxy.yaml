@@ -458,7 +458,7 @@ paths:
                     - mount-name
                     - own-mac-address
                     - egress-ltp-uuid
-                    - original-ltp-uuid
+                    - original-ltp-name
                     - vlan-id
                     - remote-mac-address
                     - time-stamp-of-data
