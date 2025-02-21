@@ -926,7 +926,7 @@
             "http-server-interface-1-0:http-server-interface-pac": {
               "http-server-interface-capability": {
                 "application-name": "NetExplorerProxy",
-                "release-number": "1.0.1",
+                "release-number": "1.0.2",
                 "application-purpose": "The application is the interface towards the NetExplorer",
                 "data-update-period": "http-server-interface-1-0:DATA_UPDATE_PERIOD_TYPE_REAL_TIME",
                 "owner-name": "Katharina Mohr",
@@ -937,6 +937,12 @@
                     "release-number": "1.0.1",
                     "release-date": "06.12.2024",
                     "changes": "Initial version"
+                  },
+                  {
+                    "local-id": "1",
+                    "release-number": "1.0.2",
+                    "release-date": "21.02.2025",
+                    "changes": "Fixes MATR services"
                   }
                 ]
               }
@@ -1043,12 +1049,12 @@
         ]
       },
       {
-        "uuid": "nep-1-0-1-http-c-nr-1-0-1-000",
+        "uuid": "nep-1-0-1-http-c-nr-1-0-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
         ],
         "server-ltp": [
-          "nep-1-0-1-tcp-c-nr-1-0-1-000"
+          "nep-1-0-1-tcp-c-nr-1-0-2-000"
         ],
         "layer-protocol": [
           {
@@ -1057,17 +1063,17 @@
             "http-client-interface-1-0:http-client-interface-pac": {
               "http-client-interface-configuration": {
                 "application-name": "NewRelease",
-                "release-number": "1.0.1"
+                "release-number": "1.0.2"
               }
             }
           }
         ]
       },
       {
-        "uuid": "nep-1-0-1-tcp-c-nr-1-0-1-000",
+        "uuid": "nep-1-0-1-tcp-c-nr-1-0-2-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-0-1-http-c-nr-1-0-1-000"
+          "nep-1-0-1-http-c-nr-1-0-2-000"
         ],
         "server-ltp": [
         ],
