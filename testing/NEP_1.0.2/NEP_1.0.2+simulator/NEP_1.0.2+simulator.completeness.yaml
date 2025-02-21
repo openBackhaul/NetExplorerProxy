@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: NEP_1.0.1+simulator.completeness
+  title: NEP_1.0.2+simulator.completeness
   version: 1.0.0
 
 paths:
 ########################################################################################################################
-#   NEP_1.0.1+simulator.completeness in static reference mode
+#   NEP_1.0.2+simulator.completeness in static reference mode
 ########################################################################################################################
   /v1/provide-mac-table-of-all-devices:
     post:
@@ -24,14 +24,6 @@ paths:
                 type: array
                 items:
                   type: object
-                  required:
-                    - mount-name
-                    - own-mac-address
-                    - egress-ltp-uuid
-                    - original-ltp-uuid
-                    - vlan-id
-                    - remote-mac-address
-                    - time-stamp-of-data
                   properties:
                     mount-name:
                       type: string
@@ -122,14 +114,6 @@ paths:
                 type: array
                 items:
                   type: object
-                  required:
-                    - mount-name
-                    - own-mac-address
-                    - egress-ltp-uuid
-                    - original-ltp-name
-                    - vlan-id
-                    - remote-mac-address
-                    - time-stamp-of-data
                   properties:
                     mount-name:
                       type: string
@@ -316,14 +300,6 @@ paths:
                     type: array
                     items:
                       type: object
-                      required:
-                        - mount-name
-                        - own-mac-address
-                        - egress-ltp-uuid
-                        - original-ltp-name
-                        - vlan-id
-                        - remote-mac-address
-                        - time-stamp-of-data
                       properties:
                         mount-name:
                           type: string
@@ -744,17 +720,17 @@ components:
                 type: string
                 description: >
                   'Field name
-                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/field-name]'
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/field-name]'
               value:
                 type: string
                 description: >
                   'Field value
-                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-configuration/value]'
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-response-p-*/response-profile-1-0:response-profile-pac/response-profile-configuration/value]'
               datatype:
                 type: string
                 description: >
                   'Field datatype
-                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/datatype]'
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/datatype]'
         consequent-action-list:
           type: array
           items:
@@ -768,20 +744,20 @@ components:
                 type: string
                 description: >
                   'Label that shall be presented on the button
-                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/label]'
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/label]'
               request:
                 type: string
                 description: >
                   'Request that shall be called, when button gets pressed
                   from
-                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol}]
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-2-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol}]
                   ://
-                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address}
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-2-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address}
                   or
-                  {/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name}]
+                  {/core-model-1-4:control-construct/logical-termination-point=nep-1-0-2-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name}]
                   :
-                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port}]
-                  [{/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-configuration/consequent-operation-reference}]'
+                  [{/core-model-1-4:control-construct/logical-termination-point=nep-1-0-2-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port}]
+                  [{/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-action-p-*/action-profile-1-0:action-profile-pac/action-profile-configuration/consequent-operation-reference}]'
               input-value-list:
                 type: array
                 items:
@@ -793,17 +769,17 @@ components:
                       type: string
                       description: >
                         'Name of an input value required for executing the Request
-                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/name]'
+                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/name]'
                     unit:
                       type: string
                       description: >
                         'Unit of an input value required for executing the Request
-                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/unit]'
+                        from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/unit]'
               display-in-new-browser-window:
                 type: boolean
                 description: >
                   'True in case Request shall be represented in a new browser window
-                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/display-in-new-browser-window]'
+                  from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-0-2-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/display-in-new-browser-window]'
     logicalTerminationPoint:
       type: object
       required:

@@ -1,9 +1,0 @@
-# NEP_1.0.1+validator
-
-### Completeness
-- [NEP_1.0.1+validator.completeness](./NEP_1.0.1+validator.completeness/NEP_1.0.1+validator.completeness.json)  
-- [NEP_1.0.1+data.completeness](./NEP_1.0.1+validator.completeness/NEP_1.0.1+data.completeness.json)  
-
-Note:  
-The MAC address data and deviceList are just read from the MATR and MWDI via services with the same names and the response data is just passed through.  
-I.e. there is no data manipulation. Therefore, the completeness tests for those services matches the completeness tests for those services from MATR and MWDI.  
