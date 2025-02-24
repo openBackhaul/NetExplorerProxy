@@ -1,7 +1,9 @@
 {
 	"info": {
+		"_postman_id": "3b174028-d49d-4a91-9eb7-aa6bfa167e5e",
 		"name": "NetExplorerProxy+test.completeness",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9698906"
 	},
 	"item": [
 		{
@@ -1329,23 +1331,6 @@
 											"/****************************************************************************************\r",
 											"* Processing\r",
 											"****************************************************************************************/\r",
-											"var reference;\r",
-											"try {\r",
-											"    reference = {\r",
-											"        \"type\": \"object\",\r",
-											"        \"required\": [\r",
-											"            \"request-id\"\r",
-											"        ],\r",
-											"        \"properties\": {\r",
-											"            \"request-id\": {\r",
-											"                \"type\": \"string\"\r",
-											"            }\r",
-											"        }\r",
-											"    }\r",
-											"\r",
-											"} catch (error) {\r",
-											"    logger.error(\"! reference could not be defined.\")\r",
-											"}\r",
 											"\r",
 											"try {\r",
 											"    if (uri != dummyUri) {\r",
