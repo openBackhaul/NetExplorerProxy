@@ -120,8 +120,11 @@ servers:
       - release-number: 1.0.1
         release-date: 06.12.2024
         changes: Initial version
+      - release-number: 1.0.2
+        release-date: 21.02.2025
+        changes: Fixes MATR services
       - release-number: 1.1.0
-        release-date: 30.01.2025
+        release-date: 24.02.2025
         changes: Adds provisioning of additional device data
   tcp-server:
     - description: Without TLS layer

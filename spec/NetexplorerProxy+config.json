@@ -1244,8 +1244,14 @@
                   },
                   {
                     "local-id": "1",
+                    "release-number": "1.0.2",
+                    "release-date": "21.02.2025",
+                    "changes": "Fixes MATR services"
+                  },
+                  {
+                    "local-id": "2",
                     "release-number": "1.1.0",
-                    "release-date": "30.01.2025",
+                    "release-date": "24.02.2025",
                     "changes": "Adds provisioning of additional device data"
                   }
                 ]
