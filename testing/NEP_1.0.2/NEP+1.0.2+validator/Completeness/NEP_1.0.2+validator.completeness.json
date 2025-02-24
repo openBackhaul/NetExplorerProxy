@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "bcc9b334-42be-4a75-9582-1ef83103c642",
-		"name": "NEP_1.0.1+testcase.completeness",
+		"name": "NEP_1.0.2+testcase.completeness",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9698906"
 	},
@@ -18,7 +18,7 @@
 								"exec": [
 									"console.clear();\r",
 									"logger.struc(\"==========================================================================================\");\r",
-									"logger.struc(\"===== NEP_1.0.1+testcase.completeness ===================================================\");\r",
+									"logger.struc(\"===== NEP_1.0.2+testcase.completeness ===================================================\");\r",
 									"logger.struc(\"==========================================================================================\");\r",
 									"\r",
 									"\r",

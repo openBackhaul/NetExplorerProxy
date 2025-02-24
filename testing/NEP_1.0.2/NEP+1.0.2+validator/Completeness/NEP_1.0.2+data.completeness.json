@@ -13,7 +13,7 @@
 				"authorizationCode": "Basic ????",
 				"operationKey": "Operation key not yet provided.",
 				"userName": "Katharina Mohr",
-				"originator": "NEP_1.0.1+testcase.completeness",
+				"originator": "NEP_1.0.2+testcase.completeness",
 				"xCorrelator": "00000000-0000-0000-0000-000000000000",
 				"traceIndicator": "1",
 				"customerJourney": ""
@@ -25,7 +25,7 @@
 				"authorizationCode": "Basic ????",
 				"operationKey": "Operation key not yet provided.",
 				"userName": "Katharina Mohr",
-				"originator": "NEP_1.0.1+testcase.completeness",
+				"originator": "NEP_1.0.2+testcase.completeness",
 				"xCorrelator": "00000000-0000-0000-0000-000000000000",
 				"traceIndicator": "1",
 				"customerJourney": ""
