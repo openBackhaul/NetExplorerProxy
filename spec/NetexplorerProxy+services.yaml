@@ -151,18 +151,18 @@ clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: 1.0.1
-      uuid: nep-1-1-0-http-c-or-1-0-1-000
+      release-number: 1.0.2
+      uuid: nep-1-1-0-http-c-or-1-0-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4018
-      uuid: nep-1-1-0-tcp-c-or-1-0-1-000
+      uuid: nep-1-1-0-tcp-c-or-1-0-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/bequeath-your-data-and-die
-            uuid: nep-1-1-0-op-c-bm-or-1-0-1-000
+            uuid: nep-1-1-0-op-c-bm-or-1-0-2-000
         individual:
       service:
         basic:
@@ -170,7 +170,7 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: 1.0.1
+      release-number: 1.1.0
       uuid: nep-1-1-0-http-c-nr-1-1-0-000
     tcp-client:
       remote-protocol: http
