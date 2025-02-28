@@ -148,7 +148,7 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
   const operation = body["requestor-receive-operation"];
 
   // write NEP callback info into the request body
-  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-1-tcp-s-000");
+  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-2-tcp-s-000");
 
   body["requestor-protocol"] = ifConfig["protocol"];
   body["requestor-address"] = {"ip-address": ifConfig["ip-address"]};
