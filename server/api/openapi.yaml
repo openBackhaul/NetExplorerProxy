@@ -18902,14 +18902,6 @@ components:
             ipv-4-address: 1.1.3.1
         new-application-port: 3001
     inline_response_200:
-      required:
-      - egress-ltp-uuid
-      - mount-name
-      - original-ltp-name
-      - own-mac-address
-      - remote-mac-address
-      - time-stamp-of-data
-      - vlan-id
       type: object
       properties:
         mount-name:
@@ -19012,14 +19004,6 @@ components:
       example:
         mount-name: "305251234"
     inline_response_200_1:
-      required:
-      - egress-ltp-uuid
-      - mount-name
-      - original-ltp-name
-      - own-mac-address
-      - remote-mac-address
-      - time-stamp-of-data
-      - vlan-id
       type: object
       properties:
         mount-name:
@@ -19146,14 +19130,6 @@ components:
           - Resource unknown. The resource for the connected device does not exist
             at the Controller.
     v1receivecurrentmactableofdevice_macaddressdata:
-      required:
-      - egress-ltp-uuid
-      - mount-name
-      - original-ltp-name
-      - own-mac-address
-      - remote-mac-address
-      - time-stamp-of-data
-      - vlan-id
       type: object
       properties:
         mount-name:
