@@ -170,7 +170,9 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
 
       // store callback data of the caller by request ID in requestMap
       const timestamp = new Date();
-      const request = {mountName, protocol, address, port, operation, timestamp};
+      const appName = ret.appName;
+      const appRelease = ret.appRelease;
+      const request = {mountName, protocol, address, port, operation, timestamp, appName, appRelease};
       requestMap.set(requestId, request);
 //      ++numberOfParallelRequests;
     } else {
@@ -213,7 +215,7 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
 
       logger.debug("forwarding mac table data to '" + targetUrl + "'");
 
-      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, undefined);
+      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, undefined, request.appName, request.appRelease);
 
       if (ret.code === responseCodeEnum.code.OK || ret.code === responseCodeEnum.code.NO_CONTENT) {
         // remove request map entry
