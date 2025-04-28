@@ -1,5 +1,6 @@
 //@ts-check
 'use strict';
+const basicServiceImpl = require('../service/BasicServicesService');
 
 const basicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
@@ -41,6 +42,10 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let responseBodyToDocument = {};
   try {
     responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+    
+    basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+    basicServiceImpl.retriveTheCCofMountname(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+    
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
   } catch (responseBody) {
