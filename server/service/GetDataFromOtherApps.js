@@ -6,7 +6,7 @@ const requestHandler = require('./individualServices/RequestHandler');
 module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url)
  {
 
-        const ListOfConnectedDevices = await individualServices.provideListOfConnectedDevices(url);
+        const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
     
         return ListOfConnectedDevices;
  }
