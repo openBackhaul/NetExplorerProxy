@@ -44,15 +44,9 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
   try {
-    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
-<<<<<<< HEAD
-    
+    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);    
     basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
     basicServiceImpl.retriveTheCCofMountname(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
-    
-=======
-    basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
->>>>>>> c041d7e26f2fde8aa6510426bfb2201c8981c959
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
   } catch (responseBody) {
