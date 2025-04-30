@@ -101,7 +101,7 @@ exports.init = function(sequelize) {
     },
     {
       sequelize,
-      modelName: 'airInterface'
+      modelName: 'air_interface_general_info'
     },
   );
 

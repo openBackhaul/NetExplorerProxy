@@ -75,7 +75,7 @@ exports.init = function (sequelize) {
     },
     {
       sequelize,
-      modelName: 'ethContainer'
+      modelName: 'ethernet_container_general_info'
     },
   );
 

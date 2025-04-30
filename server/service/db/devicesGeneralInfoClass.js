@@ -46,7 +46,7 @@ exports.init = function(sequelize) {
     },
     {
       sequelize,
-      modelName: 'deviceInfo'
+      modelName: 'devices_general_info'
     },
   );
 

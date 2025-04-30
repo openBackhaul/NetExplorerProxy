@@ -85,7 +85,7 @@ exports.init = function (sequelize) {
     },
     {
       sequelize,
-      modelName: 'airTransMode'
+      modelName: 'air_interface_transmission_mode'
     },
   );
 

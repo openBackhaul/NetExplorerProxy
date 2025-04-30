@@ -105,7 +105,7 @@ exports.init = function (sequelize) {
     },
     {
       sequelize,
-      modelName: 'deviceInterface'
+      modelName: 'devices_if'
     },
   );
 

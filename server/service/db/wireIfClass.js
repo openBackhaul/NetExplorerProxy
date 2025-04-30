@@ -96,7 +96,7 @@ exports.init = function (sequelize) {
     },
     {
       sequelize,
-      modelName: 'wireInterface'
+      modelName: 'wire_interface_general_info'
     },
   );
 
