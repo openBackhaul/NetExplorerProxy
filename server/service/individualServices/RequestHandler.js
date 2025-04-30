@@ -65,6 +65,7 @@ exports.postRequestDataFromOtherApp = async function(requestUrl, callbackName, p
     return {
         ...ret,
         operationName: opData.operationName,
+        operationKey: opData.operationKey,
         appName: opData.appName,
         appRelease: opData.appRelease
     };
