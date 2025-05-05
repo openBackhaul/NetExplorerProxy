@@ -4,10 +4,13 @@ const requestHandler = require('./individualServices/RequestHandler');
 
   module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
     let startTime = process.hrtime();
-    let ListOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url);
-    if(ListOfConnectedDevices.message["mount-name-list"]){
+    let listOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator++, customerJourney, url);
+    if(undefined != listOfConnectedDevices && 
+      Object.keys(listOfConnectedDevices).length > 0 &&
+      listOfConnectedDevices.hasOwnProperty("message") &&
+      listOfConnectedDevices.message["mount-name-list"].length > 0){
       
-    const mountNameList = ListOfConnectedDevices.message["mount-name-list"];
+    const mountNameList = listOfConnectedDevices.message["mount-name-list"];
     let requestHeaders = {
       user: user,
       // originator: originator,
@@ -18,7 +21,7 @@ const requestHandler = require('./individualServices/RequestHandler');
  
     for (let mountName of mountNameList) {
    
-    let ccOfMountname = await exports.retriveTheCCofMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
+    let ccOfMountname = await exports.retriveTheCCofMountname(body, user,requestHeaders, xCorrelator, traceIndicator++, customerJourney, url, mountName);
     }
   }
   };

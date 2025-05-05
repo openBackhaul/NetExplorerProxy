@@ -19,7 +19,7 @@ module.exports.retriveTheCC = async function retriveTheCC(body, user,requestHead
        let pathParamList = [];
        pathParamList.push(mountName);
 
-       let ccOfMountname = await IndividualServiceUtility.forwardRequest(consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer++);
+       let ccOfMountname = await IndividualServiceUtility.forwardRequest(consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicator);
        
        return ccOfMountname;;
 }

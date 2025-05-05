@@ -41,10 +41,9 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
   try {
-    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);    
-    await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+     basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
-    restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
   } catch (responseBody) {
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     let sentResp = restResponseBuilder.buildResponse(res, undefined, responseBody, responseHeader);
