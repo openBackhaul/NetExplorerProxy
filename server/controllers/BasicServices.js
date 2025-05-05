@@ -1,10 +1,7 @@
 -//@ts-check
 'use strict';
 const basicServiceImpl = require('../service/BasicServicesService');
-<<<<<<< HEAD
 
-=======
->>>>>>> c041d7e26f2fde8aa6510426bfb2201c8981c959
 const basicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
 const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/server/ResponseHeader');
@@ -44,7 +41,7 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
   try {
-    // responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);    
+    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);    
     await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
