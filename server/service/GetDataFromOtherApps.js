@@ -1,5 +1,4 @@
 'use strict';
-const individualServices = require('./IndividualServicesService');
 const requestHandler = require('./individualServices/RequestHandler');
 const IndividualServiceUtility = require('./individualServices/IndividualServicesUtility');
 
