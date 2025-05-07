@@ -27,20 +27,26 @@ exports.init = function (sequelize) {
   AirTransmissionMode.init(
     {
       // Primary key
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+      },
+
       mount_name: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: false,
       },
       uuid: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: false,
       },
       local_id: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
+        allowNull: true,
+        primaryKey: false,
       },
 
       // Time stamp
