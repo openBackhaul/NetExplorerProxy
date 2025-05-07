@@ -1,25 +1,26 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-/*
-air_interface_transmission_mode {
-    // Primary key
-    mount_name varchar [primary key]
-    uuid varchar [primary key]
-    local_id varchar [primary key] // or integer??
-    
-    // Timestamp reference
-    timestamp timestamp
+const { Model } = require('sequelize');
+
+// Table air_interface_transmission_mode {
+//   id varchar [primary key]
   
-    // Data
-    transmission_mode_name varchar
-    symbol_rate_reduction_factor integer
-    modulation_scheme_at_lct varchar
-    modulation_scheme integer
-    code_rate integer
-    channel_bandwidth varchar
-    xpic_is_avail boolean
-    capa_factor float
-  }
-*/
+//   // Primary key
+//   mount_name varchar 
+//   uuid varchar
+//   local_id varchar
+  
+//   // Timestamp reference
+//   timestamp timestamp
+
+//   // Data
+//   transmission_mode_name varchar
+//   symbol_rate_reduction_factor varchar
+//   modulation_scheme_at_lct varchar
+//   modulation_scheme varchar
+//   code_rate varchar
+//   channel_bandwidth varchar
+//   xpic_is_avail varchar
+//   capa_factor varchar
+// }
 
 exports.init = function (sequelize) {
   class AirTransmissionMode extends Model { };
@@ -36,17 +37,14 @@ exports.init = function (sequelize) {
       mount_name: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: false,
       },
       uuid: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: false,
+        allowNull: false
       },
       local_id: {
         type: DataTypes.STRING,
-        allowNull: true,
-        primaryKey: false,
+        allowNull: true
       },
 
       // Time stamp

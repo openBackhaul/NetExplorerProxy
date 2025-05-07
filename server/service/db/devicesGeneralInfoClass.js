@@ -1,16 +1,17 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Model } = require('sequelize');
 
-// devices_general_info
-// Primary key
-// mount_name varchar [primary key]
+// Table devices_general_info {
+//   // Primary key
+//   mount_name varchar [primary key]
 
-// Timestamp reference
-// timestamp timestamp
+//   // Timestamp reference
+//   timestamp timestamp
 
-// Data
-// external_label  varchar
-// device_model_name varchar
-// system_name varchar
+//   // Data
+//   external_label  varchar
+//   device_model_name varchar
+//   system_name varchar
+// }
 
 exports.init = function(sequelize) {
   class DeviceGeneralInfo extends Model {};

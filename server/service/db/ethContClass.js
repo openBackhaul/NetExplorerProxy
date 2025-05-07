@@ -1,23 +1,22 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Model } = require('sequelize');
 
-/*
-ethernet_container_general_info {
-  // Primary Key
-  mount_name varchar [primary key]
-  uuid varchar [primary key]
-  local_id varchar [primary key] // or integer??
+// // Ethernet Data
+// Table ethernet_container_general_info {
+//   // Primary Key
+//   mount_name varchar [primary key]
+//   uuid varchar [primary key]
+//   local_id varchar [primary key]
 
-  // Timestamp reference
-  timestamp timestamp
+//   // Timestamp reference
+//   timestamp timestamp
 
-  operational_state varchar
-  administrative_state varchar
-  original_ltp_name varchar
-  interface_name varchar
-  bundling_is_on varchar
-  interface_status varchar
-}
-*/
+//   operational_state varchar
+//   administrative_state varchar
+//   original_ltp_name varchar
+//   interface_name varchar
+//   bundling_is_on varchar
+//   interface_status varchar
+// }
 
 exports.init = function (sequelize) {
   class EthContainer extends Model { }
@@ -37,8 +36,8 @@ exports.init = function (sequelize) {
       },
       local_id: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
+        allowNull: true,
+        // primaryKey: true,
       },
 
       // Time stamp

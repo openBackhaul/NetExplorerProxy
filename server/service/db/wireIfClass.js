@@ -1,28 +1,27 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Model } = require('sequelize');
 
-/*
-wire_interface_general_info {
-  // Primary key
-  mount_name varchar [primary key]
-  uuid  varchar [primary key]
-  local_id varchar [primary key] // or integer??
+// // Wired connection
+// Table wire_interface_general_info {
+//   // Primary key
+//   mount_name varchar [primary key]
+//   uuid  varchar [primary key]
+//   local_id  varchar [primary key]
   
-  // Timestamp reference
-  timestamp timestamp
+//   // Timestamp reference
+//   timestamp timestamp
 
-  // Data
-  operational_state varchar
-  administrative_state varchar
-  original_ltp_name varchar
-  interface_name varchar
-  fixed_pmd_kind varchar
-  interface_status varchar
-  pmd_kind_cur varchar
-  pmd_name varchar
-  duplex varchar
-  speed  varchar
-}
-*/
+//   // Data
+//   operational_state varchar
+//   administrative_state varchar
+//   original_ltp_name varchar
+//   interface_name varchar
+//   fixed_pmd_kind varchar
+//   interface_status varchar
+//   pmd_kind_cur varchar
+//   pmd_name varchar
+//   duplex varchar
+//   speed  varchar
+// }
 
 exports.init = function (sequelize) {
   class WireInterface extends Model { };
@@ -42,8 +41,8 @@ exports.init = function (sequelize) {
       },
       local_id: {
         type: DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
+        allowNull: true,
+        // primaryKey: true,
       },
 
       // Time stamp
