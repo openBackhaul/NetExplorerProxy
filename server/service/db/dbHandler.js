@@ -383,6 +383,205 @@ exports.updateWireInterface = async function (dataArray) {
 }
 
 
+exports.readListOfDevices = async function(isCSV=false) {
+  let rawResult = await devices_general_info.findAll({
+    attributes: ['mount_name', 'timestamp'],
+    raw : isCSV
+  });
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readDeviceInfo = async function(mountNames, params, isCSV=false) {
+  let rawResult;
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await devices_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'timestamp',
+        'external_label',
+        'device_model_name',
+        'system_name'
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readEquipmentInfo = async function(mountNames, params, isCSV=false) {
+  let rawResult;
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await equipment_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'uuid',
+        'local_id',
+        'timestamp', 
+        'version',
+        'description',
+        'model_identifier',
+        'part_type_identifier',
+        'type_name',
+        'manufacturer_name',
+        'manufacturer_identifier'
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readAirInterfaceInfo = async function(mountNames, params, isCSV=false) {
+  let rawResult;
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await air_interface_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'uuid',
+        'local_id',
+        'timestamp', 
+        'operational_state',
+        'administrative_state',
+        'original_ltp_name',
+        'external_label',
+        'transmission_mode_min',
+        'transmission_mode_max',
+        'xpic_is_on',
+        'power_is_on',
+        'transmitter_is_on',
+        'interface_status',
+        'type_of_equipment',
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readAirTransMode = async function(mountNames, params, isCSV=false) {
+  let rawResult;
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await air_interface_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'uuid',
+        'local_id',
+        'timestamp',
+        'transmission_mode_name',
+        'symbol_rate_reduction_factor',
+        'modulation_scheme_at_lct',
+        'modulation_scheme',
+        'code_rate',
+        'channel_bandwidth',
+        'xpic_is_avail',
+        'capa_factor'
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readEthernetContInfo =  async function(mountNames, params, isCSV=false) {
+  let rawResult;
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await ethernet_container_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'uuid',
+        'local_id',
+        'timestamp', 
+        'operational_state',
+        'administrative_state',
+        'original_ltp_name',
+        'interface_name',
+        'bundling_is_on',
+        'interface_status'
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
+exports.readWireInterfaceInfo =  async function(mountNames, params, isCSV=false) {
+  let rawResult;
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
+    rawResult = await wire_interface_general_info.findAll({
+      attributes: [
+        'mount_name',
+        'uuid',
+        'local_id',
+        'timestamp',
+        'operational_state',
+        'administrative_state',
+        'original_ltp_name',
+        'interface_name',
+        'fixed_pmd_kind',
+        'interface_status',
+        'pmd_kind_cur',
+        'pmd_name',
+        'duplex',
+        'speed'
+      ],
+      raw : isCSV
+    });
+  } else {
+
+  }
+
+  if (isCSV) {
+    rawResult = convertToCSV(rawResult);
+  }
+
+  return rawResult;
+}
+
     // return;
     // 100254566;2024-12-11T16:00:00+01:00;100254566;OptiXRTN950;System xyz
     // const cc = await devices_general_info.update({
@@ -398,42 +597,49 @@ exports.updateWireInterface = async function (dataArray) {
 
 
     
-    /*
-      class User extends Model {}
-        User.init(
-            {
-                username: DataTypes.STRING,
-                birthday: DataTypes.DATE,
-            },
-            {
-                sequelize,
-                modelName: 'user'
-            },
-        );
+//     /*
+//       class User extends Model {}
+//         User.init(
+//             {
+//                 username: DataTypes.STRING,
+//                 birthday: DataTypes.DATE,
+//             },
+//             {
+//                 sequelize,
+//                 modelName: 'user'
+//             },
+//         );
 
-        (async () => {
-            await sequelize.sync();
-            const jane = await User.create({
-                username: 'janedoe',
-                birthday: new Date(1980, 6, 20),
-            });
-            logger.info(jane.toJSON());
-        })();
-*/
-    /*       const test = sequelize.define('user', {
-               username: DataTypes.STRING,
-               password: {
-                 type: DataTypes.STRING,
-                 set(value) {
-                   // Storing passwords in plaintext in the database is terrible.
-                   // Hashing the value with an appropriate cryptographic hash function is better.
-                   this.setDataValue('password', hash(value));
-                 },
-               },
-             });
+//         (async () => {
+//             await sequelize.sync();
+//             const jane = await User.create({
+//                 username: 'janedoe',
+//                 birthday: new Date(1980, 6, 20),
+//             });
+//             logger.info(jane.toJSON());
+//         })();
+// */
+          //  const test = sequelize.define('user', {
+          //      username: DataTypes.STRING,
+          //      password: {
+          //        type: DataTypes.STRING,
+          //        set(value) {
+          //          // Storing passwords in plaintext in the database is terrible.
+          //          // Hashing the value with an appropriate cryptographic hash function is better.
+          //          this.setDataValue('password', hash(value));
+          //        },
+          //      },
+          //    });
    
-             const user = test.build({
-               username: 'someone',
-               password: 'NotSo§tr0ngP4$SW0RD!',
-             });
-             console.log(user.password); */
+          //    const user = test.build({
+          //      username: 'someone',
+          //      password: 'NotSo§tr0ngP4$SW0RD!',
+          //    });
+
+  function convertToCSV(arr) {
+    const array = [Object.keys(arr[0])].concat(arr)
+  
+    return array.map(it => {
+      return Object.values(it).toString()
+    }).join('\n')
+  }
