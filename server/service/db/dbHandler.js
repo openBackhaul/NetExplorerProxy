@@ -274,7 +274,7 @@ exports.updateAirTransMode = async function(dataArray) {
   
 }
 
-exports.ethernetContainer = async function (dataArray) {
+exports.updateEthernetContainer = async function (dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
