@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 // Table equipment_general_info {
 //   // Primary key

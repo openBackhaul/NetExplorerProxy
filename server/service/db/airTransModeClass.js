@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 // Table air_interface_transmission_mode {
 //   id varchar [primary key]

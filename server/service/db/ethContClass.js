@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 // // Ethernet Data
 // Table ethernet_container_general_info {

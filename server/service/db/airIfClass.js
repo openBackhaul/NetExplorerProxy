@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 // // Air interface
 // Table air_interface_general_info {
