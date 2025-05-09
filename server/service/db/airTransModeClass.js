@@ -32,6 +32,7 @@ exports.init = function (sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true
       },
 
       mount_name: {
