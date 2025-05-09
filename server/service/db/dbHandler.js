@@ -28,8 +28,8 @@ exports.initDB = async function(config) {
 
   try {
     // Init sequelize with DB params
-    logger.info("Init DB with:\nUsername: " + config.user + "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
-    let sequelize = new Sequelize("", config.user, config.password, {
+    logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
+    let sequelize = new Sequelize(config.db_name, config.user, config.password, {
         host: config.host,
         port: config.port,
         dialect: config.dialect
@@ -39,17 +39,17 @@ exports.initDB = async function(config) {
     await sequelize.authenticate();
     logger.info('Connection has been established successfully.');
 
-    try {
-      logger.info("Using DB: " + db_name);
-      let res = await sequelize.query("USE " + db_name + ";");
-      logger.info("DB " + db_name + " exists");
-    } catch (db_error) {
-      logger.warn("DB " + db_name + " doesn't exists, try to create it");
-      let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
-      logger.info("DB: " + db_name + " created");
-      res = await sequelize.query("USE " + db_name + ";");
-      logger.info("using DB: " + db_name);
-    }
+    // try {
+    //   logger.info("Using DB: " + db_name);
+    //   let res = await sequelize.query("USE " + db_name + ";");
+    //   logger.info("DB " + db_name + " exists");
+    // } catch (db_error) {
+    //   logger.warn("DB " + db_name + " doesn't exists, try to create it");
+    //   let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
+    //   logger.info("DB: " + db_name + " created");
+    //   res = await sequelize.query("USE " + db_name + ";");
+    //   logger.info("using DB: " + db_name);
+    // }
 
     // Init the tables
     devices_general_info = devicesInfo.init(sequelize);
@@ -110,7 +110,6 @@ exports.updateEquipmentInfo = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await equipment_general_info.update({
-        uuid: data.uuid,
         local_id: data.local_id,
 
         // Timestamp reference
@@ -127,6 +126,7 @@ exports.updateEquipmentInfo = async function (dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
+          uuid: data.uuid,
         },
       });
 
@@ -164,7 +164,6 @@ exports.updateAirInterface = async function(dataArray) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_general_info.update({
-        uuid: data.uuid,
         local_id: data.local_id,
 
         // Timestamp reference
@@ -184,17 +183,18 @@ exports.updateAirInterface = async function(dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
+        uuid: data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await air_interface_general_info.create({
           mount_name: data.mount_name,
-          uuid: dataArray.uuid,
-          local_id: dataArray.local_id,
+          uuid: data.uuid,
+          local_id: data.local_id,
   
           // Timestamp reference
-          timestamp: dataArray.timestamp,
+          timestamp: data.timestamp,
 
           operational_state: data.operational_state,
           administrative_state: data.administrative_state,
@@ -224,9 +224,8 @@ exports.updateAirTransMode = async function(dataArray) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_transmission_mode.update({
-        uuid: data.uuid,
         local_id: data.local_id,
-
+        uuid: data.uuid,
         // Timestamp reference
         timestamp: data.timestamp,
 
@@ -241,17 +240,19 @@ exports.updateAirTransMode = async function(dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
+          uuid: data.uuid,
+          transmission_mode_name: data.transmission_mode_name
         },
       });
 
       if (cc == 0) {
         cc = await air_interface_transmission_mode.create({
           mount_name: data.mount_name,
-          uuid: dataArray.uuid,
-          local_id: dataArray.local_id,
+          uuid: data.uuid,
+          local_id: data.local_id,
   
           // Timestamp reference
-          timestamp: dataArray.timestamp,
+          timestamp: data.timestamp,
 
           transmission_mode_name: data.transmission_mode_name,
           symbol_rate_reduction_factor: data.symbol_rate_reduction_factor,
@@ -279,7 +280,6 @@ exports.updateEthernetContainer = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await ethernet_container_general_info.update({
-        uuid: data.uuid,
         local_id: data.local_id,
 
         // Timestamp reference
@@ -294,17 +294,18 @@ exports.updateEthernetContainer = async function (dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
+          uuid: data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await ethernet_container_general_info.create({
           mount_name: data.mount_name,
-          uuid: dataArray.uuid,
-          local_id: dataArray.local_id,
+          uuid: data.uuid,
+          local_id: data.local_id,
   
           // Timestamp reference
-          timestamp: dataArray.timestamp,
+          timestamp: data.timestamp,
 
           operational_state: data.operational_state,
           administrative_state: data.administrative_state,
@@ -329,7 +330,6 @@ exports.updateWireInterface = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await wire_interface_general_info.update({
-        uuid: data.uuid,
         local_id: data.local_id,
 
         // Timestamp reference
@@ -348,17 +348,18 @@ exports.updateWireInterface = async function (dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
+          uuid: data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await wire_interface_general_info.create({
           mount_name: data.mount_name,
-          uuid: dataArray.uuid,
-          local_id: dataArray.local_id,
+          uuid: data.uuid,
+          local_id: data.local_id,
   
           // Timestamp reference
-          timestamp: dataArray.timestamp,
+          timestamp: data.timestamp,
 
           operational_state: data.operational_state,
           administrative_state: data.administrative_state,
