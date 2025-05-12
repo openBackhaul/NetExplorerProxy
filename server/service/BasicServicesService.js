@@ -35,20 +35,21 @@ const ETHERNET_INTERFACE = {
     };
  
     for (let mountName of mountNameList) {
-      let ccOfMountname = await exports.retriveTheCCofMountname(body, user,requestHeaders, xCorrelator, traceIndicator++, customerJourney, url, mountName);
-      await exports.processTheCCOfMountname(ccOfMountname,timestamp,mountName);
+      let ccOfMountname = await exports.retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator++, customerJourney, url, mountName);
+      await exports.processTheccOfMountname(ccOfMountname,timestamp,mountName);
+     await exports.retriveTheGeneralInfo(ccOfMountname,mountName,timestamp);
     }
   }
   };
 
-  module.exports.retriveTheCCofMountname = async function retriveTheCCofMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
+  module.exports.retriveTheccOfMountname = async function retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
     let startTime = process.hrtime();
     let ccOfMountname = getDataFromOtherApp.retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
     return ccOfMountname;
   }; 
 
 
-  module.exports.processTheCCOfMountname = async function processTheCCOfMountname(ccOfMountname,timestamp,mountName) {
+  module.exports.processTheccOfMountname = async function processTheccOfMountname(ccOfMountname,timestamp,mountName) {
     
     
     if(ccOfMountname.hasOwnProperty("core-model-1-4:control-construct")){
@@ -114,4 +115,36 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   return ethernetContainerGeneralInfo;
 }
 
+  module.exports.retriveTheGeneralInfo = async function retriveTheGeneralInfo(ccOfMountname,mountName,timestamp){
+      
+    let deviceModelName = "";
+    let externallabelName = "";
+    const deviceModelData = ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.["equipment-augment-1-0:control-construct-pac"];
+
+
+    if (deviceModelData?.["device-model-name"] && deviceModelData?.["external-label"]) {
+    deviceModelName = deviceModelData["device-model-name"];
+    externallabelName=deviceModelData["external-label"];
+    console.log("1",deviceModelName);
+    console.log("2",externallabelName);
+  }
+
+  const systemName = ccOfMountname?.["core-model-1-4:control-construct"]?.[0]
+  ?.["equipment-augment-1-0:protocol-collection"]?.protocol?.[0]
+  ?.["lldp-1-0:lldp-pac"]?.["local-system-data"]?.["system-name"];
+
+  if (systemName) {
+    console.log("System Name:", systemName);
+  }
+  const result = {
+    mountName,
+    timestamp,
+    externallabelName,
+    deviceModelName,
+    systemName,
+  };
+  return result;
+
+    }
+  
 
