@@ -161,13 +161,13 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
           const status = airContainerPac[AIR_INTERFACE.STATUS];
           const capibility = airContainerPac[AIR_INTERFACE.CAPABILITY];
 
-          ethObj["interface_name"] = configuration["transmission-mode-min"];
-          ethObj["bundling_is_on"] = configuration["transmission-mode-max"];
-          ethObj["xpic-is-on"] = configuration["xpic-is-on"];
-          ethObj["power-is-on"] = configuration["power-is-on"];
-          ethObj["transmitter-is-on"] = configuration["transmitter-is-on"];
+          ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+          ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+          ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+          ethObj["power_is_on"] = configuration["power-is-on"];
+          ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
           ethObj["interface_status"] = status["interface-status"];
-          ethObj["type-of-equipment"] = capibility["type-of-equipment"];
+          ethObj["type_of_equipment"] = capibility["type-of-equipment"];
 
       }
       
@@ -201,9 +201,9 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
   const result = {
     "mount_name":mountName,
     "timestamp": timestamp,
-    "external-label":externallabelName,
-    "device-model-name":deviceModelName,
-    "system-name": systemName,
+    "external_label":externallabelName,
+    "device_model_name":deviceModelName,
+    "system_name": systemName,
   };
   return result;
 
