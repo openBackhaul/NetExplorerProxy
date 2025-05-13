@@ -15,6 +15,17 @@ const ETHERNET_INTERFACE = {
   HISTORICAL_PERFORMANCES_DATA_LIST: "historical-performance-data-list"
 };
 
+const AIR_INTERFACE = {
+  MODULE: "air-interface-2-0",
+  LAYER_PROTOCOL_NAME: "LAYER_PROTOCOL_NAME_TYPE_AIR_LAYER",
+  CONFIGURATION: "air-interface-configuration",
+  CAPABILITY: "air-interface-capability",
+  STATUS: "air-interface-status",
+  NAME: "air-interface-name",
+  PAC: "air-container-pac",
+  HISTORICAL_PERFORMANCES: "air-interface-historical-performances",
+  HISTORICAL_PERFORMANCE_DATA_LIST: "historical-performance-data-list"
+};
 
   module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
     let startTime = process.hrtime();
@@ -67,6 +78,15 @@ const ETHERNET_INTERFACE = {
           mountName,
           timestamp
         );
+
+        const airinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+          AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
+
+          const airContainerGeneralInfo = await extractairContainerGeneralInfo(
+            airinterfceLtpList,
+            mountName,
+            timestamp
+          );
             
         // Pretty-printed with indentation for better readability
         console.log('Ethernet Container General Info:', JSON.stringify(ethernetContainerGeneralInfo, null, 2));
@@ -115,6 +135,46 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   }
   
   return ethernetContainerGeneralInfo;
+}
+
+async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, timestamp) {
+  const airContainerGeneralInfo = [];
+  
+  for (let ltp of airinterfceLtpList) {
+      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+      const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
+      
+      // Create ethernet container object with basic information
+      let ethObj = {
+          "mount_name": mountName,
+          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
+          "timestamp": timestamp,
+          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
+          "administrative_state": layerProtocol["administrative-state"],
+          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
+      };
+      
+      // Add air container specific attributes
+      if (airContainerPac) {
+          const configuration = airContainerPac[AIR_INTERFACE.CONFIGURATION];
+          const status = airContainerPac[AIR_INTERFACE.STATUS];
+          const capibility = airContainerPac[AIR_INTERFACE.CAPABILITY];
+
+          ethObj["interface_name"] = configuration["transmission-mode-min"];
+          ethObj["bundling_is_on"] = configuration["transmission-mode-max"];
+          ethObj["xpic-is-on"] = configuration["xpic-is-on"];
+          ethObj["power-is-on"] = configuration["power-is-on"];
+          ethObj["transmitter-is-on"] = configuration["transmitter-is-on"];
+          ethObj["interface_status"] = status["interface-status"];
+          ethObj["type-of-equipment"] = capibility["type-of-equipment"];
+
+      }
+      
+      airContainerGeneralInfo.push(ethObj);
+  }
+  
+  return airContainerGeneralInfo;
 }
 
   module.exports.retriveTheGeneralInfo = async function retriveTheGeneralInfo(ccOfMountname,mountName,timestamp){
