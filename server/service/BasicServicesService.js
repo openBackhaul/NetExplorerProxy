@@ -27,6 +27,18 @@ const AIR_INTERFACE = {
   HISTORICAL_PERFORMANCE_DATA_LIST: "historical-performance-data-list"
 };
 
+const WIRE_INTERFACE = {
+  MODULE: "wire-interface-2-0",
+  LAYER_PROTOCOL_NAME: "LAYER_PROTOCOL_NAME_TYPE_WIRE_LAYER",
+  CAPABILITY: "wire-interface-capability",
+  STATUS: "wire-interface-status",
+  SUPPORTED_PMD_LIST: "supported-pmd-kind-list",
+  PMD_NAME: "pmd-name",
+  PAC: "wire-interface-pac",
+  PMD_KIND_CUR: "pmd-kind-cur",
+  CONFIGURATION: "wire-interface-configuration"
+};
+
   module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
     let startTime = process.hrtime();
     const timestamp = Date.now();
@@ -88,6 +100,15 @@ const AIR_INTERFACE = {
             timestamp
           );
             
+        const wireinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+          WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
+ 
+          const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
+            wireinterfceLtpList,
+            mountName,
+            timestamp
+          );
+
         // Pretty-printed with indentation for better readability
         console.log('Ethernet Container General Info:', JSON.stringify(ethernetContainerGeneralInfo, null, 2));
         
@@ -176,6 +197,46 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
   
   return airContainerGeneralInfo;
 }
+
+async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
+  const wireContainerGeneralInfo = [];
+ 
+  for (let ltp of wireinterfceLtpList) {
+      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+      const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
+     
+      // Create ethernet container object with basic information
+      let ethObj = {
+          "mount_name": mountName,
+          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
+          "timestamp": timestamp,
+          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
+          "administrative_state": layerProtocol["administrative-state"],
+          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
+      };
+      // Add wire container specific attributes
+      if (wireContainerPac) {
+          const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
+          const status = wireContainerPac[WIRE_INTERFACE.STATUS];
+          const capibility = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST][0];
+ 
+          ethObj["interface_name"] = configuration["interface-name"];
+          ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
+          ethObj["interface_status"] = status["interface-status"];
+          ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
+          ethObj["pmd_name"] = capibility["pmd-name"];
+          ethObj["duplex"] = capibility["duplex"];
+          ethObj["speed"] = capibility["speed"]; 
+      }
+     
+      wireContainerGeneralInfo.push(ethObj);
+  }
+ 
+  return wireContainerGeneralInfo;
+}
+
+
 
   module.exports.retriveTheGeneralInfo = async function retriveTheGeneralInfo(ccOfMountname,mountName,timestamp){
       
