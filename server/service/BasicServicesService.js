@@ -164,7 +164,8 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
   for (let ltp of airinterfceLtpList) {
       const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
       const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
-      
+      const augumentContainerPac=ltp["ltp-augment-1-0:ltp-augment-pac"];
+
       // Create ethernet container object with basic information
       let ethObj = {
           "mount_name": mountName,
@@ -191,7 +192,9 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
           ethObj["type_of_equipment"] = capibility["type-of-equipment"];
 
       }
-      
+      if(augumentContainerPac){
+        ethObj["external_label"] = augumentContainerPac["external-label"];
+      }
       airContainerGeneralInfo.push(ethObj);
   }
   
