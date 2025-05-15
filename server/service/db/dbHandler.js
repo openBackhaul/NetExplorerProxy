@@ -411,7 +411,28 @@ exports.readDeviceInfo = async function(mountNames, params, isCSV=false) {
       raw : isCSV
     });
   } else {
+    // Create by default
+    let ts = new Date(Date.now);
+    if (params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (params != undefined && mountNames && mountNames.length > 0) {
+      let ts = params.timestamp; // Get the timestamp
+      rawResult = await devices_general_info.findAll({
+        attributes: [
+          'mount_name',
+          'timestamp',
+          'external_label',
+          'device_model_name',
+          'system_name'
+        ],
+        raw : isCSV,
+        where: {
+          [Op.gte]: [{ 'timestamp': new Date(ts) }],
 
+        },
+      });
+    }
   }
 
   if (isCSV) {
