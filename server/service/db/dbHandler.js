@@ -1,6 +1,6 @@
 'use strict';
 // const { Sequelize, Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 
 const logger = require('../LoggingService.js').getLogger();
 
@@ -29,11 +29,17 @@ exports.initDB = async function(config) {
   try {
     // Init sequelize with DB params
     logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
-    let sequelize = new Sequelize(config.db_name, config.user, config.password, {
-        host: config.host,
-        port: config.port,
-        dialect: config.dialect
-        /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+    // let sequelize = new Sequelize(config.db_name, config.user, config.password, {
+    //     host: config.host,
+    //     port: config.port,
+    //     dialect: config.dialect
+    //     /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+    // });
+
+    const sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: '', //':memory:', // or ''
+      pool: { max: 1, idle: Infinity, maxUses: Infinity },
     });
 
     await sequelize.authenticate();
@@ -412,12 +418,12 @@ exports.readDeviceInfo = async function(mountNames, params, isCSV=false) {
     });
   } else {
     // Create by default
-    let ts = new Date(Date.now);
-    if (params.timestamp) {
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
       ts = new Date(params.timestamp);
     }
-    if (params != undefined && mountNames && mountNames.length > 0) {
-      let ts = params.timestamp; // Get the timestamp
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
       rawResult = await devices_general_info.findAll({
         attributes: [
           'mount_name',
@@ -428,7 +434,8 @@ exports.readDeviceInfo = async function(mountNames, params, isCSV=false) {
         ],
         raw : isCSV,
         where: {
-          [Op.gte]: [{ 'timestamp': new Date(ts) }],
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
 
         },
       });
@@ -463,7 +470,35 @@ exports.readEquipmentInfo = async function(mountNames, params, isCSV=false) {
       raw : isCSV
     });
   } else {
+    // Create by default
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
+      rawResult = await equipment_general_info.findAll({
+        attributes: [
+          'mount_name',
+          'uuid',
+          'local_id',
+          'timestamp', 
+          'version',
+          'description',
+          'model_identifier',
+          'part_type_identifier',
+          'type_name',
+          'manufacturer_name',
+          'manufacturer_identifier'
+        ],
+        raw : isCSV,
+        where: {
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
 
+        },
+      });
+    }
   }
 
   if (isCSV) {
@@ -498,7 +533,39 @@ exports.readAirInterfaceInfo = async function(mountNames, params, isCSV=false) {
       raw : isCSV
     });
   } else {
+    // Create by default
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
+      rawResult = await air_interface_general_info.findAll({
+        attributes: [
+          'mount_name',
+          'uuid',
+          'local_id',
+          'timestamp', 
+          'operational_state',
+          'administrative_state',
+          'original_ltp_name',
+          'external_label',
+          'transmission_mode_min',
+          'transmission_mode_max',
+          'xpic_is_on',
+          'power_is_on',
+          'transmitter_is_on',
+          'interface_status',
+          'type_of_equipment',
+        ],
+        raw : isCSV,
+        where: {
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
 
+        },
+      });
+    }
   }
 
   if (isCSV) {
@@ -512,7 +579,7 @@ exports.readAirTransMode = async function(mountNames, params, isCSV=false) {
   let rawResult;
 
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") && (params == undefined)) {
-    rawResult = await air_interface_general_info.findAll({
+    rawResult = await air_interface_transmission_mode.findAll({
       attributes: [
         'mount_name',
         'uuid',
@@ -530,7 +597,35 @@ exports.readAirTransMode = async function(mountNames, params, isCSV=false) {
       raw : isCSV
     });
   } else {
-
+    // Create by default
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
+      rawResult = await air_interface_transmission_mode.findAll({
+        attributes: [
+          'mount_name',
+          'uuid',
+          'local_id',
+          'timestamp',
+          'transmission_mode_name',
+          'symbol_rate_reduction_factor',
+          'modulation_scheme_at_lct',
+          'modulation_scheme',
+          'code_rate',
+          'channel_bandwidth',
+          'xpic_is_avail',
+          'capa_factor'
+        ],
+        raw : isCSV,
+        where: {
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
+        },
+      });
+    }
   }
 
   if (isCSV) {
@@ -560,7 +655,33 @@ exports.readEthernetContInfo =  async function(mountNames, params, isCSV=false) 
       raw : isCSV
     });
   } else {
-
+    // Create by default
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
+      rawResult = await ethernet_container_general_info.findAll({
+        attributes: [
+          'mount_name',
+          'uuid',
+          'local_id',
+          'timestamp', 
+          'operational_state',
+          'administrative_state',
+          'original_ltp_name',
+          'interface_name',
+          'bundling_is_on',
+          'interface_status'
+        ],
+        raw : isCSV,
+        where: {
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
+        },
+      });
+    }
   }
 
   if (isCSV) {
@@ -594,7 +715,37 @@ exports.readWireInterfaceInfo =  async function(mountNames, params, isCSV=false)
       raw : isCSV
     });
   } else {
-
+ // Create by default
+    let ts = new Date(0); // Using default time
+    if (params != undefined && params.timestamp) {
+      ts = new Date(params.timestamp);
+    }
+    if (mountNames && mountNames.length > 0) {
+      // let ts = params.timestamp; // Get the timestamp
+      rawResult = await wire_interface_general_info.findAll({
+        attributes: [
+          'mount_name',
+          'uuid',
+          'local_id',
+          'timestamp',
+          'operational_state',
+          'administrative_state',
+          'original_ltp_name',
+          'interface_name',
+          'fixed_pmd_kind',
+          'interface_status',
+          'pmd_kind_cur',
+          'pmd_name',
+          'duplex',
+          'speed'
+        ],
+        raw : isCSV,
+        where: {
+          // [Op.gte]: [{ 'timestamp': ts }],
+          mount_name: { [Op.in]: mountNames }
+        },
+      });
+    }
   }
 
   if (isCSV) {
