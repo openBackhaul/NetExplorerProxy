@@ -756,64 +756,11 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
-    // return;
-    // 100254566;2024-12-11T16:00:00+01:00;100254566;OptiXRTN950;System xyz
-    // const cc = await devices_general_info.update({
-    //   timestamp: new Date(Date.now()),
-    //   external_label: "Lorenzo",
-    //   device_model_name: "OptiXRTN950",
-    //   system_name: "System xyz"
-    // },{
-    //   where: {
-    //     mount_name: "100254566",
-    //   },
-    // });
+// Routine to convert the result into CSV format
+function convertToCSV(arr) {
+  const array = [Object.keys(arr[0])].concat(arr)
 
-
-    
-//     /*
-//       class User extends Model {}
-//         User.init(
-//             {
-//                 username: DataTypes.STRING,
-//                 birthday: DataTypes.DATE,
-//             },
-//             {
-//                 sequelize,
-//                 modelName: 'user'
-//             },
-//         );
-
-//         (async () => {
-//             await sequelize.sync();
-//             const jane = await User.create({
-//                 username: 'janedoe',
-//                 birthday: new Date(1980, 6, 20),
-//             });
-//             logger.info(jane.toJSON());
-//         })();
-// */
-          //  const test = sequelize.define('user', {
-          //      username: DataTypes.STRING,
-          //      password: {
-          //        type: DataTypes.STRING,
-          //        set(value) {
-          //          // Storing passwords in plaintext in the database is terrible.
-          //          // Hashing the value with an appropriate cryptographic hash function is better.
-          //          this.setDataValue('password', hash(value));
-          //        },
-          //      },
-          //    });
-   
-          //    const user = test.build({
-          //      username: 'someone',
-          //      password: 'NotSo§tr0ngP4$SW0RD!',
-          //    });
-
-  function convertToCSV(arr) {
-    const array = [Object.keys(arr[0])].concat(arr)
-  
-    return array.map(it => {
-      return Object.values(it).toString()
-    }).join('\n')
-  }
+  return array.map(it => {
+    return Object.values(it).toString()
+  }).join('\n')
+}
