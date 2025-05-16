@@ -350,11 +350,21 @@ exports.fillDB = async function () {
 exports.readData = async function() {
     // Read part
     try {
-        let res = await dbHandler.readEquipmentInfo(undefined, undefined, true);
+        let filters = {
+            mountNames: [],
+            timeStamp: new Date(0),
+        }
+        let res = await dbHandler.readEquipmentInfo(filters, true);
         fs.writeFileSync('./Equipment.csv', res, 'utf8');
-        res = await dbHandler.readAirInterfaceInfo(undefined, undefined, true);
+        res = await dbHandler.readAirInterfaceInfo(filters, true);
         fs.writeFileSync('./AirInterface.csv', res, 'utf8');
 
+        filters = {
+            mountNames: ['100254566', '200259999'],
+            timeStamp: new Date(0),
+        }
+        res = await dbHandler.readDeviceInfo(filters, true);
+        console.log(res)
 
     } catch (err) {
         console.error(err);
