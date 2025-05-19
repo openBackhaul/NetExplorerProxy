@@ -109,6 +109,8 @@ const WIRE_INTERFACE = {
             timestamp
           );
 
+      const equipmentGeneralInfo=await equipmentDataOutputMapping(ccOfMountname,mountName,timestamp); 
+
         // Pretty-printed with indentation for better readability
         console.log('Ethernet Container General Info:', JSON.stringify(ethernetContainerGeneralInfo, null, 2));
         
@@ -116,6 +118,43 @@ const WIRE_INTERFACE = {
     }
   };
 
+  async function equipmentDataOutputMapping(ccOfMountname,mountName,timestamp){
+      const equipmentDataOutputGeneralInfo = [];
+    
+        const equipmentArray = ccOfMountname["core-model-1-4:control-construct"][0].equipment;
+        
+            for (let i = 0; i < equipmentArray.length; i++) {
+               if (ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.equipment?.some(
+        e => e.hasOwnProperty("actual-equipment")))          
+        {
+              let equObj = {};
+              const equipment = equipmentArray[i];
+               console.log("Equipment UUID: " + equipment.uuid);
+              if(equipment.local-id)
+               {
+                console.log("Equipment UUID: " + equipment.local-id);
+              }
+  let equipmentType=equipment["actual-equipment"]["manufactured-thing"]["equipment-type"];
+  let manufacturerproperties=equipment["actual-equipment"]["manufactured-thing"]["manufacturer-properties"];
+  
+         equObj = {
+          "mount_name": mountName,
+          "uuid": equipment.uuid,
+          "local_id": equipment.local-id ?? "",                   
+          "timestamp": timestamp,
+          "version": equipmentType.version,
+          "description":equipmentType.description,
+          "model_identifier":equipmentType[model-identifier],
+          "part_type_identifier":equipmentType[part-type-identifier],
+          "type_name":equipmentType[type-name],
+          "manufacturer_name":manufacturerproperties[manufacturer-name],
+          "manufacturer_identifier":manufacturerproperties[manufacturer-identifier], 
+         };
+        }
+          equipmentDataOutputGeneralInfo.push(equObj);
+        }
+        return equipmentDataOutputGeneralInfo;
+  }
 
   /**
  * Extracts ethernet container information from LTP structure
