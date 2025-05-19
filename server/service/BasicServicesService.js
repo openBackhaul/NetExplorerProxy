@@ -117,38 +117,39 @@ const WIRE_INTERFACE = {
     }
   };
 
-  async function equipmentDataOutputMapping(ccOfMountname,mountName,timestamp){
-      const equipmentDataOutputGeneralInfo = [];
-    
-        const equipmentArray = ccOfMountname["core-model-1-4:control-construct"][0].equipment;
-        
-            for (let i = 0; i < equipmentArray.length; i++) {
-               if (equipmentArray.some(e => e.hasOwnProperty("actual-equipment")))            
-                {
-              let equObj = {};
-              const equipment = equipmentArray[i];
-             
-  let equipmentType=equipment["actual-equipment"]["manufactured-thing"]["equipment-type"];
-  let manufacturerproperties=equipment["actual-equipment"]["manufactured-thing"]["manufacturer-properties"];
-  
-             equObj = {
-                    "mount_name": mountName,
-                    "uuid": equipment.uuid,
-                    "local_id": equipment.local-id ?? "",                   
-                    "timestamp": timestamp,
-                    "version": equipmentType.version,
-                    "description":equipmentType.description,
-                    "model_identifier":equipmentType[model-identifier],
-                    "part_type_identifier":equipmentType[part-type-identifier],
-                    "type_name":equipmentType[type-name],
-                    "manufacturer_name":manufacturerproperties[manufacturer-name],
-                    "manufacturer_identifier":manufacturerproperties[manufacturer-identifier], 
-                       };
-                    }
-          equipmentDataOutputGeneralInfo.push(equObj);
-}
-        return equipmentDataOutputGeneralInfo;
-  }
+  async function equipmentDataOutputMapping(ccOfMountname, mountName, timestamp) {
+        const result = [];
+     
+        const equipmentArray =
+          ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.equipment ?? [];
+     
+        for (const equipment of equipmentArray) {
+          if (!equipment.hasOwnProperty("actual-equipment")) continue;
+     
+          const equipmentType =
+            equipment["actual-equipment"]["manufactured-thing"]["equipment-type"];
+          const manufacturerProps =
+            equipment["actual-equipment"]["manufactured-thing"]["manufacturer-properties"];
+     
+          result.push({
+            "mount_name": mountName,
+            "uuid": equipment.uuid,
+            "local_id": equipment["local-id"] ?? "",
+            "timestamp":timestamp,
+            "version": equipmentType.version,
+            "description": equipmentType.description,
+            "model_identifier": equipmentType["model-identifier"] ?? "",
+            "part_type_identifier": equipmentType["part-type-identifier"] ?? "",
+            "type_name": equipmentType["type-name"] ?? "",
+            "manufacturer_name": manufacturerProps["manufacturer-name"] ?? "",
+            "manufacturer_identifier": manufacturerProps["manufacturer-identifier"] ?? ""
+          });
+        }
+     
+        return result;
+      }
+ 
+ 
   /**
  * Extracts ethernet container information from LTP structure
  * @param {Array} ethInterfaceLtpList - List of LTPs with ethernet interface
