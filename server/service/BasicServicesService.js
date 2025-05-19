@@ -166,12 +166,12 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
       // Create ethernet container object with basic information
       let ethObj = {
           "mount_name": mountName,
-          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
-          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
+          "uuid": ltp?.[onfAttributes.GLOBAL_CLASS.UUID]??"",
+          "local_id": layerProtocol?.[onfAttributes.LOCAL_CLASS.LOCAL_ID]??"",
           "timestamp": timestamp,
-          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
-          "administrative_state": layerProtocol["administrative-state"],
-          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
+          "operational_state": ltp?.[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE]??"",
+          "administrative_state": layerProtocol?.["administrative-state"]??"",
+          "original_ltp_name": ltp?.["ltp-augment-1-0:ltp-augment-pac"]?.["original-ltp-name"]??""
       };
       
       // Add ethernet container specific attributes
@@ -179,9 +179,9 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
           const configuration = ethernetContainerPac[ETHERNET_INTERFACE.CONFIGURATION];
           const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
           
-          ethObj["interface_name"] = configuration["interface-name"];
-          ethObj["bundling_is_on"] = configuration["bundling-is-on"];
-          ethObj["interface_status"] = status["interface-status"];
+          ethObj["interface_name"] = configuration?.["interface-name"]??"";
+          ethObj["bundling_is_on"] = configuration?.["bundling-is-on"]??"";
+          ethObj["interface_status"] = status?.["interface-status"]??"";
       }
       
       ethernetContainerGeneralInfo.push(ethObj);
