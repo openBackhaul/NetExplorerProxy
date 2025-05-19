@@ -236,39 +236,52 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
 async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
   const wireContainerGeneralInfo = [];
  
-  for (let ltp of wireinterfceLtpList) {
-      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-      const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
-     
-      // Create ethernet container object with basic information
-      let ethObj = {
-          "mount_name": mountName,
-          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
-          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
-          "timestamp": timestamp,
-          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
-          "administrative_state": layerProtocol["administrative-state"],
-          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
-      };
-      // Add wire container specific attributes
-      if (wireContainerPac) {
-          const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
-          const status = wireContainerPac[WIRE_INTERFACE.STATUS];
-          const capibility = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST][0];
- 
-          ethObj["interface_name"] = configuration["interface-name"];
-          ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
-          ethObj["interface_status"] = status["interface-status"];
-          ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
-          ethObj["pmd_name"] = capibility["pmd-name"];
-          ethObj["duplex"] = capibility["duplex"];
-          ethObj["speed"] = capibility["speed"]; 
+for (let ltp of wireinterfceLtpList) {
+    const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+    const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
+
+    if (wireContainerPac) {
+      const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
+      const status = wireContainerPac[WIRE_INTERFACE.STATUS];
+      const capability = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST];
+
+      if (capability.length === 0) {
+        let ethObj = {};
+        await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj)
+        wireContainerGeneralInfo.push(ethObj);
+      } else {
+        for (let cap of capability) {
+          let ethObj = {};
+          await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj)
+          await extractFromSupportedPmdKindList(cap, ethObj);
+          wireContainerGeneralInfo.push(ethObj);
+        }
       }
-     
-      wireContainerGeneralInfo.push(ethObj);
+    }
   }
- 
+
   return wireContainerGeneralInfo;
+}
+
+async function extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj) {
+  
+        ethObj["interface_name"] = configuration["interface-name"];
+        ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
+        ethObj["interface_status"] = status["interface-status"];
+        ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
+        ethObj["mount_name"] = mountName;
+        ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
+        ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+        ethObj["timestamp"] = timestamp;
+        ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+        ethObj["administrative_state"] = layerProtocol["administrative-state"];
+        ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+}
+
+async function extractFromSupportedPmdKindList(cap, ethObj) {
+  ethObj["pmd_name"] = cap["pmd-name"];
+  ethObj["duplex"] = cap["duplex"];
+  ethObj["speed"] = cap["speed"];
 }
 
 
