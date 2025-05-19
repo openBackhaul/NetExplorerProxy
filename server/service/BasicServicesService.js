@@ -22,7 +22,7 @@ const AIR_INTERFACE = {
   CAPABILITY: "air-interface-capability",
   STATUS: "air-interface-status",
   NAME: "air-interface-name",
-  PAC: "air-container-pac",
+  PAC: "air-interface-pac",
   HISTORICAL_PERFORMANCES: "air-interface-historical-performances",
   HISTORICAL_PERFORMANCE_DATA_LIST: "historical-performance-data-list"
 };
@@ -80,7 +80,7 @@ const WIRE_INTERFACE = {
       //fetch the device general info
       const deviceGenereInfo=await exports.retriveTheGeneralInfo(ccOfMountname,mountName,timestamp);
 
-        //fetch the ethernet container general info
+      //fetch the ethernet container general info
 
         const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
            ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
@@ -109,8 +109,7 @@ const WIRE_INTERFACE = {
             timestamp
           );
 
-      const equipmentGeneralInfo=await equipmentDataOutputMapping(ccOfMountname,mountName,timestamp); 
-
+          const equipmentGeneralInfo=await equipmentDataOutputMapping(ccOfMountname,mountName,timestamp); 
         // Pretty-printed with indentation for better readability
         console.log('Ethernet Container General Info:', JSON.stringify(ethernetContainerGeneralInfo, null, 2));
         
@@ -124,38 +123,32 @@ const WIRE_INTERFACE = {
         const equipmentArray = ccOfMountname["core-model-1-4:control-construct"][0].equipment;
         
             for (let i = 0; i < equipmentArray.length; i++) {
-               if (ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.equipment?.some(
-        e => e.hasOwnProperty("actual-equipment")))          
-        {
+               if (equipmentArray.some(e => e.hasOwnProperty("actual-equipment")))            
+                {
               let equObj = {};
               const equipment = equipmentArray[i];
-               console.log("Equipment UUID: " + equipment.uuid);
-              if(equipment.local-id)
-               {
-                console.log("Equipment UUID: " + equipment.local-id);
-              }
+             
   let equipmentType=equipment["actual-equipment"]["manufactured-thing"]["equipment-type"];
   let manufacturerproperties=equipment["actual-equipment"]["manufactured-thing"]["manufacturer-properties"];
   
-         equObj = {
-          "mount_name": mountName,
-          "uuid": equipment.uuid,
-          "local_id": equipment.local-id ?? "",                   
-          "timestamp": timestamp,
-          "version": equipmentType.version,
-          "description":equipmentType.description,
-          "model_identifier":equipmentType[model-identifier],
-          "part_type_identifier":equipmentType[part-type-identifier],
-          "type_name":equipmentType[type-name],
-          "manufacturer_name":manufacturerproperties[manufacturer-name],
-          "manufacturer_identifier":manufacturerproperties[manufacturer-identifier], 
-         };
-        }
+             equObj = {
+                    "mount_name": mountName,
+                    "uuid": equipment.uuid,
+                    "local_id": equipment.local-id ?? "",                   
+                    "timestamp": timestamp,
+                    "version": equipmentType.version,
+                    "description":equipmentType.description,
+                    "model_identifier":equipmentType[model-identifier],
+                    "part_type_identifier":equipmentType[part-type-identifier],
+                    "type_name":equipmentType[type-name],
+                    "manufacturer_name":manufacturerproperties[manufacturer-name],
+                    "manufacturer_identifier":manufacturerproperties[manufacturer-identifier], 
+                       };
+                    }
           equipmentDataOutputGeneralInfo.push(equObj);
-        }
+}
         return equipmentDataOutputGeneralInfo;
   }
-
   /**
  * Extracts ethernet container information from LTP structure
  * @param {Array} ethInterfaceLtpList - List of LTPs with ethernet interface
@@ -243,57 +236,39 @@ async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, tim
 async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
   const wireContainerGeneralInfo = [];
  
-for (let ltp of wireinterfceLtpList) {
-    const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-    const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
-
-    if (wireContainerPac) {
-      const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
-      const status = wireContainerPac[WIRE_INTERFACE.STATUS];
-      const capability = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST];
-
-      if (capability.length === 0) {
-        let ethObj = {};
-        ethObj["interface_name"] = configuration["interface-name"];
-        ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
-        ethObj["interface_status"] = status["interface-status"];
-        ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
-        ethObj["mount_name"] = mountName;
-        ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
-        ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-        ethObj["timestamp"] = timestamp;
-        ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-        ethObj["administrative_state"] = layerProtocol["administrative-state"];
-        ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
-        wireContainerGeneralInfo.push(ethObj);
-      } else {
-        for (let cap of capability) {
-          let ethObj = {};
-          await extractFromSupportedPmdKindList(cap, capability,status, ethObj);
-          wireContainerGeneralInfo.push(ethObj);
-        }
+  for (let ltp of wireinterfceLtpList) {
+      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+      const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
+     
+      // Create ethernet container object with basic information
+      let ethObj = {
+          "mount_name": mountName,
+          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
+          "timestamp": timestamp,
+          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
+          "administrative_state": layerProtocol["administrative-state"],
+          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
+      };
+      // Add wire container specific attributes
+      if (wireContainerPac) {
+          const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
+          const status = wireContainerPac[WIRE_INTERFACE.STATUS];
+          const capibility = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST][0];
+ 
+          ethObj["interface_name"] = configuration["interface-name"];
+          ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
+          ethObj["interface_status"] = status["interface-status"];
+          ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
+          ethObj["pmd_name"] = capibility["pmd-name"];
+          ethObj["duplex"] = capibility["duplex"];
+          ethObj["speed"] = capibility["speed"]; 
       }
-    }
+     
+      wireContainerGeneralInfo.push(ethObj);
   }
-
+ 
   return wireContainerGeneralInfo;
-}
-
-async function extractFromSupportedPmdKindList(cap, capability,status, ethObj) {
-  ethObj["interface_name"] = configuration["interface-name"];
-  ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
-  ethObj["interface_status"] = status["interface-status"];
-  ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
-  ethObj["mount_name"] = mountName;
-  ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
-  ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-  ethObj["timestamp"] = timestamp;
-  ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-  ethObj["administrative_state"] = layerProtocol["administrative-state"];
-  ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
-  ethObj["pmd_name"] = cap["pmd-name"];
-  ethObj["duplex"] = cap["duplex"];
-  ethObj["speed"] = cap["speed"];
 }
 
 
@@ -329,5 +304,3 @@ async function extractFromSupportedPmdKindList(cap, capability,status, ethObj) {
   return result;
 
     }
-  
-
