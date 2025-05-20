@@ -519,6 +519,15 @@ exports.readListOfDevices = async function(isCSV=false) {
   return resultFetched;
 }
 
+/**
+ * Read from Device Information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readDeviceInfo = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
@@ -565,6 +574,15 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
+/**
+ * Read from Equipment Information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readEquipmentInfo = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
@@ -623,6 +641,15 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
+/**
+ * Read from Air Interface Information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
@@ -689,6 +716,15 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
+/**
+ * Read from Air Interface Transmission Mode table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readAirTransMode = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
@@ -749,6 +785,15 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
+/**
+ * Read from Ethernet Container Information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readEthernetContInfo = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
@@ -805,6 +850,15 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
+/*
+ * Read from Wire Interface Information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   // Read the parameters
   let { mountNames, timeStamp } = filters;
