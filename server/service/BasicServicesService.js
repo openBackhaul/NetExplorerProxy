@@ -94,7 +94,7 @@ const WIRE_INTERFACE = {
         const airinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
           AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
-          const airContainerGeneralInfo = await extractairContainerGeneralInfo(
+          const airContainerGeneralInfo = await extractAirContainerGeneralInfo(
             airinterfceLtpList,
             mountName,
             timestamp
@@ -118,35 +118,82 @@ const WIRE_INTERFACE = {
   };
 
   async function equipmentDataOutputMapping(ccOfMountname, mountName, timestamp) {
-        const result = [];
-     
-        const equipmentArray =
-          ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.equipment ?? [];
-     
-        for (const equipment of equipmentArray) {
-          if (!equipment.hasOwnProperty("actual-equipment")) continue;
-     
-          const equipmentType =
-            equipment["actual-equipment"]["manufactured-thing"]["equipment-type"];
-          const manufacturerProps =
-            equipment["actual-equipment"]["manufactured-thing"]["manufacturer-properties"];
-     
-          result.push({
-            "mount_name": mountName,
-            "uuid": equipment.uuid,
-            "local_id": equipment["local-id"] ?? "",
-            "timestamp":timestamp,
-            "version": equipmentType.version,
-            "description": equipmentType.description,
-            "model_identifier": equipmentType["model-identifier"] ?? "",
-            "part_type_identifier": equipmentType["part-type-identifier"] ?? "",
-            "type_name": equipmentType["type-name"] ?? "",
-            "manufacturer_name": manufacturerProps["manufacturer-name"] ?? "",
-            "manufacturer_identifier": manufacturerProps["manufacturer-identifier"] ?? ""
-          });
-        }
-     
-        return result;
+       const result = [];
+
+      // Check if ccOfMountname has the required properties
+      if (ccOfMountname && 
+          ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
+          Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
+          ccOfMountname["core-model-1-4:control-construct"].length > 0) {
+          
+          const equipmentArray = ccOfMountname["core-model-1-4:control-construct"][0] && 
+                                ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment") && 
+                                Array.isArray(ccOfMountname["core-model-1-4:control-construct"][0].equipment) ? 
+                                ccOfMountname["core-model-1-4:control-construct"][0].equipment : [];
+
+          for (const equipment of equipmentArray) {
+
+
+              if (!equipment || !equipment.hasOwnProperty("actual-equipment") || !equipment["actual-equipment"]) continue;
+
+              // Check if required nested properties exist
+              if ( !equipment["actual-equipment"].hasOwnProperty("manufactured-thing")) continue;
+
+              const manufacturedThing = equipment["actual-equipment"]["manufactured-thing"];
+              
+
+              const equipmentType = manufacturedThing["equipment-type"];
+              const manufacturerProps = manufacturedThing["manufacturer-properties"];
+              
+              // Create object with only properties that exist
+              const equipmentObj = {
+                  "mount_name": mountName,
+                  "timestamp": timestamp
+              };
+              
+              // Only add properties if they exist
+              if (equipment.hasOwnProperty("uuid")) {
+                  equipmentObj["uuid"] = equipment["uuid"];
+              }
+              
+              if (equipment.hasOwnProperty("local-id")) {
+                  equipmentObj["local_id"] = equipment["local-id"];
+              }
+              
+              if (equipmentType && equipmentType.hasOwnProperty("version")) {
+                  equipmentObj["version"] = equipmentType["version"];
+              }
+              
+              if (equipmentType && equipmentType.hasOwnProperty("description")) {
+                  equipmentObj["description"] = equipmentType["description"];
+              }
+              
+              if (equipmentType && equipmentType.hasOwnProperty("model-identifier")) {
+                  equipmentObj["model_identifier"] = equipmentType["model-identifier"];
+              }
+              
+              if (equipmentType && equipmentType.hasOwnProperty("part-type-identifier")) {
+                  equipmentObj["part_type_identifier"] = equipmentType["part-type-identifier"];
+              }
+              
+              if (equipmentType && equipmentType.hasOwnProperty("type-name")) {
+                  equipmentObj["type_name"] = equipmentType["type-name"];
+              }
+              
+              if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-name")) {
+                  equipmentObj["manufacturer_name"] = manufacturerProps["manufacturer-name"];
+              }
+              
+              if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-identifier")) {
+                  equipmentObj["manufacturer_identifier"] = manufacturerProps["manufacturer-identifier"];
+              }
+              
+              result.push(equipmentObj);
+          }
+      }
+
+      return result;
+
       }
  
  
@@ -221,44 +268,93 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   return ethernetContainerGeneralInfo;
 }
 
-async function extractairContainerGeneralInfo(airinterfceLtpList, mountName, timestamp) {
+async function extractAirContainerGeneralInfo(airinterfceLtpList, mountName, timestamp) {
   const airContainerGeneralInfo = [];
   
   for (let ltp of airinterfceLtpList) {
-      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-      const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
-      const augumentContainerPac=ltp["ltp-augment-1-0:ltp-augment-pac"];
+          
+          let ethObj = {
+              "mount_name": mountName,
+              "timestamp": timestamp
+          };
+        // Check if required properties exist before accessing
+        if (ltp && ltp.hasOwnProperty(onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL) && 
+            Array.isArray(ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL]) && 
+            ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL].length > 0) {
+            
+          const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+          const airContainerPac = layerProtocol && layerProtocol.hasOwnProperty("air-interface-2-0:air-interface-pac") ? 
+                                  layerProtocol["air-interface-2-0:air-interface-pac"] : null;
+          const augumentContainerPac = ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") ? 
+                                      ltp["ltp-augment-1-0:ltp-augment-pac"] : null;
 
-      // Create ethernet container object with basic information
-      let ethObj = {
-          "mount_name": mountName,
-          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
-          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
-          "timestamp": timestamp,
-          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
-          "administrative_state": layerProtocol["administrative-state"],
-          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
-      };
-      
-      // Add air container specific attributes
-      if (airContainerPac) {
-          const configuration = airContainerPac[AIR_INTERFACE.CONFIGURATION];
-          const status = airContainerPac[AIR_INTERFACE.STATUS];
-          const capibility = airContainerPac[AIR_INTERFACE.CAPABILITY];
+          // Create ethernet container object with basic information
+          
+          
+          // Add properties only if they exist
+          if (ltp && ltp.hasOwnProperty(onfAttributes.GLOBAL_CLASS.UUID)) {
+              ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
+          }
+          
+          if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
+              ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+          }
+          
+          if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
+              ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+          }
+          
+          if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
+              ethObj["administrative_state"] = layerProtocol["administrative-state"];
+          }
+          
+          if (augumentContainerPac && augumentContainerPac.hasOwnProperty("original-ltp-name")) {
+              ethObj["original_ltp_name"] = augumentContainerPac["original-ltp-name"];
+          }
+          
+          // Add air container specific attributes
+          if (airContainerPac) {
+              const configuration = airContainerPac.hasOwnProperty(AIR_INTERFACE.CONFIGURATION) ? 
+                                  airContainerPac[AIR_INTERFACE.CONFIGURATION] : null;
+              const status = airContainerPac.hasOwnProperty(AIR_INTERFACE.STATUS) ? 
+                            airContainerPac[AIR_INTERFACE.STATUS] : null;
+              const capibility = airContainerPac.hasOwnProperty(AIR_INTERFACE.CAPABILITY) ? 
+                                airContainerPac[AIR_INTERFACE.CAPABILITY] : null;
 
-          ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
-          ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
-          ethObj["xpic_is_on"] = configuration["xpic-is-on"];
-          ethObj["power_is_on"] = configuration["power-is-on"];
-          ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
-          ethObj["interface_status"] = status["interface-status"];
-          ethObj["type_of_equipment"] = capibility["type-of-equipment"];
+              if (configuration) {
+                  if (configuration.hasOwnProperty("transmission-mode-min")) {
+                      ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+                  }
+                  if (configuration.hasOwnProperty("transmission-mode-max")) {
+                      ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+                  }
+                  if (configuration.hasOwnProperty("xpic-is-on")) {
+                      ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+                  }
+                  if (configuration.hasOwnProperty("power-is-on")) {
+                      ethObj["power_is_on"] = configuration["power-is-on"];
+                  }
+                  if (configuration.hasOwnProperty("transmitter-is-on")) {
+                      ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
+                  }
+              }
+              
+              if (status && status.hasOwnProperty("interface-status")) {
+                  ethObj["interface_status"] = status["interface-status"];
+              }
+              
+              if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
+                  ethObj["type_of_equipment"] = capibility["type-of-equipment"];
+              }
+          }
+          
+          if (augumentContainerPac && augumentContainerPac.hasOwnProperty("external-label")) {
+              ethObj["external_label"] = augumentContainerPac["external-label"];
+          }
+        }
 
-      }
-      if(augumentContainerPac){
-        ethObj["external_label"] = augumentContainerPac["external-label"];
-      }
-      airContainerGeneralInfo.push(ethObj);
+
+         airContainerGeneralInfo.push(ethObj);
   }
   
   return airContainerGeneralInfo;
@@ -268,27 +364,51 @@ async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, t
   const wireContainerGeneralInfo = [];
  
 for (let ltp of wireinterfceLtpList) {
-    const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-    const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
+  // Check if ltp has the required properties
+      if (ltp && 
+          ltp.hasOwnProperty(onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL) && 
+          Array.isArray(ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL]) && 
+          ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL].length > 0) {
+          
+          const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+          
+          // Check if layerProtocol has wire-interface-pac
+          if (layerProtocol && layerProtocol.hasOwnProperty("wire-interface-2-0:wire-interface-pac")) {
+              const wireContainerPac = layerProtocol["wire-interface-2-0:wire-interface-pac"];
 
-    if (wireContainerPac) {
-      const configuration = wireContainerPac[WIRE_INTERFACE.CONFIGURATION];
-      const status = wireContainerPac[WIRE_INTERFACE.STATUS];
-      const capability = wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST];
+              if (wireContainerPac) {
+                  // Check for configuration, status, and capability properties
+                  const configuration = wireContainerPac.hasOwnProperty(WIRE_INTERFACE.CONFIGURATION) ? 
+                                      wireContainerPac[WIRE_INTERFACE.CONFIGURATION] : null;
+                  
+                  const status = wireContainerPac.hasOwnProperty(WIRE_INTERFACE.STATUS) ? 
+                                wireContainerPac[WIRE_INTERFACE.STATUS] : null;
+                  
+                  // Check if capability exists and has the required property
+                  const capability = (wireContainerPac.hasOwnProperty(WIRE_INTERFACE.CAPABILITY) && 
+                                    wireContainerPac[WIRE_INTERFACE.CAPABILITY].hasOwnProperty(WIRE_INTERFACE.SUPPORTED_PMD_LIST) &&
+                                    Array.isArray(wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST])) ? 
+                                    wireContainerPac[WIRE_INTERFACE.CAPABILITY][WIRE_INTERFACE.SUPPORTED_PMD_LIST] : [];
 
-      if (capability.length === 0) {
-        let ethObj = {};
-        await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj)
-        wireContainerGeneralInfo.push(ethObj);
-      } else {
-        for (let cap of capability) {
-          let ethObj = {};
-          await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj)
-          await extractFromSupportedPmdKindList(cap, ethObj);
-          wireContainerGeneralInfo.push(ethObj);
-        }
+                  if (capability.length === 0) {
+                      let ethObj = {};
+                      await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj);
+                      wireContainerGeneralInfo.push(ethObj);
+                  } else {
+                      for (let cap of capability) {
+                          let ethObj = {};
+                          await extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj);
+                          if (cap) {
+                              await extractFromSupportedPmdKindList(cap, ethObj);
+                          }
+                          wireContainerGeneralInfo.push(ethObj);
+                      }
+                  }
+              }
+          }
       }
-    }
+
+
   }
 
   return wireContainerGeneralInfo;
@@ -296,55 +416,126 @@ for (let ltp of wireinterfceLtpList) {
 
 async function extractIfCapabilityNotFound(configuration, status, mountName, timestamp, layerProtocol, ltp, ethObj) {
   
-        ethObj["interface_name"] = configuration["interface-name"];
-        ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
-        ethObj["interface_status"] = status["interface-status"];
-        ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
-        ethObj["mount_name"] = mountName;
-        ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
-        ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-        ethObj["timestamp"] = timestamp;
-        ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-        ethObj["administrative_state"] = layerProtocol["administrative-state"];
-        ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+       // Only set properties if the corresponding values exist
+      if (configuration && configuration.hasOwnProperty("interface-name")) {
+          ethObj["interface_name"] = configuration["interface-name"];
+      }
+
+      if (configuration && configuration.hasOwnProperty("fixed-pmd-kind")) {
+          ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
+      }
+
+      if (status && status.hasOwnProperty("interface-status")) {
+          ethObj["interface_status"] = status["interface-status"];
+      }
+
+      if (status && status.hasOwnProperty("pmd-kind-cur")) {
+          ethObj["pmd_kind_cur"] = status["pmd-kind-cur"];
+      }
+
+      // Always set mount_name and timestamp
+      ethObj["mount_name"] = mountName;
+      ethObj["timestamp"] = timestamp;
+
+      if (ltp && ltp.hasOwnProperty(onfAttributes.GLOBAL_CLASS.UUID)) {
+          ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
+      }
+
+      if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
+          ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+      }
+
+      if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
+          ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      }
+
+      if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
+          ethObj["administrative_state"] = layerProtocol["administrative-state"];
+      }
+
+      if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") && 
+          ltp["ltp-augment-1-0:ltp-augment-pac"] && 
+          ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
+          ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+      }
+
 }
 
 async function extractFromSupportedPmdKindList(cap, ethObj) {
-  ethObj["pmd_name"] = cap["pmd-name"];
-  ethObj["duplex"] = cap["duplex"];
-  ethObj["speed"] = cap["speed"];
+    if (cap && cap.hasOwnProperty("pmd-name")) {
+    ethObj["pmd_name"] = cap["pmd-name"];
+    }
+
+    if (cap && cap.hasOwnProperty("duplex")) {
+    ethObj["duplex"] = cap["duplex"];
+    }
+
+    if (cap && cap.hasOwnProperty("speed")) {
+    ethObj["speed"] = cap["speed"];
+    }
 }
 
 
 
   module.exports.retriveTheGeneralInfo = async function retriveTheGeneralInfo(ccOfMountname,mountName,timestamp){
       
-    let deviceModelName = "";
-    let externallabelName = "";
-    const deviceModelData = ccOfMountname?.["core-model-1-4:control-construct"]?.[0]?.["equipment-augment-1-0:control-construct-pac"];
+    let deviceModelName;
+    let externallabelName;
+    let systemName;
 
+    // Check if required properties exist before accessing
+    if (ccOfMountname && 
+        ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
+        Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
+        ccOfMountname["core-model-1-4:control-construct"].length > 0 &&
+        ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment-augment-1-0:control-construct-pac")) {
+        
+        const deviceModelData = ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:control-construct-pac"];
+        
+        if (deviceModelData && deviceModelData.hasOwnProperty("device-model-name")) {
+            deviceModelName = deviceModelData["device-model-name"];
+        }
+        
+        if (deviceModelData && deviceModelData.hasOwnProperty("external-label")) {
+            externallabelName = deviceModelData["external-label"];
+        }
+    }
 
-    if (deviceModelData?.["device-model-name"] && deviceModelData?.["external-label"]) {
-    deviceModelName = deviceModelData["device-model-name"];
-    externallabelName=deviceModelData["external-label"];
-    console.log("deviceModelName",deviceModelName);
-    console.log("externallabelName",externallabelName);
-  }
+    // Check for system name with nested property checks
+    if (ccOfMountname && 
+        ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
+        Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
+        ccOfMountname["core-model-1-4:control-construct"].length > 0 &&
+        ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment-augment-1-0:protocol-collection") &&
+        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"].hasOwnProperty("protocol") &&
+        Array.isArray(ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"]) &&
+        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"].length > 0 &&
+        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0].hasOwnProperty("lldp-1-0:lldp-pac") &&
+        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"].hasOwnProperty("local-system-data") &&
+        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"].hasOwnProperty("system-name")) {
+        
+        systemName = ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"]["system-name"];
+    }
 
-  const systemName = ccOfMountname?.["core-model-1-4:control-construct"]?.[0]
-  ?.["equipment-augment-1-0:protocol-collection"]?.protocol?.[0]
-  ?.["lldp-1-0:lldp-pac"]?.["local-system-data"]?.["system-name"];
+    // Create result object with only required and available properties
+    const result = {
+        "mount_name": mountName,
+        "timestamp": timestamp
+    };
 
-  if (systemName) {
-    console.log("System Name:", systemName);
-  }
-  const result = {
-    "mount_name":mountName,
-    "timestamp": timestamp,
-    "external_label":externallabelName,
-    "device_model_name":deviceModelName,
-    "system_name": systemName,
-  };
-  return result;
+    // Only add properties if they have values
+    if (externallabelName) {
+        result["external_label"] = externallabelName;
+    }
+
+    if (deviceModelName) {
+        result["device_model_name"] = deviceModelName;
+    }
+
+    if (systemName) {
+        result["system_name"] = systemName;
+    }
+    
+    return result;
 
     }
