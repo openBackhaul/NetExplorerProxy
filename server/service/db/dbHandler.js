@@ -22,6 +22,18 @@ let ethernet_container_general_info;
 let wire_interface_general_info;
 
 
+/*
+ * Init function
+ * config contains all the info to initialize the DB
+ * {
+ *  db_name: name of DB to use
+ *  user: username to access to DB system
+ *  password: password to access to DB system
+ *  host: ip address where db server is listening
+ *  port: port number where db server is listening
+ *  dialect: | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' |
+ * }
+ */
 exports.initDB = async function(config) {
   const db_name = (config.db_name == "" || config.db_name == undefined) ?
       NEP_DB : config.db_name;
@@ -77,6 +89,16 @@ exports.initDB = async function(config) {
 
 }
 
+/*
+ * Function to update Device information table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    timestamp,
+ *    device_model_name,
+ *    system_name
+ * }
+ */
 exports.updateDeviceInfo = async function (dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
@@ -111,6 +133,23 @@ exports.updateDeviceInfo = async function (dataArray) {
   }
 }
 
+/*
+ * Function to update Equipment information table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid,
+ *    local_id,
+ *    timestamp,
+ *    version,
+ *    description,
+ *    model_identifier,
+ *    part_type_identifier,
+ *    type_name,
+ *    manufacturer_name,
+ *    manufacturer_identifier
+ * }
+ */
 exports.updateEquipmentInfo = async function (dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
@@ -165,6 +204,27 @@ exports.updateEquipmentInfo = async function (dataArray) {
   }
 }
 
+/*
+ * Function to update Air interface information table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid,
+ *    local_id,
+ *    timestamp,
+ *    operational_state,
+ *    administrative_state,
+ *    original_ltp_name,
+ *    external_label,
+ *    transmission_mode_min,
+ *    transmission_mode_max,
+ *    xpic_is_on,
+ *    power_is_on,
+ *    transmitter_is_on,
+ *    interface_status,
+ *    type_of_equipment
+ * }
+ */
 exports.updateAirInterface = async function(dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
@@ -189,7 +249,7 @@ exports.updateAirInterface = async function(dataArray) {
       },{
         where: {
           mount_name: data.mount_name,
-        uuid: data.uuid,
+          uuid: data.uuid,
         },
       });
 
@@ -225,6 +285,24 @@ exports.updateAirInterface = async function(dataArray) {
   }
 }
 
+/*
+ * Function to update Air Transmission Mode table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid,
+ *    local_id,
+ *    timestamp,
+ *    transmission_mode_name,
+ *    symbol_rate_reduction_factor,
+ *    modulation_scheme_at_lct,
+ *    modulation_scheme,
+ *    code_rate,
+ *    channel_bandwidth,
+ *    xpic_is_avail,
+ *    capa_factor
+ * }
+ */
 exports.updateAirTransMode = async function(dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
@@ -277,10 +355,25 @@ exports.updateAirTransMode = async function(dataArray) {
     } catch(error) {
         logger.error(error);
     }
-  }
-  
+  }  
 }
 
+/*
+ * Function to update Air Transmission Mode table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid,
+ *    local_id,
+ *    timestamp,
+ *    operational_state,
+ *    administrative_state,
+ *    original_ltp_name,
+ *    interface_name,
+ *    bundling_is_on,
+ *    interface_status
+ * }
+ */
 exports.updateEthernetContainer = async function (dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
@@ -331,6 +424,26 @@ exports.updateEthernetContainer = async function (dataArray) {
   }
 }
 
+/*
+ * Function to update Air Transmission Mode table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid,
+ *    local_id,
+ *    timestamp,
+ *    operational_state,
+ *    administrative_state,
+ *    original_ltp_name,
+ *    interface_name,
+ *    fixed_pmd_kind,
+ *    interface_status,
+ *    pmd_kind_cur,
+ *    pmd_name,
+ *    duplex,
+ *    speed
+ * }
+ */
 exports.updateWireInterface = async function (dataArray) {
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
