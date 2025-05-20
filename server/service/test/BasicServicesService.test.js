@@ -215,8 +215,7 @@ describe('extractEthernetContainerInfo', () => {
       local_id: 'test-local-id',
       timestamp: 12345,
       operational_state: 'ENABLED',
-      administrative_state: 'UNLOCKED',
-      original_ltp_name:''
+      administrative_state: 'UNLOCKED'
     });
     
   });

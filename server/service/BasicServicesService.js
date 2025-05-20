@@ -162,26 +162,56 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   for (let ltp of ethInterfaceLtpList) {
       const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
       const ethernetContainerPac = layerProtocol["ethernet-container-2-0:ethernet-container-pac"];
-      
+      let ethObj = {};
       // Create ethernet container object with basic information
-      let ethObj = {
-          "mount_name": mountName,
-          "uuid": ltp?.[onfAttributes.GLOBAL_CLASS.UUID]??"",
-          "local_id": layerProtocol?.[onfAttributes.LOCAL_CLASS.LOCAL_ID]??"",
-          "timestamp": timestamp,
-          "operational_state": ltp?.[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE]??"",
-          "administrative_state": layerProtocol?.["administrative-state"]??"",
-          "original_ltp_name": ltp?.["ltp-augment-1-0:ltp-augment-pac"]?.["original-ltp-name"]??""
-      };
+
+      ethObj["mount_name"] = mountName;
+
+      if (ltp && ltp.hasOwnProperty(onfAttributes.GLOBAL_CLASS.UUID)) {
+        ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
+      }
+
+      if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
+        ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+      }
+
+      ethObj["timestamp"] = timestamp;
+
+      if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
+        ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      }
+
+      if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
+        ethObj["administrative_state"] = layerProtocol["administrative-state"];
+      }
+
+      if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") && 
+          ltp["ltp-augment-1-0:ltp-augment-pac"] && 
+          ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
+        ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+      }
+
       
+
       // Add ethernet container specific attributes
-      if (ethernetContainerPac) {
-          const configuration = ethernetContainerPac[ETHERNET_INTERFACE.CONFIGURATION];
-          const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
-          
-          ethObj["interface_name"] = configuration?.["interface-name"]??"";
-          ethObj["bundling_is_on"] = configuration?.["bundling-is-on"]??"";
-          ethObj["interface_status"] = status?.["interface-status"]??"";
+      if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.CONFIGURATION)) {
+        const configuration = ethernetContainerPac[ETHERNET_INTERFACE.CONFIGURATION];
+        
+        if (configuration && configuration.hasOwnProperty("interface-name")) {
+          ethObj["interface_name"] = configuration["interface-name"];
+        }
+        
+        if (configuration && configuration.hasOwnProperty("bundling-is-on")) {
+          ethObj["bundling_is_on"] = configuration["bundling-is-on"];
+        }
+      }
+
+      if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.STATUS)) {
+        const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
+        
+        if (status && status.hasOwnProperty("interface-status")) {
+          ethObj["interface_status"] = status["interface-status"];
+        }
       }
       
       ethernetContainerGeneralInfo.push(ethObj);
