@@ -58,6 +58,7 @@ logger.info("Connecting to the DB");
         // if (dbResult) {
         //     await dummyData.fillDB();
         //     await dummyData.readData();
+        //     await dummyData.deleteData();
         // }
     }catch (error) {
         logger.error(error);
