@@ -24,7 +24,8 @@ const AIR_INTERFACE = {
   NAME: "air-interface-name",
   PAC: "air-interface-pac",
   HISTORICAL_PERFORMANCES: "air-interface-historical-performances",
-  HISTORICAL_PERFORMANCE_DATA_LIST: "historical-performance-data-list"
+  HISTORICAL_PERFORMANCE_DATA_LIST: "historical-performance-data-list",
+  MODE_LIST:"transmission-mode-list"
 };
 
 const WIRE_INTERFACE = {
@@ -270,94 +271,83 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
 
 async function extractAirContainerGeneralInfo(airinterfceLtpList, mountName, timestamp) {
   const airContainerGeneralInfo = [];
+  const returnObj={};
+    const transMissionListInfo = [];
+
   
   for (let ltp of airinterfceLtpList) {
-          
-          let ethObj = {
-              "mount_name": mountName,
-              "timestamp": timestamp
-          };
-        // Check if required properties exist before accessing
-        if (ltp && ltp.hasOwnProperty(onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL) && 
-            Array.isArray(ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL]) && 
-            ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL].length > 0) {
-            
-          const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-          const airContainerPac = layerProtocol && layerProtocol.hasOwnProperty("air-interface-2-0:air-interface-pac") ? 
-                                  layerProtocol["air-interface-2-0:air-interface-pac"] : null;
-          const augumentContainerPac = ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") ? 
-                                      ltp["ltp-augment-1-0:ltp-augment-pac"] : null;
+      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+      const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
+      const augumentContainerPac=ltp["ltp-augment-1-0:ltp-augment-pac"];
 
-          // Create ethernet container object with basic information
+      // Create ethernet container object with basic information
+      let ethObj = {
+          "mount_name": mountName,
+          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
+          "timestamp": timestamp,
+          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
+          "administrative_state": layerProtocol["administrative-state"],
+          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
+      };
+      
+      // Add air container specific attributes
+      if (airContainerPac) {
+          const configuration = airContainerPac[AIR_INTERFACE.CONFIGURATION];
+          const status = airContainerPac[AIR_INTERFACE.STATUS];
+          const capibility = airContainerPac[AIR_INTERFACE.CAPABILITY];
+          const transmissionList =capibility[AIR_INTERFACE.MODE_LIST]; 
+        
+          ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+          ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+          ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+          ethObj["power_is_on"] = configuration["power-is-on"];
+          ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
+          ethObj["interface_status"] = status["interface-status"];
+          ethObj["type_of_equipment"] = capibility["type-of-equipment"];
           
-          
-          // Add properties only if they exist
-          if (ltp && ltp.hasOwnProperty(onfAttributes.GLOBAL_CLASS.UUID)) {
-              ethObj["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
-          }
-          
-          if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
-              ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-          }
-          
-          if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-              ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-          }
-          
-          if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-              ethObj["administrative_state"] = layerProtocol["administrative-state"];
-          }
-          
-          if (augumentContainerPac && augumentContainerPac.hasOwnProperty("original-ltp-name")) {
-              ethObj["original_ltp_name"] = augumentContainerPac["original-ltp-name"];
-          }
-          
-          // Add air container specific attributes
-          if (airContainerPac) {
-              const configuration = airContainerPac.hasOwnProperty(AIR_INTERFACE.CONFIGURATION) ? 
-                                  airContainerPac[AIR_INTERFACE.CONFIGURATION] : null;
-              const status = airContainerPac.hasOwnProperty(AIR_INTERFACE.STATUS) ? 
-                            airContainerPac[AIR_INTERFACE.STATUS] : null;
-              const capibility = airContainerPac.hasOwnProperty(AIR_INTERFACE.CAPABILITY) ? 
-                                airContainerPac[AIR_INTERFACE.CAPABILITY] : null;
 
-              if (configuration) {
-                  if (configuration.hasOwnProperty("transmission-mode-min")) {
-                      ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
-                  }
-                  if (configuration.hasOwnProperty("transmission-mode-max")) {
-                      ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
-                  }
-                  if (configuration.hasOwnProperty("xpic-is-on")) {
-                      ethObj["xpic_is_on"] = configuration["xpic-is-on"];
-                  }
-                  if (configuration.hasOwnProperty("power-is-on")) {
-                      ethObj["power_is_on"] = configuration["power-is-on"];
-                  }
-                  if (configuration.hasOwnProperty("transmitter-is-on")) {
-                      ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
-                  }
-              }
+      if(transmissionList){
+        for(let ltp of transmissionList){
+          let traMis={};
+          traMis["mount_name"]=mountName;
+          traMis["uuid"]=ltp[onfAttributes.GLOBAL_CLASS.UUID];
+          traMis["local_id"]= layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
               
-              if (status && status.hasOwnProperty("interface-status")) {
-                  ethObj["interface_status"] = status["interface-status"];
-              }
-              
-              if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
-                  ethObj["type_of_equipment"] = capibility["type-of-equipment"];
-              }
-          }
-          
-          if (augumentContainerPac && augumentContainerPac.hasOwnProperty("external-label")) {
-              ethObj["external_label"] = augumentContainerPac["external-label"];
-          }
-        }
-
-
-         airContainerGeneralInfo.push(ethObj);
-  }
+            // Add existing properties with null checks
+            if (transmissionList["transmission-mode-name"]) 
+              traMis["transmission_mode_name"] = transmissionList["transmission-mode-name"];
+            if (transmissionList["symbol-rate-reduction-factor"]) 
+              traMis["symbol_rate_reduction_factor"] = transmissionList["symbol-rate-reduction-factor"];
+            if (transmissionList["channel-bandwidth"]) 
+              traMis["channel_bandwidth"] = transmissionList["channel-bandwidth"];
+            if (transmissionList["modulation-schema-name-at-lct"]) 
+              traMis["modulation_schema_name_at_lct"] = transmissionList["modulation-schema-name-at-lct"];
+            if (transmissionList["modulation-scheme"]) 
+              traMis["modulation_scheme"] = transmissionList["modulation-scheme"];
+            if (transmissionList["code-rate"]) 
+              traMis["code_rate"] = transmissionList["code-rate"];
+            if (transmissionList["xpic-is-avail"]) 
+              traMis["xpic_is_avail"] = transmissionList["xpic-is-avail"];
   
-  return airContainerGeneralInfo;
+              // Calculate and add capa-factor
+              const capaFactor = calculateCapaFactor(transmissionList);
+              if (capaFactor !== null) {
+                traMis["capa_factor"] = capaFactor;
+              }
+             transMissionListInfo.push(traMis);
+            };
+            }
+            }
+            if(augumentContainerPac){
+               ethObj["external_label"] = augumentContainerPac["external-label"];
+            }
+           airContainerGeneralInfo.push(ethObj);
+  }
+   returnObj["airContainerGeneralInfo"]=airContainerGeneralInfo;
+   returnObj["transMissionListInfo"]=transMissionListInfo;
+
+    return returnObj;
 }
 
 async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
@@ -539,3 +529,36 @@ async function extractFromSupportedPmdKindList(cap, ethObj) {
     return result;
 
     }
+
+  function calculateCapaFactor(transmissionList) {
+  // Check if all required properties exist
+  if (!transmissionList || 
+      !transmissionList["channel-bandwidth"] || 
+      !transmissionList["symbol-rate-reduction-factor"] || 
+      !transmissionList["modulation-scheme"] || 
+      !transmissionList["code-rate"]) {
+    console.warn("Missing required parameters for capa-factor calculation");
+    return null;
+  }
+
+  // Extract values from transmissionList
+  const channelBandwidth = parseFloat(transmissionList["channel-bandwidth"]);
+  const symbolRateReductionFactor = parseFloat(transmissionList["symbol-rate-reduction-factor"]);
+  const modulationScheme = parseFloat(transmissionList["modulation-scheme"]);
+  const codeRate = parseFloat(transmissionList["code-rate"]);
+  
+  // Calculate log2 of modulation scheme (number of states)
+  const log2ModulationScheme = Math.log2(modulationScheme);
+  
+  // Constant factor (1/1.15 kbps)
+  const constantFactor = 1/1.15;
+  
+  // Calculate capa-factor in mbps
+  const capaFactor = ((channelBandwidth / symbolRateReductionFactor) * 
+                      log2ModulationScheme * 
+                      codeRate * 
+                      constantFactor) / 1000;
+  
+  // Add the calculated capa-factor to traMis
+  return capaFactor;
+}
