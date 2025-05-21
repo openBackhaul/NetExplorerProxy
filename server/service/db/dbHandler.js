@@ -90,7 +90,7 @@ exports.initDB = async function(config) {
 }
 
 /*
- * Function to update Device information table
+ * Function to create/update Device information table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -100,6 +100,8 @@ exports.initDB = async function(config) {
  * }
  */
 exports.updateDeviceInfo = async function (dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -123,18 +125,23 @@ exports.updateDeviceInfo = async function (dataArray) {
           system_name: data.system_name,
         });
         logger.info("Entry devices_general_info Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry devices_general_info Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
+
       }
 
     } catch(error) {
       logger.error(error);
     }
   }
+
+  return result;
 }
 
 /*
- * Function to update Equipment information table
+ * Function to create/update Equipment information table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -151,6 +158,8 @@ exports.updateDeviceInfo = async function (dataArray) {
  * }
  */
 exports.updateEquipmentInfo = async function (dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -194,8 +203,10 @@ exports.updateEquipmentInfo = async function (dataArray) {
           manufacturer_identifier: data.manufacturer_identifier
         });
         logger.info("Entry equipment_general_info Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry equipment_general_info Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
       }
 
     } catch(error) {
@@ -205,7 +216,7 @@ exports.updateEquipmentInfo = async function (dataArray) {
 }
 
 /*
- * Function to update Air interface information table
+ * Function to create/update Air interface information table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -226,6 +237,8 @@ exports.updateEquipmentInfo = async function (dataArray) {
  * }
  */
 exports.updateAirInterface = async function(dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -275,8 +288,10 @@ exports.updateAirInterface = async function(dataArray) {
           type_of_equipment: data.type_of_equipment
         });
         logger.info("Entry air_interface_general_info Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry air_interface_general_info Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
       }
 
     } catch(error) {
@@ -286,7 +301,7 @@ exports.updateAirInterface = async function(dataArray) {
 }
 
 /*
- * Function to update Air Transmission Mode table
+ * Function to create/update Air Transmission Mode table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -304,6 +319,8 @@ exports.updateAirInterface = async function(dataArray) {
  * }
  */
 exports.updateAirTransMode = async function(dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -348,8 +365,10 @@ exports.updateAirTransMode = async function(dataArray) {
           capa_factor: data.capa_factor
         });
         logger.info("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
       }
 
     } catch(error) {
@@ -359,7 +378,7 @@ exports.updateAirTransMode = async function(dataArray) {
 }
 
 /*
- * Function to update Air Transmission Mode table
+ * Function to create/update Ethernet Container information table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -375,6 +394,8 @@ exports.updateAirTransMode = async function(dataArray) {
  * }
  */
 exports.updateEthernetContainer = async function (dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -414,8 +435,10 @@ exports.updateEthernetContainer = async function (dataArray) {
           interface_status: data.interface_status
         });
         logger.info("Entry ethernet_container_general_info Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry ethernet_container_general_info Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
       }
 
     } catch(error) {
@@ -425,7 +448,7 @@ exports.updateEthernetContainer = async function (dataArray) {
 }
 
 /*
- * Function to update Air Transmission Mode table
+ * Function to create/update Wire interface information table
  * dataArray is an array with fields to be store in the DB:
  * {
  *    mount_name,
@@ -445,6 +468,8 @@ exports.updateEthernetContainer = async function (dataArray) {
  * }
  */
 exports.updateWireInterface = async function (dataArray) {
+  let result = { added: 0, updated: 0 };
+
   for (let i = 0; i< dataArray.length; i++) {
     let data = dataArray[i];
     try {
@@ -492,8 +517,10 @@ exports.updateWireInterface = async function (dataArray) {
           speed: data.speed
         });
         logger.info("Entry wire_interface_general_info Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
       } else {
         logger.info("Entry wire_interface_general_info Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
       }
 
     } catch(error) {
@@ -502,7 +529,9 @@ exports.updateWireInterface = async function (dataArray) {
   }
 }
 
-
+/*
+ * This function will retrieve the list of devices
+ */
 exports.readListOfDevices = async function(isCSV=false) {
   let resultFetched = await devices_general_info.findAll({
     attributes: ['mount_name', 'timestamp'],
@@ -510,7 +539,7 @@ exports.readListOfDevices = async function(isCSV=false) {
   });
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -524,7 +553,7 @@ exports.readListOfDevices = async function(isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -533,15 +562,12 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // DB fields to read
+  const attr = ['mount_name', 'timestamp', 'external_label', 'device_model_name', 'system_name' ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
     resultFetched = await devices_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'timestamp',
-        'external_label',
-        'device_model_name',
-        'system_name'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -549,13 +575,7 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
     });
   } else { // If mountNames list is not empty
     resultFetched = await devices_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'timestamp',
-        'external_label',
-        'device_model_name',
-        'system_name'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -565,7 +585,7 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -579,7 +599,7 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -588,21 +608,24 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // DB fields to read
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp', 
+    'version',
+    'description',
+    'model_identifier',
+    'part_type_identifier',
+    'type_name',
+    'manufacturer_name',
+    'manufacturer_identifier'
+  ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
     resultFetched = await equipment_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'version',
-        'description',
-        'model_identifier',
-        'part_type_identifier',
-        'type_name',
-        'manufacturer_name',
-        'manufacturer_identifier'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -610,19 +633,7 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
     });
   } else {
     resultFetched = await equipment_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'version',
-        'description',
-        'model_identifier',
-        'part_type_identifier',
-        'type_name',
-        'manufacturer_name',
-        'manufacturer_identifier'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -632,7 +643,7 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -646,7 +657,7 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -655,25 +666,28 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // DB fields to read
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp', 
+    'operational_state',
+    'administrative_state',
+    'original_ltp_name',
+    'external_label',
+    'transmission_mode_min',
+    'transmission_mode_max',
+    'xpic_is_on',
+    'power_is_on',
+    'transmitter_is_on',
+    'interface_status',
+    'type_of_equipment',
+  ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
     resultFetched = await air_interface_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'external_label',
-        'transmission_mode_min',
-        'transmission_mode_max',
-        'xpic_is_on',
-        'power_is_on',
-        'transmitter_is_on',
-        'interface_status',
-        'type_of_equipment',
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -681,23 +695,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
     });
   } else {
     resultFetched = await air_interface_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'external_label',
-        'transmission_mode_min',
-        'transmission_mode_max',
-        'xpic_is_on',
-        'power_is_on',
-        'transmitter_is_on',
-        'interface_status',
-        'type_of_equipment',
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -707,7 +705,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -721,7 +719,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -730,22 +728,25 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // DB fields to read
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp',
+    'transmission_mode_name',
+    'symbol_rate_reduction_factor',
+    'modulation_scheme_at_lct',
+    'modulation_scheme',
+    'code_rate',
+    'channel_bandwidth',
+    'xpic_is_avail',
+    'capa_factor'
+  ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") ) {
     resultFetched = await air_interface_transmission_mode.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp',
-        'transmission_mode_name',
-        'symbol_rate_reduction_factor',
-        'modulation_scheme_at_lct',
-        'modulation_scheme',
-        'code_rate',
-        'channel_bandwidth',
-        'xpic_is_avail',
-        'capa_factor'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -753,20 +754,7 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
     });
   } else {
     resultFetched = await air_interface_transmission_mode.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp',
-        'transmission_mode_name',
-        'symbol_rate_reduction_factor',
-        'modulation_scheme_at_lct',
-        'modulation_scheme',
-        'code_rate',
-        'channel_bandwidth',
-        'xpic_is_avail',
-        'capa_factor'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -776,7 +764,7 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -790,7 +778,7 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -799,20 +787,23 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // DB fields to read
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp', 
+    'operational_state',
+    'administrative_state',
+    'original_ltp_name',
+    'interface_name',
+    'bundling_is_on',
+    'interface_status'
+  ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") ) {
     resultFetched = await ethernet_container_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'interface_name',
-        'bundling_is_on',
-        'interface_status'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -820,18 +811,7 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
     });
   } else {
     resultFetched = await ethernet_container_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp', 
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'interface_name',
-        'bundling_is_on',
-        'interface_status'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -841,7 +821,7 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
@@ -855,7 +835,7 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
  * 
  * filters: {
  *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time must be greater than
+ *    timeStamp: timeStamp to filter, time that must be greater than
  * }
  * isCSV: true/false with true return RAW data
  */
@@ -864,24 +844,27 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   let { mountNames, timeStamp } = filters;
   let resultFetched; // Define return Data
 
+  // Fields to read from DB
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp',
+    'operational_state',
+    'administrative_state',
+    'original_ltp_name',
+    'interface_name',
+    'fixed_pmd_kind',
+    'interface_status',
+    'pmd_kind_cur',
+    'pmd_name',
+    'duplex',
+    'speed'
+  ];
+
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
     resultFetched = await wire_interface_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp',
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'interface_name',
-        'fixed_pmd_kind',
-        'interface_status',
-        'pmd_kind_cur',
-        'pmd_name',
-        'duplex',
-        'speed'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp }
       },
@@ -889,22 +872,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
     });
   } else {
     resultFetched = await wire_interface_general_info.findAll({
-      attributes: [
-        'mount_name',
-        'uuid',
-        'local_id',
-        'timestamp',
-        'operational_state',
-        'administrative_state',
-        'original_ltp_name',
-        'interface_name',
-        'fixed_pmd_kind',
-        'interface_status',
-        'pmd_kind_cur',
-        'pmd_name',
-        'duplex',
-        'speed'
-      ],
+      attributes: attr,
       where: {
         timestamp: { [Op.gte]: timeStamp },
         mount_name: { [Op.in]: mountNames }
@@ -914,10 +882,198 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   }
 
   if (isCSV) {
-    if (resultFetched[0].length == 0) {
+    if (resultFetched.length == 0) {
       return "";
     }
     resultFetched = convertToCSV(resultFetched);
+  }
+
+  return resultFetched;
+}
+
+// Remove elements from DB =====================================================================
+
+/*
+ * Delete entries from Device information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeDeviceInfo = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await devices_general_info.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await devices_general_info.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
+  }
+
+  return resultFetched;
+}
+
+/*
+ * Delete entries from Equipment information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeEquipmentInfo = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await equipment_general_info.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await equipment_general_info.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
+  }
+
+  return resultFetched;
+}
+
+/*
+ * Delete entries from Air interface information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeAirInterface = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await air_interface_general_info.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await air_interface_general_info.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
+  }
+
+  return resultFetched;
+}
+
+/*
+ * Delete entries from Air Transmission mode table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeAirTransMode = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await air_interface_transmission_mode.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await air_interface_transmission_mode.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
+  }
+
+  return resultFetched;
+}
+
+/*
+ * Delete entries from Ethernet container table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeEthernetContInfo = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await ethernet_container_general_info.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await ethernet_container_general_info.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
+  }
+
+  return resultFetched;
+}
+
+/*
+ * Delete entries from Wire interface information table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeWireInterfaceInfo = async function(filters) {
+  // Read the parameters
+  let { mountNames, timeStamp } = filters;
+  let resultFetched; // Define return Data
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+      resultFetched = await wire_interface_general_info.destroy({
+        where: {
+          timestamp: { [Op.lte]: timeStamp }
+        }
+      });
+  } else {
+    resultFetched = await wire_interface_general_info.destroy({
+      where: {
+        timestamp: { [Op.lte]: timeStamp },
+        mount_name: { [Op.in]: mountNames }
+      }
+    });
   }
 
   return resultFetched;
