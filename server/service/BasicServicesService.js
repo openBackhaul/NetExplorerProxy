@@ -95,7 +95,7 @@ const WIRE_INTERFACE = {
         const airinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
           AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
-          const airContainerGeneralInfo = await extractAirContainerGeneralInfo(
+          const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
             airinterfceLtpList,
             mountName,
             timestamp
@@ -269,7 +269,7 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   return ethernetContainerGeneralInfo;
 }
 
-async function extractAirContainerGeneralInfo(airinterfceLtpList, mountName, timestamp) {
+async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpList, mountName, timestamp) {
   const airContainerGeneralInfo = [];
   const returnObj={};
     const transMissionListInfo = [];
@@ -307,42 +307,42 @@ async function extractAirContainerGeneralInfo(airinterfceLtpList, mountName, tim
           ethObj["type_of_equipment"] = capibility["type-of-equipment"];
           
 
-      if(transmissionList){
-        for(let ltp of transmissionList){
-          let traMis={};
-          traMis["mount_name"]=mountName;
-          traMis["uuid"]=ltp[onfAttributes.GLOBAL_CLASS.UUID];
-          traMis["local_id"]= layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-              
-            // Add existing properties with null checks
-            if (transmissionList["transmission-mode-name"]) 
-              traMis["transmission_mode_name"] = transmissionList["transmission-mode-name"];
-            if (transmissionList["symbol-rate-reduction-factor"]) 
-              traMis["symbol_rate_reduction_factor"] = transmissionList["symbol-rate-reduction-factor"];
-            if (transmissionList["channel-bandwidth"]) 
-              traMis["channel_bandwidth"] = transmissionList["channel-bandwidth"];
-            if (transmissionList["modulation-schema-name-at-lct"]) 
-              traMis["modulation_schema_name_at_lct"] = transmissionList["modulation-schema-name-at-lct"];
-            if (transmissionList["modulation-scheme"]) 
-              traMis["modulation_scheme"] = transmissionList["modulation-scheme"];
-            if (transmissionList["code-rate"]) 
-              traMis["code_rate"] = transmissionList["code-rate"];
-            if (transmissionList["xpic-is-avail"]) 
-              traMis["xpic_is_avail"] = transmissionList["xpic-is-avail"];
-  
-              // Calculate and add capa-factor
-              const capaFactor = calculateCapaFactor(transmissionList);
-              if (capaFactor !== null) {
-                traMis["capa_factor"] = capaFactor;
-              }
-             transMissionListInfo.push(traMis);
-            };
+          if(transmissionList){
+            for(let transmissionListObj of transmissionList){
+              let traMis={};
+              traMis["mount_name"]=mountName;
+              traMis["uuid"]=ltp[onfAttributes.GLOBAL_CLASS.UUID];
+              traMis["local_id"]= layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+                  
+                // Add existing properties with null checks
+                if (transmissionListObj["transmission-mode-name"]) 
+                  traMis["transmission_mode_name"] = transmissionListObj["transmission-mode-name"];
+                if (transmissionListObj["symbol-rate-reduction-factor"]) 
+                  traMis["symbol_rate_reduction_factor"] = transmissionListObj["symbol-rate-reduction-factor"];
+                if (transmissionListObj["channel-bandwidth"]) 
+                  traMis["channel_bandwidth"] = transmissionListObj["channel-bandwidth"];
+                if (transmissionListObj["modulation-scheme-name-at-lct"]) 
+                  traMis["modulation_scheme_name_at_lct"] = transmissionListObj["modulation-scheme-name-at-lct"];
+                if (transmissionListObj["modulation-scheme"]) 
+                  traMis["modulation_scheme"] = transmissionListObj["modulation-scheme"];
+                if (transmissionListObj["code-rate"]) 
+                  traMis["code_rate"] = transmissionListObj["code-rate"];
+                if (transmissionListObj["xpic-is-avail"]) 
+                  traMis["xpic_is_avail"] = transmissionListObj["xpic-is-avail"];
+      
+                  // Calculate and add capa-factor
+                  const capaFactor = calculateCapaFactor(transmissionListObj);
+                  if (capaFactor !== null) {
+                    traMis["capa_factor"] = capaFactor;
+                  }
+                transMissionListInfo.push(traMis);
+                };
             }
-            }
-            if(augumentContainerPac){
-               ethObj["external_label"] = augumentContainerPac["external-label"];
-            }
-           airContainerGeneralInfo.push(ethObj);
+        }
+        if(augumentContainerPac){
+            ethObj["external_label"] = augumentContainerPac["external-label"];
+        }
+        airContainerGeneralInfo.push(ethObj);
   }
    returnObj["airContainerGeneralInfo"]=airContainerGeneralInfo;
    returnObj["transMissionListInfo"]=transMissionListInfo;
@@ -530,22 +530,22 @@ async function extractFromSupportedPmdKindList(cap, ethObj) {
 
     }
 
-  function calculateCapaFactor(transmissionList) {
+  function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist
-  if (!transmissionList || 
-      !transmissionList["channel-bandwidth"] || 
-      !transmissionList["symbol-rate-reduction-factor"] || 
-      !transmissionList["modulation-scheme"] || 
-      !transmissionList["code-rate"]) {
+  if (!transmissionListObj || 
+      !transmissionListObj["channel-bandwidth"] || 
+      !transmissionListObj["symbol-rate-reduction-factor"] || 
+      !transmissionListObj["modulation-scheme"] || 
+      !transmissionListObj["code-rate"]) {
     console.warn("Missing required parameters for capa-factor calculation");
     return null;
   }
 
   // Extract values from transmissionList
-  const channelBandwidth = parseFloat(transmissionList["channel-bandwidth"]);
-  const symbolRateReductionFactor = parseFloat(transmissionList["symbol-rate-reduction-factor"]);
-  const modulationScheme = parseFloat(transmissionList["modulation-scheme"]);
-  const codeRate = parseFloat(transmissionList["code-rate"]);
+  const channelBandwidth = parseFloat(transmissionListObj["channel-bandwidth"]);
+  const symbolRateReductionFactor = parseFloat(transmissionListObj["symbol-rate-reduction-factor"]);
+  const modulationScheme = parseFloat(transmissionListObj["modulation-scheme"]);
+  const codeRate = parseFloat(transmissionListObj["code-rate"]);
   
   // Calculate log2 of modulation scheme (number of states)
   const log2ModulationScheme = Math.log2(modulationScheme);
