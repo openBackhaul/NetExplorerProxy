@@ -4,7 +4,7 @@ const rewire = require('rewire');
 // Rewire the module to access private functions
 const basicServicesService = rewire('../BasicServicesService');
 const extractEthernetContainerInfo = basicServicesService.__get__('extractEthernetContainerInfo');
-
+const { retriveTheGeneralInfo } = require("../BasicServicesService"); 
 // Mock the onfAttributes constant
 const onfAttributes = {
   LOGICAL_TERMINATION_POINT: {
@@ -241,3 +241,139 @@ describe('extractEthernetContainerInfo', () => {
     expect(result[0]).toHaveProperty('timestamp', 12345);
   });
 });
+
+describe("retriveTheGeneralInfo", () => {
+            const mountName = "CO12123";
+            const timestamp = "1747899140618";
+
+            it("should return all values when all fields are present", async () => {
+              const ccOfMountname={
+                "core-model-1-4:control-construct": [
+                  {
+                   "equipment-augment-1-0:control-construct-pac": {
+                      "device-model-name": "MINI-LINK 6352",
+                      "external-label": "ML6352_ODUC",
+                    },
+                    "equipment-augment-1-0:protocol-collection": {
+                      protocol: [
+                        {
+                          "lldp-1-0:lldp-pac": {
+                            "local-system-data": {
+                              "system-name": "ML6352_ODUC",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              };
+
+              const expected = {
+                                mount_name: "CO12123",
+                                timestamp: timestamp,
+                                external_label: "ML6352_ODUC",
+                                device_model_name: "MINI-LINK 6352",
+                                system_name: "ML6352_ODUC",
+                              };
+
+              const result = await retriveTheGeneralInfo(ccOfMountname, mountName, timestamp);
+              expect(result).toEqual(expected);
+            });
+
+            it("should return only device_model_name and external_label when system_name is missing", async () => {
+              const input = {
+                "core-model-1-4:control-construct": [
+                  {
+                    "equipment-augment-1-0:control-construct-pac": {
+                      "device-model-name": "MINI-LINK 6352",
+                      "external-label": "ML6352_ODUC",
+                    },
+                    "equipment-augment-1-0:protocol-collection": {
+                      protocol: [
+                        {
+                          "lldp-1-0:lldp-pac": {
+                            "local-system-data": {
+                              // "system-name": "ML6352_ODUC",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              };
+
+              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              expect(result).toEqual({
+                mount_name: mountName,
+                timestamp: timestamp,
+                device_model_name: "MINI-LINK 6352",
+                external_label: "ML6352_ODUC"
+              });
+            });
+
+            it("should return only system_name when device-model-name and external-label are missing", async () => {
+              const input ={
+                "core-model-1-4:control-construct": [
+                  {
+                    
+                    // "equipment-augment-1-0:control-construct-pac": {
+                    //   "device-model-name": "MINI-LINK 6352",
+                    //   "external-label": "ML6352_ODUC",
+                    // },
+                    "equipment-augment-1-0:protocol-collection": {
+                      protocol: [
+                        {
+                          "lldp-1-0:lldp-pac": {
+                            "local-system-data": {
+                              "system-name": "ML6352_ODUC",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              };
+
+              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              expect(result).toEqual({
+                mount_name: mountName,
+                timestamp: timestamp,
+                system_name: "ML6352_ODUC"
+              });
+            });
+
+            it("should return only mount_name and timestamp when all optional fields are missing", async () => {
+              const input = {
+                "core-model-1-4:control-construct": [
+                  {
+                    // No equipment-augment fields at all
+                  }
+                ]
+              };
+
+              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              expect(result).toEqual({
+                mount_name: mountName,
+                timestamp: timestamp
+              });
+            });
+
+            it("should return empty object with only mount_name and timestamp when input is empty", async () => {
+              const result = await retriveTheGeneralInfo({}, mountName, timestamp);
+              expect(result).toEqual({
+                mount_name: mountName,
+                timestamp: timestamp
+              });
+            });
+
+            it("should return empty object with only mount_name and timestamp when input is null", async () => {
+              const result = await retriveTheGeneralInfo(null, mountName, timestamp);
+              expect(result).toEqual({
+                mount_name: mountName,
+                timestamp: timestamp
+              });
+            });
+          });
