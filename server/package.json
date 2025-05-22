@@ -16,14 +16,21 @@
   "dependencies": {
     "connect": "^3.2.0",
     "js-yaml": "^3.3.0",
+    "mariadb": "^3.4.2",
+    "mysql2": "^3.14.1",
     "oas3-tools": "^2.2.3",
     "onf-core-model-ap": "2.1.2",
     "onf-core-model-ap-bs": "2.1.2",
+    "pg": "^8.15.6",
+    "pg-hstore": "^2.3.4",
     "pino": "^9.4.0",
     "pino-pretty": "^11.2.2",
     "pino-roll": "^2.2.0",
-    "uuid": "^11.0.3",
-    "rewire": "^7.0.0"
+    "rewire": "^7.0.0",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7",
+    "uuid": "^11.0.3"
+
   },
   "devDependencies": {
     "jest": "^29.7.0",
