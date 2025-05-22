@@ -273,63 +273,84 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
   const airContainerGeneralInfo = [];
   const returnObj={};
     const transMissionListInfo = [];
-
-  
+ 
   for (let ltp of airinterfceLtpList) {
       const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
       const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
       const augumentContainerPac=ltp["ltp-augment-1-0:ltp-augment-pac"];
-
-      // Create ethernet container object with basic information
-      let ethObj = {
-          "mount_name": mountName,
-          "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
-          "local_id": layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID],
-          "timestamp": timestamp,
-          "operational_state": ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE],
-          "administrative_state": layerProtocol["administrative-state"],
-          "original_ltp_name": ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"]
-      };
-      
+ 
+          let ethObj = {
+              "mount_name": mountName,
+              "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+              "timestamp": timestamp
+          };
+ 
+          if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
+              ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+          }
+          if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
+              ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+          }
+          if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
+              ethObj["administrative_state"] = layerProtocol["administrative-state"];
+          }
+          if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") &&
+              ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
+              ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+          }
+ 
       // Add air container specific attributes
       if (airContainerPac) {
           const configuration = airContainerPac[AIR_INTERFACE.CONFIGURATION];
           const status = airContainerPac[AIR_INTERFACE.STATUS];
           const capibility = airContainerPac[AIR_INTERFACE.CAPABILITY];
-          const transmissionList =capibility[AIR_INTERFACE.MODE_LIST]; 
-        
-          ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
-          ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
-          ethObj["xpic_is_on"] = configuration["xpic-is-on"];
-          ethObj["power_is_on"] = configuration["power-is-on"];
-          ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
-          ethObj["interface_status"] = status["interface-status"];
-          ethObj["type_of_equipment"] = capibility["type-of-equipment"];
-          
-
+          const transmissionList =capibility[AIR_INTERFACE.MODE_LIST];
+ 
+            if (configuration && configuration.hasOwnProperty("transmission-mode-min")) {
+                ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+            }
+            if (configuration && configuration.hasOwnProperty("transmission-mode-max")) {
+                ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+            }
+            if (configuration && configuration.hasOwnProperty("xpic-is-on")) {
+                ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+            }
+            if (configuration && configuration.hasOwnProperty("power-is-on")) {
+                ethObj["power_is_on"] = configuration["power-is-on"];
+            }
+            if (configuration && configuration.hasOwnProperty("transmitter-is-on")) {
+                ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
+            }
+            if (status && status.hasOwnProperty("interface-status")) {
+                ethObj["interface_status"] = status["interface-status"];
+            }
+            if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
+                ethObj["type_of_equipment"] = capibility["type-of-equipment"];
+            }
+ 
           if(transmissionList){
             for(let transmissionListObj of transmissionList){
               let traMis={};
               traMis["mount_name"]=mountName;
               traMis["uuid"]=ltp[onfAttributes.GLOBAL_CLASS.UUID];
               traMis["local_id"]= layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-                  
+                 
                 // Add existing properties with null checks
-                if (transmissionListObj["transmission-mode-name"]) 
+                if (transmissionListObj["transmission-mode-name"])
                   traMis["transmission_mode_name"] = transmissionListObj["transmission-mode-name"];
-                if (transmissionListObj["symbol-rate-reduction-factor"]) 
+                if (transmissionListObj["symbol-rate-reduction-factor"])
                   traMis["symbol_rate_reduction_factor"] = transmissionListObj["symbol-rate-reduction-factor"];
-                if (transmissionListObj["channel-bandwidth"]) 
+                if (transmissionListObj["channel-bandwidth"])
                   traMis["channel_bandwidth"] = transmissionListObj["channel-bandwidth"];
-                if (transmissionListObj["modulation-scheme-name-at-lct"]) 
+                if (transmissionListObj["modulation-scheme-name-at-lct"])
                   traMis["modulation_scheme_name_at_lct"] = transmissionListObj["modulation-scheme-name-at-lct"];
-                if (transmissionListObj["modulation-scheme"]) 
+                if (transmissionListObj["modulation-scheme"])
                   traMis["modulation_scheme"] = transmissionListObj["modulation-scheme"];
-                if (transmissionListObj["code-rate"]) 
+                if (transmissionListObj["code-rate"])
                   traMis["code_rate"] = transmissionListObj["code-rate"];
-                if (transmissionListObj["xpic-is-avail"]) 
+                if (transmissionListObj["xpic-is-avail"])
                   traMis["xpic_is_avail"] = transmissionListObj["xpic-is-avail"];
-      
+     
                   // Calculate and add capa-factor
                   const capaFactor = calculateCapaFactor(transmissionListObj);
                   if (capaFactor !== null) {
@@ -346,10 +367,10 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
   }
    returnObj["airContainerGeneralInfo"]=airContainerGeneralInfo;
    returnObj["transMissionListInfo"]=transMissionListInfo;
-
+ 
     return returnObj;
 }
-
+ 
 async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
   const wireContainerGeneralInfo = [];
  
