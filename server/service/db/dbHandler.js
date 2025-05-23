@@ -41,19 +41,23 @@ exports.initDB = async function(config) {
   try {
     // Init sequelize with DB params
     logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
-    // let sequelize = new Sequelize(config.db_name, config.user, config.password, {
-    //     host: config.host,
-    //     port: config.port,
-    //     dialect: config.dialect
-    //     /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    // });
+    if (config.dialect == 'sqlite') {
+      sequelize = new Sequelize({
+        dialect: 'sqlite',
+        storage: ':memory:', //':memory:', // or ''
+        pool: { max: 1, idle: Infinity, maxUses: Infinity },
+        logger: msg => logger.debug(msg),
+      });
+    } else {
+      sequelize = new Sequelize(config.db_name, config.user, config.password, {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+        logger: msg => logger.debug(msg),
+      });
+    }
 
-    const sequelize = new Sequelize({
-      dialect: 'sqlite',
-      storage: '', //':memory:', // or ''
-      pool: { max: 1, idle: Infinity, maxUses: Infinity },
-    });
-
+    // Try to connect to the DB
     await sequelize.authenticate();
     logger.info('Connection has been established successfully.');
 
@@ -71,11 +75,17 @@ exports.initDB = async function(config) {
 
     // Init the tables
     devices_general_info = devicesInfo.init(sequelize);
+    logger.debug("Device general info Table created");
     equipment_general_info = equipmentInfo.init(sequelize);
+    logger.debug("Equipment general info Table created");
     air_interface_general_info = airIf.init(sequelize);
+    logger.debug("Air Interface info Table created");
     air_interface_transmission_mode = airTransMode.init(sequelize);
+    logger.debug("Air Transmission mode Table created");
     ethernet_container_general_info = ethContIf.init(sequelize);
+    logger.debug("Ethernet container general info Table created");
     wire_interface_general_info = wireIf.init(sequelize);
+    logger.debug("Wire interface general info Table created");
 
     // Synchronize the DB
     await sequelize.sync({alter: true});
@@ -86,8 +96,9 @@ exports.initDB = async function(config) {
     logger.error(error, 'Unable to connect to the database:');
     return false;
   }
-
 }
+
+// Create/Update elements from DB =====================================================================
 
 /*
  * Function to create/update Device information table
@@ -529,6 +540,9 @@ exports.updateWireInterface = async function (dataArray) {
   }
 }
 
+
+// Read elements from DB =====================================================================
+
 /*
  * This function will retrieve the list of devices
  */
@@ -558,38 +572,9 @@ exports.readListOfDevices = async function(isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readDeviceInfo = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  // DB fields to read
   const attr = ['mount_name', 'timestamp', 'external_label', 'device_model_name', 'system_name' ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-    resultFetched = await devices_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else { // If mountNames list is not empty
-    resultFetched = await devices_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
-
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      return "";
-    }
-    resultFetched = convertToCSV(resultFetched);
-  }
+  let resultFetched = await readGeneralData(devices_general_info, attr, filters, isCSV);
 
   return resultFetched;
 }
@@ -604,10 +589,6 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readEquipmentInfo = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
   // DB fields to read
   const attr = [
     'mount_name',
@@ -623,31 +604,7 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
     'manufacturer_identifier'
   ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-    resultFetched = await equipment_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else {
-    resultFetched = await equipment_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
-
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      return "";
-    }
-    resultFetched = convertToCSV(resultFetched);
-  }
+  let resultFetched = await readGeneralData(equipment_general_info, attr, filters, isCSV);
 
   return resultFetched;
 }
@@ -662,10 +619,6 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
   // DB fields to read
   const attr = [
     'mount_name',
@@ -685,31 +638,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
     'type_of_equipment',
   ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-    resultFetched = await air_interface_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else {
-    resultFetched = await air_interface_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
-
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      return "";
-    }
-    resultFetched = convertToCSV(resultFetched);
-  }
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, isCSV);
 
   return resultFetched;
 }
@@ -724,10 +653,6 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readAirTransMode = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
   // DB fields to read
   const attr = [
     'mount_name',
@@ -744,31 +669,7 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
     'capa_factor'
   ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") ) {
-    resultFetched = await air_interface_transmission_mode.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else {
-    resultFetched = await air_interface_transmission_mode.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
-
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      return "";
-    }
-    resultFetched = convertToCSV(resultFetched);
-  }
+  let resultFetched = await readGeneralData(air_interface_transmission_mode, attr, filters, isCSV);
 
   return resultFetched;
 }
@@ -783,10 +684,6 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readEthernetContInfo = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
   // DB fields to read
   const attr = [
     'mount_name',
@@ -801,31 +698,8 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
     'interface_status'
   ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "") ) {
-    resultFetched = await ethernet_container_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else {
-    resultFetched = await ethernet_container_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
-
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      return "";
-    }
-    resultFetched = convertToCSV(resultFetched);
-  }
+  // Retrieve data
+  let resultFetched = await readGeneralData(ethernet_container_general_info, attr, filters, isCSV);
 
   return resultFetched;
 }
@@ -840,10 +714,6 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
   // Fields to read from DB
   const attr = [
     'mount_name',
@@ -862,26 +732,46 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
     'speed'
   ];
 
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-    resultFetched = await wire_interface_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp }
-      },
-      raw : isCSV
-    });
-  } else {
-    resultFetched = await wire_interface_general_info.findAll({
-      attributes: attr,
-      where: {
-        timestamp: { [Op.gte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      },
-      raw : isCSV
-    });
-  }
+  // Retrieve data
+  let resultFetched = await readGeneralData(ethernet_container_general_info, attr, filters, isCSV);
 
-  if (isCSV) {
+  return resultFetched;
+}
+
+// Interface info for devices
+exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
+  const whereCondition = getWhereConditionForRead(filters);
+  // DB fields to read
+  const attr = [
+    'mount_name',
+    'uuid',
+    'local_id',
+    'timestamp',
+    'original_ltp_name',
+    'interface_status',
+    'interface_type' // fake entry
+  ];
+
+  // Retrieve data
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
+  resultFetched += await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
+  resultFetched += await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
+
+  return resultFetched;
+}
+
+
+// This is internal general routine to read data from DB model
+async function readGeneralData(tableModel, fields, filters, isCSV=false) {
+  const whereCondition = getWhereConditionForRead(filters);
+
+  let resultFetched = await tableModel.findAll({
+    attributes: fields,
+    where: whereCondition,
+    raw : isCSV
+  });
+
+  if (isCSV) { // Convert into CSV format
     if (resultFetched.length == 0) {
       return "";
     }
@@ -890,6 +780,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
 
   return resultFetched;
 }
+
 
 // Remove elements from DB =====================================================================
 
@@ -902,24 +793,9 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
  * }
  */
 exports.removeDeviceInfo = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await devices_general_info.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await devices_general_info.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await devices_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
 }
@@ -933,24 +809,9 @@ exports.removeDeviceInfo = async function(filters) {
  * }
  */
 exports.removeEquipmentInfo = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await equipment_general_info.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await equipment_general_info.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await equipment_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
 }
@@ -964,24 +825,9 @@ exports.removeEquipmentInfo = async function(filters) {
  * }
  */
 exports.removeAirInterface = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await air_interface_general_info.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await air_interface_general_info.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await air_interface_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
 }
@@ -995,24 +841,9 @@ exports.removeAirInterface = async function(filters) {
  * }
  */
 exports.removeAirTransMode = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await air_interface_transmission_mode.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await air_interface_transmission_mode.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await air_interface_transmission_mode.destroy({ where: whereCondition});
 
   return resultFetched;
 }
@@ -1026,24 +857,9 @@ exports.removeAirTransMode = async function(filters) {
  * }
  */
 exports.removeEthernetContInfo = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await ethernet_container_general_info.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await ethernet_container_general_info.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await ethernet_container_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
 }
@@ -1057,26 +873,76 @@ exports.removeEthernetContInfo = async function(filters) {
  * }
  */
 exports.removeWireInterfaceInfo = async function(filters) {
-  // Read the parameters
-  let { mountNames, timeStamp } = filters;
-  let resultFetched; // Define return Data
-
-  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-      resultFetched = await wire_interface_general_info.destroy({
-        where: {
-          timestamp: { [Op.lte]: timeStamp }
-        }
-      });
-  } else {
-    resultFetched = await wire_interface_general_info.destroy({
-      where: {
-        timestamp: { [Op.lte]: timeStamp },
-        mount_name: { [Op.in]: mountNames }
-      }
-    });
-  }
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await wire_interface_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
+}
+
+exports.removeAllReferences = async function(filters) {
+  // let resultFetched = 0; // Define return Data
+  let resultFeatched = {
+    'device_general_info': 0,
+    'equipment_general_info': 0,
+    'air_interface_general_info': 0,
+    'air_interface_transmission_mode': 0,
+    'ethernet_container_general_info': 0,
+    'wire_interface_general_info': 0,
+  }
+  let whereCondition = getWhereConditionForDelete(filters);
+
+  resultFeatched.device_general_info = await devices_general_info.destroy({ where: whereCondition});
+  resultFeatched.equipment_general_info = await equipment_general_info.destroy({ where: whereCondition});
+  resultFeatched.air_interface_general_info = await air_interface_general_info.destroy({ where: whereCondition});
+  resultFeatched.air_interface_transmission_mode = await air_interface_transmission_mode.destroy({ where: whereCondition});
+  resultFeatched.ethernet_container_general_info = await ethernet_container_general_info.destroy({ where: whereCondition});
+  resultFeatched.wire_interface_general_info = await wire_interface_general_info.destroy({ where: whereCondition});
+
+  return resultFetched;
+}
+
+function getWhereConditionForRead(filters) {
+  let { mountNames, timeStamp } = filters;
+  let whereCondition = {}
+  if (timeStamp == undefined, timeStamp == null) {
+    timeStamp = new Date(0); // from epoch
+  }
+
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+    whereCondition = {
+      timestamp: { [Op.gte]: timeStamp }
+    }
+  } else {
+    whereCondition = {
+      timestamp: { [Op.gte]: timeStamp },
+      mount_name: { [Op.in]: mountNames }
+    }
+  }
+
+  return whereCondition;
+}
+
+function getWhereConditionForDelete(filters) {
+  let { mountNames, timeStamp } = filters;
+  let whereCondition = {}
+  if (timeStamp == undefined, timeStamp == null) {
+    timeStamp = new Date(Date.now()); // NOW
+  }
+
+  // if mountname is not valid
+  if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+    whereCondition = {
+      timestamp: { [Op.lte]: timeStamp }
+    }
+  } else {
+    whereCondition = {
+      timestamp: { [Op.lte]: timeStamp },
+      mount_name: { [Op.in]: mountNames }
+    }
+  }
+
+  return whereCondition;
 }
 
 // Routine to convert the result into CSV format
@@ -1086,4 +952,20 @@ function convertToCSV(arr) {
   return array.map(it => {
     return Object.values(it).toString()
   }).join('\n')
+}
+
+function convertToCSVEnh(arr) {
+      let csv = '';
+    
+    // Extract headers
+    const headers = Object.keys(arr[0]);
+    csv += headers.join(',') + '\n';
+    
+    // Extract values
+    arr.forEach(obj => {
+        const values = headers.map(header => obj[header]);
+        csv += values.join(',') + '\n';
+    });
+    
+    return csv;
 }
