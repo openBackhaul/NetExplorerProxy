@@ -92,6 +92,11 @@ exports.init = function (sequelize) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      interface_type: {
+        type: DataTypes.STRING,
+        defaultValue: "wire-interface",
+        allowNull: false,
+      },
     },
     {
       sequelize,

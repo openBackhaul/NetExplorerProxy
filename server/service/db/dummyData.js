@@ -39,7 +39,23 @@ exports.fillDB = async function () {
             system_name: "Windows",
         },
     ];
-    await dbHandler.updateDeviceInfo(deviceGenArray);
+
+    let result = await dbHandler.updateDeviceInfo(deviceGenArray);
+    console.log(result);
+    result = await dbHandler.updateDeviceInfo(deviceGenArray);
+    console.log(result);
+    deviceGenArray = [
+        {
+            mount_name: "XXX254566",
+            timestamp: "2024-12-11T16:00:00+01:00",
+        },
+        {
+            mount_name: "YYY254566",
+            timestamp: "2024-12-11T16:00:00+01:00",
+        },
+    ];
+    result = await dbHandler.updateDeviceInfo(deviceGenArray);
+    console.log(result);
 
     // Equipment
     equipmentArray = [
@@ -364,10 +380,41 @@ exports.readData = async function() {
             timeStamp: new Date(0),
         }
         res = await dbHandler.readDeviceInfo(filters, true);
+        filters = {
+            mountNames: [],
+            timeStamp: new Date(0),
+        }
+        res = await dbHandler.readDeviceInfo(filters, true);
         console.log(res)
 
     } catch (err) {
         console.error(err);
     }
 
+}
+
+
+exports.deleteData = async function() {
+    try {
+        let filters = {
+            mountNames: ['100254566', '200259999'],
+            timeStamp: new Date(0),
+        }
+        let res = await dbHandler.readDeviceInfo(filters, true);
+        console.log(res);
+        filters = {
+            mountNames: ['100254566', '200259999'],
+            timeStamp: new Date(Date.now()),
+        }
+        res = await dbHandler.removeDeviceInfo(filters);
+        console.log(res);
+         filters = {
+            mountNames: ['100254566', '200259999'],
+            timeStamp: new Date(0),
+        }
+        res = await dbHandler.readDeviceInfo(filters, true);
+        console.log(res);
+    } catch (err) {
+        console.error(err);
+    }
 }
