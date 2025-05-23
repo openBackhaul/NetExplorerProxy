@@ -2,6 +2,8 @@
 const getDataFromOtherApp=require('./GetDataFromOtherApps');
 const ltpStructureUtility = require('./LtpStructureUtility');
 const onfAttributes = require('onf-core-model-ap/applicationPattern/onfModel/constants/OnfAttributes');
+const logger = require('./LoggingService.js').getLogger();
+const dbHandler = require('./db/dbHandler.js');
 
 const ETHERNET_INTERFACE = {
   MODULE: "ethernet-container-2-0",
@@ -77,48 +79,70 @@ const WIRE_INTERFACE = {
     
     if(ccOfMountname.hasOwnProperty("core-model-1-4:control-construct")){
         
+        await processGeneralInfo(ccOfMountname, mountName, timestamp);
 
-      //fetch the device general info
-      const deviceGenereInfo=await exports.retriveTheGeneralInfo(ccOfMountname,mountName,timestamp);
+        await processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
 
-      //fetch the ethernet container general info
-
-        const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
-           ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
-  
-        const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
-          ethInterfaceLtpList,
-          mountName,
-          timestamp
-        );
-
-        const airinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
-          AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
-
-          const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
-            airinterfceLtpList,
-            mountName,
-            timestamp
-          );
+        await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
             
-        const wireinterfceLtpList= await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
-          WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
- 
-          const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
-            wireinterfceLtpList,
-            mountName,
-            timestamp
-          );
+        await processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
 
-          const equipmentGeneralInfo=await equipmentDataOutputMapping(ccOfMountname,mountName,timestamp); 
-        // Pretty-printed with indentation for better readability
-        console.log('Ethernet Container General Info:', JSON.stringify(ethernetContainerGeneralInfo, null, 2));
+        await processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp); 
         
     
     }
   };
 
-  async function equipmentDataOutputMapping(ccOfMountname, mountName, timestamp) {
+async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
+  const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp);
+  await dbHandler.updateDeviceInfo(deviceGenereInfo);
+}
+
+async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) {
+  const equipmentGeneralInfo = await extractEquipmentData(ccOfMountname, mountName, timestamp);
+  await dbHandler.updateEquipmentInfo(equipmentGeneralInfo);
+}
+
+async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
+  const wireinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+    WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
+
+  const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
+    wireinterfceLtpList,
+    mountName,
+    timestamp
+  );
+  await dbHandler.updateWireInterface(wireInterfaceGeneralInfo);
+}
+
+async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
+  const airinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+    AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
+
+  const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
+    airinterfceLtpList,
+    mountName,
+    timestamp
+  );
+
+  await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]);
+  await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]);
+}
+
+async function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp) {
+  const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+    ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
+
+  const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
+    ethInterfaceLtpList,
+    mountName,
+    timestamp
+  );
+  await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo);
+  
+}
+
+  async function extractEquipmentData(ccOfMountname, mountName, timestamp) {
        const result = [];
 
       // Check if ccOfMountname has the required properties
@@ -195,7 +219,7 @@ const WIRE_INTERFACE = {
 
       return result;
 
-      }
+  }
  
  
   /**
@@ -334,21 +358,22 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
               traMis["mount_name"]=mountName;
               traMis["uuid"]=ltp[onfAttributes.GLOBAL_CLASS.UUID];
               traMis["local_id"]= layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+              traMis["timestamp"] = timestamp;
                  
                 // Add existing properties with null checks
-                if (transmissionListObj["transmission-mode-name"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("transmission-mode-name"))
                   traMis["transmission_mode_name"] = transmissionListObj["transmission-mode-name"];
-                if (transmissionListObj["symbol-rate-reduction-factor"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("symbol-rate-reduction-factor"))
                   traMis["symbol_rate_reduction_factor"] = transmissionListObj["symbol-rate-reduction-factor"];
-                if (transmissionListObj["channel-bandwidth"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("channel-bandwidth"))
                   traMis["channel_bandwidth"] = transmissionListObj["channel-bandwidth"];
-                if (transmissionListObj["modulation-scheme-name-at-lct"])
-                  traMis["modulation_scheme_name_at_lct"] = transmissionListObj["modulation-scheme-name-at-lct"];
-                if (transmissionListObj["modulation-scheme"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme-name-at-lct"))
+                  traMis["modulation_scheme_at_lct"] = transmissionListObj["modulation-scheme-name-at-lct"];
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme"))
                   traMis["modulation_scheme"] = transmissionListObj["modulation-scheme"];
-                if (transmissionListObj["code-rate"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("code-rate"))
                   traMis["code_rate"] = transmissionListObj["code-rate"];
-                if (transmissionListObj["xpic-is-avail"])
+                if (transmissionListObj && transmissionListObj.hasOwnProperty("xpic-is-avail"))
                   traMis["xpic_is_avail"] = transmissionListObj["xpic-is-avail"];
      
                   // Calculate and add capa-factor
@@ -486,13 +511,12 @@ async function extractFromSupportedPmdKindList(cap, ethObj) {
     }
 }
 
-
-
-  module.exports.retriveTheGeneralInfo = async function retriveTheGeneralInfo(ccOfMountname,mountName,timestamp){
+async function extractGeneralInfo(ccOfMountname,mountName,timestamp){
       
     let deviceModelName;
     let externallabelName;
     let systemName;
+    let result = [];
 
     // Check if required properties exist before accessing
     if (ccOfMountname && 
@@ -529,27 +553,29 @@ async function extractFromSupportedPmdKindList(cap, ethObj) {
     }
 
     // Create result object with only required and available properties
-    const result = {
+    const deviceGeneralObj = {
         "mount_name": mountName,
         "timestamp": timestamp
     };
 
     // Only add properties if they have values
     if (externallabelName) {
-        result["external_label"] = externallabelName;
+        deviceGeneralObj["external_label"] = externallabelName;
     }
 
     if (deviceModelName) {
-        result["device_model_name"] = deviceModelName;
+        deviceGeneralObj["device_model_name"] = deviceModelName;
     }
 
     if (systemName) {
-        result["system_name"] = systemName;
+        deviceGeneralObj["system_name"] = systemName;
     }
     
+    result.push(deviceGeneralObj);
     return result;
 
-    }
+
+}
 
   function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist

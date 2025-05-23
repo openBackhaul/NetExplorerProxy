@@ -4,7 +4,7 @@ const rewire = require('rewire');
 // Rewire the module to access private functions
 const basicServicesService = rewire('../BasicServicesService');
 const extractEthernetContainerInfo = basicServicesService.__get__('extractEthernetContainerInfo');
-const { retriveTheGeneralInfo } = require("../BasicServicesService"); 
+const  extractGeneralInfo  = basicServicesService.__get__('extractGeneralInfo');
 // Mock the onfAttributes constant
 const onfAttributes = {
   LOGICAL_TERMINATION_POINT: {
@@ -242,7 +242,7 @@ describe('extractEthernetContainerInfo', () => {
   });
 });
 
-describe("retriveTheGeneralInfo", () => {
+describe("extractGeneralInfo", () => {
             const mountName = "CO12123";
             const timestamp = "1747899140618";
 
@@ -277,7 +277,7 @@ describe("retriveTheGeneralInfo", () => {
                                 system_name: "ML6352_ODUC",
                               };
 
-              const result = await retriveTheGeneralInfo(ccOfMountname, mountName, timestamp);
+              const result = await extractGeneralInfo(ccOfMountname, mountName, timestamp);
               expect(result).toEqual(expected);
             });
 
@@ -304,7 +304,7 @@ describe("retriveTheGeneralInfo", () => {
                 ],
               };
 
-              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              const result = await extractGeneralInfo(input, mountName, timestamp);
               expect(result).toEqual({
                 mount_name: mountName,
                 timestamp: timestamp,
@@ -337,7 +337,7 @@ describe("retriveTheGeneralInfo", () => {
                 ],
               };
 
-              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              const result = await extractGeneralInfo(input, mountName, timestamp);
               expect(result).toEqual({
                 mount_name: mountName,
                 timestamp: timestamp,
@@ -354,7 +354,7 @@ describe("retriveTheGeneralInfo", () => {
                 ]
               };
 
-              const result = await retriveTheGeneralInfo(input, mountName, timestamp);
+              const result = await extractGeneralInfo(input, mountName, timestamp);
               expect(result).toEqual({
                 mount_name: mountName,
                 timestamp: timestamp
@@ -362,7 +362,7 @@ describe("retriveTheGeneralInfo", () => {
             });
 
             it("should return empty object with only mount_name and timestamp when input is empty", async () => {
-              const result = await retriveTheGeneralInfo({}, mountName, timestamp);
+              const result = await extractGeneralInfo({}, mountName, timestamp);
               expect(result).toEqual({
                 mount_name: mountName,
                 timestamp: timestamp
@@ -370,7 +370,7 @@ describe("retriveTheGeneralInfo", () => {
             });
 
             it("should return empty object with only mount_name and timestamp when input is null", async () => {
-              const result = await retriveTheGeneralInfo(null, mountName, timestamp);
+              const result = await extractGeneralInfo(null, mountName, timestamp);
               expect(result).toEqual({
                 mount_name: mountName,
                 timestamp: timestamp
