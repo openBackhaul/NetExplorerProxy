@@ -318,7 +318,7 @@ exports.updateAirTransMode = async function(dataArray) {
         modulation_scheme_at_lct: data.modulation_scheme_at_lct,
         modulation_scheme: data.modulation_scheme,
         code_rate: data.code_rate,
-        channel_bandwidth: data.code_rate,
+        channel_bandwidth: data.channel_bandwidth,
         xpic_is_avail: data.xpic_is_avail,
         capa_factor: data.capa_factor
       },{
@@ -343,7 +343,7 @@ exports.updateAirTransMode = async function(dataArray) {
           modulation_scheme_at_lct: data.modulation_scheme_at_lct,
           modulation_scheme: data.modulation_scheme,
           code_rate: data.code_rate,
-          channel_bandwidth: data.code_rate,
+          channel_bandwidth: data.channel_bandwidth,
           xpic_is_avail: data.xpic_is_avail,
           capa_factor: data.capa_factor
         });
