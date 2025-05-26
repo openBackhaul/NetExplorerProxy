@@ -5,31 +5,10 @@ const rewire = require('rewire');
 const basicServicesService = rewire('../BasicServicesService');
 const extractEthernetContainerInfo = basicServicesService.__get__('extractEthernetContainerInfo');
 const  extractGeneralInfo  = basicServicesService.__get__('extractGeneralInfo');
-// Mock the onfAttributes constant
-const onfAttributes = {
-  LOGICAL_TERMINATION_POINT: {
-    LAYER_PROTOCOL: 'layer-protocol'
-  },
-  GLOBAL_CLASS: {
-    UUID: 'uuid'
-  },
-  LOCAL_CLASS: {
-    LOCAL_ID: 'local-id'
-  },
-  OPERATION_CLIENT: {
-    OPERATIONAL_STATE: 'operational-state'
-  }
-};
+const extractEquipmentData = basicServicesService.__get__('extractEquipmentData');
+const extractAirContainerGeneralInfoAndTransmissionInfo = basicServicesService.__get__('extractAirContainerGeneralInfoAndTransmissionInfo');
 
-// Mock the ETHERNET_INTERFACE constant
-const ETHERNET_INTERFACE = {
-  CONFIGURATION: 'ethernet-container-configuration',
-  STATUS: 'ethernet-container-status'
-};
-
-describe('extractEthernetContainerInfo', () => {
-  
-  
+describe('extractEthernetContainerInfo', () => {  
   test('should return an empty array when ethInterfaceLtpList is empty', async () => {
     const result = await extractEthernetContainerInfo([], 'test-mount', 12345);
     expect(result).toEqual([]);
@@ -89,10 +68,8 @@ describe('extractEthernetContainerInfo', () => {
       'ltp-augment-1-0:ltp-augment-pac': {
         'original-ltp-name': 'test-ltp-name'
       }
-    };
-    
+    };    
     const result = await extractEthernetContainerInfo([mockLtp], 'test-mount', 12345);
-    
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({
       mount_name: 'test-mount',
@@ -269,13 +246,13 @@ describe("extractGeneralInfo", () => {
                 ],
               };
 
-              const expected = {
+              const expected = [{
                                 mount_name: "CO12123",
                                 timestamp: timestamp,
                                 external_label: "ML6352_ODUC",
                                 device_model_name: "MINI-LINK 6352",
                                 system_name: "ML6352_ODUC",
-                              };
+                              }];
 
               const result = await extractGeneralInfo(ccOfMountname, mountName, timestamp);
               expect(result).toEqual(expected);
@@ -305,12 +282,12 @@ describe("extractGeneralInfo", () => {
               };
 
               const result = await extractGeneralInfo(input, mountName, timestamp);
-              expect(result).toEqual({
+              expect(result).toEqual([{
                 mount_name: mountName,
                 timestamp: timestamp,
                 device_model_name: "MINI-LINK 6352",
                 external_label: "ML6352_ODUC"
-              });
+              }]);
             });
 
             it("should return only system_name when device-model-name and external-label are missing", async () => {
@@ -338,11 +315,11 @@ describe("extractGeneralInfo", () => {
               };
 
               const result = await extractGeneralInfo(input, mountName, timestamp);
-              expect(result).toEqual({
+              expect(result).toEqual([{
                 mount_name: mountName,
                 timestamp: timestamp,
                 system_name: "ML6352_ODUC"
-              });
+              }]);
             });
 
             it("should return only mount_name and timestamp when all optional fields are missing", async () => {
@@ -355,25 +332,431 @@ describe("extractGeneralInfo", () => {
               };
 
               const result = await extractGeneralInfo(input, mountName, timestamp);
-              expect(result).toEqual({
+              expect(result).toEqual([{
                 mount_name: mountName,
                 timestamp: timestamp
-              });
+              }]);
             });
 
             it("should return empty object with only mount_name and timestamp when input is empty", async () => {
               const result = await extractGeneralInfo({}, mountName, timestamp);
-              expect(result).toEqual({
+              expect(result).toEqual([{
                 mount_name: mountName,
                 timestamp: timestamp
-              });
+              }]);
             });
 
             it("should return empty object with only mount_name and timestamp when input is null", async () => {
               const result = await extractGeneralInfo(null, mountName, timestamp);
-              expect(result).toEqual({
+              expect(result).toEqual([{
                 mount_name: mountName,
                 timestamp: timestamp
-              });
+              }]);
             });
-          });
+});
+
+describe("extractEquipmentData", () => {
+            const mountName = "CO12123";
+            const timestamp = "1747899140618";
+
+  it("should return full mapped equipment data when all fields are present", async () => {
+    const input = {
+  "core-model-1-4:control-construct": [
+    {
+      equipment: [
+        {
+          uuid: "RMM-1",
+          "actual-equipment": {
+            "manufactured-thing": {
+              "equipment-type": {
+                version: "R2A",
+                description: "Removable Memory Module",
+                "model-identifier": "Removable Memory Module",
+                "part-type-identifier": "RYS 110 243/1",
+                "type-name": "Removable Memory Module",
+              },
+              "manufacturer-properties": {
+                "manufacturer-name": "",
+              },
+            },
+          },
+        }
+      ],
+    },
+  ],
+};
+
+    const result = await extractEquipmentData(input, mountName, timestamp);
+    expect(result).toEqual([
+  {
+    mount_name: "CO12123",
+    timestamp: timestamp,
+    uuid: "RMM-1",
+    version: "R2A",
+    description: "Removable Memory Module",
+    model_identifier: "Removable Memory Module",
+    part_type_identifier: "RYS 110 243/1",
+    type_name: "Removable Memory Module",
+    manufacturer_name: "",
+  }
+]);
+  });
+
+  it("should skip equipment without 'actual-equipment'", async () => {
+    const input = {
+  "core-model-1-4:control-construct": [
+    {
+     
+      equipment: [
+        {
+          uuid: "RMM-1",         
+        },
+        {
+          uuid: "SFP-1.2",
+        },
+        {
+          uuid: "SFP-1.3",
+        },
+        {
+          uuid: "SFP-1.4",
+        },
+        {
+          uuid: "SLOT-1",
+        },
+      ],
+      "equipment-augment-1-0:control-construct-pac": {
+        "device-model-name": "MINI-LINK 6352",
+        "external-label": "ML6352_ODUC",
+      },
+      "equipment-augment-1-0:protocol-collection": {
+        protocol: [
+          {
+            "lldp-1-0:lldp-pac": {
+              "local-system-data": {
+                "system-name": "ML6352_ODUC",
+              },
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+    const result = await extractEquipmentData(input, mountName, timestamp);
+    expect(result).toEqual([]);
+  });
+
+  it("should skip equipment without 'manufactured-thing'", async () => {
+    const input = {
+  "core-model-1-4:control-construct": [
+    {
+      equipment: [
+        {
+          uuid: "RMM-1",
+          "actual-equipment": {
+          },
+        },
+        {
+          uuid: "SFP-1.2",
+          "actual-equipment": {
+          },
+        },
+        {
+          uuid: "SFP-1.3",
+        },
+        {
+          uuid: "SFP-1.4",
+          "actual-equipment": {
+          },
+        },
+        {
+          uuid: "SLOT-1",
+          "actual-equipment": {
+          },
+        },
+      ],
+      "equipment-augment-1-0:control-construct-pac": {
+        "device-model-name": "MINI-LINK 6352",
+        "external-label": "ML6352_ODUC",
+      },
+    },
+  ],
+};
+
+    const result = await extractEquipmentData(input, mountName, timestamp);
+    expect(result).toEqual([]);
+  });
+
+  it("should return equipment object with only available fields", async () => {
+    const input ={
+  "core-model-1-4:control-construct": [
+    {
+      equipment: [
+        {
+          uuid: "RMM-1",
+          "actual-equipment": {
+            "manufactured-thing": {
+              "equipment-type": {
+                "type-name": "Removable Memory Module",
+              },
+              "manufacturer-properties": {
+                "manufacturer-name": "",
+              },
+            },
+          },
+        }
+      ],
+    },
+  ],
+};
+
+    const result = await extractEquipmentData(input, mountName, timestamp);
+    expect(result).toEqual([
+      {
+        mount_name: mountName,
+        timestamp: timestamp,
+        uuid: "RMM-1",
+        manufacturer_name: "",
+        type_name: "Removable Memory Module"
+      }
+    ]);
+  });
+
+  it("should return empty array if input is empty", async () => {
+    const result = await extractEquipmentData({}, mountName, timestamp);
+    expect(result).toEqual([]);
+  });
+
+  it("should return empty array if input is null", async () => {
+    const result = await extractEquipmentData(null, mountName, timestamp);
+    expect(result).toEqual([]);
+  });
+
+  it("should return empty array if equipment is not an array", async () => {
+    const input = {
+      "core-model-1-4:control-construct": [
+        {
+          equipment: null
+        }
+      ]
+    };
+
+    const result = await extractEquipmentData(input, mountName, timestamp);
+    expect(result).toEqual([]);
+  });
+});
+
+describe("extractAirContainerGeneralInfoAndTransmissionInfo", () => {
+  const mountName = "CO12123";
+  const timestamp = "1747995605012";
+
+  it("should return full airContainerGeneralInfo and transmissionListInfo when all properties exist", async () => {
+    const input = [
+  {
+    uuid: "RF-819.1.1",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+    "layer-protocol": [
+      {
+        "local-id": "819.1.1",
+        "air-interface-2-0:air-interface-pac": {
+          "air-interface-configuration": {
+            "transmission-mode-min": "782.1.1.16.3",
+            "transmitter-is-on": true,
+            "transmission-mode-max": "782.1.1.16.19",
+            "xpic-is-on": true,
+            "power-is-on": true,
+          },
+          "air-interface-status": {
+            "interface-status": "air-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+          },
+          "air-interface-capability": {
+            "transmission-mode-list": [
+              {
+                "transmission-mode-name": "782.1.1.15.22",
+                "symbol-rate-reduction-factor": 1,
+                "channel-bandwidth": 750000,
+                "xpic-is-avail": true,
+                "modulation-scheme-name-at-lct": "256 QAM",
+                "modulation-scheme": 256,
+                "code-rate": 87,
+              },
+              {
+                "transmission-mode-name": "782.1.1.2.22",
+                "symbol-rate-reduction-factor": 1,
+                "channel-bandwidth": 250000,
+                "xpic-is-avail": false,
+                "modulation-scheme-name-at-lct": "256 QAM",
+                "modulation-scheme": 256,
+                "code-rate": 85,
+              },
+            ],
+            "type-of-equipment": "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "External label not yet defined.",
+      "original-ltp-name": "CT 1/1/1",
+    },
+  },
+];
+      const expected={
+  airContainerGeneralInfo: [
+    {
+      mount_name: "CO12123",
+      uuid: "RF-819.1.1",
+      timestamp: timestamp,
+      local_id: "819.1.1",
+      operational_state: "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+      administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      original_ltp_name: "CT 1/1/1",
+      transmission_mode_min: "782.1.1.16.3",
+      transmission_mode_max: "782.1.1.16.19",
+      xpic_is_on: true,
+      power_is_on: true,
+      transmitter_is_on: true,
+      interface_status: "air-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+      type_of_equipment: "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+      external_label: "External label not yet defined.",
+    },
+  ],
+  transMissionListInfo: [
+    {
+      mount_name: "CO12123",
+      uuid: "RF-819.1.1",
+      local_id: "819.1.1",
+      timestamp: timestamp,
+      transmission_mode_name: "782.1.1.15.22",
+      symbol_rate_reduction_factor: 1,
+      channel_bandwidth: 750000,
+      modulation_scheme_at_lct: "256 QAM",
+      modulation_scheme: 256,
+      code_rate: 87,
+      xpic_is_avail: true,
+      capa_factor: 453913.0434782609,
+    },
+    {
+      mount_name: "CO12123",
+      uuid: "RF-819.1.1",
+      local_id: "819.1.1",
+      timestamp: timestamp,
+      transmission_mode_name: "782.1.1.2.22",
+      symbol_rate_reduction_factor: 1,
+      channel_bandwidth: 250000,
+      modulation_scheme_at_lct: "256 QAM",
+      modulation_scheme: 256,
+      code_rate: 85,
+      xpic_is_avail: false,
+      capa_factor: 147826.08695652176,
+    },
+  ],
+};
+    const result = await extractAirContainerGeneralInfoAndTransmissionInfo(input, mountName, timestamp);
+
+
+    expect(result).toEqual(expected);
+  });
+
+  it("should return empty arrays when input is empty", async () => {
+    const result = await extractAirContainerGeneralInfoAndTransmissionInfo([], mountName, timestamp);
+    expect(result).toEqual({
+      airContainerGeneralInfo: [],
+      transMissionListInfo: []
+    });
+  });
+
+  it("should handle missing air-interface-pac properties", async () => {
+  const input = [
+    {
+      uuid: "RF-819.1.1",
+      "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+      "layer-protocol": [
+        {
+          "local-id": "819.1.1",
+          "air-interface-2-0:air-interface-pac": {
+            // Missing configuration and status
+            "air-interface-capability": {
+              "type-of-equipment": "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+            },
+          },
+          "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+        },
+      ],
+      "ltp-augment-1-0:ltp-augment-pac": {
+        "external-label": "External label not yet defined.",
+        "original-ltp-name": "CT 1/1/1",
+      },
+    },
+  ];
+
+  const expected = {
+    airContainerGeneralInfo: [
+      {
+        mount_name: "CO12123",
+        uuid: "RF-819.1.1",
+        timestamp: timestamp,
+        local_id: "819.1.1",
+        operational_state: "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+        administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+        original_ltp_name: "CT 1/1/1",
+        type_of_equipment: "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+        external_label: "External label not yet defined.",
+      },
+    ],
+    transMissionListInfo: [],
+  };
+
+  const result = await extractAirContainerGeneralInfoAndTransmissionInfo(input, mountName, timestamp);
+  expect(result).toEqual(expected);
+});
+
+  it("should handle missing transmission-mode-list", async () => {
+    const input = [
+      {
+        uuid: "RF-819.1.1",
+        "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+        "layer-protocol": [
+          {
+            "local-id": "819.1.1",
+            "air-interface-2-0:air-interface-pac": {
+              "air-interface-configuration": {
+                "transmission-mode-min": "782.1.1.16.3",
+                "transmitter-is-on": true,
+              },
+              "air-interface-status": {
+                "interface-status": "air-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+              },
+              "air-interface-capability": {
+                // Missing transmission-mode-list
+                "type-of-equipment": "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+              },
+            },
+            "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+          },
+        ],
+      },
+    ];
+
+    const expected = {
+      airContainerGeneralInfo: [
+        {
+          mount_name: "CO12123",
+          uuid: "RF-819.1.1",
+          timestamp: timestamp,
+          local_id: "819.1.1",
+          operational_state: "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+          administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+          transmission_mode_min: "782.1.1.16.3",
+          transmitter_is_on: true,
+          interface_status: "air-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+          type_of_equipment: "UKL 501 003/21L R1A CXP9026371_3 R29E117",
+        },
+      ],
+      transMissionListInfo: [],
+    };
+    const result = await extractAirContainerGeneralInfoAndTransmissionInfo(input, mountName, timestamp);
+    expect(result).toEqual(expected);
+  });
+});
