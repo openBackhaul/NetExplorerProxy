@@ -7,6 +7,498 @@ const extractEthernetContainerInfo = basicServicesService.__get__('extractEthern
 const  extractGeneralInfo  = basicServicesService.__get__('extractGeneralInfo');
 const extractEquipmentData = basicServicesService.__get__('extractEquipmentData');
 const extractAirContainerGeneralInfoAndTransmissionInfo = basicServicesService.__get__('extractAirContainerGeneralInfoAndTransmissionInfo');
+const extractWireInterfaceGeneralInfo = basicServicesService.__get__('extractWireInterfaceGeneralInfo');
+
+
+describe('extractWireInterfaceGeneralInfo', () => {
+  
+  test('should return an empty array when wireinterfceLtpList is empty', async () => {
+    const result = await extractWireInterfaceGeneralInfo([], 'CO12123', 1748327909254);
+    expect(result).toEqual([]);
+  });
+
+  test('should return an empty array when LTP has no layer protocol', async () => {
+    const mockLtp = 
+   [   
+  {
+    uuid: "ETY-86.1.4",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+     "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "",
+      "original-ltp-name": "LAN:1/4",
+    },
+  }];
+      
+    
+    const result = await extractWireInterfaceGeneralInfo(mockLtp, 'CO12123', 1748327909254);
+    expect(result).toEqual([]);
+  });
+
+  test('should return an empty array when layer protocol does not contain wire-interface-pac', async () => {
+    const mockLtp =  [ {
+    uuid: "ETY-86.1.2",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.2",
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "Y-cable  to 6691",
+      "original-ltp-name": "LAN:1/2",
+    },
+  }];
+    const result = await extractWireInterfaceGeneralInfo(mockLtp, 'CO12123', 1748327909254);
+    expect(result).toEqual([]);
+  });
+
+  test('should extract basic wire interface configuration, status, and capability', async () => {
+    const mockLtp = [
+      {
+    uuid: "ETY-86.1.4",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.4",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+            "pmd-kind-cur": "10GBASE-LR-LW",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "10GBASE-LR-LW",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "",
+      "original-ltp-name": "LAN:1/4",
+    },
+  },
+  {
+    uuid: "ETY-86.1.2",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.2",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+            "pmd-kind-cur": "10GBASE-LR-LW",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "Y-cable  to 6691",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "10GBASE-LR-LW",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "Y-cable  to 6691",
+      "original-ltp-name": "LAN:1/2",
+    },
+  },
+    ];
+
+    const result = await extractWireInterfaceGeneralInfo(mockLtp, 'CO12123', 1748327909254);
+    expect(result).toMatchObject(
+       [
+      {
+        interface_name: '',
+        fixed_pmd_kind: 'NOT_YET_DEFINED',
+        interface_status: 'wire-interface-2-0:INTERFACE_STATUS_TYPE_UP',
+        pmd_kind_cur: '10GBASE-LR-LW',
+        mount_name: 'CO12123',
+        timestamp: 1748327909254,
+        uuid: 'ETY-86.1.4',
+        local_id: '86.1.4',
+        operational_state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED',
+        administrative_state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED',
+        original_ltp_name: 'LAN:1/4',
+        pmd_name: '10GBASE-LR-LW',
+        duplex: 'wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED',
+        speed: 'NOT_YET_DEFINED'
+      },
+      {
+        interface_name: '',
+        fixed_pmd_kind: 'NOT_YET_DEFINED',
+        interface_status: 'wire-interface-2-0:INTERFACE_STATUS_TYPE_UP',
+        pmd_kind_cur: '10GBASE-LR-LW',
+        mount_name: 'CO12123',
+        timestamp: 1748327909254,
+        uuid: 'ETY-86.1.4',
+        local_id: '86.1.4',
+        operational_state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED',
+        administrative_state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED',
+        original_ltp_name: 'LAN:1/4',
+        pmd_name: 'NOT_YET_DEFINED',
+        duplex: 'wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED',
+        speed: 'NOT_YET_DEFINED'
+      },
+      {
+        interface_name: 'Y-cable  to 6691',
+        fixed_pmd_kind: 'NOT_YET_DEFINED',
+        interface_status: 'wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN',
+        pmd_kind_cur: '10GBASE-LR-LW',
+        mount_name: 'CO12123',
+        timestamp: 1748327909254,
+        uuid: 'ETY-86.1.2',
+        local_id: '86.1.2',
+        operational_state: 'core-model-1-4:OPERATIONAL_STATE_DISABLED',
+        administrative_state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED',
+        original_ltp_name: 'LAN:1/2',
+        pmd_name: '10GBASE-LR-LW',
+        duplex: 'wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED',
+        speed: 'NOT_YET_DEFINED'
+      },
+      {
+        interface_name: 'Y-cable  to 6691',
+        fixed_pmd_kind: 'NOT_YET_DEFINED',
+        interface_status: 'wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN',
+        pmd_kind_cur: '10GBASE-LR-LW',
+        mount_name: 'CO12123',
+        timestamp: 1748327909254,
+        uuid: 'ETY-86.1.2',
+        local_id: '86.1.2',
+        operational_state: 'core-model-1-4:OPERATIONAL_STATE_DISABLED',
+        administrative_state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED',
+        original_ltp_name: 'LAN:1/2',
+        pmd_name: 'NOT_YET_DEFINED',
+        duplex: 'wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED',
+        speed: 'NOT_YET_DEFINED'
+      }
+    ]
+  );
+  });
+
+  test('should handle missing configuration/status/capability blocks gracefully', async () => {
+    const mockLtp = [{
+    uuid: "ETY-86.1.1",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.1",
+        "wire-interface-2-0:wire-interface-pac": {
+         },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "",
+      "original-ltp-name": "LAN:1/1",
+    },
+  }];
+    const result = await extractWireInterfaceGeneralInfo(mockLtp, 'CO12123', 1748327909254);
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject({
+      mount_name: 'CO12123',
+      timestamp: 1748327909254
+    });
+    expect(result[0]).not.toHaveProperty('interface_name');
+    expect(result[0]).not.toHaveProperty('interface_status');
+    expect(result[0]).not.toHaveProperty('supported_speed');
+  });
+
+  test('should handle multiple wire interface LTPs correctly', async () => {
+    const mockLtps = [
+  {
+    uuid: "ETY-86.1.4",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.4",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+            "pmd-kind-cur": "10GBASE-LR-LW",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "10GBASE-LR-LW",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "",
+      "original-ltp-name": "LAN:1/4",
+    },
+  },
+  {
+    uuid: "ETY-86.1.2",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.2",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+            "pmd-kind-cur": "10GBASE-LR-LW",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "Y-cable  to 6691",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "10GBASE-LR-LW",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "Y-cable  to 6691",
+      "original-ltp-name": "LAN:1/2",
+    },
+  },
+  {
+    uuid: "ETY-86.1.3",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.3",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+            "pmd-kind-cur": "NOT_YET_DEFINED",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "External label not yet defined.",
+      "original-ltp-name": "LAN:1/3",
+    },
+  },
+  {
+    uuid: "ETY-86.1.1",
+    "operational-state": "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    "layer-protocol": [
+      {
+        "local-id": "86.1.1",
+        "wire-interface-2-0:wire-interface-pac": {
+          "wire-interface-status": {
+            "interface-status": "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+            "pmd-kind-cur": "1000BASE-T",
+          },
+          "wire-interface-configuration": {
+            "interface-name": "",
+            "fixed-pmd-kind": "NOT_YET_DEFINED",
+          },
+          "wire-interface-capability": {
+            "supported-pmd-kind-list": [
+              {
+                "pmd-name": "1000BASE-T",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+              {
+                "pmd-name": "NOT_YET_DEFINED",
+                duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+                speed: "NOT_YET_DEFINED",
+              },
+            ],
+          },
+        },
+        "administrative-state": "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+      },
+    ],
+    "ltp-augment-1-0:ltp-augment-pac": {
+      "external-label": "",
+      "original-ltp-name": "LAN:1/1",
+    },
+  },
+];
+  const result = await extractWireInterfaceGeneralInfo(mockLtps, 'CO12123', 1748327909254);
+        expect(result[0]).toMatchObject(   
+  {
+    interface_name: "",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+    pmd_kind_cur: "10GBASE-LR-LW",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.4",
+    local_id: "86.1.4",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/4",
+    pmd_name: "10GBASE-LR-LW",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_UP",
+    pmd_kind_cur: "10GBASE-LR-LW",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.4",
+    local_id: "86.1.4",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_ENABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/4",
+    pmd_name: "NOT_YET_DEFINED",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "Y-cable  to 6691",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+    pmd_kind_cur: "10GBASE-LR-LW",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.2",
+    local_id: "86.1.2",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/2",
+    pmd_name: "10GBASE-LR-LW",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "Y-cable  to 6691",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+    pmd_kind_cur: "10GBASE-LR-LW",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.2",
+    local_id: "86.1.2",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/2",
+    pmd_name: "NOT_YET_DEFINED",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+    pmd_kind_cur: "NOT_YET_DEFINED",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.3",
+    local_id: "86.1.3",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/3",
+    pmd_name: "NOT_YET_DEFINED",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+    pmd_kind_cur: "1000BASE-T",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.1",
+    local_id: "86.1.1",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/1",
+    pmd_name: "1000BASE-T",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },
+  {
+    interface_name: "",
+    fixed_pmd_kind: "NOT_YET_DEFINED",
+    interface_status: "wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN",
+    pmd_kind_cur: "1000BASE-T",
+    mount_name: "CO12123",
+    timestamp: 1748327909254,
+    uuid: "ETY-86.1.1",
+    local_id: "86.1.1",
+    operational_state: "core-model-1-4:OPERATIONAL_STATE_DISABLED",
+    administrative_state: "core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED",
+    original_ltp_name: "LAN:1/1",
+    pmd_name: "NOT_YET_DEFINED",
+    duplex: "wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED",
+    speed: "NOT_YET_DEFINED",
+  },      
+    );
+  });
+});
 
 describe('extractEthernetContainerInfo', () => {  
   test('should return an empty array when ethInterfaceLtpList is empty', async () => {
