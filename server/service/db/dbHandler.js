@@ -35,25 +35,32 @@ let wire_interface_general_info;
  * }
  */
 exports.initDB = async function(config) {
-  const db_name = (config.db_name == "" || config.db_name == undefined) ?
-      NEP_DB : config.db_name;
 
   try {
+    // Extract DB name, if doesn't exist use default
+    let db_name = config.db_name;
+    if (config.db_name == "" || config.db_name == undefined) {
+      logger.warn("DB name is not defined, so using default: " + NEP_DB);
+      db_name = config.db_name;
+    }
+
+    let sequelize;
     // Init sequelize with DB params
-    logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
+    logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + 
+      "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
     if (config.dialect == 'sqlite') {
       sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: ':memory:', //':memory:', // or ''
+        storage: '', //':memory:', // or ''
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
-        logger: msg => logger.debug(msg),
+        logger: msg => logger.info(msg),
       });
     } else {
-      sequelize = new Sequelize(config.db_name, config.user, config.password, {
+      sequelize = new Sequelize(db_name, config.user, config.password, {
         host: config.host,
         port: config.port,
         dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-        logger: msg => logger.debug(msg),
+        logger: msg => logger.info(msg),
       });
     }
 
@@ -61,6 +68,7 @@ exports.initDB = async function(config) {
     await sequelize.authenticate();
     logger.info('Connection has been established successfully.');
 
+    // IF DB doesn't exist I have to create a new one
     // try {
     //   logger.info("Using DB: " + db_name);
     //   let res = await sequelize.query("USE " + db_name + ";");
@@ -545,6 +553,8 @@ exports.updateWireInterface = async function (dataArray) {
 
 /*
  * This function will retrieve the list of devices
+ * 
+ * isCSV: force the routine to extract raw data ready for CSV
  */
 exports.readListOfDevices = async function(isCSV=false) {
   let resultFetched = await devices_general_info.findAll({
@@ -738,7 +748,21 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
-// Interface info for devices
+
+/*
+ * Read data for Interface info per Device
+ * 
+ * This function will union 3 tables:
+ * - air_interface_general_info
+ * - ethernet_container_general_info
+ * - wire_interface_general_info
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
 exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
   const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
@@ -760,8 +784,9 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
   return resultFetched;
 }
 
-
-// This is internal general routine to read data from DB model
+/*
+ * This is internal general routine to read data from DB model
+ */
 async function readGeneralData(tableModel, fields, filters, isCSV=false) {
   const whereCondition = getWhereConditionForRead(filters);
 
@@ -788,8 +813,8 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
  * Delete entries from Device information table
  * 
  * filters: {
- *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time that must be lower than
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
  * }
  */
 exports.removeDeviceInfo = async function(filters) {
@@ -804,8 +829,8 @@ exports.removeDeviceInfo = async function(filters) {
  * Delete entries from Equipment information table
  * 
  * filters: {
- *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time that must be lower than
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
  * }
  */
 exports.removeEquipmentInfo = async function(filters) {
@@ -820,8 +845,8 @@ exports.removeEquipmentInfo = async function(filters) {
  * Delete entries from Air interface information table
  * 
  * filters: {
- *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time that must be lower than
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
  * }
  */
 exports.removeAirInterface = async function(filters) {
@@ -836,8 +861,8 @@ exports.removeAirInterface = async function(filters) {
  * Delete entries from Air Transmission mode table
  * 
  * filters: {
- *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time that must be lower than
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
  * }
  */
 exports.removeAirTransMode = async function(filters) {
@@ -852,8 +877,8 @@ exports.removeAirTransMode = async function(filters) {
  * Delete entries from Ethernet container table
  * 
  * filters: {
- *    mountNames: [list of mountname],
- *    timeStamp: timeStamp to filter, time that must be lower than
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
  * }
  */
 exports.removeEthernetContInfo = async function(filters) {
@@ -880,9 +905,16 @@ exports.removeWireInterfaceInfo = async function(filters) {
   return resultFetched;
 }
 
+/*
+ * Delete all references in the DB Tables if match the filters provide
+ * filters: {
+ *   mountNames: [list of mountname],
+ *   timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
 exports.removeAllReferences = async function(filters) {
   // let resultFetched = 0; // Define return Data
-  let resultFeatched = {
+  let resultFetched = {
     'device_general_info': 0,
     'equipment_general_info': 0,
     'air_interface_general_info': 0,
@@ -892,16 +924,19 @@ exports.removeAllReferences = async function(filters) {
   }
   let whereCondition = getWhereConditionForDelete(filters);
 
-  resultFeatched.device_general_info = await devices_general_info.destroy({ where: whereCondition});
-  resultFeatched.equipment_general_info = await equipment_general_info.destroy({ where: whereCondition});
-  resultFeatched.air_interface_general_info = await air_interface_general_info.destroy({ where: whereCondition});
-  resultFeatched.air_interface_transmission_mode = await air_interface_transmission_mode.destroy({ where: whereCondition});
-  resultFeatched.ethernet_container_general_info = await ethernet_container_general_info.destroy({ where: whereCondition});
-  resultFeatched.wire_interface_general_info = await wire_interface_general_info.destroy({ where: whereCondition});
+  resultFetched.device_general_info = await devices_general_info.destroy({ where: whereCondition});
+  resultFetched.equipment_general_info = await equipment_general_info.destroy({ where: whereCondition});
+  resultFetched.air_interface_general_info = await air_interface_general_info.destroy({ where: whereCondition});
+  resultFetched.air_interface_transmission_mode = await air_interface_transmission_mode.destroy({ where: whereCondition});
+  resultFetched.ethernet_container_general_info = await ethernet_container_general_info.destroy({ where: whereCondition});
+  resultFetched.wire_interface_general_info = await wire_interface_general_info.destroy({ where: whereCondition});
 
   return resultFetched;
 }
 
+/*
+ * Internal routine to extract WHERE condition in READ operation
+ */
 function getWhereConditionForRead(filters) {
   let { mountNames, timeStamp } = filters;
   let whereCondition = {}
@@ -923,6 +958,9 @@ function getWhereConditionForRead(filters) {
   return whereCondition;
 }
 
+/*
+ * Internal routine to extract WHERE condition in DELETE operation
+ */
 function getWhereConditionForDelete(filters) {
   let { mountNames, timeStamp } = filters;
   let whereCondition = {}
@@ -945,7 +983,9 @@ function getWhereConditionForDelete(filters) {
   return whereCondition;
 }
 
-// Routine to convert the result into CSV format
+/*
+ * Internal routine to convert the result into CSV format
+ */
 function convertToCSV(arr) {
   const array = [Object.keys(arr[0])].concat(arr)
 
@@ -955,7 +995,7 @@ function convertToCSV(arr) {
 }
 
 function convertToCSVEnh(arr) {
-      let csv = '';
+    let csv = '';
     
     // Extract headers
     const headers = Object.keys(arr[0]);
