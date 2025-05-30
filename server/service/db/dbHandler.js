@@ -53,14 +53,14 @@ exports.initDB = async function(config) {
         dialect: 'sqlite',
         storage: '', //':memory:', // or ''
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
-        logger: msg => logger.info(msg),
+        logging: msg => logger.debug(msg)
       });
     } else {
       sequelize = new Sequelize(db_name, config.user, config.password, {
         host: config.host,
         port: config.port,
         dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-        logger: msg => logger.info(msg),
+        logging: msg => logger.debug(msg)
       });
     }
 
@@ -778,8 +778,12 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
 
   // Retrieve data
   let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
-  resultFetched += await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
-  resultFetched += await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
+
+  let resultData = await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
+  resultFetched += resultData.replace("mount_name,uuid,local_id,timestamp,original_ltp_name,interface_status,interface_type", "");
+
+  resultData = await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
+  resultFetched += resultData.replace("mount_name,uuid,local_id,timestamp,original_ltp_name,interface_status,interface_type", "");
 
   return resultFetched;
 }
@@ -798,9 +802,12 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
 
   if (isCSV) { // Convert into CSV format
     if (resultFetched.length == 0) {
-      return "";
+      logger.warn("Query result empty");
+      resultFetched = "";
+      // resultFetched = convertToCSVEnh(resultFetched, true);
+    } else {
+      resultFetched = convertToCSV(resultFetched);
     }
-    resultFetched = convertToCSV(resultFetched);
   }
 
   return resultFetched;
@@ -994,18 +1001,25 @@ function convertToCSV(arr) {
   }).join('\n')
 }
 
-function convertToCSVEnh(arr) {
+/*
+ * Internal routine to convert the result into CSV format
+ */
+function convertToCSVEnh(arr, onlyHeader=true) {
     let csv = '';
-    
-    // Extract headers
-    const headers = Object.keys(arr[0]);
-    csv += headers.join(',') + '\n';
-    
-    // Extract values
-    arr.forEach(obj => {
-        const values = headers.map(header => obj[header]);
-        csv += values.join(',') + '\n';
-    });
-    
+
+    if (onlyHeader) {
+      // Extract headers
+      logger.debug("Extract only Headers");
+      const headers = Object.keys(arr[0]);
+      csv += headers.join(',') + '\n';
+    } else {
+      // Extract values
+      logger.debug("Extract only Data values");
+      arr.forEach(obj => {
+          const values = headers.map(header => obj[header]);
+          csv += values.join(',') + '\n';
+      });
+    }
+
     return csv;
 }

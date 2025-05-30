@@ -4,7 +4,7 @@
 const db_config_mysql = { user: 'root', password: 'mypass', host: "localhost", port: 3306, dialect: "mysql", db_name: "nep_db" };
 const db_config_mariaDB = { user: 'root', password: 'mypass', host: "localhost", port: 3307, dialect: "mariadb", db_name: "nep_db" };
 const db_config_posgres = { user: 'postgres', password: 'mypass', host: "localhost", port: 3308, dialect: "postgres", db_name: "nep_db" };
-const db_config_sqlLite = { user: 'roor', password: 'mypass' }
+const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" }
 
 const logger = require('./service/LoggingService.js').getLogger();
 
@@ -52,7 +52,7 @@ appCommons.performApplicationRegistration();
 logger.info("Connecting to the DB");
 (async () => {
     try {
-        let dbResult = await dbHandler.initDB(db_config_posgres);
+        let dbResult = await dbHandler.initDB(db_config_sqlLite);
 
         // Enable the code to test dummy data update / read data from DB
         // if (dbResult) {
@@ -60,7 +60,7 @@ logger.info("Connecting to the DB");
         //     await dummyData.readData();
         //     await dummyData.deleteData();
         // }
-    }catch (error) {
+    } catch (error) {
         logger.error(error);
     }
  })();
