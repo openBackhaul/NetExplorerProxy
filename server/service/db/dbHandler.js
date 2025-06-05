@@ -948,7 +948,7 @@ exports.removeAllReferences = async function(filters) {
 function getWhereConditionForRead(filters) {
   let { mountNames, timeStamp } = filters;
   let whereCondition = {}
-  if (timeStamp == undefined, timeStamp == null) {
+  if (timeStamp == undefined || timeStamp == null || timeStamp == '') {
     timeStamp = new Date(0); // from epoch
   }
 
@@ -972,7 +972,7 @@ function getWhereConditionForRead(filters) {
 function getWhereConditionForDelete(filters) {
   let { mountNames, timeStamp } = filters;
   let whereCondition = {}
-  if (timeStamp == undefined, timeStamp == null) {
+  if (timeStamp == undefined || timeStamp == null || timeStamp == '') {
     timeStamp = new Date(Date.now()); // NOW
   }
 
