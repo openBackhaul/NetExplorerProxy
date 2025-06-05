@@ -997,9 +997,12 @@ function getWhereConditionForDelete(filters) {
 function convertToCSV(arr) {
   const array = [Object.keys(arr[0])].concat(arr);
 
-  return array.map(it => {
+  let retValue = array.map(it => {
     return Object.values(it).toString();
-  }).join('\n')
+  }).join(' ');
+  
+  retValue = retValue.replaceAll(',', ';');
+  return retValue;
 }
 
 /*
