@@ -125,23 +125,23 @@ exports.updateDeviceInfo = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await devices_general_info.update({
-        timestamp: new Date(data.timestamp),
-        external_label: data.external_label,
-        device_model_name: data.device_model_name,
-        system_name: data.system_name,
+        "timestamp": new Date(data.timestamp),
+        "external-label": data.external_label,
+        "device-model-name": data.device_model_name,
+        "system-name": data.system_name,
       },{
         where: {
-          mount_name: data.mount_name,
+          "mount-name": data.mount_name,
         },
       });
 
       if (cc == 0) {
         cc = await devices_general_info.create({
-          mount_name: data.mount_name,
-          timestamp: new Date(data.timestamp),
-          external_label: data.external_label,
-          device_model_name: data.device_model_name,
-          system_name: data.system_name,
+          "mount-name": data.mount_name,
+          "timestamp": new Date(data.timestamp),
+          "external-label": data.external_label,
+          "device-model-name": data.device_model_name,
+          "system-name": data.system_name,
         });
         logger.info("Entry devices_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -558,7 +558,7 @@ exports.updateWireInterface = async function (dataArray) {
  */
 exports.readListOfDevices = async function(isCSV=false) {
   let resultFetched = await devices_general_info.findAll({
-    attributes: ['mount_name', 'timestamp'],
+    attributes: ['mount-name', 'timestamp'],
     raw : isCSV
   });
 
@@ -582,7 +582,7 @@ exports.readListOfDevices = async function(isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readDeviceInfo = async function(filters, isCSV=false) {
-  const attr = ['mount_name', 'timestamp', 'external_label', 'device_model_name', 'system_name' ];
+  const attr = ['mount-name', 'timestamp', 'external-label', 'device-model-name', 'system-name' ];
 
   let resultFetched = await readGeneralData(devices_general_info, attr, filters, isCSV);
 
@@ -958,7 +958,7 @@ function getWhereConditionForRead(filters) {
   } else {
     whereCondition = {
       timestamp: { [Op.gte]: timeStamp },
-      mount_name: { [Op.in]: mountNames }
+      "mount-name": { [Op.in]: mountNames }
     }
   }
 
@@ -983,7 +983,7 @@ function getWhereConditionForDelete(filters) {
   } else {
     whereCondition = {
       timestamp: { [Op.lte]: timeStamp },
-      mount_name: { [Op.in]: mountNames }
+      "mount-name": { [Op.in]: mountNames }
     }
   }
 
@@ -994,10 +994,10 @@ function getWhereConditionForDelete(filters) {
  * Internal routine to convert the result into CSV format
  */
 function convertToCSV(arr) {
-  const array = [Object.keys(arr[0])].concat(arr)
+  const array = [Object.keys(arr[0])].concat(arr);
 
   return array.map(it => {
-    return Object.values(it).toString()
+    return Object.values(it).toString();
   }).join('\n')
 }
 
