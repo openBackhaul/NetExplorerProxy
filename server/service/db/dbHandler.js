@@ -183,43 +183,43 @@ exports.updateEquipmentInfo = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await equipment_general_info.update({
-        local_id: data.local_id,
+        "local-id": data.local_id,
 
         // Timestamp reference
-        timestamp: new Date(data.timestamp),
+        "timestamp": new Date(data.timestamp),
 
-        version: data.version,
-        description: data.description,
-        model_identifier: data.model_identifier,
-        part_type_identifier: data.part_type_identifier,
-        type_name: data.type_name,
+        "version": data.version,
+        "description": data.description,
+        "model-identifier": data.model_identifier,
+        "part-type-identifier": data.part_type_identifier,
+        "type-name": data.type_name,
 
-        manufacturer_name: data.manufacturer_name,
-        manufacturer_identifier: data.manufacturer_identifier
+        "manufacturer-name": data.manufacturer_name,
+        "manufacturer-identifier": data.manufacturer_identifier
       },{
         where: {
-          mount_name: data.mount_name,
-          uuid: data.uuid,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await equipment_general_info.create({
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          local_id: data.local_id,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "local-id": data.local_id,
   
           // Timestamp reference
-          timestamp: new Date(data.timestamp),
-  
-          version: data.version,
-          description: data.description,
-          model_identifier: data.model_identifier,
-          part_type_identifier: data.part_type_identifier,
-          type_name: data.type_name,
-  
-          manufacturer_name: data.manufacturer_name,
-          manufacturer_identifier: data.manufacturer_identifier
+          "timestamp": new Date(data.timestamp),
+
+          "version": data.version,
+          "description": data.description,
+          "model-identifier": data.model_identifier,
+          "part-type-identifier": data.part_type_identifier,
+          "type-name": data.type_name,
+
+          "manufacturer-name": data.manufacturer_name,
+          "manufacturer-identifier": data.manufacturer_identifier
         });
         logger.info("Entry equipment_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -262,49 +262,49 @@ exports.updateAirInterface = async function(dataArray) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_general_info.update({
-        local_id: data.local_id,
+        "local-id": data.local_id,
 
         // Timestamp reference
-        timestamp: new Date(data.timestamp),
+        "timestamp": new Date(data.timestamp),
 
-        operational_state: data.operational_state,
-        administrative_state: data.administrative_state,
-        original_ltp_name: data.original_ltp_name,
-        external_label: data.external_label,
-        transmission_mode_min: data.transmission_mode_min,
-        transmission_mode_max: data.transmission_mode_max,
-        xpic_is_on: data.xpic_is_on,
-        power_is_on: data.power_is_on,
-        transmitter_is_on: data.transmitter_is_on,
-        interface_status: data.interface_status,
-        type_of_equipment: data.type_of_equipment
+        "operational-state": data.operational_state,
+        "administrative-state": data.administrative_state,
+        "original-ltp-name": data.original_ltp_name,
+        "external-label": data.external_label,
+        "transmission-mode-min": data.transmission_mode_min,
+        "transmission-mode-max": data.transmission_mode_max,
+        "xpic-is-on": data.xpic_is_on,
+        "power-is-on": data.power_is_on,
+        "transmitter-is-on": data.transmitter_is_on,
+        "interface-status": data.interface_status,
+        "type-of-equipment": data.type_of_equipment
       },{
         where: {
-          mount_name: data.mount_name,
-          uuid: data.uuid,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await air_interface_general_info.create({
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          local_id: data.local_id,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "local-id": data.local_id,
   
           // Timestamp reference
-          timestamp: new Date(data.timestamp),
+          "timestamp": new Date(data.timestamp),
 
-          operational_state: data.operational_state,
-          administrative_state: data.administrative_state,
-          original_ltp_name: data.original_ltp_name,
-          external_label: data.external_label,
-          transmission_mode_min: data.transmission_mode_min,
-          transmission_mode_max: data.transmission_mode_max,
-          xpic_is_on: data.xpic_is_on,
-          power_is_on: data.power_is_on,
-          transmitter_is_on: data.transmitter_is_on,
-          interface_status: data.interface_status,
-          type_of_equipment: data.type_of_equipment
+          "operational-state": data.operational_state,
+          "administrative-state": data.administrative_state,
+          "original-ltp-name": data.original_ltp_name,
+          "external-label": data.external_label,
+          "transmission-mode-min": data.transmission_mode_min,
+          "transmission-mode-max": data.transmission_mode_max,
+          "xpic-is-on": data.xpic_is_on,
+          "power-is-on": data.power_is_on,
+          "transmitter-is-on": data.transmitter_is_on,
+          "interface-status": data.interface_status,
+          "type-of-equipment": data.type_of_equipment
         });
         logger.info("Entry air_interface_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -344,44 +344,44 @@ exports.updateAirTransMode = async function(dataArray) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_transmission_mode.update({
-        local_id: data.local_id,
-        uuid: data.uuid,
+        "local-id": data.local_id,
+        "uuid": data.uuid,
         // Timestamp reference
-        timestamp: new Date(data.timestamp),
+        "timestamp": new Date(data.timestamp),
 
-        transmission_mode_name: data.transmission_mode_name,
-        symbol_rate_reduction_factor: data.symbol_rate_reduction_factor,
-        modulation_scheme_at_lct: data.modulation_scheme_at_lct,
-        modulation_scheme: data.modulation_scheme,
-        code_rate: data.code_rate,
-        channel_bandwidth: data.code_rate,
-        xpic_is_avail: data.xpic_is_avail,
-        capa_factor: data.capa_factor
+        "transmission-mode-name": data.transmission_mode_name,
+        "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
+        "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
+        "modulation-scheme": data.modulation_scheme,
+        "code-rate": data.code_rate,
+        "channel-bandwidth": data.code_rate,
+        "xpic-is-avail": data.xpic_is_avail,
+        "capa-factor": data.capa_factor
       },{
         where: {
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          transmission_mode_name: data.transmission_mode_name
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "transmission-mode-name": data.transmission_mode_name
         },
       });
 
       if (cc == 0) {
         cc = await air_interface_transmission_mode.create({
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          local_id: data.local_id,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "local-id": data.local_id,
   
           // Timestamp reference
-          timestamp: new Date(data.timestamp),
+          "timestamp": new Date(data.timestamp),
 
-          transmission_mode_name: data.transmission_mode_name,
-          symbol_rate_reduction_factor: data.symbol_rate_reduction_factor,
-          modulation_scheme_at_lct: data.modulation_scheme_at_lct,
-          modulation_scheme: data.modulation_scheme,
-          code_rate: data.code_rate,
-          channel_bandwidth: data.code_rate,
-          xpic_is_avail: data.xpic_is_avail,
-          capa_factor: data.capa_factor
+          "transmission-mode-name": data.transmission_mode_name,
+          "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
+          "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
+          "modulation-scheme": data.modulation_scheme,
+          "code-rate": data.code_rate,
+          "channel-bandwidth": data.code_rate,
+          "xpic-is-avail": data.xpic_is_avail,
+          "capa-factor": data.capa_factor
         });
         logger.info("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -419,39 +419,39 @@ exports.updateEthernetContainer = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await ethernet_container_general_info.update({
-        local_id: data.local_id,
+        "local-id": data.local_id,
 
         // Timestamp reference
-        timestamp: new Date(data.timestamp),
+        "timestamp": new Date(data.timestamp),
 
-        operational_state: data.operational_state,
-        administrative_state: data.administrative_state,
-        original_ltp_name: data.original_ltp_name,
-        interface_name: data.interface_name,
-        bundling_is_on: data.bundling_is_on,
-        interface_status: data.interface_status
+        "operational-state": data.operational_state,
+        "administrative-state": data.administrative_state,
+        "original-ltp-name": data.original_ltp_name,
+        "interface-name": data.interface_name,
+        "bundling-is-on": data.bundling_is_on,
+        "interface-status": data.interface_status
       },{
         where: {
-          mount_name: data.mount_name,
-          uuid: data.uuid,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await ethernet_container_general_info.create({
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          local_id: data.local_id,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "local-id": data.local_id,
   
           // Timestamp reference
-          timestamp: new Date(data.timestamp),
+          "timestamp": new Date(data.timestamp),
 
-          operational_state: data.operational_state,
-          administrative_state: data.administrative_state,
-          original_ltp_name: data.original_ltp_name,
-          interface_name: data.interface_name,
-          bundling_is_on: data.bundling_is_on,
-          interface_status: data.interface_status
+          "operational-state": data.operational_state,
+          "administrative-state": data.administrative_state,
+          "original-ltp-name": data.original_ltp_name,
+          "interface-name": data.interface_name,
+          "bundling-is-on": data.bundling_is_on,
+          "interface-status": data.interface_status
         });
         logger.info("Entry ethernet_container_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -493,47 +493,47 @@ exports.updateWireInterface = async function (dataArray) {
     let data = dataArray[i];
     try {
       let cc = await wire_interface_general_info.update({
-        local_id: data.local_id,
+        "local-id": data.local_id,
 
         // Timestamp reference
-        timestamp: new Date(data.timestamp),
+        "timestamp": new Date(data.timestamp),
 
-        operational_state: data.operational_state,
-        administrative_state: data.administrative_state,
-        original_ltp_name: data.original_ltp_name,
-        interface_name: data.interface_name,
-        fixed_pmd_kind: data.fixed_pmd_kind,
-        interface_status: data.interface_status,
-        pmd_kind_cur: data.pmd_kind_cur,
-        pmd_name: data.pmd_name,
-        duplex: data.duplex,
-        speed: data.speed
+        "operational-state": data.operational_state,
+        "administrative-state": data.administrative_state,
+        "original-ltp-name": data.original_ltp_name,
+        "interface-name": data.interface_name,
+        "fixed-pmd-kind": data.fixed_pmd_kind,
+        "interface-status": data.interface_status,
+        "pmd-kind-cur": data.pmd_kind_cur,
+        "pmd-name": data.pmd_name,
+        "duplex": data.duplex,
+        "speed": data.speed
       },{
         where: {
-          mount_name: data.mount_name,
-          uuid: data.uuid,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
         },
       });
 
       if (cc == 0) {
         cc = await wire_interface_general_info.create({
-          mount_name: data.mount_name,
-          uuid: data.uuid,
-          local_id: data.local_id,
+          "mount-name": data.mount_name,
+          "uuid": data.uuid,
+          "local-id": data.local_id,
   
           // Timestamp reference
-          timestamp: new Date(data.timestamp),
+          "timestamp": new Date(data.timestamp),
 
-          operational_state: data.operational_state,
-          administrative_state: data.administrative_state,
-          original_ltp_name: data.original_ltp_name,
-          interface_name: data.interface_name,
-          fixed_pmd_kind: data.fixed_pmd_kind,
-          interface_status: data.interface_status,
-          pmd_kind_cur: data.pmd_kind_cur,
-          pmd_name: data.pmd_name,
-          duplex: data.duplex,
-          speed: data.speed
+          "operational-state": data.operational_state,
+          "administrative-state": data.administrative_state,
+          "original-ltp-name": data.original_ltp_name,
+          "interface-name": data.interface_name,
+          "fixed-pmd-kind": data.fixed_pmd_kind,
+          "interface-status": data.interface_status,
+          "pmd-kind-cur": data.pmd_kind_cur,
+          "pmd-name": data.pmd_name,
+          "duplex": data.duplex,
+          "speed": data.speed
         });
         logger.info("Entry wire_interface_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
@@ -601,17 +601,17 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
 exports.readEquipmentInfo = async function(filters, isCSV=false) {
   // DB fields to read
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp', 
     'version',
     'description',
-    'model_identifier',
-    'part_type_identifier',
-    'type_name',
-    'manufacturer_name',
-    'manufacturer_identifier'
+    'model-identifier',
+    'part-type-identifier',
+    'type-name',
+    'manufacturer-name',
+    'manufacturer-identifier'
   ];
 
   let resultFetched = await readGeneralData(equipment_general_info, attr, filters, isCSV);
@@ -631,21 +631,21 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
 exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
   // DB fields to read
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp', 
-    'operational_state',
-    'administrative_state',
-    'original_ltp_name',
-    'external_label',
-    'transmission_mode_min',
-    'transmission_mode_max',
-    'xpic_is_on',
-    'power_is_on',
-    'transmitter_is_on',
-    'interface_status',
-    'type_of_equipment',
+    'operational-state',
+    'administrative-state',
+    'original-ltp-name',
+    'external-label',
+    'transmission-mode-min',
+    'transmission-mode-max',
+    'xpic-is-on',
+    'power-is-on',
+    'transmitter-is-on',
+    'interface-status',
+    'type-of-equipment',
   ];
 
   let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, isCSV);
@@ -665,18 +665,18 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
 exports.readAirTransMode = async function(filters, isCSV=false) {
   // DB fields to read
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp',
-    'transmission_mode_name',
-    'symbol_rate_reduction_factor',
-    'modulation_scheme_at_lct',
-    'modulation_scheme',
-    'code_rate',
-    'channel_bandwidth',
-    'xpic_is_avail',
-    'capa_factor'
+    'transmission-mode-name',
+    'symbol-rate-reduction-factor',
+    'modulation-scheme-at-lct',
+    'modulation-scheme',
+    'code-rate',
+    'channel-bandwidth',
+    'xpic-is-avail',
+    'capa-factor'
   ];
 
   let resultFetched = await readGeneralData(air_interface_transmission_mode, attr, filters, isCSV);
@@ -696,16 +696,16 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
 exports.readEthernetContInfo = async function(filters, isCSV=false) {
   // DB fields to read
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp', 
-    'operational_state',
-    'administrative_state',
-    'original_ltp_name',
-    'interface_name',
-    'bundling_is_on',
-    'interface_status'
+    'operational-state',
+    'administrative-state',
+    'original-ltp-name',
+    'interface-name',
+    'bundling-is-on',
+    'interface-status'
   ];
 
   // Retrieve data
@@ -726,18 +726,18 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
 exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   // Fields to read from DB
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp',
-    'operational_state',
-    'administrative_state',
-    'original_ltp_name',
-    'interface_name',
-    'fixed_pmd_kind',
-    'interface_status',
-    'pmd_kind_cur',
-    'pmd_name',
+    'operational-state',
+    'administrative-state',
+    'original-ltp-name',
+    'interface-name',
+    'fixed-pmd-kind',
+    'interface-status',
+    'pmd-kind-cur',
+    'pmd-name',
     'duplex',
     'speed'
   ];
@@ -767,23 +767,24 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
   const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
-    'mount_name',
+    'mount-name',
     'uuid',
-    'local_id',
+    'local-id',
     'timestamp',
-    'original_ltp_name',
-    'interface_status',
-    'interface_type' // fake entry
+    'original-ltp-name',
+    'interface-status',
+    'interface-type' // fake entry
   ];
 
   // Retrieve data
+  // TODO @latta-siae this has to be reworked. It will not works properly with empty data
   let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
 
   let resultData = await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
-  resultFetched += resultData.replace("mount_name,uuid,local_id,timestamp,original_ltp_name,interface_status,interface_type", "");
+  resultFetched += resultData.replace("mount-name,uuid,local-id,timestamp,original-ltp-name,interface-status,interface-type", "");
 
   resultData = await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
-  resultFetched += resultData.replace("mount_name,uuid,local_id,timestamp,original_ltp_name,interface_status,interface_type", "");
+  resultFetched += resultData.replace("mount-name,uuid,local-id,timestamp,original-ltp-name,interface-status,interface-type", "");
 
   return resultFetched;
 }
