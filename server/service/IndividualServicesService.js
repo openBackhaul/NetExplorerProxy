@@ -9,7 +9,7 @@ const requestUtil = require("./individualServices/RequestUtil");
 const restClient = require("./individualServices/RestClient");
 const {HTTP_CODES} = require("./individualServices/RestClient");
 const logger = require('./LoggingService.js').getLogger();
-
+const dbHandler = require('./db/dbHandler');
 
 /**
  * Initiates process of embedding a new release
@@ -250,3 +250,47 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
     };
   }
 }
+
+// new functions
+module.exports.provideGeneralInformationOfDevices = async function provideGeneralInformationOfDevices (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readDeviceInfo(filters, true);
+
+  return result;
+}
+
+
+function getFiltersFromBody(body) {
+  const mountNameList = body["mount-name-list"];
+  const dataAge = body["data-age"];
+
+  let timeStampFilter = "";
+  if (dataAge && dataAge != undefined) {
+    timeStampFilter = convertDataAgeToTimeStamp(dataAge);
+  }
+
+  const filters = {
+    mountNames: mountNameList,
+    timeStamp: timeStampFilter
+  }
+
+  return filters;
+}
+
+/*
+ * Function that convert data age into timestamp, in order to use to retrieve data from the DB
+ *
+ * dataAge
+ */
+function convertDataAgeToTimeStamp(dataAge) {
+  let date = new Date(Date.now());
+  let millisec = (dataAge * 60 * 60 * 1000);
+
+  date.setTime(Date.now() - millisec);
+  
+  return date;
+}
+
