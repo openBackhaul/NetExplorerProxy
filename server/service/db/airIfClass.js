@@ -3,25 +3,25 @@ const { Model, DataTypes } = require('sequelize');
 // // Air interface
 // Table air_interface_general_info {
 //   // Primary Key
-//   mount_name varchar [primary key]
+//   mount-name varchar [primary key]
 //   uuid varchar [primary key]
-//   local_id varchar [primary key]
+//   local-id varchar [primary key]
 
 //   // Timestamp reference
 //   timestamp timestamp
 
 //   // Data
-//   operational_state varchar
-//   administrative_state varchar
-//   original_ltp_name varchar
-//   external_label varchar
-//   transmission_mode_min varchar
-//   transmission_mode_max varchar
-//   xpic_is_on boolean
-//   power_is_on boolean
-//   transmitter_is_on boolean
-//   interface_status varchar
-//   type_of_equipment varchar
+//   operational-state varchar
+//   administrative-state varchar
+//   original-ltp-name varchar
+//   external-label varchar
+//   transmission-mode-min varchar
+//   transmission-mode-max varchar
+//   xpic-is-on boolean
+//   power-is-on boolean
+//   transmitter-is-on boolean
+//   interface-status varchar
+//   type-of-equipment varchar
 // }
 
 exports.init = function(sequelize) {
@@ -30,74 +30,74 @@ exports.init = function(sequelize) {
     AirInterface.init(
     {
         // Primary key
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      uuid: {
+      "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      local_id: {
+      "local-id": {
         type: DataTypes.STRING,
         allowNull: true,
         // primaryKey: true,
       },
 
        // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
 
       // Data
-      operational_state: {
+      "operational-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      administrative_state: {
+      "administrative-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      original_ltp_name : {
+      "original-ltp-name" : {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      external_label: {
+      "external-label": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      transmission_mode_min: {
+      "transmission-mode-min": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      transmission_mode_max: {
+      "transmission-mode-max": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      xpic_is_on: {
+      "xpic-is-on": {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      power_is_on: {
+      "power-is-on": {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      transmitter_is_on: {
+      "transmitter-is-on": {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      interface_status: {
+      "interface-status": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      type_of_equipment: {
+      "type-of-equipment": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_type: {
+      "interface-type": {
         type: DataTypes.STRING,
         defaultValue: "air-interface",
         allowNull: false,

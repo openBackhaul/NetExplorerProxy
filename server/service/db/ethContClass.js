@@ -3,19 +3,19 @@ const { Model, DataTypes } = require('sequelize');
 // // Ethernet Data
 // Table ethernet_container_general_info {
 //   // Primary Key
-//   mount_name varchar [primary key]
+//   mount-name varchar [primary key]
 //   uuid varchar [primary key]
-//   local_id varchar [primary key]
+//   local-id varchar [primary key]
 
 //   // Timestamp reference
 //   timestamp timestamp
 
-//   operational_state varchar
-//   administrative_state varchar
-//   original_ltp_name varchar
-//   interface_name varchar
-//   bundling_is_on varchar
-//   interface_status varchar
+//   operational-state varchar
+//   administrative-state varchar
+//   original-ltp-name varchar
+//   interface-name varchar
+//   bundling-is-on varchar
+//   interface-status varchar
 // }
 
 exports.init = function (sequelize) {
@@ -24,54 +24,54 @@ exports.init = function (sequelize) {
   EthContainer.init(
     {
       // Primary key
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      uuid: {
+      "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      local_id: {
+      "local-id": {
         type: DataTypes.STRING,
         allowNull: true,
         // primaryKey: true,
       },
 
       // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
 
       // Data
-      operational_state: {
+      "operational-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      administrative_state: {
+      "administrative-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      original_ltp_name: {
+      "original-ltp-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_name: {
+      "interface-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      bundling_is_on: {
+      "bundling-is-on": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_status: {
+      "interface-status": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_type: {
+      "interface-type": {
         type: DataTypes.STRING,
         defaultValue: "ethernet-container",
         allowNull: false,

@@ -2,15 +2,15 @@ const { Model, DataTypes } = require('sequelize');
 
 // Table devices_general_info {
 //   // Primary key
-//   mount_name varchar [primary key]
+//   mount-name varchar [primary key]
 
 //   // Timestamp reference
 //   timestamp timestamp
 
 //   // Data
-//   external_label  varchar
-//   device_model_name varchar
-//   system_name varchar
+//   external-label  varchar
+//   device-model-name varchar
+//   system-name varchar
 // }
 
 exports.init = function(sequelize) {
@@ -19,28 +19,28 @@ exports.init = function(sequelize) {
   DeviceGeneralInfo.init(
     {
       // Primary key
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
   
       // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
   
       // Data
-      external_label: {
+      "external-label": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      device_model_name: {
+      "device-model-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      system_name: {
+      "system-name": {
         type: DataTypes.STRING,
         allowNull: true,
       }

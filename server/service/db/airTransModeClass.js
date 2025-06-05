@@ -4,22 +4,22 @@ const { Model, DataTypes } = require('sequelize');
 //   id varchar [primary key]
   
 //   // Primary key
-//   mount_name varchar 
+//   mount-name varchar 
 //   uuid varchar
-//   local_id varchar
+//   local-id varchar
   
 //   // Timestamp reference
 //   timestamp timestamp
 
 //   // Data
-//   transmission_mode_name varchar
-//   symbol_rate_reduction_factor varchar
-//   modulation_scheme_at_lct varchar
-//   modulation_scheme varchar
-//   code_rate varchar
-//   channel_bandwidth varchar
-//   xpic_is_avail varchar
-//   capa_factor varchar
+//   transmission-mode-name varchar
+//   symbol-rate-reduction-factor varchar
+//   modulation-scheme-at-lct varchar
+//   modulation-scheme varchar
+//   code-rate varchar
+//   channel-bandwidth varchar
+//   xpic-is-avail varchar
+//   capa-factor varchar
 // }
 
 exports.init = function (sequelize) {
@@ -28,62 +28,62 @@ exports.init = function (sequelize) {
   AirTransmissionMode.init(
     {
       // Primary key
-      id: {
+      "id": {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
       },
 
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      uuid: {
+      "uuid": {
         type: DataTypes.STRING,
         allowNull: false
       },
-      local_id: {
+      "local-id": {
         type: DataTypes.STRING,
         allowNull: true
       },
 
       // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
 
       // Data
-      transmission_mode_name: {
+      "transmission-mode-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      symbol_rate_reduction_factor: {
+      "symbol-rate-reduction-factor": {
         type: DataTypes.STRING, //integer
         allowNull: true,
       },
-      modulation_scheme_at_lct: {
+      "modulation-scheme-at-lct": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      modulation_scheme: {
+      "modulation-scheme": {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      code_rate: {
+      "code-rate": {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      channel_bandwidth: {
+      "channel-bandwidth": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      xpic_is_avail: {
+      "xpic-is-avail": {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      capa_factor: {
+      "capa-factor": {
         type: DataTypes.FLOAT,
         allowNull: true,
       },
