@@ -252,7 +252,10 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
 }
 
 // new functions
-module.exports.provideGeneralInformationOfDevices = async function provideGeneralInformationOfDevices (req, body) {
+/*
+ * Function that retrieve General information of Device from DB and return data in CSV format
+ */
+module.exports.provideGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
 
