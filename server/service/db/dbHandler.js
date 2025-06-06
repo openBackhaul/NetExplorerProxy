@@ -565,13 +565,13 @@ exports.readListOfDevices = async function(isCSV=false) {
     raw : isCSV
   });
 
-  if (isCSV) {
-    if (resultFetched.length == 0) {
-      resultFetched = "";
-    } else {
-      resultFetched = convertToCSV(resultFetched);
-    }
-  }
+  // if (isCSV) {
+  //   if (resultFetched.length == 0) {
+  //     resultFetched = "";
+  //   } else {
+  //     resultFetched = convertToCSV(resultFetched);
+  //   }
+  // }
 
   return resultFetched;
 }

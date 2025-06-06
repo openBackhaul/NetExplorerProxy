@@ -347,6 +347,30 @@ module.exports.provideListOfInterfacesPerDeviceInNep = async function provideLis
   return result;
 }
 
+/*
+ * Function to retrieve the list of devices store in the nep cache
+ */
+module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep (req, body) {
+  // Get data from DB
+  let result = await dbHandler.readListOfDevices(true);
+
+  let dataArray = [];
+  for (let i=0; i< result.length; i++) {
+    let tmpData = result[i];
+    let temp = {
+      "mount-name": tmpData['mount-name'],
+      "last-data-update-timestamp": tmpData.timestamp,
+    }
+    dataArray.push(temp);
+  }
+
+  let returnValue = {
+    "mount-name-list": dataArray
+  };
+
+  return returnValue;
+}
+
 function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";

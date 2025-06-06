@@ -524,3 +524,31 @@ module.exports.provideListOfInterfacesPerDeviceInNep = async function provideLis
     return handleError(startTime, error, req, res);
   }
 }
+
+/**
+ * Handler for /v1/provide-list-of-devices-in-nep
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideListOfDevicesInNep(req.url, body);
+
+    const responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+
+    responseBuilder.buildResponse(res, responseCode, response, responseHeader);
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);;
+  } catch (error) {
+    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    return handleError(startTime, error, req, res);
+  }
+}
