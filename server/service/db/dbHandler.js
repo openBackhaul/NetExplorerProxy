@@ -14,6 +14,9 @@ const wireIf = require('./wireIfClass');
 // Default name of NEP DB
 const NEP_DB = "nep_db"
 
+const SEPARATOR = ";"
+const EOL = "\n";
+
 let devices_general_info;
 let equipment_general_info;
 let air_interface_general_info;
@@ -564,9 +567,10 @@ exports.readListOfDevices = async function(isCSV=false) {
 
   if (isCSV) {
     if (resultFetched.length == 0) {
-      return "";
+      resultFetched = "";
+    } else {
+      resultFetched = convertToCSV(resultFetched);
     }
-    resultFetched = convertToCSV(resultFetched);
   }
 
   return resultFetched;
@@ -779,12 +783,14 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
   // Retrieve data
   // TODO @latta-siae this has to be reworked. It will not works properly with empty data
   let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
+  let stringReplace = attr.toString();
+  stringReplace = stringReplace.replaceAll(",", ";");
 
   let resultData = await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
-  resultFetched += resultData.replace("mount-name,uuid,local-id,timestamp,original-ltp-name,interface-status,interface-type", "");
+  resultFetched += resultData.replace(stringReplace, "");
 
   resultData = await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
-  resultFetched += resultData.replace("mount-name,uuid,local-id,timestamp,original-ltp-name,interface-status,interface-type", "");
+  resultFetched += resultData.replace(stringReplace, "");
 
   return resultFetched;
 }
@@ -804,8 +810,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
   if (isCSV) { // Convert into CSV format
     if (resultFetched.length == 0) {
       logger.warn("Query result empty");
-      resultFetched = "";
-      // resultFetched = convertToCSVEnh(resultFetched, true);
+      resultFetched = fields.toString().replaceAll(",", ";") + "\n";
     } else {
       resultFetched = convertToCSV(resultFetched);
     }
@@ -999,9 +1004,9 @@ function convertToCSV(arr) {
 
   let retValue = array.map(it => {
     return Object.values(it).toString();
-  }).join(' ');
+  }).join(EOL);
   
-  retValue = retValue.replaceAll(',', ';');
+  retValue = retValue.replaceAll(',', SEPARATOR);
   return retValue;
 }
 
@@ -1015,13 +1020,13 @@ function convertToCSVEnh(arr, onlyHeader=true) {
       // Extract headers
       logger.debug("Extract only Headers");
       const headers = Object.keys(arr[0]);
-      csv += headers.join(',') + '\n';
+      csv += headers.join(SEPARATOR) + EOL;
     } else {
       // Extract values
       logger.debug("Extract only Data values");
       arr.forEach(obj => {
           const values = headers.map(header => obj[header]);
-          csv += values.join(',') + '\n';
+          csv += values.join(SEPARATOR) + EOL;
       });
     }
 
