@@ -305,6 +305,19 @@ module.exports.provideWireInterfaceGeneralInformationOfDevices = async function 
   return result;
 }
 
+/*
+ * Function that retrieve Air interface information of Device from DB and return data in CSV format
+ */
+module.exports.provideAirInterfaceGeneralInformationOfDevices = async function provideAirInterfaceGeneralInformationOfDevices (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readAirInterfaceInfo(filters, true);
+
+  return result;
+}
+
 function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";
