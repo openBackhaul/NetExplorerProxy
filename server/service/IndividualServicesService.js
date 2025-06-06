@@ -295,7 +295,7 @@ module.exports.provideEthernetContainerGeneralInformationOfDevices = async funct
 /*
  * Function that retrieve Wire interface information of Device from DB and return data in CSV format
  */
-module.exports.provideWireInterfaceGeneralInformationOfDevices = async function provideWireInterfaceGeneralInformationOfDevices  (req, body) {
+module.exports.provideWireInterfaceGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
 
@@ -308,7 +308,7 @@ module.exports.provideWireInterfaceGeneralInformationOfDevices = async function 
 /*
  * Function that retrieve Air interface information of Device from DB and return data in CSV format
  */
-module.exports.provideAirInterfaceGeneralInformationOfDevices = async function provideAirInterfaceGeneralInformationOfDevices (req, body) {
+module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
 
@@ -317,6 +317,20 @@ module.exports.provideAirInterfaceGeneralInformationOfDevices = async function p
 
   return result;
 }
+
+/*
+ * Function that retrieve Air interface Transimission Mode information of Device from DB and return data in CSV format
+ */
+module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readAirTransMode(filters, true);
+
+  return result;
+}
+
 
 function getFiltersFromBody(body) {
   let mountNameList = "";
