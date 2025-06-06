@@ -270,7 +270,6 @@ function getFiltersFromBody(body) {
     mountNameList = body["mount-name-list"];
     const dataAge = body["data-age"];
 
-    let timeStampFilter = "";
     if (dataAge && dataAge != undefined) {
       timeStampFilter = convertDataAgeToTimeStamp(dataAge);
     }
