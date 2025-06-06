@@ -743,7 +743,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
   ];
 
   // Retrieve data
-  let resultFetched = await readGeneralData(ethernet_container_general_info, attr, filters, isCSV);
+  let resultFetched = await readGeneralData(wire_interface_general_info, attr, filters, isCSV);
 
   return resultFetched;
 }
