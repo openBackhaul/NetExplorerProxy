@@ -267,7 +267,7 @@ module.exports.provideGeneralInformationOfDevices = async function (req, body) {
 }
 
 /*
- * Function that retrieve Actual equiment information of Device from DB and return data in CSV format
+ * Function that retrieve Actual equipment information of Device from DB and return data in CSV format
  */
 module.exports.provideActualEquipmentInformationOfDevices = async function (req, body) {
   // Get filters structure from body
@@ -275,6 +275,19 @@ module.exports.provideActualEquipmentInformationOfDevices = async function (req,
 
   // Get data from DB
   let result = await dbHandler.readEquipmentInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Ethernet container information of Device from DB and return data in CSV format
+ */
+module.exports.provideEthernetContainerGeneralInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readEthernetContInfo(filters, true);
 
   return result;
 }
