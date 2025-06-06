@@ -292,6 +292,19 @@ module.exports.provideEthernetContainerGeneralInformationOfDevices = async funct
   return result;
 }
 
+/*
+ * Function that retrieve Wire interface information of Device from DB and return data in CSV format
+ */
+module.exports.provideWireInterfaceGeneralInformationOfDevices = async function provideWireInterfaceGeneralInformationOfDevices  (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readWireInterfaceInfo(filters, true);
+
+  return result;
+}
+
 function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";
