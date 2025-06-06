@@ -331,6 +331,21 @@ module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = as
   return result;
 }
 
+/*
+ * Function that retrieve The list of general interface information of Device from DB and return data in CSV format
+ * - Air interfaces
+ * - Ethernet container interfaces
+ * - Wire interfaces
+ */
+module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readInterfaceInfoPerDevice(filters, true);
+
+  return result;
+}
 
 function getFiltersFromBody(body) {
   let mountNameList = "";

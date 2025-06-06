@@ -494,3 +494,33 @@ module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = as
     return handleError(startTime, error, req, res);
   }
 }
+
+/**
+ * Handler for /v1/provide-list-of-interfaces-per-device-in-nep
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep (req, res, next, body) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideListOfInterfacesPerDeviceInNep(req.url, body);
+
+    res.set({
+      "Content-Type": "text/csv",
+      "Content-Disposition": 'inline'
+    }).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    return handleError(startTime, error, req, res);
+  }
+}
