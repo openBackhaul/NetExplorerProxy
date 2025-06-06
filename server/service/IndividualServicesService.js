@@ -251,7 +251,8 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
   }
 }
 
-// new functions
+// Functions for NEP 1.1.0
+
 /*
  * Function that retrieve General information of Device from DB and return data in CSV format
  */
@@ -265,6 +266,18 @@ module.exports.provideGeneralInformationOfDevices = async function (req, body) {
   return result;
 }
 
+/*
+ * Function that retrieve Actual equiment information of Device from DB and return data in CSV format
+ */
+module.exports.provideActualEquipmentInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readEquipmentInfo(filters, true);
+
+  return result;
+}
 
 function getFiltersFromBody(body) {
   let mountNameList = "";
