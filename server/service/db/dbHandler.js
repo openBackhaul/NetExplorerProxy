@@ -948,7 +948,7 @@ exports.removeAllReferences = async function(filters) {
 function getWhereConditionForRead(filters) {
   let { mountNames, timeStamp } = filters;
   let whereCondition = {}
-  if (timeStamp == undefined || timeStamp == null || timeStamp == '') {
+  if (timeStamp == undefined || timeStamp == null || timeStamp == "") {
     timeStamp = new Date(0); // from epoch
   }
 

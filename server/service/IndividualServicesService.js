@@ -264,12 +264,18 @@ module.exports.provideGeneralInformationOfDevices = async function provideGenera
 
 
 function getFiltersFromBody(body) {
-  const mountNameList = body["mount-name-list"];
-  const dataAge = body["data-age"];
-
+  let mountNameList = "";
   let timeStampFilter = "";
-  if (dataAge && dataAge != undefined) {
-    timeStampFilter = convertDataAgeToTimeStamp(dataAge);
+  if (body !== undefined) {
+    mountNameList = body["mount-name-list"];
+    const dataAge = body["data-age"];
+
+    let timeStampFilter = "";
+    if (dataAge && dataAge != undefined) {
+      timeStampFilter = convertDataAgeToTimeStamp(dataAge);
+    }
+  } else {
+    logger.debug("Body to parse is empty");
   }
 
   const filters = {
@@ -293,4 +299,3 @@ function convertDataAgeToTimeStamp(dataAge) {
   
   return date;
 }
-
