@@ -94,13 +94,21 @@ const WIRE_INTERFACE = {
   };
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
-  const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp);
-  await dbHandler.updateDeviceInfo(deviceGenereInfo);
+  const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp)
+  .catch((err) => logger.error(`${err}`));
+  if(deviceGenereInfo){
+  await dbHandler.updateDeviceInfo(deviceGenereInfo)
+  .catch((err) => logger.error(`${err}`));
+  }
 }
 
 async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) {
-  const equipmentGeneralInfo = await extractEquipmentData(ccOfMountname, mountName, timestamp);
-  await dbHandler.updateEquipmentInfo(equipmentGeneralInfo);
+  const equipmentGeneralInfo = await extractEquipmentData(ccOfMountname, mountName, timestamp)
+    .catch((err) => logger.error(`${err}`));
+    if(equipmentGeneralInfo){
+    await dbHandler.updateEquipmentInfo(equipmentGeneralInfo)
+    .catch((err) => logger.error(`${err}`));
+    }
 }
 
 async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
@@ -108,38 +116,54 @@ async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timesta
     WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
 
   const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
-    wireinterfceLtpList,
-    mountName,
-    timestamp
-  );
-  await dbHandler.updateWireInterface(wireInterfaceGeneralInfo);
+      wireinterfceLtpList,
+      mountName,
+      timestamp
+    ).catch((err) => logger.error(`${err}`));
+    
+  if (wireInterfaceGeneralInfo) {
+    await dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
+      .catch((err) => logger.error(`${err}`));
+  }
 }
 
 async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
   const airinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
-  const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
-    airinterfceLtpList,
-    mountName,
-    timestamp
-  );
-
-  await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]);
-  await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]);
+ const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
+   airinterfceLtpList,
+   mountName,
+   timestamp
+ ).catch((err) => logger.error(`${err}`));
+ 
+if (airContainerGeneralInfoAndTransmissionInfo) {
+  if (airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]) {
+    await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
+      .catch((err) => logger.error(`${err}`));
+  }
+  
+  if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]) {
+    await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
+      .catch((err) => logger.error(`${err}`));
+  }
+}
 }
 
 async function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp) {
   const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
 
-  const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
-    ethInterfaceLtpList,
-    mountName,
-    timestamp
-  );
-  await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo);
-  
+ const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
+   ethInterfaceLtpList,
+   mountName,
+   timestamp
+  ).catch((err) => logger.error(`${err}`));
+ 
+  if (ethernetContainerGeneralInfo) {
+      await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
+    .catch((err) => logger.error(`${err}`));
+  } 
 }
 
   async function extractEquipmentData(ccOfMountname, mountName, timestamp) {
@@ -263,8 +287,6 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
           ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
         ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
       }
-
-      
 
       // Add ethernet container specific attributes
       if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.CONFIGURATION)) {
@@ -573,11 +595,9 @@ async function extractGeneralInfo(ccOfMountname,mountName,timestamp){
     
     result.push(deviceGeneralObj);
     return result;
-
-
 }
 
-  function calculateCapaFactor(transmissionListObj) {
+function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist
   if (!transmissionListObj || 
       !transmissionListObj["channel-bandwidth"] || 
