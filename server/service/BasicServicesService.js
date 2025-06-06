@@ -166,7 +166,7 @@ async function processEthernetContainergeneralInfo(ccOfMountname, mountName, tim
   } 
 }
 
-  async function extractEquipmentData(ccOfMountname, mountName, timestamp) {
+async function extractEquipmentData(ccOfMountname, mountName, timestamp) {
        const result = [];
 
       // Check if ccOfMountname has the required properties
@@ -243,8 +243,7 @@ async function processEthernetContainergeneralInfo(ccOfMountname, mountName, tim
 
       return result;
 
-  }
- 
+}
  
   /**
  * Extracts ethernet container information from LTP structure
@@ -304,10 +303,12 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
       if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.STATUS)) {
         const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
         
-        if (status && status.hasOwnProperty("interface-status")) {
-          ethObj["interface_status"] = status["interface-status"];
-        }
+      if (status && status.hasOwnProperty("interface-status")) {
+      const fullStatus = status["interface-status"];
+      const lastUnderscore = fullStatus.lastIndexOf("_");
+      ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); 
       }
+    }
       
       ethernetContainerGeneralInfo.push(ethObj);
   }
@@ -368,7 +369,9 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
                 ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
             }
             if (status && status.hasOwnProperty("interface-status")) {
-                ethObj["interface_status"] = status["interface-status"];
+              const fullStatus = status["interface-status"];
+              const lastUnderscore = fullStatus.lastIndexOf("_");
+              ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
             }
             if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
                 ethObj["type_of_equipment"] = capibility["type-of-equipment"];
@@ -484,7 +487,9 @@ async function extractIfCapabilityNotFound(configuration, status, mountName, tim
       }
 
       if (status && status.hasOwnProperty("interface-status")) {
-          ethObj["interface_status"] = status["interface-status"];
+      const fullStatus = status["interface-status"];
+      const lastUnderscore = fullStatus.lastIndexOf("_");
+      ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); 
       }
 
       if (status && status.hasOwnProperty("pmd-kind-cur")) {
@@ -525,8 +530,15 @@ async function extractFromSupportedPmdKindList(cap, ethObj) {
     }
 
     if (cap && cap.hasOwnProperty("duplex")) {
-    ethObj["duplex"] = cap["duplex"];
+    const fullDuplex = cap["duplex"];
+    const lastColon = fullDuplex.lastIndexOf(":");
+    const afterColon = fullDuplex.substring(lastColon + 1); // "DUPLEX_TYPE_NOT_YET_DEFINED"
+    const prefix = "DUPLEX_TYPE_";
+    
+    if (afterColon.startsWith(prefix)) {
+      ethObj["duplex"] = afterColon.substring(prefix.length); // "NOT_YET_DEFINED"
     }
+   }
 
     if (cap && cap.hasOwnProperty("speed")) {
     ethObj["speed"] = cap["speed"];
