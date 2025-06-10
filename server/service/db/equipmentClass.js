@@ -2,21 +2,21 @@ const { Model, DataTypes } = require('sequelize');
 
 // Table equipment_general_info {
 //   // Primary key
-//   mount_name varchar [primary key]
+//   mount-name varchar [primary key]
 //   uuid varchar
-//   local_id varchar
+//   local-id varchar
 
 //   // Timestamp reference
 //   timestamp timestamp
 
 //   version varchar
 //   description varchar
-//   model_identifier varchar
-//   part_type_identifier varchar
-//   type_name varchar
+//   model-identifier varchar
+//   part-type-identifier varchar
+//   type-name varchar
 
-//   manufacturer_name varchar
-//   manufacturer_identifier varchar
+//   manufacturer-name varchar
+//   manufacturer-identifier varchar
 // }
 
 
@@ -26,54 +26,54 @@ exports.init = function (sequelize) {
   EquipmentInfo.init(
     {
       // Primary key
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      uuid: {
+      "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      local_id: {
+      "local-id": {
         type: DataTypes.STRING,
         allowNull: true,
         // primaryKey: true, ???
       },
 
       // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
 
       // Data
-      version: {
+      "version": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      description: {
+      "description": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      model_identifier: {
+      "model-identifier": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      part_type_identifier: {
+      "part-type-identifier": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      type_name: {
+      "type-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      manufacturer_name: {
+      "manufacturer-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      manufacturer_identifier: {
+      "manufacturer-identifier": {
         type: DataTypes.STRING,
         allowNull: true,
       },

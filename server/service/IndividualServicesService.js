@@ -9,7 +9,7 @@ const requestUtil = require("./individualServices/RequestUtil");
 const restClient = require("./individualServices/RestClient");
 const {HTTP_CODES} = require("./individualServices/RestClient");
 const logger = require('./LoggingService.js').getLogger();
-
+const dbHandler = require('./db/dbHandler');
 
 /**
  * Initiates process of embedding a new release
@@ -249,4 +249,160 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
       // no message body and headers
     };
   }
+}
+
+// Functions for NEP 1.1.0
+
+/*
+ * Function that retrieve General information of Device from DB and return data in CSV format
+ */
+module.exports.provideGeneralInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readDeviceInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Actual equipment information of Device from DB and return data in CSV format
+ */
+module.exports.provideActualEquipmentInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readEquipmentInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Ethernet container information of Device from DB and return data in CSV format
+ */
+module.exports.provideEthernetContainerGeneralInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readEthernetContInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Wire interface information of Device from DB and return data in CSV format
+ */
+module.exports.provideWireInterfaceGeneralInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readWireInterfaceInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Air interface information of Device from DB and return data in CSV format
+ */
+module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readAirInterfaceInfo(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve Air interface Transimission Mode information of Device from DB and return data in CSV format
+ */
+module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readAirTransMode(filters, true);
+
+  return result;
+}
+
+/*
+ * Function that retrieve The list of general interface information of Device from DB and return data in CSV format
+ * - Air interfaces
+ * - Ethernet container interfaces
+ * - Wire interfaces
+ */
+module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readInterfaceInfoPerDevice(filters, true);
+
+  return result;
+}
+
+/*
+ * Function to retrieve the list of devices store in the nep cache
+ */
+module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep (req, body) {
+  // Get data from DB
+  let result = await dbHandler.readListOfDevices(true);
+
+  let dataArray = [];
+  for (let i=0; i< result.length; i++) {
+    let tmpData = result[i];
+    let temp = {
+      "mount-name": tmpData['mount-name'],
+      "last-data-update-timestamp": tmpData.timestamp,
+    }
+    dataArray.push(temp);
+  }
+
+  let returnValue = {
+    "mount-name-list": dataArray
+  };
+
+  return returnValue;
+}
+
+function getFiltersFromBody(body) {
+  let mountNameList = "";
+  let timeStampFilter = "";
+  if (body !== undefined) {
+    mountNameList = body["mount-name-list"];
+    const dataAge = body["data-age"];
+
+    if (dataAge && dataAge != undefined) {
+      timeStampFilter = convertDataAgeToTimeStamp(dataAge);
+    }
+  } else {
+    logger.debug("Body to parse is empty");
+  }
+
+  const filters = {
+    mountNames: mountNameList,
+    timeStamp: timeStampFilter
+  }
+
+  return filters;
+}
+
+/*
+ * Function that convert data age into timestamp, in order to use to retrieve data from the DB
+ *
+ * dataAge
+ */
+function convertDataAgeToTimeStamp(dataAge) {
+  let date = new Date(Date.now());
+  let millisec = (dataAge * 60 * 60 * 1000);
+
+  date.setTime(Date.now() - millisec);
+  
+  return date;
 }
