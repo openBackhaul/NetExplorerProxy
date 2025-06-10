@@ -216,7 +216,6 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
 
       logger.debug("forwarding mac table data to '" + targetUrl + "'");
 
-      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, undefined, request.appName, request.appRelease);
       const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, request.operationKey, request.appName, request.appRelease);
 
       if (ret.code === responseCodeEnum.code.OK || ret.code === responseCodeEnum.code.NO_CONTENT) {
