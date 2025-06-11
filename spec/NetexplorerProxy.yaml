@@ -1,7 +1,12 @@
 ﻿openapi: 3.0.0
 info:
   title: NetExplorerProxy
-  version: 1.1.0
+  version: 1.1.1
+  description: NetExplorerProxy gathers data from MATR and MWDI and passes it through to NetExplorer.
+  contact:
+    name: Zia Ul Haq Hussain Batcha
+    url: https://newintranet.de.telefonica/profile/zia-ul-haq.hussain-batcha.external
+    email: zia-ul-haq.hussain-batcha.external@telefonica.com
 
 x-gui-paths:
 ########################################################################################################################
