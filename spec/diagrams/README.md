@@ -22,7 +22,7 @@
 ![PromptForProvidingListOfDevicesInNepCausesReadingFromNepCache](./021_ProvideListOfDevicesInNep.png)  
 .  
 .  
-![PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache](./022_ProvideGeneralDeviceInfo.png)  
+![PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache](./022_ProvideListOfInterfacesPerDevice.png)  
 .  
 .  
 ![PromptForProvidingGeneralDeviceInfoCausesReadingFromNepCache](./025_ProvideGeneralDeviceInfo.png)  
