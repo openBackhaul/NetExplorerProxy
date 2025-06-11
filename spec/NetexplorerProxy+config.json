@@ -1230,7 +1230,7 @@
             "http-server-interface-1-0:http-server-interface-pac": {
               "http-server-interface-capability": {
                 "application-name": "NetExplorerProxy",
-                "release-number": "1.1.0",
+                "release-number": "1.1.1",
                 "application-purpose": "The application is the interface towards the NetExplorer",
                 "data-update-period": "http-server-interface-1-0:DATA_UPDATE_PERIOD_TYPE_REAL_TIME",
                 "owner-name": "Katharina Mohr",
@@ -1253,6 +1253,12 @@
                     "release-number": "1.1.0",
                     "release-date": "24.02.2025",
                     "changes": "Adds provisioning of additional device data"
+                  },
+                  {
+                    "local-id": "3",
+                    "release-number": "1.1.1",
+                    "release-date": "30.06.2025",
+                    "changes": "Correction of findings from 1.1.0"
                   }
                 ]
               }

@@ -111,7 +111,7 @@ servers:
 
   http-server:
     own-application-name: NetExplorerProxy
-    own-release-number: 1.1.0
+    own-release-number: 1.1.1
     uuid: nep-1-1-0-http-s-000
     application-purpose: The application is the interface towards the NetExplorer
     owner-name: Katharina Mohr
@@ -126,6 +126,9 @@ servers:
       - release-number: 1.1.0
         release-date: 24.02.2025
         changes: Adds provisioning of additional device data
+      - release-number: 1.1.1
+        release-date: 30.06.2025
+        changes: Correction of findings from 1.1.0
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
@@ -151,7 +154,7 @@ clients:
 
   - http-client:
       application-name: OldRelease
-      release-number: 1.0.2
+      release-number: 1.1.0
       uuid: nep-1-1-0-http-c-or-1-0-2-000
     tcp-client:
       remote-protocol: http
@@ -170,7 +173,7 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: 1.1.0
+      release-number: 1.1.1
       uuid: nep-1-1-0-http-c-nr-1-1-0-000
     tcp-client:
       remote-protocol: http
