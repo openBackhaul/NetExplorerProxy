@@ -1508,6 +1508,28 @@ paths:
         - IndividualServices
       security:
         - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
+                    If not provided, all found data (for target devices) is returned.'
+              example:
+                mount-name-list: 
+                  - '305251234'
+                  - '100250001'
+                data-age: 48
       responses:
         '200':
           description: 'Interface list for all devices in the NetExplorerProxy cache in csv format.'
