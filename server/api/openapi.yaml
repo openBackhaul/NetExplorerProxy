@@ -4250,6 +4250,12 @@ paths:
       summary: Responses with a list of interfaces that are stored in the NEP cache
         for all devices found in NEP cache.
       operationId: provideListOfInterfacesPerDeviceInNep
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/v1_providelistofinterfacesperdeviceinnep_body"
+        required: false
       responses:
         "200":
           description: Interface list for all devices in the NetExplorerProxy cache
@@ -22106,6 +22112,24 @@ components:
           last-data-update-timestamp: 2025-01-15T14:00:00+01:02
         - mount-name: "105258888"
           last-data-update-timestamp: 2010-01-15T18:27:00+01:02
+    v1_providelistofinterfacesperdeviceinnep_body:
+      type: object
+      properties:
+        mount-name-list:
+          type: array
+          items:
+            type: string
+            description: Optional list of device names the reponse data shall be filtered
+              for
+        data-age:
+          type: integer
+          description: |
+            'Optional: if provided, found data is filtered for data that is not older than data-age hours. If not provided, all found data (for target devices) is returned.'
+      example:
+        mount-name-list:
+        - "305251234"
+        - "100250001"
+        data-age: 48
     v1_providegeneralinformationofdevices_body:
       type: object
       properties:
