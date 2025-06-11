@@ -5,8 +5,9 @@ info:
   description: NetExplorerProxy gathers data from MATR and MWDI and passes it through to NetExplorer.
   contact:
     name: Zia Ul Haq Hussain Batcha
-    url: https://newintranet.de.telefonica/profile/zia-ul-haq.hussain-batcha.external
+    url: https://github.com/openBackhaul/NetExplorerProxy
     email: zia-ul-haq.hussain-batcha.external@telefonica.com
+  x-api-id: u-1792-sdn-microwave-netexplorerproxy
 
 x-gui-paths:
 ########################################################################################################################
