@@ -51,7 +51,7 @@ forwardings:
         uuid: nep-1-1-1-op-s-bm-001
     consequent-requests:
       - client-name: OldRelease://v1/bequeath-your-data-and-die
-        uuid: nep-1-1-1-op-c-bm-or-1-0-2-000
+        uuid: nep-1-1-1-op-c-bm-or-1-1-0-000
 
   - forwarding-name: ServiceRequestCausesLoggingRequest
     uuid: nep-1-1-1-op-fc-bm-002

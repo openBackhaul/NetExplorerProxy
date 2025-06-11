@@ -1291,11 +1291,11 @@
         ]
       },
       {
-        "uuid": "nep-1-1-1-op-c-bm-or-1-0-2-000",
+        "uuid": "nep-1-1-1-op-c-bm-or-1-1-0-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [],
         "server-ltp": [
-          "nep-1-1-1-http-c-or-1-0-2-000"
+          "nep-1-1-1-http-c-or-1-1-0-000"
         ],
         "layer-protocol": [
           {
@@ -1315,13 +1315,13 @@
         ]
       },
       {
-        "uuid": "nep-1-1-1-http-c-or-1-0-2-000",
+        "uuid": "nep-1-1-1-http-c-or-1-1-0-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-1-1-op-c-bm-or-1-0-2-000"
+          "nep-1-1-1-op-c-bm-or-1-1-0-000"
         ],
         "server-ltp": [
-          "nep-1-1-1-tcp-c-or-1-0-2-000"
+          "nep-1-1-1-tcp-c-or-1-1-0-000"
         ],
         "layer-protocol": [
           {
@@ -1337,10 +1337,10 @@
         ]
       },
       {
-        "uuid": "nep-1-1-1-tcp-c-or-1-0-2-000",
+        "uuid": "nep-1-1-1-tcp-c-or-1-1-0-000",
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
-          "nep-1-1-1-http-c-or-1-0-2-000"
+          "nep-1-1-1-http-c-or-1-1-0-000"
         ],
         "server-ltp": [],
         "layer-protocol": [
@@ -2220,7 +2220,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-1-1-op-c-bm-or-1-0-2-000"
+                "logical-termination-point": "nep-1-1-1-op-c-bm-or-1-1-0-000"
               }
             ]
           },
