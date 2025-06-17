@@ -99,10 +99,9 @@ function cleanupRequestMap(date) {
 
 
 /**
- * Respond with the current MAC table of a specific device.
- *
- * returns request ID in ret.message
- **/
+ * Responds with the current MAC table of a specific device.
+ * On success, the response includes the request ID in `ret.message["request-id"]`.
+ */
 exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
 
   // Throttling
@@ -204,23 +203,37 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
   let errorCode = undefined;
   let errorMessage = undefined;
 
+  let requestsToDelete = new Set();
+
   for (let entry of body) {
+    if (!entry["request-id"] || !entry["mac-address-data"]) {
+      logger.info({ entry }, "Invalid entry in mac table body");
+      continue;
+    }
+
     const requestId = entry["request-id"];
 
     const request = requestMap.get(requestId);
+
     if (request) {
-      const data = entry["mac-address-data"];
+      const macAddressData = entry["mac-address-data"];
+      const data = [
+        {
+          "request-id": requestId,
+          "mac-address-data": macAddressData
+        }
+      ];
 
       // forward received data to the requestor
       let targetUrl = requestUtil.buildRequestTargetPath(request.protocol, request.address, request.port) + request.operation;
 
-      logger.debug("forwarding mac table data to '" + targetUrl + "'");
+      logger.debug({ targetUrl, requestId }, "Forwarding MAC table data");
 
       const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, request.operationKey, request.appName, request.appRelease);
 
       if (ret.code === responseCodeEnum.code.OK || ret.code === responseCodeEnum.code.NO_CONTENT) {
-        // remove request map entry
-        requestMap.delete(requestId);
+        // store request to remove later from requestMap
+        requestsToDelete.add(requestId);
 
         // if (--numberOfParallelRequests < 0) {
         //   logger.warn("numberOfParallelRequests: %d", numberOfParallelRequests);
@@ -228,10 +241,11 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
         // }
       } else {
         errorCode = ret.code;
-        errorMessage = "requestor callback result: " + ret.code + " - " + ret.message;
+        errorMessage = `Requestor callback result: ${ret.code} - ${ret.message}`;
+        logger.error({ errorCode, errorMessage, requestId }, "Failed to forward MAC table data");
       }
     } else {
-      logger.warn("Unknown request ID in receiveCurrentMacTableOfDevice: %s", requestId);
+      logger.warn({ requestId }, "Unknown request ID in receiveCurrentMacTableOfDevice");
 
       // Response in case that the application wants to call a service specified by the requestor
       // (e.g., to return data after a long taking data retrieval) during a service call to the application
@@ -239,6 +253,10 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
       errorCode = HTTP_CODES.REQUESTOR_NOT_FOUND; // 550
       errorMessage = "Requestor information for callback execution not found.";
     }
+  }
+
+  for(let requestId of requestsToDelete) {
+    requestMap.delete(requestId);
   }
 
   if (errorMessage) {
