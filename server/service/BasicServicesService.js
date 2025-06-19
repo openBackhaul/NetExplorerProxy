@@ -4,6 +4,9 @@ const ltpStructureUtility = require('./LtpStructureUtility');
 const onfAttributes = require('onf-core-model-ap/applicationPattern/onfModel/constants/OnfAttributes');
 const logger = require('./LoggingService.js').getLogger();
 const dbHandler = require('./db/dbHandler.js');
+const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
+const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
 
 const ETHERNET_INTERFACE = {
   MODULE: "ethernet-container-2-0",
@@ -42,30 +45,78 @@ const WIRE_INTERFACE = {
   CONFIGURATION: "wire-interface-configuration"
 };
 
-  module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
-    let startTime = process.hrtime();
-    const timestamp = Date.now();
-    let listOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator++, customerJourney, url);
-    if(undefined != listOfConnectedDevices && 
-      Object.keys(listOfConnectedDevices).length > 0 &&
-      listOfConnectedDevices.hasOwnProperty("message") &&
-      listOfConnectedDevices.message["mount-name-list"].length > 0){
-      
+async function processMountNamesInBatches(mountNameList, body, user, requestHeaders, customerJourney, url, timestamp) {
+  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+  let prefix = forwardingConstruct.uuid.split('op')[0];
+  let MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-003");
+
+  let activePromises = [];
+  let index = 0;
+
+  async function processNext() {
+  if (index >= mountNameList.length) return;
+
+  const mountName = mountNameList[index++];
+  const start=Date.now();
+
+
+  console.log(`🔄 Starting processing for mountName: ${mountName}`);
+  console.log(start);
+
+  const promise = exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName)
+    .then(ccOfMountname => {
+      const stop=Date.now();
+      console.log(`✅ Finished retrieving cc for mountName: ${mountName}`);
+      console.log(stop);
+      return exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
+    })
+    .finally(() => {
+      activePromises.splice(activePromises.indexOf(promise), 1);
+      return processNext();
+    });
+
+  activePromises.push(promise);
+}
+
+  // Start the first batch of concurrent tasks
+  for (let i = 0; i < MAX_CONCURRENT && i < mountNameList.length; i++) {
+    await processNext();
+  }
+
+  // Wait for all remaining tasks to complete
+  await Promise.all(activePromises);
+}
+
+module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
+ 
+  const timestamp = Date.now();
+  const listOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(
+    body, user, xCorrelator, traceIndicator++, customerJourney, url
+  );
+
+  if (
+    listOfConnectedDevices &&
+    Object.keys(listOfConnectedDevices).length > 0 &&
+    listOfConnectedDevices.hasOwnProperty("message") &&
+    listOfConnectedDevices.message["mount-name-list"].length > 0
+  ) {
     const mountNameList = listOfConnectedDevices.message["mount-name-list"];
-    let requestHeaders = {
+    const requestHeaders = {
       user: user,
-      // originator: originator,
       xCorrelator: xCorrelator,
       traceIndicator: traceIndicator,
       customerJourney: customerJourney
     };
- 
-    for (let mountName of mountNameList) {
-      let ccOfMountname = await exports.retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator++, customerJourney, url, mountName);
-      await exports.processTheccOfMountname(ccOfMountname,timestamp,mountName);
-    }
+
+    let taskTraceId = traceIndicator; // Start from the current traceIndicator
+
+    // ✅ Call the batch processor here
+    await processMountNamesInBatches(
+      mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp
+    );
   }
-  };
+};
 
   module.exports.retriveTheccOfMountname = async function retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
     let startTime = process.hrtime();
