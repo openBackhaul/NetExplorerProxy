@@ -49,7 +49,7 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
   let prefix = forwardingConstruct.uuid.split('op')[0];
-  let MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-003");
+  let MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-002");
 
   let activePromises = [];
   let index = 0;
