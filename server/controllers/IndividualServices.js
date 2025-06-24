@@ -11,6 +11,7 @@ const requestUtil = require("../service/individualServices/RequestUtil");
 const logger = require('../service/LoggingService.js').getLogger();
 const httpErrors = require('http-errors');
 
+const csvResponse = { "Content-Type": "text/csv", "Content-Disposition": 'inline' }
 
 function removeParametersFromString(str) {
   const tokens = str.split('?');
@@ -324,23 +325,19 @@ module.exports.receiveCurrentMacTableOfDevice = async function receiveCurrentMac
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideGeneralInformationOfDevices = async function provideGeneralInformationOfDevices (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+module.exports.provideGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
 
   try {
     // Query the DB
     let response = await individualServices.provideGeneralInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -355,22 +352,18 @@ module.exports.provideGeneralInformationOfDevices = async function provideGenera
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideActualEquipmentInformationOfDevices = async function provideActualEquipmentInformationOfDevices (req, res, next, body) {
+module.exports.provideActualEquipmentInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideActualEquipmentInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -385,22 +378,18 @@ module.exports.provideActualEquipmentInformationOfDevices = async function provi
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideEthernetContainerGeneralInformationOfDevices = async function provideEthernetContainerGeneralInformationOfDevices (req, res, next, body) {
+module.exports.provideEthernetContainerGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideEthernetContainerGeneralInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -415,22 +404,18 @@ module.exports.provideEthernetContainerGeneralInformationOfDevices = async funct
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideWireInterfaceGeneralInformationOfDevices = async function provideWireInterfaceGeneralInformationOfDevices  (req, res, next, body) {
+module.exports.provideWireInterfaceGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideWireInterfaceGeneralInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -445,22 +430,18 @@ module.exports.provideWireInterfaceGeneralInformationOfDevices = async function 
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideAirInterfaceGeneralInformationOfDevices = async function provideAirInterfaceGeneralInformationOfDevices (req, res, next, body) {
+module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideAirInterfaceGeneralInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -475,22 +456,18 @@ module.exports.provideAirInterfaceGeneralInformationOfDevices = async function p
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function provideAirInterfaceTransmissionModeListsInformationOfDevices (req, res, next, body) {
+module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideAirInterfaceTransmissionModeListsInformationOfDevices(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -505,22 +482,18 @@ module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = as
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep (req, res, next, body) {
+module.exports.provideListOfInterfacesPerDeviceInNep = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
     let response = await individualServices.provideListOfInterfacesPerDeviceInNep(req.url, body);
 
-    res.set({
-      "Content-Type": "text/csv",
-      "Content-Disposition": 'inline'
-    }).send(response);
+    res.set(csvResponse).send(response);
     
     const responseCode = responseCodeEnum.code.OK; // if no error return OK
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
@@ -535,7 +508,7 @@ module.exports.provideListOfInterfacesPerDeviceInNep = async function provideLis
  * 200 result of content
  * 500 Internal server error - internal NEP error
  */
-module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+module.exports.provideListOfDevicesInNep = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   let startTime = process.hrtime();
   try {
     // Query the DB
@@ -547,8 +520,7 @@ module.exports.provideListOfDevicesInNep = async function provideListOfDevicesIn
     responseBuilder.buildResponse(res, responseCode, response, responseHeader);
     await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);;
   } catch (error) {
-    const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
     return handleError(startTime, error, req, res);
   }
 }
