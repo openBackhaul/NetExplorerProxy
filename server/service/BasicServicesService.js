@@ -45,7 +45,7 @@ const WIRE_INTERFACE = {
   CONFIGURATION: "wire-interface-configuration"
 };
 
-async function processMountNamesInBatches(mountNameList, body, user, requestHeaders, customerJourney, url, timestamp) {
+async function processMountNamesInBatches(mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp) {
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
   let prefix = forwardingConstruct.uuid.split('op')[0];
