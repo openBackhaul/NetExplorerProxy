@@ -46,7 +46,7 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
   let prefix = forwardingConstruct.uuid.split('op')[0];
-  let minimumTime = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-003");
+  let minimumTime = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-006");
   // minimumTime=180;
  
   try {
@@ -66,7 +66,7 @@ const fetchFreshData = async () => {
 };
  
   // Run every X seconds (e.g., every 10 seconds)
-    const X = minimumTime * 1000; // X seconds in milliseconds
+    const X = minimumTime*3600* 1000; // X seconds in milliseconds
     fetchFreshData();
     setInterval(fetchFreshData, X);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
