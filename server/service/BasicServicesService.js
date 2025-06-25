@@ -60,16 +60,12 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   const mountName = mountNameList[index++];
   const start=Date.now();
 
+  console.log(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
 
-  console.log(`🔄 Starting processing for mountName: ${mountName}`);
-  console.log(start);
-
-  const promise = exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName)
+  const promise = exports.doWorkThread(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName,timestamp)
     .then(ccOfMountname => {
       const stop=Date.now();
-      console.log(`✅ Finished retrieving cc for mountName: ${mountName}`);
-      console.log(stop);
-      return exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
+      console.log(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
     })
     .finally(() => {
       activePromises.splice(activePromises.indexOf(promise), 1);
@@ -95,6 +91,7 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     body, user, xCorrelator, traceIndicator++, customerJourney, url
   );
 
+
   if (
     listOfConnectedDevices &&
     Object.keys(listOfConnectedDevices).length > 0 &&
@@ -118,9 +115,20 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
   }
 };
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+  module.exports.doWorkThread = async function doWorkThread(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName,timestamp) {
+  
+   let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName);
+    await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
+    return ccOfMountname;
+  };
+
   module.exports.retriveTheccOfMountname = async function retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
-    let startTime = process.hrtime();
-    let ccOfMountname = getDataFromOtherApp.retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
+  
+    let ccOfMountname =  getDataFromOtherApp.retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
     return ccOfMountname;
   }; 
 
@@ -141,7 +149,8 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
         await processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp); 
         
     
-    }
+    }    
+    console.log(`🔄 After Processing the : ${mountName} `);
   };
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
