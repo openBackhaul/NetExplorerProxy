@@ -1,0 +1,47 @@
+[
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "RF-123456789",
+        "local_id": "123456789",
+
+        "transmission_mode_name": "56000-64-v0",
+        "symbol_rate_reduction_factor": "1",
+        "modulation_scheme_at_lct": "64 QAM",
+        "modulation_scheme": 64,
+        "code_rate": 97,
+        "channel_bandwidth": 56000,
+        "xpic_is_avail": true,
+        "capa_factor": 28340.9
+    },
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "RF-123456789",
+        "local_id": "123456789",
+
+        "transmission_mode_name": "56000-256-v0",
+        "symbol_rate_reduction_factor": "1",
+        "modulation_scheme_at_lct": "256 QAM",
+        "modulation_scheme": 256,
+        "code_rate": 95,
+        "channel_bandwidth": 56000,
+        "xpic_is_avail": true,
+        "capa_factor": 37008.7
+    },
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "RF-123456789",
+        "local_id": "123456789",
+
+        "transmission_mode_name": "56000-16-v0",
+        "symbol_rate_reduction_factor": "1",
+        "modulation_scheme_at_lct": "16 QAM",
+        "modulation_scheme": 16,
+        "code_rate": 97,
+        "channel_bandwidth": 56000,
+        "xpic_is_avail": true,
+        "capa_factor": 18893.9
+    }
+]

@@ -3,22 +3,22 @@ const { Model, DataTypes } = require('sequelize');
 // // Wired connection
 // Table wire_interface_general_info {
 //   // Primary key
-//   mount_name varchar [primary key]
+//   mount-name varchar [primary key]
 //   uuid  varchar [primary key]
-//   local_id  varchar [primary key]
+//   local-id  varchar [primary key]
   
 //   // Timestamp reference
 //   timestamp timestamp
 
 //   // Data
-//   operational_state varchar
-//   administrative_state varchar
-//   original_ltp_name varchar
-//   interface_name varchar
-//   fixed_pmd_kind varchar
-//   interface_status varchar
-//   pmd_kind_cur varchar
-//   pmd_name varchar
+//   operational-state varchar
+//   administrative-state varchar
+//   original-ltp-name varchar
+//   interface-name varchar
+//   fixed-pmd-kind varchar
+//   interface-status varchar
+//   pmd-kind-cur varchar
+//   pmd-name varchar
 //   duplex varchar
 //   speed  varchar
 // }
@@ -29,68 +29,73 @@ exports.init = function (sequelize) {
   WireInterface.init(
     {
       // Primary key
-      mount_name: {
+      "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      uuid: {
+      "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
-      local_id: {
+      "local-id": {
         type: DataTypes.STRING,
         allowNull: true,
         // primaryKey: true,
       },
 
       // Time stamp
-      timestamp: {
+      "timestamp": {
         type: DataTypes.DATE,
         allowNull: false,
       },
 
       // Data
-      operational_state: {
+      "operational-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      administrative_state: {
+      "administrative-state": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      original_ltp_name: {
+      "original-ltp-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_name: {
+      "interface-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      fixed_pmd_kind: {
+      "fixed-pmd-kind": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      interface_status: {
+      "interface-status": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      pmd_kind_cur: {
+      "pmd-kind-cur": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      pmd_name: {
+      "pmd-name": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      duplex: {
+      "duplex": {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      speed: {
+      "speed": {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      "interface-type": {
+        type: DataTypes.STRING,
+        defaultValue: "wire-interface",
+        allowNull: false,
       },
     },
     {
