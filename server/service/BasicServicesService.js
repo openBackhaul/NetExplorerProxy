@@ -60,12 +60,12 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   const mountName = mountNameList[index++];
   const start=Date.now();
 
-  console.log(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
+  logger.info(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
 
   const promise = exports.doWorkThread(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName,timestamp)
     .then(ccOfMountname => {
       const stop=Date.now();
-      console.log(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
+      logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
     })
     .finally(() => {
       activePromises.splice(activePromises.indexOf(promise), 1);
@@ -150,7 +150,7 @@ function sleep(ms) {
         
     
     }    
-    console.log(`🔄 After Processing the : ${mountName} `);
+    logger.info(`🔄 After Processing the : ${mountName} `);
   };
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
@@ -676,7 +676,7 @@ function calculateCapaFactor(transmissionListObj) {
       !transmissionListObj["symbol-rate-reduction-factor"] || 
       !transmissionListObj["modulation-scheme"] || 
       !transmissionListObj["code-rate"]) {
-    console.warn("Missing required parameters for capa-factor calculation");
+    logger.warn("Missing required parameters for capa-factor calculation");
     return null;
   }
 
