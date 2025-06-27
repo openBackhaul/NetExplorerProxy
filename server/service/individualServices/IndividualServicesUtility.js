@@ -150,7 +150,7 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
     // logger.info(operationClientAndFieldParams);
     // logger.info(pathParamList);
     // logger.info(requestHeaders);
-    // logger.info(traceIndicatorIncrementer);
+    logger.info(`Traceindicator incrementer: ${traceIndicatorIncrementer}`);
 
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;

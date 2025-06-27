@@ -71,7 +71,7 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   const start = Date.now();
 
   logger.info(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
-  const promise = exports.doWorkThread(body, user, requestHeaders, customerJourney, url, mountName, timestamp)
+  const promise = exports.doWorkThread(body, user, requestHeaders, taskTraceId, customerJourney, url, mountName, timestamp)
     .then(ccOfMountname => {
       const stop = Date.now();
       logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
@@ -132,8 +132,8 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-module.exports.doWorkThread = async function doWorkThread(body, user, requestHeaders, customerJourney, url, mountName, timestamp) {
-  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator,traceIndicator, customerJourney, url, mountName);
+module.exports.doWorkThread = async function doWorkThread(body, user, requestHeaders, traceIndicator, customerJourney, url, mountName, timestamp) {
+  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, traceIndicator, customerJourney, url, mountName);
   await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
   return ccOfMountname;
 };
