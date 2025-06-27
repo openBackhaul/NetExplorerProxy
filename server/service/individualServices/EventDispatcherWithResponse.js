@@ -56,11 +56,12 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         httpRequestBody,
         params
     );
-    
+
     let responseCode = response.status;
-    logger.warn(`Error in the request: Response code: ${responseCode}`);
     if (responseCode.toString().startsWith("2")) {
+        logger.debug(`Response ok: ${responseCode}`);
         responseData = response.data;
+
     } else {
         logger.error(`Error in the request: Response code: ${responseCode}`);
         if (responseCode == 408) {
