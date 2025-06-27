@@ -131,9 +131,10 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
     consequentOperationClientAndFieldParams.operationName = await OperationClientInterface.getOperationNameAsync(consequentOperationClientAndFieldParams.operationClientUuid);
     consequentOperationClientAndFieldParams.fields = await IndividualServiceUtility.getStringProfileInstanceValue(stringName);
   } catch(error) {
-    console.log(`getConsequentOperationClientAndFieldParams is not success with ${error}`);
+    logger.error(error, "getConsequentOperationClientAndFieldParams is not success");
     return new createHttpError.InternalServerError(`${error}`);
   }
+
   return consequentOperationClientAndFieldParams;
 }
 
@@ -147,9 +148,6 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
 exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
   try {
     logger.info("Trying to forward request:");
-    // logger.info(operationClientAndFieldParams);
-    // logger.info(pathParamList);
-    // logger.info(requestHeaders);
     logger.info(`Traceindicator incrementer: ${traceIndicatorIncrementer}`);
 
     let operationName = operationClientAndFieldParams.operationName;
@@ -168,7 +166,9 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
       "GET",
       params
     );
+
     logger.debug(responseData);
+
     return responseData;
   } catch (error) {
     logger.error(error, "forwardRequest is not success");

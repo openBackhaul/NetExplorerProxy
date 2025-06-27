@@ -5,21 +5,24 @@ const logger = require('./LoggingService.js').getLogger();
 
 
 module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
-    const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
+    const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(
+        url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
 
     return ListOfConnectedDevices;
 }
 
-module.exports.retriveTheCC = async function retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
+module.exports.retriveTheCC = async function retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName) {
     const CyclicDeviceDataRetrievalFromMwdi = "PromptForEmbeddingCausesCyclicDeviceDataRetrievalFromMwdi";
     const DeviceDataFromMwdi = "EmbeddingCausesRequestForDeviceDataFromMwdi";
-    let consequentOperationClientAndFieldParams = await IndividualServiceUtility.getConsequentOperationClientAndFieldParams(CyclicDeviceDataRetrievalFromMwdi, DeviceDataFromMwdi);
+    let consequentOperationClientAndFieldParams = await IndividualServiceUtility.getConsequentOperationClientAndFieldParams(
+        CyclicDeviceDataRetrievalFromMwdi, DeviceDataFromMwdi);
     let pathParamList = [];
-    logger.info(`Mountname is: ${mountName}`);
+
     pathParamList.push(mountName);
-    logger.info(pathParamList, "Mountname is");
 
-    let ccOfMountname = await IndividualServiceUtility.forwardRequest(consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicator);
+    logger.debug(`Forward request for mountname ${mountName}`);
+    let ccOfMountname = await IndividualServiceUtility.forwardRequest(
+        consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer);
 
-    return ccOfMountname;;
+    return ccOfMountname;
 }
