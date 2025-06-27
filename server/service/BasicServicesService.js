@@ -45,6 +45,13 @@ const WIRE_INTERFACE = {
   CONFIGURATION: "wire-interface-configuration"
 };
 
+
+// --------------  Constant Strings Definition----------------------
+const CORE_MODEL_CC = "core-model-1-4:control-construct";
+const EQUIP_AUG_PC = "equipment-augment-1-0:protocol-collection";
+const LTP_AUG_PAC = "ltp-augment-1-0:ltp-augment-pac";
+// -----------------------------------------------------------------
+
 async function processMountNamesInBatches(mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp) {
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
@@ -55,7 +62,10 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   let index = 0;
 
   async function processNext() {
-  if (index >= mountNameList.length) return;
+  if (index >= mountNameList.length) {
+    logger.debug(`Index is > mountnamelist length, so return ${index} >= ${mountNameList.length}`);
+    return;
+  }
 
   const mountName = mountNameList[index++];
   const start=Date.now();
@@ -64,7 +74,7 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
 
   const promise = exports.doWorkThread(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName,timestamp)
     .then(ccOfMountname => {
-      const stop=Date.now();
+      const stop = Date.now();
       logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
     })
     .finally(() => {
@@ -91,14 +101,15 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     body, user, xCorrelator, traceIndicator++, customerJourney, url
   );
 
-
   if (
     listOfConnectedDevices &&
     Object.keys(listOfConnectedDevices).length > 0 &&
     listOfConnectedDevices.hasOwnProperty("message") &&
     listOfConnectedDevices.message["mount-name-list"].length > 0
   ) {
+    logger.info("List of connected device exists");
     const mountNameList = listOfConnectedDevices.message["mount-name-list"];
+    logger.info(mountNameList);
     const requestHeaders = {
       user: user,
       xCorrelator: xCorrelator,
@@ -112,6 +123,8 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     await processMountNamesInBatches(
       mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp
     );
+  } else {
+    logger.warn(listOfConnectedDevices, "List of connected device is empty or wrong");
   }
 };
 
@@ -119,189 +132,190 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-  module.exports.doWorkThread = async function doWorkThread(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName,timestamp) {
+module.exports.doWorkThread = async function doWorkThread(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName,timestamp) {
   
-   let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName);
-    await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
-    return ccOfMountname;
-  };
+  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName);
+  await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
+  return ccOfMountname;
+};
 
-  module.exports.retriveTheccOfMountname = async function retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
-  
-    let ccOfMountname =  getDataFromOtherApp.retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
-    return ccOfMountname;
-  }; 
+module.exports.retriveTheccOfMountname = async function retriveTheccOfMountname(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
+  let ccOfMountname = getDataFromOtherApp.retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName);
+  return ccOfMountname;
+}; 
 
 
-  module.exports.processTheccOfMountname = async function processTheccOfMountname(ccOfMountname,timestamp,mountName) {
-    
-    
-    if(ccOfMountname.hasOwnProperty("core-model-1-4:control-construct")){
-        
-        await processGeneralInfo(ccOfMountname, mountName, timestamp);
+module.exports.processTheccOfMountname = async function processTheccOfMountname(ccOfMountname, timestamp, mountName) {
+  logger.info(`Retrieving data for ${mountName} with timestamp: ${timestamp}`);
+  if (ccOfMountname.hasOwnProperty(CORE_MODEL_CC)) {
+    await processGeneralInfo(ccOfMountname, mountName, timestamp);
+    await processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
+    await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
+    await processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
+    await processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp); 
+  } else {
+    logger.error(`Not able to extract data from CC of ${mountName}`);
+  }
 
-        await processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
-
-        await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
-            
-        await processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
-
-        await processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp); 
-        
-    
-    }    
-    logger.info(`🔄 After Processing the : ${mountName} `);
-  };
+  logger.info(`🔄 After Processing the : ${mountName}`);
+};
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
+  logger.info(`Processing General info for ${mountName}`);
   const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp)
-  .catch((err) => logger.error(`${err}`));
-  if(deviceGenereInfo){
-  await dbHandler.updateDeviceInfo(deviceGenereInfo)
-  .catch((err) => logger.error(`${err}`));
+    .catch((err) => logger.error(err));
+
+  if (deviceGenereInfo) {
+    await dbHandler.updateDeviceInfo(deviceGenereInfo).catch((err) => logger.error(err));
   }
 }
 
 async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) {
+  logger.info(`Processing Equipment info for ${mountName}`);
   const equipmentGeneralInfo = await extractEquipmentData(ccOfMountname, mountName, timestamp)
     .catch((err) => logger.error(`${err}`));
-    if(equipmentGeneralInfo){
-    await dbHandler.updateEquipmentInfo(equipmentGeneralInfo)
-    .catch((err) => logger.error(`${err}`));
-    }
+  
+  if (equipmentGeneralInfo) {
+    await dbHandler.updateEquipmentInfo(equipmentGeneralInfo).catch((err) => logger.error(err));
+  }
 }
 
 async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
+  logger.info(`Processing Wire interface info for ${mountName}`);
   const wireinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
 
   const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
-      wireinterfceLtpList,
-      mountName,
-      timestamp
-    ).catch((err) => logger.error(`${err}`));
-    
+    wireinterfceLtpList,
+    mountName,
+    timestamp
+  ).catch((err) => logger.error(err));
+
   if (wireInterfaceGeneralInfo) {
     await dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
-      .catch((err) => logger.error(`${err}`));
+      .catch((err) => logger.error(err));
   }
 }
 
 async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
+  logger.info(`Processing Air interface info for ${mountName}`);
   const airinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
- const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
-   airinterfceLtpList,
-   mountName,
-   timestamp
- ).catch((err) => logger.error(`${err}`));
- 
-if (airContainerGeneralInfoAndTransmissionInfo) {
-  if (airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]) {
-    await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
-      .catch((err) => logger.error(`${err}`));
-  }
+  const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
+    airinterfceLtpList,
+    mountName,
+    timestamp
+  ).catch((err) => logger.error(`${err}`));
+
+  if (airContainerGeneralInfoAndTransmissionInfo) {
+    if (airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]) {
+      await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
+        .catch((err) => logger.error(err));
+    }
   
-  if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]) {
-    await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
-      .catch((err) => logger.error(`${err}`));
+    if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]) {
+      await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
+        .catch((err) => logger.error(err));
+    }
   }
-}
 }
 
 async function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp) {
+  logger.info(`Processing Ethernet info for ${mountName}`);
   const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
 
- const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
-   ethInterfaceLtpList,
-   mountName,
-   timestamp
-  ).catch((err) => logger.error(`${err}`));
+  const ethernetContainerGeneralInfo = await extractEthernetContainerInfo(
+    ethInterfaceLtpList,
+    mountName,
+    timestamp
+  ).catch((err) => logger.error(err));
  
   if (ethernetContainerGeneralInfo) {
-      await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
-    .catch((err) => logger.error(`${err}`));
+    await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
+      .catch((err) => logger.error(err));
   } 
 }
 
 async function extractEquipmentData(ccOfMountname, mountName, timestamp) {
-       const result = [];
+  const result = [];
 
-      // Check if ccOfMountname has the required properties
-      if (ccOfMountname && 
-          ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
-          Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
-          ccOfMountname["core-model-1-4:control-construct"].length > 0) {
-          
-          const equipmentArray = ccOfMountname["core-model-1-4:control-construct"][0] && 
-                                ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment") && 
-                                Array.isArray(ccOfMountname["core-model-1-4:control-construct"][0].equipment) ? 
-                                ccOfMountname["core-model-1-4:control-construct"][0].equipment : [];
+  // Check if ccOfMountname has the required properties
+  if (ccOfMountname && 
+      ccOfMountname.hasOwnProperty(CORE_MODEL_CC) && 
+      Array.isArray(ccOfMountname[CORE_MODEL_CC]) && 
+      ccOfMountname[CORE_MODEL_CC].length > 0) {
+      
+    const equipmentArray = ccOfMountname[CORE_MODEL_CC][0] && 
+                           ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty("equipment") && 
+                           Array.isArray(ccOfMountname[CORE_MODEL_CC][0].equipment) ? 
+                           ccOfMountname[CORE_MODEL_CC][0].equipment : [];
 
-          for (const equipment of equipmentArray) {
-
-
-              if (!equipment || !equipment.hasOwnProperty("actual-equipment") || !equipment["actual-equipment"]) continue;
-
-              // Check if required nested properties exist
-              if ( !equipment["actual-equipment"].hasOwnProperty("manufactured-thing")) continue;
-
-              const manufacturedThing = equipment["actual-equipment"]["manufactured-thing"];
-              
-
-              const equipmentType = manufacturedThing["equipment-type"];
-              const manufacturerProps = manufacturedThing["manufacturer-properties"];
-              
-              // Create object with only properties that exist
-              const equipmentObj = {
-                  "mount_name": mountName,
-                  "timestamp": timestamp
-              };
-              
-              // Only add properties if they exist
-              if (equipment.hasOwnProperty("uuid")) {
-                  equipmentObj["uuid"] = equipment["uuid"];
-              }
-              
-              if (equipment.hasOwnProperty("local-id")) {
-                  equipmentObj["local_id"] = equipment["local-id"];
-              }
-              
-              if (equipmentType && equipmentType.hasOwnProperty("version")) {
-                  equipmentObj["version"] = equipmentType["version"];
-              }
-              
-              if (equipmentType && equipmentType.hasOwnProperty("description")) {
-                  equipmentObj["description"] = equipmentType["description"];
-              }
-              
-              if (equipmentType && equipmentType.hasOwnProperty("model-identifier")) {
-                  equipmentObj["model_identifier"] = equipmentType["model-identifier"];
-              }
-              
-              if (equipmentType && equipmentType.hasOwnProperty("part-type-identifier")) {
-                  equipmentObj["part_type_identifier"] = equipmentType["part-type-identifier"];
-              }
-              
-              if (equipmentType && equipmentType.hasOwnProperty("type-name")) {
-                  equipmentObj["type_name"] = equipmentType["type-name"];
-              }
-              
-              if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-name")) {
-                  equipmentObj["manufacturer_name"] = manufacturerProps["manufacturer-name"];
-              }
-              
-              if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-identifier")) {
-                  equipmentObj["manufacturer_identifier"] = manufacturerProps["manufacturer-identifier"];
-              }
-              
-              result.push(equipmentObj);
-          }
+    for (const equipment of equipmentArray) {
+      if (!equipment || !equipment.hasOwnProperty("actual-equipment") || !equipment["actual-equipment"]) {
+        continue;
       }
 
-      return result;
+      // Check if required nested properties exist
+      if ( !equipment["actual-equipment"].hasOwnProperty("manufactured-thing")) {
+        continue 
+      };
+
+      const manufacturedThing = equipment["actual-equipment"]["manufactured-thing"];
+      
+
+      const equipmentType = manufacturedThing["equipment-type"];
+      const manufacturerProps = manufacturedThing["manufacturer-properties"];
+      
+      // Create object with only properties that exist
+      const equipmentObj = {
+        "mount_name": mountName,
+        "timestamp": timestamp
+      };
+      
+      // Only add properties if they exist
+      if (equipment.hasOwnProperty("uuid")) {
+        equipmentObj["uuid"] = equipment["uuid"];
+      }
+      
+      if (equipment.hasOwnProperty("local-id")) {
+        equipmentObj["local_id"] = equipment["local-id"];
+      }
+      
+      if (equipmentType && equipmentType.hasOwnProperty("version")) {
+        equipmentObj["version"] = equipmentType["version"];
+      }
+      
+      if (equipmentType && equipmentType.hasOwnProperty("description")) {
+          equipmentObj["description"] = equipmentType["description"];
+      }
+      
+      if (equipmentType && equipmentType.hasOwnProperty("model-identifier")) {
+        equipmentObj["model_identifier"] = equipmentType["model-identifier"];
+      }
+      
+      if (equipmentType && equipmentType.hasOwnProperty("part-type-identifier")) {
+            equipmentObj["part_type_identifier"] = equipmentType["part-type-identifier"];
+        }
+        
+        if (equipmentType && equipmentType.hasOwnProperty("type-name")) {
+            equipmentObj["type_name"] = equipmentType["type-name"];
+        }
+        
+        if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-name")) {
+            equipmentObj["manufacturer_name"] = manufacturerProps["manufacturer-name"];
+        }
+        
+        if (manufacturerProps && manufacturerProps.hasOwnProperty("manufacturer-identifier")) {
+            equipmentObj["manufacturer_identifier"] = manufacturerProps["manufacturer-identifier"];
+        }
+        
+        result.push(equipmentObj);
+    }
+  }
+
+  return result;
 
 }
  
@@ -341,10 +355,10 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
         ethObj["administrative_state"] = layerProtocol["administrative-state"];
       }
 
-      if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") && 
-          ltp["ltp-augment-1-0:ltp-augment-pac"] && 
-          ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
-        ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+      if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) && 
+          ltp[LTP_AUG_PAC] && 
+          ltp[LTP_AUG_PAC].hasOwnProperty("original-ltp-name")) {
+        ethObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
       }
 
       // Add ethernet container specific attributes
@@ -378,34 +392,37 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
 
 async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpList, mountName, timestamp) {
   const airContainerGeneralInfo = [];
-  const returnObj={};
-    const transMissionListInfo = [];
+  const returnObj = {};
+  const transMissionListInfo = [];
  
   for (let ltp of airinterfceLtpList) {
-      const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
-      const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
-      const augumentContainerPac=ltp["ltp-augment-1-0:ltp-augment-pac"];
+    const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
+    const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
+    const augumentContainerPac=ltp[LTP_AUG_PAC];
+
+    let ethObj = {
+      "mount_name": mountName,
+      "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
+      "timestamp": timestamp
+    };
  
-          let ethObj = {
-              "mount_name": mountName,
-              "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
-              "timestamp": timestamp
-          };
- 
-          if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
-              ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
-          }
-          if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-              ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-          }
-          if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-              ethObj["administrative_state"] = layerProtocol["administrative-state"];
-          }
-          if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") &&
-              ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
-              ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
-          }
- 
+    if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
+      ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+    }
+    
+    if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
+      ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+    }
+
+    if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
+      ethObj["administrative_state"] = layerProtocol["administrative-state"];
+    }
+
+    if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
+      ltp[LTP_AUG_PAC].hasOwnProperty("original-ltp-name")) {
+          ethObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
+      }
+
       // Add air container specific attributes
       if (airContainerPac) {
           const configuration = airContainerPac[AIR_INTERFACE.CONFIGURATION];
@@ -475,18 +492,19 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
         }
         airContainerGeneralInfo.push(ethObj);
   }
-   returnObj["airContainerGeneralInfo"]=airContainerGeneralInfo;
-   returnObj["transMissionListInfo"]=transMissionListInfo;
- 
-    return returnObj;
+
+  returnObj["airContainerGeneralInfo"]=airContainerGeneralInfo;
+  returnObj["transMissionListInfo"]=transMissionListInfo;
+
+  return returnObj;
 }
- 
+
 async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, timestamp) {
   const wireContainerGeneralInfo = [];
- 
-for (let ltp of wireinterfceLtpList) {
-  // Check if ltp has the required properties
-      if (ltp && 
+
+  for (let ltp of wireinterfceLtpList) {
+    // Check if ltp has the required properties
+    if (ltp && 
           ltp.hasOwnProperty(onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL) && 
           Array.isArray(ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL]) && 
           ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL].length > 0) {
@@ -576,10 +594,10 @@ async function extractIfCapabilityNotFound(configuration, status, mountName, tim
           ethObj["administrative_state"] = layerProtocol["administrative-state"];
       }
 
-      if (ltp && ltp.hasOwnProperty("ltp-augment-1-0:ltp-augment-pac") && 
-          ltp["ltp-augment-1-0:ltp-augment-pac"] && 
-          ltp["ltp-augment-1-0:ltp-augment-pac"].hasOwnProperty("original-ltp-name")) {
-          ethObj["original_ltp_name"] = ltp["ltp-augment-1-0:ltp-augment-pac"]["original-ltp-name"];
+      if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) && 
+          ltp[LTP_AUG_PAC] && 
+          ltp[LTP_AUG_PAC].hasOwnProperty("original-ltp-name")) {
+          ethObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
       }
 
 }
@@ -614,12 +632,12 @@ async function extractGeneralInfo(ccOfMountname,mountName,timestamp){
 
     // Check if required properties exist before accessing
     if (ccOfMountname && 
-        ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
-        Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
-        ccOfMountname["core-model-1-4:control-construct"].length > 0 &&
-        ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment-augment-1-0:control-construct-pac")) {
+        ccOfMountname.hasOwnProperty(CORE_MODEL_CC) && 
+        Array.isArray(ccOfMountname[CORE_MODEL_CC]) && 
+        ccOfMountname[CORE_MODEL_CC].length > 0 &&
+        ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty("equipment-augment-1-0:control-construct-pac")) {
         
-        const deviceModelData = ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:control-construct-pac"];
+        const deviceModelData = ccOfMountname[CORE_MODEL_CC][0]["equipment-augment-1-0:control-construct-pac"];
         
         if (deviceModelData && deviceModelData.hasOwnProperty("device-model-name")) {
             deviceModelName = deviceModelData["device-model-name"];
@@ -632,18 +650,18 @@ async function extractGeneralInfo(ccOfMountname,mountName,timestamp){
 
     // Check for system name with nested property checks
     if (ccOfMountname && 
-        ccOfMountname.hasOwnProperty("core-model-1-4:control-construct") && 
-        Array.isArray(ccOfMountname["core-model-1-4:control-construct"]) && 
-        ccOfMountname["core-model-1-4:control-construct"].length > 0 &&
-        ccOfMountname["core-model-1-4:control-construct"][0].hasOwnProperty("equipment-augment-1-0:protocol-collection") &&
-        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"].hasOwnProperty("protocol") &&
-        Array.isArray(ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"]) &&
-        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"].length > 0 &&
-        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0].hasOwnProperty("lldp-1-0:lldp-pac") &&
-        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"].hasOwnProperty("local-system-data") &&
-        ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"].hasOwnProperty("system-name")) {
+        ccOfMountname.hasOwnProperty(CORE_MODEL_CC) && 
+        Array.isArray(ccOfMountname[CORE_MODEL_CC]) && 
+        ccOfMountname[CORE_MODEL_CC].length > 0 &&
+        ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty(EQUIP_AUG_PC) &&
+        ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC].hasOwnProperty("protocol") &&
+        Array.isArray(ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"]) &&
+        ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"].length > 0 &&
+        ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"][0].hasOwnProperty("lldp-1-0:lldp-pac") &&
+        ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"][0]["lldp-1-0:lldp-pac"].hasOwnProperty("local-system-data") &&
+        ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"].hasOwnProperty("system-name")) {
         
-        systemName = ccOfMountname["core-model-1-4:control-construct"][0]["equipment-augment-1-0:protocol-collection"]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"]["system-name"];
+        systemName = ccOfMountname[CORE_MODEL_CC][0][EQUIP_AUG_PC]["protocol"][0]["lldp-1-0:lldp-pac"]["local-system-data"]["system-name"];
     }
 
     // Create result object with only required and available properties
@@ -671,7 +689,7 @@ async function extractGeneralInfo(ccOfMountname,mountName,timestamp){
 
 function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist
-  if (!transmissionListObj || 
+  if (!transmissionListObj ||
       !transmissionListObj["channel-bandwidth"] || 
       !transmissionListObj["symbol-rate-reduction-factor"] || 
       !transmissionListObj["modulation-scheme"] || 
@@ -685,19 +703,19 @@ function calculateCapaFactor(transmissionListObj) {
   const symbolRateReductionFactor = parseFloat(transmissionListObj["symbol-rate-reduction-factor"]);
   const modulationScheme = parseFloat(transmissionListObj["modulation-scheme"]);
   const codeRate = parseFloat(transmissionListObj["code-rate"]);
-  
+
   // Calculate log2 of modulation scheme (number of states)
   const log2ModulationScheme = Math.log2(modulationScheme);
-  
+
   // Constant factor (1/1.15 kbps)
   const constantFactor = 1/1.15;
-  
+
   // Calculate capa-factor in mbps
   const capaFactor = ((channelBandwidth / symbolRateReductionFactor) * 
                       log2ModulationScheme * 
                       codeRate * 
                       constantFactor) / 1000;
-  
+
   // Add the calculated capa-factor to traMis
   return capaFactor;
 }

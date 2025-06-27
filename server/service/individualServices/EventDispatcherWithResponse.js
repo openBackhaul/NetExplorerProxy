@@ -50,23 +50,29 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         params
         );
     let responseCode = response.status;
+
     if (responseCode.toString().startsWith("2")) {
         responseData = response.data;
-    } else 
-    if (responseCode == 408) {
-        ExecutionAndTraceService.recordServiceRequestFromClient(serverApplicationName, serverApplicationReleaseNumber, xCorrelator, traceIndicator, user, originator, operationName, responseCode, httpRequestBody, response.data)
-            .catch((error) => console.log(`record service request ${JSON.stringify({
-                xCorrelator,
-                traceIndicator,
-                user,
-                originator,
-                serverApplicationName,
-                serverApplicationReleaseNumber,
-                operationName,
-                responseCode,
-                reqBody: httpRequestBody,
-                resBody: response.data
-            })} failed with error: ${error.message}`));
+    } else {
+        console.error("Error in the request", responseCode);
+        if (responseCode == 408) {
+            ExecutionAndTraceService.recordServiceRequestFromClient(serverApplicationName, serverApplicationReleaseNumber, xCorrelator, traceIndicator, user, originator, operationName, responseCode, httpRequestBody, response.data)
+                .catch((error) => console.log(`record service request ${JSON.stringify({
+                    xCorrelator,
+                    traceIndicator,
+                    user,
+                    originator,
+                    serverApplicationName,
+                    serverApplicationReleaseNumber,
+                    operationName,
+                    responseCode,
+                    reqBody: httpRequestBody,
+                    resBody: response.data
+                })} failed with error: ${error.message}`));
+        } else {
+            console.error(responseCode);
+        }
     }
+
     return responseData;
 }

@@ -14,6 +14,9 @@ const createHttpError = require('http-errors');
 const fileSystem = require('fs');
 const AsyncLock = require('async-lock');
 const lock = new AsyncLock();
+
+const logger = require('../LoggingService.js').getLogger();
+
 /**
  * This function fetches the integer value from the integer profile based on the expected integer name.
  * @param {String} expectedIntegerName name of the integer profile.
@@ -138,6 +141,12 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
  **/
 exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
   try {
+    logger.info("Trying to forward request:");
+    logger.info(operationClientAndFieldParams);
+    logger.info(pathParamList);
+    logger.info(requestHeaders);
+    logger.info(traceIndicatorIncrementer);
+
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
@@ -152,9 +161,10 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
       "GET",
       params
     );
+    logger.debug(responseData);
     return responseData;
   } catch (error) {
-    console.log(`forwardRequest is not success with ${error}`);
+    logger.error(error, "forwardRequest is not success");
     return new createHttpError.InternalServerError(`${error}`);
   }
 }
