@@ -1,7 +1,7 @@
 'use strict';
 const requestHandler = require('./individualServices/RequestHandler');
 const IndividualServiceUtility = require('./individualServices/IndividualServicesUtility');
-
+const logger = require('./LoggingService.js').getLogger();
 
 
 module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
