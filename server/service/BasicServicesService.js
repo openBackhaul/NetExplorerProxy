@@ -52,7 +52,7 @@ const EQUIP_AUG_PC = "equipment-augment-1-0:protocol-collection";
 const LTP_AUG_PAC = "ltp-augment-1-0:ltp-augment-pac";
 // -----------------------------------------------------------------
 
-async function processMountNamesInBatches(mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp) {
+async function processMountNamesInBatches(mountNameList, requestHeaders, taskTraceId, timestamp) {
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
   let prefix = forwardingConstruct.uuid.split('op')[0];
@@ -71,7 +71,7 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
     const start = Date.now();
 
     logger.info(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
-    const promise = exports.doWorkThread(body, user, requestHeaders, taskTraceId, customerJourney, url, mountName, timestamp)
+    const promise = exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp)
       .then(ccOfMountname => {
         const stop = Date.now();
         logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
@@ -118,11 +118,10 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
       customerJourney
     };
 
-    // let taskTraceId = traceIndicator; // Start from the current traceIndicator
-
     // ✅ Call the batch processor here
+    traceIncrement += 1;
     await processMountNamesInBatches(
-      mountNameList, body, user, requestHeaders, traceIncrement++, customerJourney, url, timestamp
+      mountNameList, requestHeaders, traceIncrement++, timestamp
     );
   } else {
     logger.warn(listOfConnectedDevices, "List of connected device is empty or wrong");
@@ -133,8 +132,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-module.exports.doWorkThread = async function doWorkThread(body, user, requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
-  // let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, traceIndicator, customerJourney, url, mountName);
+module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
   let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
   await exports.processTheccOfMountname(ccOfMountName, timestamp, mountName);
   return ccOfMountName;
