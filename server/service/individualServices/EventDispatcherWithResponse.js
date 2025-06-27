@@ -51,18 +51,19 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
     logger.info(params);
     let response = await RestRequestBuilder.BuildAndTriggerRestRequest(
         operationClientUuid,
-        httpMethod, 
-        httpRequestHeader, 
-        httpRequestBody, 
-        params
+        httpMethod,
+        httpRequestHeader,
+        httpRequestBody,
+        ""
+        // params
     );
     
     let responseCode = response.status;
-    logger.warn(`Error in the request: Response code: ${responsecode}`);
+    logger.warn(`Error in the request: Response code: ${responseCode}`);
     if (responseCode.toString().startsWith("2")) {
         responseData = response.data;
     } else {
-        logger.error(`Error in the request: Response code: ${responsecode}`);
+        logger.error(`Error in the request: Response code: ${responseCode}`);
         if (responseCode == 408) {
             ExecutionAndTraceService.recordServiceRequestFromClient(serverApplicationName, serverApplicationReleaseNumber, xCorrelator, traceIndicator, user, originator, operationName, responseCode, httpRequestBody, response.data)
                 .catch((error) => console.log(`record service request ${JSON.stringify({
