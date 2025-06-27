@@ -154,14 +154,14 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
     let params = await IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
-    let incr = Math.random(3000);
+    // let incr = Math.random(3000);
     let responseData = await eventDispatcher.dispatchEvent(
       operationClientUuid,
       {},
       requestHeaders.user,
       requestHeaders.xCorrelator,
-      "1.3.1" + incr,
-      // requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
+      // "1.3.1" + incr,
+      requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
       requestHeaders.customerJourney,
       "GET",
       params

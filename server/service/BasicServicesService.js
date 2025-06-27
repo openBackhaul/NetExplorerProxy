@@ -93,12 +93,13 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   await Promise.all(activePromises);
 }
 
+let traceIncrement= 1;
 module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
 
   const timestamp = Date.now();
   const listOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(
-    body, user, xCorrelator, traceIndicator++, customerJourney, url
-  ); // TODO @ll
+    body, user, xCorrelator, traceIndicator, customerJourney, url
+  );
 
   if (
     listOfConnectedDevices &&
@@ -110,18 +111,18 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     logger.info("List of connected device exists");
     const mountNameList = listOfConnectedDevices.message["mount-name-list"];
     logger.info(mountNameList);
-    const requestHeaders = {
-      user: user,
-      xCorrelator: xCorrelator,
-      traceIndicator: traceIndicator,
-      customerJourney: customerJourney
+    const requestHeaders = { // using shorthand
+      user,
+      xCorrelator,
+      traceIndicator,
+      customerJourney
     };
 
-    let taskTraceId = traceIndicator; // Start from the current traceIndicator
+    // let taskTraceId = traceIndicator; // Start from the current traceIndicator
 
     // ✅ Call the batch processor here
     await processMountNamesInBatches(
-      mountNameList, body, user, requestHeaders, taskTraceId, customerJourney, url, timestamp
+      mountNameList, body, user, requestHeaders, traceIncrement++, customerJourney, url, timestamp
     );
   } else {
     logger.warn(listOfConnectedDevices, "List of connected device is empty or wrong");
@@ -427,18 +428,23 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
       if (configuration && configuration.hasOwnProperty("transmission-mode-min")) {
         ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
       }
+
       if (configuration && configuration.hasOwnProperty("transmission-mode-max")) {
         ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
       }
+
       if (configuration && configuration.hasOwnProperty("xpic-is-on")) {
         ethObj["xpic_is_on"] = configuration["xpic-is-on"];
       }
+
       if (configuration && configuration.hasOwnProperty("power-is-on")) {
         ethObj["power_is_on"] = configuration["power-is-on"];
       }
+
       if (configuration && configuration.hasOwnProperty("transmitter-is-on")) {
         ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
       }
+
       if (status && status.hasOwnProperty("interface-status")) {
         const fullStatus = status["interface-status"];
         const lastUnderscore = fullStatus.lastIndexOf("_");
@@ -457,20 +463,33 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
           traMis["timestamp"] = timestamp;
 
           // Add existing properties with null checks
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("transmission-mode-name"))
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("transmission-mode-name")) {
             traMis["transmission_mode_name"] = transmissionListObj["transmission-mode-name"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("symbol-rate-reduction-factor"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("symbol-rate-reduction-factor")) {
             traMis["symbol_rate_reduction_factor"] = transmissionListObj["symbol-rate-reduction-factor"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("channel-bandwidth"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("channel-bandwidth")) {
             traMis["channel_bandwidth"] = transmissionListObj["channel-bandwidth"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme-name-at-lct"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme-name-at-lct")) {
             traMis["modulation_scheme_at_lct"] = transmissionListObj["modulation-scheme-name-at-lct"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("modulation-scheme")) {
             traMis["modulation_scheme"] = transmissionListObj["modulation-scheme"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("code-rate"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("code-rate")) {
             traMis["code_rate"] = transmissionListObj["code-rate"];
-          if (transmissionListObj && transmissionListObj.hasOwnProperty("xpic-is-avail"))
+          }
+
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("xpic-is-avail")) {
             traMis["xpic_is_avail"] = transmissionListObj["xpic-is-avail"];
+          }
 
           // Calculate and add capa-factor
           const capaFactor = calculateCapaFactor(transmissionListObj);
@@ -540,8 +559,6 @@ async function extractWireInterfaceGeneralInfo(wireinterfceLtpList, mountName, t
         }
       }
     }
-
-
   }
 
   return wireContainerGeneralInfo;
