@@ -4,22 +4,22 @@ const IndividualServiceUtility = require('./individualServices/IndividualService
 
 
 
-module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url)
- {
+module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
+    const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
 
-        const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
-    
-        return ListOfConnectedDevices;
- }
-module.exports.retriveTheCC = async function retriveTheCC(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
+    return ListOfConnectedDevices;
+}
 
-       const CyclicDeviceDataRetrievalFromMwdi = "PromptForEmbeddingCausesCyclicDeviceDataRetrievalFromMwdi";
-       const DeviceDataFromMwdi = "EmbeddingCausesRequestForDeviceDataFromMwdi";
-       let consequentOperationClientAndFieldParams = await IndividualServiceUtility.getConsequentOperationClientAndFieldParams(CyclicDeviceDataRetrievalFromMwdi, DeviceDataFromMwdi);
-       let pathParamList = [];
-       pathParamList.push(mountName);
+module.exports.retriveTheCC = async function retriveTheCC(body, user, requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName) {
+    const CyclicDeviceDataRetrievalFromMwdi = "PromptForEmbeddingCausesCyclicDeviceDataRetrievalFromMwdi";
+    const DeviceDataFromMwdi = "EmbeddingCausesRequestForDeviceDataFromMwdi";
+    let consequentOperationClientAndFieldParams = await IndividualServiceUtility.getConsequentOperationClientAndFieldParams(CyclicDeviceDataRetrievalFromMwdi, DeviceDataFromMwdi);
+    let pathParamList = [];
+    logger.info(`Mountname is: ${mountName}`);
+    pathParamList.push(mountName);
+    logger.info(pathParamList, "Mountname is");
 
-       let ccOfMountname = await IndividualServiceUtility.forwardRequest(consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicator);
-       
-       return ccOfMountname;;
+    let ccOfMountname = await IndividualServiceUtility.forwardRequest(consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicator);
+
+    return ccOfMountname;;
 }

@@ -132,8 +132,7 @@ function sleep(ms) {
 }
 
 module.exports.doWorkThread = async function doWorkThread(body, user, requestHeaders, customerJourney, url, mountName, timestamp) {
-  
-  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName);
+  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, 1, customerJourney, url, mountName);
   await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
   return ccOfMountname;
 };
