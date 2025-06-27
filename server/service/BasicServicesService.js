@@ -71,7 +71,7 @@ async function processMountNamesInBatches(mountNameList, body, user, requestHead
   const start = Date.now();
 
   logger.info(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
-  const promise = exports.doWorkThread(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName, timestamp)
+  const promise = exports.doWorkThread(body, user, requestHeaders, customerJourney, url, mountName, timestamp)
     .then(ccOfMountname => {
       const stop = Date.now();
       logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
@@ -104,6 +104,7 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     listOfConnectedDevices &&
     Object.keys(listOfConnectedDevices).length > 0 &&
     listOfConnectedDevices.hasOwnProperty("message") &&
+    listOfConnectedDevices.message.hasOwnProperty("mount-name-list") &&
     listOfConnectedDevices.message["mount-name-list"].length > 0
   ) {
     logger.info("List of connected device exists");
@@ -132,7 +133,7 @@ function sleep(ms) {
 }
 
 module.exports.doWorkThread = async function doWorkThread(body, user, requestHeaders, customerJourney, url, mountName, timestamp) {
-  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, 1, customerJourney, url, mountName);
+  let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator,traceIndicator, customerJourney, url, mountName);
   await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
   return ccOfMountname;
 };
