@@ -86,6 +86,8 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
  */
 exports.getQueryAndPathParameter = async function (operationName, pathParamList, fields) {
   try {
+    logger.info("getQuery And Path Param");
+    logger.info(pathParamList);
     let pathParams = new Map();
     let queryParams = {};
     let params = {};
@@ -96,6 +98,8 @@ exports.getQueryAndPathParameter = async function (operationName, pathParamList,
         pathParams.set(pathParamMatches[i], pathParamList[i]);
       }
       params.path = pathParams;
+    } else {
+      logger.error("pathparam seem empty");
     }
 
     if (fields !== "") {
@@ -106,8 +110,9 @@ exports.getQueryAndPathParameter = async function (operationName, pathParamList,
     return params;
 
   } catch (error) {
-    console.log(`getQueryAndPathParameter is not success with ${error}`);
-    return new createHttpError.InternalServerError(`${error}`);    }
+    logger.error(error, "getQueryAndPathParameter is not success");
+    return new createHttpError.InternalServerError(`${error}`);
+  }
 }
 
 
