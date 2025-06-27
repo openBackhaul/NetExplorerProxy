@@ -54,8 +54,7 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         httpMethod,
         httpRequestHeader,
         httpRequestBody,
-        ""
-        // params
+        params
     );
     
     let responseCode = response.status;

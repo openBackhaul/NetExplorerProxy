@@ -142,21 +142,23 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
 exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
   try {
     logger.info("Trying to forward request:");
-    logger.info(operationClientAndFieldParams);
-    logger.info(pathParamList);
-    logger.info(requestHeaders);
-    logger.info(traceIndicatorIncrementer);
+    // logger.info(operationClientAndFieldParams);
+    // logger.info(pathParamList);
+    // logger.info(requestHeaders);
+    // logger.info(traceIndicatorIncrementer);
 
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
     let params = await IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
+    let incr = Math.random(3000);
     let responseData = await eventDispatcher.dispatchEvent(
       operationClientUuid,
       {},
       requestHeaders.user,
       requestHeaders.xCorrelator,
-      requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
+      "1.3.1" + incr,
+      // requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
       requestHeaders.customerJourney,
       "GET",
       params
