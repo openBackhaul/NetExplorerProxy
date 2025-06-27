@@ -91,11 +91,11 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     body, user, xCorrelator, traceIndicator++, customerJourney, url
   );
 
-
   if (
     listOfConnectedDevices &&
     Object.keys(listOfConnectedDevices).length > 0 &&
     listOfConnectedDevices.hasOwnProperty("message") &&
+    listOfConnectedDevices.message.hasOwnProperty("mount-name-list") &&
     listOfConnectedDevices.message["mount-name-list"].length > 0
   ) {
     const mountNameList = listOfConnectedDevices.message["mount-name-list"];
@@ -121,7 +121,7 @@ function sleep(ms) {
 
   module.exports.doWorkThread = async function doWorkThread(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName,timestamp) {
   
-   let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator, customerJourney, url, mountName);
+   let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator,traceIndicator, customerJourney, url, mountName);
     await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
     return ccOfMountname;
   };
