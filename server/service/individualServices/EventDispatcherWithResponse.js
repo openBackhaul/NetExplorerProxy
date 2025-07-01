@@ -9,6 +9,8 @@ const RequestHeader = require('onf-core-model-ap/applicationPattern/rest/client/
 const RestRequestBuilder = require('onf-core-model-ap/applicationPattern/rest/client/RequestBuilder');
 const ExecutionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
 
+const logger = require('../LoggingService.js').getLogger();
+
 /**
  * This function formulates the request body based on the operation name and application 
  * @param {String} operationClientUuid uuid of the client operation that needs to be addressed
@@ -32,6 +34,7 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
     let serverApplicationReleaseNumber = await HttpClientInterface.getReleaseNumberAsync(httpClientUuid[0]);
     let originator = await HttpServerInterface.getApplicationNameAsync();
 
+    logger.info("RequestorHeader:");
     let httpRequestHeader = new RequestHeader(
         user, 
         originator,
@@ -39,34 +42,46 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         traceIndicator, 
         customerJourney, 
         operationKey
-        );
+    );
     httpRequestHeader = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(httpRequestHeader);
-    
+    logger.info(httpRequestHeader);
+    logger.info(operationClientUuid);
+    logger.info(httpMethod);
+    logger.info(httpRequestBody)
+    logger.info(params);
     let response = await RestRequestBuilder.BuildAndTriggerRestRequest(
         operationClientUuid,
-        httpMethod, 
-        httpRequestHeader, 
-        httpRequestBody, 
+        httpMethod,
+        httpRequestHeader,
+        httpRequestBody,
         params
-        );
+    );
+
     let responseCode = response.status;
     if (responseCode.toString().startsWith("2")) {
+        logger.debug(`Response ok: ${responseCode}`);
         responseData = response.data;
-    } else 
-    if (responseCode == 408) {
-        ExecutionAndTraceService.recordServiceRequestFromClient(serverApplicationName, serverApplicationReleaseNumber, xCorrelator, traceIndicator, user, originator, operationName, responseCode, httpRequestBody, response.data)
-            .catch((error) => console.log(`record service request ${JSON.stringify({
-                xCorrelator,
-                traceIndicator,
-                user,
-                originator,
-                serverApplicationName,
-                serverApplicationReleaseNumber,
-                operationName,
-                responseCode,
-                reqBody: httpRequestBody,
-                resBody: response.data
-            })} failed with error: ${error.message}`));
+
+    } else {
+        logger.error(`Error in the request: Response code: ${responseCode}`);
+        if (responseCode == 408) {
+            ExecutionAndTraceService.recordServiceRequestFromClient(serverApplicationName, serverApplicationReleaseNumber, xCorrelator, traceIndicator, user, originator, operationName, responseCode, httpRequestBody, response.data)
+                .catch((error) => console.log(`record service request ${JSON.stringify({
+                    xCorrelator,
+                    traceIndicator,
+                    user,
+                    originator,
+                    serverApplicationName,
+                    serverApplicationReleaseNumber,
+                    operationName,
+                    responseCode,
+                    reqBody: httpRequestBody,
+                    resBody: response.data
+                })} failed with error: ${error.message}`));
+        } else {
+            logger.error(responseCode);
+        }
     }
+
     return responseData;
 }
