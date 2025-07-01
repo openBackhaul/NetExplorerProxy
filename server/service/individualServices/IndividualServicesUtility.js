@@ -14,6 +14,9 @@ const createHttpError = require('http-errors');
 const fileSystem = require('fs');
 const AsyncLock = require('async-lock');
 const lock = new AsyncLock();
+
+const logger = require('../LoggingService.js').getLogger();
+
 /**
  * This function fetches the integer value from the integer profile based on the expected integer name.
  * @param {String} expectedIntegerName name of the integer profile.
@@ -83,6 +86,8 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
  */
 exports.getQueryAndPathParameter = async function (operationName, pathParamList, fields) {
   try {
+    logger.info("getQuery And Path Param");
+    logger.info(pathParamList);
     let pathParams = new Map();
     let queryParams = {};
     let params = {};
@@ -93,6 +98,8 @@ exports.getQueryAndPathParameter = async function (operationName, pathParamList,
         pathParams.set(pathParamMatches[i], pathParamList[i]);
       }
       params.path = pathParams;
+    } else {
+      logger.error("pathparam seem empty");
     }
 
     if (fields !== "") {
@@ -103,8 +110,9 @@ exports.getQueryAndPathParameter = async function (operationName, pathParamList,
     return params;
 
   } catch (error) {
-    console.log(`getQueryAndPathParameter is not success with ${error}`);
-    return new createHttpError.InternalServerError(`${error}`);    }
+    logger.error(error, "getQueryAndPathParameter is not success");
+    return new createHttpError.InternalServerError(`${error}`);
+  }
 }
 
 
@@ -123,9 +131,10 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
     consequentOperationClientAndFieldParams.operationName = await OperationClientInterface.getOperationNameAsync(consequentOperationClientAndFieldParams.operationClientUuid);
     consequentOperationClientAndFieldParams.fields = await IndividualServiceUtility.getStringProfileInstanceValue(stringName);
   } catch(error) {
-    console.log(`getConsequentOperationClientAndFieldParams is not success with ${error}`);
+    logger.error(error, "getConsequentOperationClientAndFieldParams is not success");
     return new createHttpError.InternalServerError(`${error}`);
   }
+
   return consequentOperationClientAndFieldParams;
 }
 
@@ -138,23 +147,31 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
  **/
 exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
   try {
+    logger.info("Trying to forward request:");
+    logger.info(`Traceindicator incrementer: ${traceIndicatorIncrementer}`);
+
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
     let params = await IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
+    // let incr = Math.random(3000);
     let responseData = await eventDispatcher.dispatchEvent(
       operationClientUuid,
       {},
       requestHeaders.user,
       requestHeaders.xCorrelator,
+      // "1.3.1" + incr,
       requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
       requestHeaders.customerJourney,
       "GET",
       params
     );
+
+    logger.debug(responseData);
+
     return responseData;
   } catch (error) {
-    console.log(`forwardRequest is not success with ${error}`);
+    logger.error(error, "forwardRequest is not success");
     return new createHttpError.InternalServerError(`${error}`);
   }
 }

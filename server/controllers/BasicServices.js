@@ -50,23 +50,22 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   // minimumTime=180;
  
   try {
-const fetchFreshData = async () => {
-  try {
-    const now = new Date().toLocaleString(); // Get current date and time in readable format
+    const fetchFreshData = async () => {
+      try {
+        const now = new Date().toLocaleString(); // Get current date and time in readable format
+    
+        logger.info(`Data fetching starts ${now}`);
+    
+        await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+        const now1 = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Data fetched successfully at ${now1}`);
+      } catch (error) {
+        logger.error(error, "Error fetching data");
+      }
+    };
  
-    logger.info(`Data fetching starts ${now}`);
- 
-    await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
-    const now1 = new Date().toLocaleString(); // Get current date and time in readable format
-    logger.info(`Data fetched successfully at ${now1}`);
-
-  } catch (error) {
-    logger.error(`Error fetching data: ${error}`);
-  }
-};
- 
-  // Run every X seconds (e.g., every 10 seconds)
-    const X = minimumTime*3600* 1000; // X seconds in milliseconds
+    // Run every X seconds (e.g., every 10 seconds)
+    const X = minimumTime * 3600 * 1000; // X seconds in milliseconds
     fetchFreshData();
     setInterval(fetchFreshData, X);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
