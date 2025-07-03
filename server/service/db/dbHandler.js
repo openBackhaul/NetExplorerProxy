@@ -784,7 +784,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
-  const whereCondition = getWhereConditionForRead(filters);
+  // const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
     'mount-name',
@@ -798,14 +798,14 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
 
   // Retrieve data
   // TODO @latta-siae this has to be reworked. It will not works properly with empty data
-  let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, true);
   let stringReplace = attr.toString();
   stringReplace = stringReplace.replaceAll(",", ";");
 
-  let resultData = await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
+  let resultData = await readGeneralData(ethernet_container_general_info, attr, filters, true);
   resultFetched += resultData.replace(stringReplace, "");
 
-  resultData = await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
+  resultData = await readGeneralData(wire_interface_general_info, attr, filters, true);
   resultFetched += resultData.replace(stringReplace, "");
 
   return resultFetched;
