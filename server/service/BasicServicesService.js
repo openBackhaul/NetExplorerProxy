@@ -6,6 +6,8 @@ const logger = require('./LoggingService.js').getLogger();
 const dbHandler = require('./db/dbHandler.js');
 const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
 const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+const processMountNames=require('./ProcessMountNames.js');
+
 
 
 const ETHERNET_INTERFACE = {
@@ -118,6 +120,9 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
       customerJourney
     };
 
+    //call for offline mountName processiong 
+    await processMountNames.addNewDataInNEPdeviceList(mountNameList);
+
     // ✅ Call the batch processor here
     traceIncrement += 1;
     await processMountNamesInBatches(
@@ -128,9 +133,9 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
   }
 };
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
