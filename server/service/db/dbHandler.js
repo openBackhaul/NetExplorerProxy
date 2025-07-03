@@ -828,6 +828,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
       logger.warn("Query result empty");
       resultFetched = fields.toString().replaceAll(",", ";") + "\n";
     } else {
+      resultFetched = convertTimeStamp(resultFetched); // Fix timestamp format
       resultFetched = convertToCSV(resultFetched);
     }
   }
@@ -1047,4 +1048,16 @@ function convertToCSVEnh(arr, onlyHeader=true) {
     }
 
     return csv;
+}
+
+function convertTimeStamp(arr) {
+  for (let idx in arr) {
+    let element = arr[idx];
+    if (element.timestamp && element.timestamp != undefined) {
+      let time = new Date(element.timestamp).toISOString();
+      arr[idx].timestamp = time;
+    }
+  }
+
+  return arr;
 }
