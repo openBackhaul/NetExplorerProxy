@@ -359,7 +359,7 @@ module.exports.provideListOfDevicesInNep = async function provideListOfDevicesIn
     let tmpData = result[i];
     let temp = {
       "mount-name": tmpData['mount-name'],
-      "last-data-update-timestamp": new Date(tmpData.timestamp).toISOString,
+      "last-data-update-timestamp": new Date(tmpData.timestamp).toISOString(),
     }
     dataArray.push(temp);
   }
