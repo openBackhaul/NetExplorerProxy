@@ -132,20 +132,13 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-<<<<<<< HEAD
-  module.exports.doWorkThread = async function doWorkThread(body, user,requestHeaders, xCorrelator, traceIndicator, customerJourney, url, mountName,timestamp) {
-  
-   let ccOfMountname = await exports.retriveTheccOfMountname(body, user, requestHeaders, requestHeaders.xCorrelator,traceIndicator, customerJourney, url, mountName);
-    await exports.processTheccOfMountname(ccOfMountname, timestamp, mountName);
-    return ccOfMountname;
-  };
-=======
+
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
   let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
   await exports.processTheccOfMountname(ccOfMountName, timestamp, mountName);
   return ccOfMountName;
 };
->>>>>>> refs/remotes/origin/develop_1.1.0
+
 
 module.exports.processTheccOfMountname = async function processTheccOfMountname(ccOfMountname, timestamp, mountName) {
   logger.info(`Retrieving data for ${mountName} with timestamp: ${timestamp}`);
