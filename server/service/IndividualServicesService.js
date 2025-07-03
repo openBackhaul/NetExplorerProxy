@@ -359,7 +359,7 @@ module.exports.provideListOfDevicesInNep = async function provideListOfDevicesIn
     let tmpData = result[i];
     let temp = {
       "mount-name": tmpData['mount-name'],
-      "last-data-update-timestamp": tmpData.timestamp,
+      "last-data-update-timestamp": new Date(tmpData.timestamp).toISOString,
     }
     dataArray.push(temp);
   }
@@ -374,7 +374,7 @@ module.exports.provideListOfDevicesInNep = async function provideListOfDevicesIn
 function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";
-  if (body !== undefined) {
+  if (body && body !== undefined) {
     mountNameList = body["mount-name-list"];
     const dataAge = body["data-age"];
 
