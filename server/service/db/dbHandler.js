@@ -59,12 +59,28 @@ exports.initDB = async function(config) {
         logging: msg => logger.debug(msg)
       });
     } else {
-      sequelize = new Sequelize(db_name, config.user, config.password, {
-        host: config.host,
-        port: config.port,
-        dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-        logging: msg => logger.debug(msg)
-      });
+      try {
+        sequelize = new Sequelize(db_name, config.user, config.password, {
+          host: config.host,
+          port: config.port,
+          dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+          logging: msg => logger.debug(msg)
+        });
+      } catch (error) {
+        logger.error(error, "DB doesn't exists");
+        try {
+          logger.info("Using DB: " + db_name);
+          let res = await sequelize.query("USE " + db_name + ";");
+          logger.info("DB " + db_name + " exists");
+        } catch (db_error) {
+          logger.warn("DB " + db_name + " doesn't exists, try to create it");
+          let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
+          logger.info("DB: " + db_name + " created");
+          res = await sequelize.query("USE " + db_name + ";");
+          logger.info("using DB: " + db_name);
+        }
+      }
+
     }
 
     // Try to connect to the DB
@@ -768,7 +784,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
  * isCSV: true/false with true return RAW data
  */
 exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
-  const whereCondition = getWhereConditionForRead(filters);
+  // const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
     'mount-name',
@@ -782,14 +798,14 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
 
   // Retrieve data
   // TODO @latta-siae this has to be reworked. It will not works properly with empty data
-  let resultFetched = await readGeneralData(air_interface_general_info, attr, whereCondition, true);
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, true);
   let stringReplace = attr.toString();
   stringReplace = stringReplace.replaceAll(",", ";");
 
-  let resultData = await readGeneralData(ethernet_container_general_info, attr, whereCondition, true);
+  let resultData = await readGeneralData(ethernet_container_general_info, attr, filters, true);
   resultFetched += resultData.replace(stringReplace, "");
 
-  resultData = await readGeneralData(wire_interface_general_info, attr, whereCondition, true);
+  resultData = await readGeneralData(wire_interface_general_info, attr, filters, true);
   resultFetched += resultData.replace(stringReplace, "");
 
   return resultFetched;
@@ -812,6 +828,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
       logger.warn("Query result empty");
       resultFetched = fields.toString().replaceAll(",", ";") + "\n";
     } else {
+      resultFetched = convertTimeStamp(resultFetched); // Fix timestamp format
       resultFetched = convertToCSV(resultFetched);
     }
   }
@@ -1031,4 +1048,16 @@ function convertToCSVEnh(arr, onlyHeader=true) {
     }
 
     return csv;
+}
+
+function convertTimeStamp(arr) {
+  for (let idx in arr) {
+    let element = arr[idx];
+    if (element.timestamp && element.timestamp != undefined) {
+      let time = new Date(element.timestamp).toISOString();
+      arr[idx].timestamp = time;
+    }
+  }
+
+  return arr;
 }
