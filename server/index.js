@@ -76,3 +76,6 @@ logger.info("Connecting to the DB");
  })();
 
 logger.info("NetExplorerProxy is up.");
+
+global.mountMap = new Map();
+
