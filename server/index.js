@@ -12,7 +12,6 @@ var initConfig = require('./initConfig');
 
 var path = require('path');
 var http = require('http');
-const { Sequelize } = require('sequelize');
 
 var oas3Tools = require('oas3-tools');
 var appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommons');

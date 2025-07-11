@@ -12,6 +12,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "env": {
+                "DB": "true",
+            },
             "program": "${workspaceFolder}\\server\\index.js"
         }
     ]
