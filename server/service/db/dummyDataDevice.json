@@ -1,0 +1,37 @@
+[
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "external_label": "100254566",
+        "device_model_name": "OptiXRTN950",
+        "system_name": "System xyz"
+    },
+    {
+        "mount_name": "200000",
+        "timestamp": "2024-12-11T18:00:00+01:00",
+        "external_label": "20025999",
+        "device_model_name": "MINI-LINK Traffic Node",
+        "system_name": ""
+    },
+    {
+        "mount_name": "300000",
+        "timestamp": "2024-12-11T18:00:00+01:00",
+        "external_label": "20025999",
+        "device_model_name": "MINI-LINK Traffic Node",
+        "system_name": "System OS"
+    },
+    {
+        "mount_name": "400000",
+        "timestamp": "2024-12-11T18:00:00+01:00",
+        "external_label": "20025999",
+        "device_model_name": "MINI-LINK Traffic Node",
+        "system_name": "Linux"
+    },
+    {
+        "mount_name": "500000",
+        "timestamp": "2024-12-11T18:00:00+01:00",
+        "external_label": "20025999",
+        "device_model_name": "MINI-LINK Traffic Node",
+        "system_name": "Windows"
+    }
+]

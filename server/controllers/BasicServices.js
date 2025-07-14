@@ -1,5 +1,6 @@
-//@ts-check
+-//@ts-check
 'use strict';
+const basicServiceImpl = require('../service/BasicServicesService');
 
 const basicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
@@ -7,6 +8,9 @@ const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/se
 const restResponseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
 const executionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
 const logger = require('../service/LoggingService.js').getLogger();
+const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
+const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
 
 const NEW_RELEASE_FORWARDING_NAME = undefined;
 const OLD_RELEASE_FORWARDING_NAME = 'PromptForEmbeddingCausesRequestForBequeathingData';
@@ -39,10 +43,33 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let startTime = process.hrtime();
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
+  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+  let prefix = forwardingConstruct.uuid.split('op')[0];
+  let minimumTime = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-006");
+  // minimumTime=180;
+ 
   try {
-    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+    const fetchFreshData = async () => {
+      try {
+        const now = new Date().toLocaleString(); // Get current date and time in readable format
+    
+        logger.info(`Data fetching starts ${now}`);
+    
+        await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+        const now1 = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Data fetched successfully at ${now1}`);
+      } catch (error) {
+        logger.error(error, "Error fetching data");
+      }
+    };
+ 
+    // Run every X seconds (e.g., every 10 seconds)
+    const X = minimumTime * 3600 * 1000; // X seconds in milliseconds
+    fetchFreshData();
+    setInterval(fetchFreshData, X);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
-    restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
   } catch (responseBody) {
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     let sentResp = restResponseBuilder.buildResponse(res, undefined, responseBody, responseHeader);
