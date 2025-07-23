@@ -58,6 +58,10 @@ exports.initDB = async function(config) {
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
         logging: msg => logger.debug(msg)
       });
+
+      // Try to connect to the DB
+      await sequelize.authenticate();
+      logger.info('Connection has been established successfully.');
     } else {
       try {
         sequelize = new Sequelize(db_name, config.user, config.password, {
@@ -66,9 +70,21 @@ exports.initDB = async function(config) {
           dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
           logging: msg => logger.debug(msg)
         });
+
+        // Try to connect to the DB
+        await sequelize.authenticate();
+        logger.info('Connection has been established successfully.');
       } catch (error) {
         logger.error(error, "DB doesn't exists");
         try {
+          sequelize = new Sequelize("", config.user, config.password, {
+            host: config.host,
+            port: config.port,
+            dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+            logging: msg => logger.debug(msg)
+          });
+          await sequelize.authenticate();
+          
           logger.info("Using DB: " + db_name);
           let res = await sequelize.query("USE " + db_name + ";");
           logger.info("DB " + db_name + " exists");
@@ -83,9 +99,7 @@ exports.initDB = async function(config) {
 
     }
 
-    // Try to connect to the DB
-    await sequelize.authenticate();
-    logger.info('Connection has been established successfully.');
+
 
     // IF DB doesn't exist I have to create a new one
     // try {
