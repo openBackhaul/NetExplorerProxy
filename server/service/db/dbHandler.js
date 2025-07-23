@@ -83,12 +83,11 @@ exports.initDB = async function(config) {
             dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
             logging: msg => logger.debug(msg)
           });
-          await sequelize.authenticate();
+          
 
           logger.info("Using DB: " + db_name);
           let res = await sequelize.query("USE " + db_name + ";");
           logger.info("DB " + db_name + " exists");
-          
 
           sequelize = new Sequelize(db_name, config.user, config.password, {
             host: config.host,
@@ -96,6 +95,7 @@ exports.initDB = async function(config) {
             dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
             logging: msg => logger.debug(msg)
           });
+          await sequelize.authenticate();
         } catch (db_error) {
           logger.warn("DB " + db_name + " doesn't exists, try to create it");
           let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
