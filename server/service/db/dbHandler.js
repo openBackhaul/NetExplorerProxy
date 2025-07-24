@@ -1047,6 +1047,8 @@ function getWhereConditionForDelete(filters) {
  * Internal routine to convert the result into CSV format
  */
 function convertToCSV(arr) {
+  // Convert values 0 or 1 in 'false' or 'true'
+  fixBooleanValues(arr);
   const array = [Object.keys(arr[0])].concat(arr);
 
   let retValue = array.map(it => {
@@ -1090,4 +1092,20 @@ function convertTimeStamp(arr) {
   }
 
   return arr;
+}
+
+// Define fileds where is defined boolean values
+const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail"];
+
+function fixBooleanValues(arr) {
+  arr.map(entry => {
+    boolean_fields.forEach(boolentry => {
+      if(entry[boolentry] != undefined) {
+        entry[boolentry] = entry[boolentry] == 0 ? "false" : "true";
+      }
+    });
+    return entry;
+  });
+
+  return
 }
