@@ -68,11 +68,12 @@ function translateProxyResponse(ret) {
  * @param payload
  * @param operationName
  * @param operationKey
+ * @param serverAppName
+ * @param serverAppRelease
  * @return {Promise<boolean>}
  */
-exports.startPostRequest = async function (targetUrl, payload, operationName, operationKey) {
+exports.startPostRequest = async function (targetUrl, payload, operationName, operationKey, serverAppName, serverAppRelease) {
     const requestHeader = requestUtil.createRequestHeader(operationKey);
-    const appInformation = requestUtil.getAppInformation();
 
     try {
         const response = await axios.post(targetUrl, payload, {
@@ -88,19 +89,23 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
 
         logger.debug(`${operationName} success. Result: ${response.status}`);
 
-        executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
-          requestHeader.xCorrelator,
-          requestHeader.traceIndicator,
-          requestHeader.user,
-          requestHeader.originator,
-          operationName,
-          response.status,
-          payload,
-          response.data,
-          targetUrl
-        );
+        // For example if the response code is 408 (server timeout), then that means the server didn't receive the request
+        // Execute the EATL request only if the response code is 408 or such similar case.
+        if (response.status >= 400) {
+            executionAndTraceService.recordServiceRequestFromClient(
+              serverAppName,
+              serverAppRelease,
+              requestHeader.xCorrelator,
+              requestHeader.traceIndicator,
+              requestHeader.user,
+              requestHeader.originator,
+              operationName,
+              response.status,
+              payload,
+              response.data,
+              targetUrl
+            );
+        }
 
         return true;
     } catch (e) {
@@ -109,8 +114,8 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
         const status = e.response?.status || HTTP_CODES.DATA_INVALID;
 
         executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
+          serverAppName,
+          serverAppRelease,
           requestHeader.xCorrelator,
           requestHeader.traceIndicator,
           requestHeader.user,
@@ -127,9 +132,8 @@ exports.startPostRequest = async function (targetUrl, payload, operationName, op
 };
 
 
-exports.startPostDataRequest = async function (targetUrl, payload, operationName, operationKey) {
+exports.startPostDataRequest = async function (targetUrl, payload, operationName, operationKey, serverAppName, serverAppRelease) {
     const requestHeader = requestUtil.createRequestHeader(operationKey);
-    const appInformation = requestUtil.getAppInformation();
 
     let ret;
 
@@ -147,19 +151,23 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
 
         logger.debug(`${operationName} success. Result: ${response.status} Data: ${JSON.stringify(response.data)}`);
 
-        executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
-          requestHeader.xCorrelator,
-          requestHeader.traceIndicator,
-          requestHeader.user,
-          requestHeader.originator,
-          operationName,
-          response.status,
-          payload,
-          response.data,
-          targetUrl
-        );
+        // For example if the response code is 408 (server timeout), then that means the server didn't receive the request
+        // Execute the EATL request only if the response code is 408 or such similar case.
+        if (response.status >= 400) {
+            executionAndTraceService.recordServiceRequestFromClient(
+              serverAppName,
+              serverAppRelease,
+              requestHeader.xCorrelator,
+              requestHeader.traceIndicator,
+              requestHeader.user,
+              requestHeader.originator,
+              operationName,
+              response.status,
+              payload,
+              response.data,
+              targetUrl
+            );
+        }
 
         ret = { code: response.status, message: response.data, headers: requestHeader };
     } catch (e) {
@@ -169,8 +177,8 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
         const data = e.response?.data || e;
 
         executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
+          serverAppName,
+          serverAppRelease,
           requestHeader.xCorrelator,
           requestHeader.traceIndicator,
           requestHeader.user,
@@ -199,11 +207,12 @@ exports.startPostDataRequest = async function (targetUrl, payload, operationName
  * @param targetUrl
  * @param operationName
  * @param operationKey
+ * @oaram serverAppName
+ * @oaram serverAppRelease
  * @return {Promise}
  */
-exports.startGetRequest = async function (targetUrl, operationName, operationKey) {
+exports.startGetRequest = async function (targetUrl, operationName, operationKey, serverAppName, serverRelease) {
     const requestHeader = requestUtil.createRequestHeader(operationKey);
-    const appInformation = requestUtil.getAppInformation();
 
     let ret;
 
@@ -221,19 +230,23 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
 
         logger.debug(`${operationName} success. Result: ${response.status}`);
 
-        executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
-          requestHeader.xCorrelator,
-          requestHeader.traceIndicator,
-          requestHeader.user,
-          requestHeader.originator,
-          operationName,
-          response.status,
-          undefined,
-          response.data,
-          targetUrl
-        );
+        // For example if the response code is 408 (server timeout), then that means the server didn't receive the request
+        // Execute the EATL request only if the response code is 408 or such similar case.
+        if (response.status >= 400) {
+            executionAndTraceService.recordServiceRequestFromClient(
+              serverAppName,
+              serverAppRelease,
+              requestHeader.xCorrelator,
+              requestHeader.traceIndicator,
+              requestHeader.user,
+              requestHeader.originator,
+              operationName,
+              response.status,
+              undefined,
+              response.data,
+              targetUrl
+            );
+        }
 
         ret = { code: response.status, message: response.data, headers: requestHeader };
     } catch (e) {
@@ -243,8 +256,8 @@ exports.startGetRequest = async function (targetUrl, operationName, operationKey
         const data = e.response?.data || e;
 
         executionAndTraceService.recordServiceRequestFromClient(
-          appInformation["application-name"],
-          appInformation["release-number"],
+          serverAppName,
+          serverAppRelease,
           requestHeader.xCorrelator,
           requestHeader.traceIndicator,
           requestHeader.user,

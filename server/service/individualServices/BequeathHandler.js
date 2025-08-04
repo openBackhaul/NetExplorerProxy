@@ -16,7 +16,7 @@ exports.handleRequest = async function (body, requestUrl) {
 
     let success = await addNewReleaseInfoToConfig(appName, appRelease, appAddress, appPort, requestUrl);
 
-    let appInformation = requestUtil.getAppInformation();
+    let appInformation = await requestUtil.getAppInformation();
 
     if (success) {
         success = await broadcastInfoAboutServerReplacement(appInformation, appName, appRelease, appAddress, appPort);
@@ -56,7 +56,8 @@ async function broadcastInfoAboutServerReplacement(appInformation, appName, appR
         };
 
         let targetAppUrlServerReplacement = requestUtil.buildRequestTargetPath(targetAddressWrapperServerReplacement.protocol, targetAddressWrapperServerReplacement.address, targetAddressWrapperServerReplacement.port) + targetAddressWrapperServerReplacement.operationName;
-        return await restClient.startPostRequest(targetAppUrlServerReplacement, serverReplacementMessage, targetAddressWrapperServerReplacement.operationName, targetAddressWrapperServerReplacement.operationKey);
+
+        return await restClient.startPostRequest(targetAppUrlServerReplacement, serverReplacementMessage, targetAddressWrapperServerReplacement.operationName, targetAddressWrapperServerReplacement.operationKey, targetAddressWrapperServerReplacement.appName, targetAddressWrapperServerReplacement.appRelease);
     } catch (exception) {
         logger.error(exception, "broadcastInfoAboutServerReplacement failed");
         return false;

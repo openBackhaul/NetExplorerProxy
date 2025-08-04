@@ -50,7 +50,7 @@ const handleError = async function handleError(startTime, error, req, res) {
   if (responseHeader) {
     let requestHeader = requestUtil.createRequestHeader();
 
-    await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetworkDataLakeProxy",
+    await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetExplorerProxy",
       requestHeader.originator, req, errorResponse.code, errorResponse.body)
   }
 }
@@ -88,7 +88,7 @@ const handleForwardedResult = async function handleForwardedResult(startTime, re
   let forwardResponse = buildForwardedResponse(res, ret.code, ret.message, responseHeader);
 
   let requestHeader = requestUtil.createRequestHeader();
-  await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetworkDataLakeProxy",
+  await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetExplorerProxy",
     requestHeader.originator, req, ret.code, ret.message)
 
   return forwardResponse;

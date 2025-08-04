@@ -148,7 +148,7 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
   const operation = body["requestor-receive-operation"];
 
   // write NEP callback info into the request body
-  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-1-tcp-s-000");
+  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-2-tcp-s-000");
 
   body["requestor-protocol"] = ifConfig["protocol"];
   body["requestor-address"] = {"ip-address": ifConfig["ip-address"]};
@@ -170,7 +170,10 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
 
       // store callback data of the caller by request ID in requestMap
       const timestamp = new Date();
-      const request = {mountName, protocol, address, port, operation, timestamp};
+      const operationKey = ret.operationKey;
+      const appName = ret.appName;
+      const appRelease = ret.appRelease;
+            const request = {mountName, protocol, address, port, operation, timestamp, operationKey, appName, appRelease};
       requestMap.set(requestId, request);
 //      ++numberOfParallelRequests;
     } else {
@@ -213,7 +216,7 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
 
       logger.debug("forwarding mac table data to '" + targetUrl + "'");
 
-      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, undefined);
+      const ret = await restClient.startPostDataRequest(targetUrl, data, requestUrl, request.operationKey, request.appName, request.appRelease);
 
       if (ret.code === responseCodeEnum.code.OK || ret.code === responseCodeEnum.code.NO_CONTENT) {
         // remove request map entry

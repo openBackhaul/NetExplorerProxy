@@ -56,7 +56,7 @@ async function getForwardingConstructOutputOperationData(forwardingName) {
             let address = tcpLTP['layer-protocol'][0]['tcp-client-interface-1-0:tcp-client-interface-pac']['tcp-client-interface-configuration']['remote-address'];
             // let targetOperationUrl = buildDeviceSubscriberOperationPath(stringProtocol, address, port, operationName);
             let operationKey = operationLTP['layer-protocol'][0]['operation-client-interface-1-0:operation-client-interface-pac']['operation-client-interface-configuration']['operation-key'];
-            // let operationUUID = operationLTP['uuid'];
+            //let operationUUID = operationLTP['uuid'];
 
             opData = {
                 "protocol": stringProtocol,
@@ -65,8 +65,8 @@ async function getForwardingConstructOutputOperationData(forwardingName) {
                 // "targetOperationURL": targetOperationUrl,
                 // "operationKey": operationKey,
                 // "operationUUID": operationUUID,
-                // "name": httpLTP['layer-protocol'][0]['http-client-interface-1-0:http-client-interface-pac']['http-client-interface-configuration']['application-name'],
-                // "release": httpLTP['layer-protocol'][0]['http-client-interface-1-0:http-client-interface-pac']['http-client-interface-configuration']['release-number'],
+                "appName": httpLTP['layer-protocol'][0]['http-client-interface-1-0:http-client-interface-pac']['http-client-interface-configuration']['application-name'],
+                "appRelease": httpLTP['layer-protocol'][0]['http-client-interface-1-0:http-client-interface-pac']['http-client-interface-configuration']['release-number'],
                 "operationName": operationName,
                 "operationKey": operationKey,
             }
