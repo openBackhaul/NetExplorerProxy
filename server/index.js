@@ -53,22 +53,28 @@ let dbConfig = db_config_sqlLite;
 if (process.env.DB && process.env.DB.toLowerCase() === "true") {
     logger.warn("Working using external DB");
     if (process.env.USER) {
-       db_config_mariaDB.user = process.env.USER;
+        db_config_mariaDB.user = process.env.USER;
     }
     if (process.env.PASSWORD) {
-       db_config_mariaDB.password = process.env.PASSWORD;
+        db_config_mariaDB.password = process.env.PASSWORD;
     }
     if (process.env.HOST) {
-       db_config_mariaDB.host = process.env.HOST;
+        db_config_mariaDB.host = process.env.HOST;
     }
     if (process.env.PORT) {
-       db_config_mariaDB.port = process.env.PORT;
+        try {
+            db_config_mariaDB.port = parseInt(process.env.PORT);
+        } catch (e) {
+            db_config_mariaDB.port = 3306;
+            logger.warn("Using default port for DB");
+        }
+        db_config_mariaDB.port = process.env.PORT;
     }
     if (process.env.DIALECT) {
-       db_config_mariaDB.dialect = process.env.DIALECT;
+        db_config_mariaDB.dialect = process.env.DIALECT;
     }
     if (process.env.DB_NAME) {
-       db_config_mariaDB.db_name = process.env.DB_NAME;
+        db_config_mariaDB.db_name = process.env.DB_NAME;
     }
     dbConfig = db_config_mariaDB;
 } else {
@@ -90,7 +96,7 @@ logger.info("Connecting to the DB");
     } catch (error) {
         logger.error(error);
     }
- })();
+})();
 
 logger.info("NetExplorerProxy is up.");
 
