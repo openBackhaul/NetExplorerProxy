@@ -58,6 +58,10 @@ exports.initDB = async function(config) {
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
         logging: msg => logger.debug(msg)
       });
+
+      // Try to connect to the DB
+      await sequelize.authenticate();
+      logger.info('Connection has been established successfully.');
     } else {
       try {
         sequelize = new Sequelize(db_name, config.user, config.password, {
@@ -66,12 +70,40 @@ exports.initDB = async function(config) {
           dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
           logging: msg => logger.debug(msg)
         });
+
+        // Try to connect to the DB
+        await sequelize.authenticate();
+        logger.info('Connection has been established successfully.');
       } catch (error) {
         logger.error(error, "DB doesn't exists");
         try {
+          sequelize = new Sequelize("", config.user, config.password, {
+            host: config.host,
+            port: config.port,
+            dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+            logging: msg => logger.debug(msg)
+          });
+
+          await sequelize.authenticate();
+
+          logger.warn("DB " + db_name + " doesn't exists, try to create it");
+          let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
+
           logger.info("Using DB: " + db_name);
-          let res = await sequelize.query("USE " + db_name + ";");
+          res = await sequelize.query("USE " + db_name + ";");
           logger.info("DB " + db_name + " exists");
+
+          sequelize.close();
+          logger.info("Closing connection");
+
+          sequelize = new Sequelize(db_name, config.user, config.password, {
+            host: config.host,
+            port: config.port,
+            dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+            logging: msg => logger.debug(msg)
+          });
+          await sequelize.authenticate();
+          logger.info("Authentication done with db name selected");
         } catch (db_error) {
           logger.warn("DB " + db_name + " doesn't exists, try to create it");
           let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
@@ -83,9 +115,7 @@ exports.initDB = async function(config) {
 
     }
 
-    // Try to connect to the DB
-    await sequelize.authenticate();
-    logger.info('Connection has been established successfully.');
+
 
     // IF DB doesn't exist I have to create a new one
     // try {
@@ -373,7 +403,7 @@ exports.updateAirTransMode = async function(dataArray) {
         "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
         "modulation-scheme": data.modulation_scheme,
         "code-rate": data.code_rate,
-        "channel-bandwidth": data.code_rate,
+        "channel-bandwidth": data.channel_bandwidth,
         "xpic-is-avail": data.xpic_is_avail,
         "capa-factor": data.capa_factor
       },{
@@ -398,7 +428,7 @@ exports.updateAirTransMode = async function(dataArray) {
           "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
           "modulation-scheme": data.modulation_scheme,
           "code-rate": data.code_rate,
-          "channel-bandwidth": data.code_rate,
+          "channel-bandwidth": data.channel_bandwidth,
           "xpic-is-avail": data.xpic_is_avail,
           "capa-factor": data.capa_factor
         });
@@ -1017,6 +1047,8 @@ function getWhereConditionForDelete(filters) {
  * Internal routine to convert the result into CSV format
  */
 function convertToCSV(arr) {
+  // Convert values 0 or 1 in 'false' or 'true'
+  fixBooleanValues(arr);
   const array = [Object.keys(arr[0])].concat(arr);
 
   let retValue = array.map(it => {
@@ -1060,4 +1092,20 @@ function convertTimeStamp(arr) {
   }
 
   return arr;
+}
+
+// Define fileds where is defined boolean values
+const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail"];
+
+function fixBooleanValues(arr) {
+  arr.map(entry => {
+    boolean_fields.forEach(boolentry => {
+      if(entry[boolentry] != undefined) {
+        entry[boolentry] = entry[boolentry] == 0 ? "false" : "true";
+      }
+    });
+    return entry;
+  });
+
+  return
 }

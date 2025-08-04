@@ -14,6 +14,12 @@
             ],
             "env": {
                 "DB": "true",
+                "USER": "user",
+                "PASSWORD": "mypass",
+                "HOST": "localhost",
+                "PORT": "3306",
+                "DIALECT": "mariadb",
+                "DB_NAME": "nep_database"
             },
             "program": "${workspaceFolder}\\server\\index.js"
         }

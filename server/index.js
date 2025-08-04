@@ -2,7 +2,7 @@
 
 // Examples of DB connection
 // const db_config_mysql = { user: 'root', password: 'mypass', host: "localhost", port: 3306, dialect: "mysql", db_name: "nep_db" };
-const db_config_mariaDB = { user: 'root', password: 'mypass', host: "localhost", port: 3306, dialect: "mariadb", db_name: "nep_db" };
+let db_config_mariaDB = { user: 'root', password: 'mypass', host: "localhost", port: 3306, dialect: "mariadb", db_name: "nep_db" };
 // const db_config_posgres = { user: 'postgres', password: 'mypass', host: "localhost", port: 3308, dialect: "postgres", db_name: "nep_db" };
 const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" }
 
@@ -51,7 +51,31 @@ appCommons.performApplicationRegistration();
 
 let dbConfig = db_config_sqlLite;
 if (process.env.DB && process.env.DB.toLowerCase() === "true") {
-    logger.warn("Working using Maria DB");
+    logger.warn("Working using external DB");
+    if (process.env.USER) {
+        db_config_mariaDB.user = process.env.USER;
+    }
+    if (process.env.PASSWORD) {
+        db_config_mariaDB.password = process.env.PASSWORD;
+    }
+    if (process.env.HOST) {
+        db_config_mariaDB.host = process.env.HOST;
+    }
+    if (process.env.PORT) {
+        try {
+            db_config_mariaDB.port = parseInt(process.env.PORT);
+        } catch (e) {
+            db_config_mariaDB.port = 3306;
+            logger.warn("Using default port for DB");
+        }
+        db_config_mariaDB.port = process.env.PORT;
+    }
+    if (process.env.DIALECT) {
+        db_config_mariaDB.dialect = process.env.DIALECT;
+    }
+    if (process.env.DB_NAME) {
+        db_config_mariaDB.db_name = process.env.DB_NAME;
+    }
     dbConfig = db_config_mariaDB;
 } else {
     logger.warn("No DB selected, using by default sqlite");
@@ -72,7 +96,7 @@ logger.info("Connecting to the DB");
     } catch (error) {
         logger.error(error);
     }
- })();
+})();
 
 logger.info("NetExplorerProxy is up.");
 
