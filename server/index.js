@@ -56,7 +56,8 @@ if (process.env.DB && process.env.DB.toLowerCase() === "true") {
         db_config_mariaDB.user = process.env.USER;
     }
     if (process.env.PASSWORD) {
-        db_config_mariaDB.password = process.env.PASSWORD;
+        let decPass = atob(process.env.PASSWORD);
+        db_config_mariaDB.password = decPass;
     }
     if (process.env.HOST) {
         db_config_mariaDB.host = process.env.HOST;

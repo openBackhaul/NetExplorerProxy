@@ -15,7 +15,7 @@
             "env": {
                 "DB": "true",
                 "USER": "user",
-                "PASSWORD": "mypass",
+                "PASSWORD": "bXlwYXNzd29yZA==",
                 "HOST": "localhost",
                 "PORT": "3306",
                 "DIALECT": "mariadb",
