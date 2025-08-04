@@ -1,0 +1,19 @@
+@startuml 021_ProvideListOfDevicesInNep
+skinparam responseMessageBelowArrow true
+
+title PromptForProvidingListOfDevicesInNepCausesReadingFromNepCache
+
+participant "external \n(Netexplorer)" as external
+participant "NEP://v1/provide-list-of-devices-in-nep" as nep
+participant "ElasticSearch \n(or database)" as db
+
+external -> nep: (BasicAuth)
+activate nep
+
+nep -> db: (apiAuthKey)
+db --> nep: {list-of(mountName, lastDataUpdateTimestamp)} (no security)
+
+nep --> external: {list-of(mountName, lastDataUpdateTimestamp)} (no security)
+
+deactivate nep
+@enduml

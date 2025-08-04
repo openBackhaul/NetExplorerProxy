@@ -1,0 +1,50 @@
+[
+	{
+		"mode": "debug",
+		"serverList": [
+			{
+				"serverName": "dummy",
+				"dummyUri": "ping.openBackhaul.com"
+			},
+			{
+				"serverName": "NetExplorerProxy",
+				"server": "http://127.0.0.1:4018",
+				"pathToControlConstruct": "",
+				"authorizationCode": "Basic ????",
+				"operationKey": "Operation key not yet provided.",
+				"userName": "Katharina Mohr",
+				"originator": "NEP_1.1.0+testcase.completeness",
+				"xCorrelator": "00000000-0000-0000-0000-000000000000",
+				"traceIndicator": "1",
+				"customerJourney": ""
+			},
+			{
+				"serverName": "NetExplorerProxy+simu",
+				"server": "http://localhost:3003",
+				"pathToControlConstruct": "",
+				"authorizationCode": "Basic ????",
+				"operationKey": "Operation key not yet provided.",
+				"userName": "Katharina Mohr",
+				"originator": "NEP_1.1.0+testcase.completeness",
+				"xCorrelator": "00000000-0000-0000-0000-000000000000",
+				"traceIndicator": "1",
+				"customerJourney": ""
+			}
+		],
+		"collectionInputList": [
+			{
+				"collectionName": "nep",
+				"serverToBeApplied": "NetExplorerProxy",
+				"mountName": "513250011",
+				"kindOfReference": "dynamic"
+			},
+			{
+				"collectionName": "nep_simulator",
+				"serverToBeApplied": "NetExplorerProxy+simu",
+				"mountName": "513250010",
+				"kindOfReference": "static",
+				"suffixUrlEncodingIsRequired": true
+			}
+		]
+	}
+]

@@ -1,5 +1,12 @@
-# NetExplorerProxy Testing
+# Testing
 
-The following testcase collection(s) target NetExplorerProxy v1.0.2.
+Testing is structured into the following six stages:
+- [Unit Testing](../server/)
+- [Internal Integration Testing](./1_integration/)
+- [Functional Testing](./2_functional/)
+- [Performance Testing](./3_performance/)
+- [Pre-prod Testing](./4_preprod/)
+- [FOA](./5_foa/)
 
-- [NEP_1.0.2](NEP_1.0.2/)  
+
+![StructureOfTesting](./pictures/241004_StructureOfTesting.png)
