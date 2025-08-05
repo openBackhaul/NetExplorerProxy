@@ -400,27 +400,27 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
     const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
     const augumentContainerPac = ltp[LTP_AUG_PAC];
 
-    let ethObj = {
+    let airContObj = {
       "mount_name": mountName,
       "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
       "timestamp": timestamp
     };
 
     if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
-      ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+      airContObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
     }
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-      ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      airContObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-      ethObj["administrative_state"] = layerProtocol["administrative-state"];
+      airContObj["administrative_state"] = layerProtocol["administrative-state"];
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
       ltp[LTP_AUG_PAC].hasOwnProperty("original-ltp-name")) {
-      ethObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
+      airContObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
     }
 
     // Add air container specific attributes
@@ -431,32 +431,32 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
       const transmissionList = capibility[AIR_INTERFACE.MODE_LIST];
 
       if (configuration && configuration.hasOwnProperty("transmission-mode-min")) {
-        ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+        airContObj["transmission_mode_min"] = configuration["transmission-mode-min"];
       }
 
       if (configuration && configuration.hasOwnProperty("transmission-mode-max")) {
-        ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+        airContObj["transmission_mode_max"] = configuration["transmission-mode-max"];
       }
 
       if (configuration && configuration.hasOwnProperty("xpic-is-on")) {
-        ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+        airContObj["xpic_is_on"] = configuration["xpic-is-on"];
       }
 
       if (configuration && configuration.hasOwnProperty("power-is-on")) {
-        ethObj["power_is_on"] = configuration["power-is-on"];
+        airContObj["power_is_on"] = configuration["power-is-on"];
       }
 
       if (configuration && configuration.hasOwnProperty("transmitter-is-on")) {
-        ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
+        airContObj["transmitter_is_on"] = configuration["transmitter-is-on"];
       }
 
       if (status && status.hasOwnProperty("interface-status")) {
         const fullStatus = status["interface-status"];
         const lastUnderscore = fullStatus.lastIndexOf("_");
-        ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
+        airContObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
       }
       if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
-        ethObj["type_of_equipment"] = capibility["type-of-equipment"];
+        airContObj["type_of_equipment"] = capibility["type-of-equipment"];
       }
 
       if (transmissionList) {
@@ -506,7 +506,7 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
       }
     }
     if (augumentContainerPac) {
-      ethObj["external_label"] = augumentContainerPac["external-label"];
+      airContObj["external_label"] = augumentContainerPac["external-label"];
     }
     airContainerGeneralInfo.push(ethObj);
   }
@@ -712,6 +712,12 @@ function calculateCapaFactor(transmissionListObj) {
     !transmissionListObj["code-rate"]) {
     logger.warn("Missing required parameters for capa-factor calculation");
     return null;
+  }
+
+  if (transmissionListObj["code-rate"] == -1 ||
+    transmissionListObj["code-rate"] == "-1") {
+      logger.warn("Code Rate is -1, drop the entry");
+      return null;
   }
 
   // Extract values from transmissionList
