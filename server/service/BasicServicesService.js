@@ -1,13 +1,16 @@
 'use strict';
-const getDataFromOtherApp = require('./GetDataFromOtherApps');
-const ltpStructureUtility = require('./LtpStructureUtility');
+// ONF imports
 const onfAttributes = require('onf-core-model-ap/applicationPattern/onfModel/constants/OnfAttributes');
-const logger = require('./LoggingService.js').getLogger();
-const dbHandler = require('./db/dbHandler.js');
 const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
 const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
+const getDataFromOtherApp = require('./GetDataFromOtherApps');
+const ltpStructureUtility = require('./LtpStructureUtility');
+
+const dbHandler = require('./db/dbHandler.js');
 const processMountNames=require('./ProcessMountNames.js');
 
+const logger = require('./LoggingService.js').getLogger();
 
 
 const ETHERNET_INTERFACE = {
