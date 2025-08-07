@@ -1,7 +1,12 @@
 'use strict';
-const dbHandler = require('./db/dbHandler.js');
-const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
 const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
+
+const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+const dbHandler = require('./db/dbHandler.js');
+
+const logger = require('./LoggingService.js').getLogger();
+
 let currentTime, dataRetentionTime, dataRetention, thresholdTime, thresholdTimeinDate;
 
 module.exports.addNewDataInNEPdeviceList = async function (mountNameList) {
@@ -32,11 +37,18 @@ module.exports.addNewDataInNEPdeviceList = async function (mountNameList) {
 
 };
 
-module.exports.deleteFromDb = async function (filters) {
-  await dbHandler.removeDeviceInfo(filters);
-  await dbHandler.removeEquipmentInfo(filters);
-  await dbHandler.removeAirInterface(filters);
-  await dbHandler.removeAirTransMode(filters);
-  await dbHandler.removeEthernetContInfo(filters);
-  await dbHandler.removeWireInterfaceInfo(filters);
+module.exports.deleteFromDb = async function(retentionTs) {
+  // Create a timefilter object
+  let dateFilter = {
+    timeStamp: retentionTs
+  };
+  logger.info(`Data Retention, delete entries older than ${retentionTs}`);
+  let res = await dbHandler.removeAllReferences(dateFilter);
+  logger.info(`Entries deleted in the DB: ${res}`);
+  // await dbHandler.removeDeviceInfo(filters);
+  // await dbHandler.removeEquipmentInfo(filters);
+  // await dbHandler.removeAirInterface(filters);
+  // await dbHandler.removeAirTransMode(filters);
+  // await dbHandler.removeEthernetContInfo(filters);
+  // await dbHandler.removeWireInterfaceInfo(filters);
 };
