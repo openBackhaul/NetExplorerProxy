@@ -19,10 +19,10 @@ The following data for all (target) devices should be gathered into the followin
 - general information:
   - `mount-name`
   - `uuid`: *logical-termination-point/uuid*
-  - `operational-state`: *logical-termination-point/operational-state*
+  - `operational-state`: *logical-termination-point/operational-state*, provide without the substring "core-model-1-4:OPERATIONAL_STATE_"
   - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
-  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*
+  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*, provide without the substring "core-model-1-4:ADMINISTRATIVE_STATE_"
   - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
   - `external-label`: related *ltp-augment-1-0:ltp-augment-pac/external-label*: contains the unitID, from which the linkId can be derived
 - from *air-interface-configuration*:
@@ -42,9 +42,9 @@ Excerpt from sample data:
 Compiled response data:  
 ```
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;external-label;transmission-mode-min;transmission-mode-max;xpic-is-on;power-is-on;transmitter-is-on;interface-status;type-of-equipment
-100250001;RF-123456789;core-model-1-4:OPERATIONAL_STATE_ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;100551233B;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
-100250001;RF-234234234;core-model-1-4:OPERATIONAL_STATE_ENABLED;234234234;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/3.1/1;100551234B;56000-16-v0;56000-1024-v0;false;true;true;UP;RAU2 X 32/13 R3A
-200250003;ltpB-1;core-model-1-4:OPERATIONAL_STATE_ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;200550020A;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A
+100250001;RF-123456789;ENABLED;123456789;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/2.1/1;100551233B;56000-16-v0;56000-256-v0;false;true;true;UP;RAU2 X 32/13 R3A
+100250001;RF-234234234;ENABLED;234234234;2024-12-11T16:00:00+01:00;UNLOCKED;RF 1/3.1/1;100551234B;56000-16-v0;56000-1024-v0;false;true;true;UP;RAU2 X 32/13 R3A
+200250003;ltpB-1;ENABLED;ltpB-1-localId-1;2024-12-11T16:07:00+01:00;UNLOCKED;RF 1/5.1/1;200550020A;4QAM;2048QAM;false;true;true;UP;RAU2 X 32/13 R3A
 ```
 
 ---

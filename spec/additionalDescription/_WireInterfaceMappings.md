@@ -22,10 +22,10 @@ The following data for all (target) devices should be gathered into the followin
 - general information:
   - `mount-name`
   - `uuid`: *logical-termination-point/uuid*
-  - `operational-state`: *logical-termination-point/operational-state*
+  - `operational-state`: *logical-termination-point/operational-state*, provide without the substring "core-model-1-4:OPERATIONAL_STATE_"
   - `local-id`: *logical-termination-point/layer-protocol/uuid*
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache. It just needs to be by a single of the services mentioned in this document.
-  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*
+  - `administrative-state`: *logical-termination-point/layer-protocol/administrative-state*, provide without the substring "core-model-1-4:ADMINISTRATIVE_STATE_"
   - `original-ltp-name`: related *ltp-augment-1-0:ltp-augment-pac/original-ltp-name*
 - from *wire-interface-configuration*:
   - `interface-name`
@@ -84,8 +84,8 @@ See example for 100250001:
 Compiled response data:  
 ```
 mount-name;uuid;operational-state;local-id;timestamp;administrative-state;original-ltp-name;interface-name;fixed-pmd-kind;interface-status;pmd-kind-cur;pmd-name;duplex;speed
-100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;NOT_YET_DEFINED;NOT_YET_DEFINED;NOT_YET_DEFINED;
-100250001;ETY-2134639491;core-model-1-4:OPERATIONAL_STATE_DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;1000BASE_FD;FULL_DUPLEX;1000Mbit/s
+100250001;ETY-2134639491;DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;NOT_YET_DEFINED;NOT_YET_DEFINED;NOT_YET_DEFINED;
+100250001;ETY-2134639491;DISABLED;2134639491;2024-12-11T16:00:00+01:00;core-model-1-4:UNLOCKED;LAN 1/7/3;VendorX interfaceName;1000BASE_FD;DOWN;1000BASE_FD;1000BASE_FD;FULL_DUPLEX;1000Mbit/s
 ```
 
 [go up to CyclicDataRetrievalMappings](CyclicDataRetrievalProcess.md)
