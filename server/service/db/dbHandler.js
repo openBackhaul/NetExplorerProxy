@@ -80,7 +80,7 @@ exports.initDB = async function(config) {
                 pool: {
                     max: 2500,
                     min: 0,
-                    acquire: 5000, // wait max 5 seconds for connection before throwing error
+                    acquire: 15000, // wait max 15 seconds for connection before throwing error
                     idle: 5000,    // release connection if idle for 5 seconds
                     evict: 5000    // evict idle connections after 5 seconds
                   },
@@ -107,7 +107,7 @@ exports.initDB = async function(config) {
                           pool: {
                     max: 2500,
                     min: 0,
-                    acquire: 5000, // wait max 5 seconds for connection before throwing error
+                    acquire: 15000, // wait max 15 seconds for connection before throwing error
                     idle: 5000,    // release connection if idle for 5 seconds
                     evict: 5000    // evict idle connections after 5 seconds
                   },
@@ -137,7 +137,7 @@ exports.initDB = async function(config) {
                           pool: {
                     max: 2500,
                     min: 0,
-                    acquire: 5000, // wait max 5 seconds for connection before throwing error
+                    acquire: 15000, // wait max 15 seconds for connection before throwing error
                     idle: 5000,    // release connection if idle for 5 seconds
                     evict: 5000    // evict idle connections after 5 seconds
                   },
