@@ -53,10 +53,9 @@ exports.initDB = async function(config) {
     let db_name = config.db_name;
     if (config.db_name == "" || config.db_name == undefined) {
       logger.warn("DB name is not defined, so using default: " + NEP_DB);
-      db_name = config.db_name;
+      db_name = NEP_DB;
     }
 
-    
     // Init sequelize with DB params
     logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + 
       "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
@@ -73,113 +72,96 @@ exports.initDB = async function(config) {
       logger.info('Connection has been established successfully.');
     } else {
       try {
-              sequelize = new Sequelize(db_name, config.user, config.password, {
-                host: config.host,
-                port: config.port,
-                dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-                pool: {
-                    max: 2500,
-                    min: 0,
-                    acquire: 15000, // wait max 15 seconds for connection before throwing error
-                    idle: 5000,    // release connection if idle for 5 seconds
-                    evict: 5000    // evict idle connections after 5 seconds
-                  },
+        sequelize = new Sequelize(db_name, config.user, config.password, {
+          host: config.host,
+          port: config.port,
+          dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+          pool: {
+            max: 2500,
+            min: 0,
+            acquire: 15000, // wait max 15 seconds for connection before throwing error
+            idle: 5000,    // release connection if idle for 5 seconds
+            evict: 5000    // evict idle connections after 5 seconds
+          },
+          dialectOptions: {
+            connectTimeout: 10000 // 10 seconds connect timeout 
+          },
+          logging: msg => logger.debug(msg)
+        });
 
-                  dialectOptions: {
-                      connectTimeout: 10000 // 10 seconds connect timeout 
-                    },
-                logging: msg => logger.debug(msg)
-              });
-
-              // Try to connect to the DB
-              await sequelize.authenticate();
-              logger.info('Connection has been established successfully.');
+        // Try to connect to the DB
+        await sequelize.authenticate();
+        logger.info('Connection has been established successfully.');
       } catch (error) {
         logger.error(error, "There is a problem with the DB connection");
         // If DB doesn't exist I have to create a new one
-        if( error.original.errno === 1049) {
-              logger.error(error, "DB doesn't exists");
-              try {
-                sequelize = new Sequelize("", config.user, config.password, {
-                  host: config.host,
-                  port: config.port,
-                  dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-                          pool: {
-                    max: 2500,
-                    min: 0,
-                    acquire: 15000, // wait max 15 seconds for connection before throwing error
-                    idle: 5000,    // release connection if idle for 5 seconds
-                    evict: 5000    // evict idle connections after 5 seconds
-                  },
+        if (error.original.errno === 1049) {
+          logger.error(error, "DB doesn't exists");
+          try {
+            sequelize = new Sequelize("", config.user, config.password, {
+              host: config.host,
+              port: config.port,
+              dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+              pool: {
+                max: 2500,
+                min: 0,
+                acquire: 15000, // wait max 15 seconds for connection before throwing error
+                idle: 5000,    // release connection if idle for 5 seconds
+                evict: 5000    // evict idle connections after 5 seconds
+              },
 
-                  dialectOptions: {
-                    connectTimeout: 10000 // 10 seconds connect timeout
-                    },
-                  logging: msg => logger.debug(msg)
-                });
+              dialectOptions: {
+                connectTimeout: 10000 // 10 seconds connect timeout
+              },
+              logging: msg => logger.debug(msg)
+            });
 
-                await sequelize.authenticate();
+            await sequelize.authenticate();
 
-                logger.warn("DB " + db_name + " doesn't exists, try to create it");
-                let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
+            logger.warn("DB " + db_name + " doesn't exists, try to create it");
+            let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
 
-                logger.info("Using DB: " + db_name);
-                res = await sequelize.query("USE " + db_name + ";");
-                logger.info("DB " + db_name + " exists");
+            logger.info("Using DB: " + db_name);
+            res = await sequelize.query("USE " + db_name + ";");
+            logger.info("DB " + db_name + " exists");
 
-                sequelize.close();
-                logger.info("Closing connection");
+            sequelize.close();
+            logger.info("Closing connection, and reopen using " + db_name + " Database");
 
-                sequelize = new Sequelize(db_name, config.user, config.password, {
-                  host: config.host,
-                  port: config.port,
-                  dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-                          pool: {
-                    max: 2500,
-                    min: 0,
-                    acquire: 15000, // wait max 15 seconds for connection before throwing error
-                    idle: 5000,    // release connection if idle for 5 seconds
-                    evict: 5000    // evict idle connections after 5 seconds
-                  },
+            sequelize = new Sequelize(db_name, config.user, config.password, {
+              host: config.host,
+              port: config.port,
+              dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+              pool: {
+                max: 2500,
+                min: 0,
+                acquire: 15000, // wait max 15 seconds for connection before throwing error
+                idle: 5000,    // release connection if idle for 5 seconds
+                evict: 5000    // evict idle connections after 5 seconds
+              },
 
-                    dialectOptions: {
-                      connectTimeout: 10000 // 10 seconds connect timeout 
-                    },
-                  logging: msg => logger.debug(msg)
-                });
-                await sequelize.authenticate();
-                logger.info("Authentication done with db name selected");
-              } catch (db_error) {
-                logger.error(db_error, "There is a problem with the DB connection");
-                if(db_error.original.errno === 1049) {
-                    logger.warn("DB " + db_name + " doesn't exists, try to create it");
-                    let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
-                    logger.info("DB: " + db_name + " created");
-                    res = await sequelize.query("USE " + db_name + ";");
-                    logger.info("using DB: " + db_name);
-
-                }
-                
-              }
+              dialectOptions: {
+                connectTimeout: 10000 // 10 seconds connect timeout 
+              },
+              logging: msg => logger.debug(msg)
+            });
+            
+            await sequelize.authenticate();
+            logger.info("Authentication done with db name selected");
+          } catch (db_error) {
+            logger.error("Impossible to connect dabase, maybe we have to abort it");
+            logger.error(db_error, "There is a problem with the DB connection");
+            if (db_error.original.errno === 1049) {
+              logger.warn("DB " + db_name + " doesn't exists, try to create it");
+              let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
+              logger.info("DB: " + db_name + " created");
+              res = await sequelize.query("USE " + db_name + ";");
+              logger.info("using DB: " + db_name);
+            }
           }
+        }
       }
-
     }
-
-
-
-    // IF DB doesn't exist I have to create a new one
-    // try {
-    //   logger.info("Using DB: " + db_name);
-    //   let res = await sequelize.query("USE " + db_name + ";");
-    //   logger.info("DB " + db_name + " exists");
-    // } catch (db_error) {
-    //   logger.warn("DB " + db_name + " doesn't exists, try to create it");
-    //   let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
-    //   logger.info("DB: " + db_name + " created");
-    //   res = await sequelize.query("USE " + db_name + ";");
-    //   logger.info("using DB: " + db_name);
-    // }
 
     // Init the tables
     devices_general_info = devicesInfo.init(sequelize);
