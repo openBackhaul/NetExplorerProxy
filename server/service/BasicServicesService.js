@@ -414,17 +414,19 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
     }
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-      airContObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-      // let status = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-      // const lastUnderscore = status.lastIndexOf("_");
-      // airContObj["operational_state"] = status.substring(lastUnderscore + 1);
+      // Trim the prefix
+      // airContObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      let status = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      const lastUnderscore = status.lastIndexOf("_");
+      airContObj["operational_state"] = status.substring(lastUnderscore + 1);
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-      airContObj["administrative_state"] = layerProtocol["administrative-state"];
-      // let status = layerProtocol["administrative-state"];
-      // const lastUnderscore = status.lastIndexOf("_");
-      // airContObj["administrative_state"] = status.substring(lastUnderscore + 1);
+      // Trim the prefix
+      // airContObj["administrative_state"] = layerProtocol["administrative-state"];
+      let status = layerProtocol["administrative-state"];
+      const lastUnderscore = status.lastIndexOf("_");
+      airContObj["administrative_state"] = status.substring(lastUnderscore + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
