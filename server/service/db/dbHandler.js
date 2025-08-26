@@ -96,7 +96,7 @@ exports.initDB = async function(config) {
         logger.error(error, "There is a problem with the DB connection");
         // If DB doesn't exist I have to create a new one
         if (error.original.errno === 1049) {
-          logger.error(error, "DB doesn't exists");
+          logger.error(error, "Error 1049 - DB doesn't exists");
           try {
             sequelize = new Sequelize("", config.user, config.password, {
               host: config.host,
@@ -152,13 +152,13 @@ exports.initDB = async function(config) {
             logger.error("Impossible to connect dabase, maybe we have to abort it");
             logger.error(db_error, "There is a problem with the DB connection");
             if (db_error.original.errno === 1049) {
-              logger.warn("DB " + db_name + " doesn't exists, try to create it");
-              let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
-              logger.info("DB: " + db_name + " created");
-              res = await sequelize.query("USE " + db_name + ";");
-              logger.info("using DB: " + db_name);
+              logger.error("DB " + db_name + " doesn't exists, but this is the second time failing.");
+            } else {
+              logger.error("Impossible to connect to DB for the second time");
             }
           }
+        } else {
+          logger.error("Impossible to connect to DB.");
         }
       }
     }
