@@ -472,6 +472,11 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
 
       if (transmissionList) {
         for (let transmissionListObj of transmissionList) {
+          // Skipping entries with code-rate = -1
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("code-rate") &&
+            (transmissionListObj["code-rate"] == -1 || transmissionListObj["code-rate"] == "-1")) {
+            continue;
+          }
           let traMis = {};
           traMis["mount_name"] = mountName;
           traMis["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
