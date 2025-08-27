@@ -99,5 +99,22 @@ logger.info("Connecting to the DB");
 
 logger.info("NetExplorerProxy is up.");
 
+
+
+const gracefulShutdown = async () => {
+logger.info('Shutting down DB connection...');
+  await dbHandler.closeDataBaseConnection(); // properly close connection pool
+  process.exit();
+};
+
+process.on('SIGINT', async () => {
+  await gracefulShutdown();
+});
+
+process.on('SIGTERM', async () => {
+  await gracefulShutdown();
+});
+
+
 global.mountMap = new Map();
 
