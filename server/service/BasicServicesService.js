@@ -522,7 +522,7 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
     if (augumentContainerPac) {
       airContObj["external_label"] = augumentContainerPac["external-label"];
     }
-    airContainerGeneralInfo.push(ethObj);
+    airContainerGeneralInfo.push(airContObj);
   }
 
   returnObj["airContainerGeneralInfo"] = airContainerGeneralInfo;
