@@ -75,11 +75,11 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
     const mountName = mountNameList[index++];
     const start = Date.now();
 
-    logger.info(`🔄 Starting processing for mountName: ${mountName}  with time ${start}`);
+    logger.info(`Starting processing for mountName: ${mountName}  with time ${start}`);
     const promise = exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp)
       .then(ccOfMountname => {
         const stop = Date.now();
-        logger.info(`✅ Finished retrieving cc for mountName: ${mountName}  with stopTime ${stop}`);
+        logger.info(`Finished retrieving cc for mountName: ${mountName} with stopTime ${stop}`);
       })
       .finally(() => {
         activePromises.splice(activePromises.indexOf(promise), 1);
@@ -113,9 +113,8 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     listOfConnectedDevices.message.hasOwnProperty("mount-name-list") &&
     listOfConnectedDevices.message["mount-name-list"].length > 0
   ) {
-    logger.info("List of connected device exists");
     const mountNameList = listOfConnectedDevices.message["mount-name-list"];
-    logger.info(mountNameList);
+    logger.info(mountNameList, "List of connected device exists");
     const requestHeaders = { // using shorthand
       user,
       xCorrelator,
@@ -160,11 +159,11 @@ module.exports.processTheccOfMountname = async function processTheccOfMountname(
     logger.error(`Not able to extract data from CC of ${mountName}`);
   }
 
-  logger.info(`🔄 After Processing the : ${mountName}`);
+  logger.info(`Data has been processed for Mount-Name: ${mountName}`);
 };
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.info(`Processing General info for ${mountName}`);
+  logger.debug(`Processing General info for ${mountName}`);
   const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp)
     .catch((err) => logger.error(err));
 
@@ -174,7 +173,7 @@ async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
 }
 
 async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.info(`Processing Equipment info for ${mountName}`);
+  logger.debug(`Processing Equipment info for ${mountName}`);
   const equipmentGeneralInfo = await extractEquipmentData(ccOfMountname, mountName, timestamp)
     .catch((err) => logger.error(`${err}`));
 
@@ -184,7 +183,7 @@ async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) 
 }
 
 async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.info(`Processing Wire interface info for ${mountName}`);
+  logger.debug(`Processing Wire interface info for ${mountName}`);
   const wireinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
 
@@ -201,7 +200,7 @@ async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timesta
 }
 
 async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
-  logger.info(`Processing Air interface info for ${mountName}`);
+  logger.debug(`Processing Air interface info for ${mountName}`);
   const airinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
@@ -225,7 +224,7 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
 }
 
 async function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.info(`Processing Ethernet info for ${mountName}`);
+  logger.debug(`Processing Ethernet info for ${mountName}`);
   const ethInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
 

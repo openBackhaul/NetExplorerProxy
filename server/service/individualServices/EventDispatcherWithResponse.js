@@ -34,7 +34,7 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
     let serverApplicationReleaseNumber = await HttpClientInterface.getReleaseNumberAsync(httpClientUuid[0]);
     let originator = await HttpServerInterface.getApplicationNameAsync();
 
-    logger.info("RequestorHeader:");
+    logger.debug("RequestorHeader:");
     let httpRequestHeader = new RequestHeader(
         user, 
         originator,
@@ -44,11 +44,11 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         operationKey
     );
     httpRequestHeader = OnfAttributeFormatter.modifyJsonObjectKeysToKebabCase(httpRequestHeader);
-    logger.info(httpRequestHeader);
-    logger.info(operationClientUuid);
-    logger.info(httpMethod);
-    logger.info(httpRequestBody)
-    logger.info(params);
+    logger.debug(httpRequestHeader);
+    logger.debug(operationClientUuid);
+    logger.debug(httpMethod);
+    logger.debug(httpRequestBody)
+    logger.debug(params);
     let response = await RestRequestBuilder.BuildAndTriggerRestRequest(
         operationClientUuid,
         httpMethod,
