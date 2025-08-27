@@ -170,7 +170,7 @@ exports.initDB = async function(config) {
 exports.updateDeviceInfo = async function (dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await devices_general_info.update({
@@ -228,7 +228,7 @@ exports.updateDeviceInfo = async function (dataArray) {
 exports.updateEquipmentInfo = async function (dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await equipment_general_info.update({
@@ -257,7 +257,7 @@ exports.updateEquipmentInfo = async function (dataArray) {
           "mount-name": data.mount_name,
           "uuid": data.uuid,
           "local-id": data.local_id,
-  
+
           // Timestamp reference
           "timestamp": new Date(data.timestamp),
 
@@ -278,7 +278,7 @@ exports.updateEquipmentInfo = async function (dataArray) {
       }
 
     } catch(error) {
-        logger.error(error);
+      logger.error(error);
     }
   }
 }
@@ -307,7 +307,7 @@ exports.updateEquipmentInfo = async function (dataArray) {
 exports.updateAirInterface = async function(dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_general_info.update({
@@ -339,7 +339,7 @@ exports.updateAirInterface = async function(dataArray) {
           "mount-name": data.mount_name,
           "uuid": data.uuid,
           "local-id": data.local_id,
-  
+
           // Timestamp reference
           "timestamp": new Date(data.timestamp),
 
@@ -363,7 +363,7 @@ exports.updateAirInterface = async function(dataArray) {
       }
 
     } catch(error) {
-        logger.error(error);
+      logger.error(error);
     }
   }
 }
@@ -389,7 +389,7 @@ exports.updateAirInterface = async function(dataArray) {
 exports.updateAirTransMode = async function(dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await air_interface_transmission_mode.update({
@@ -419,7 +419,7 @@ exports.updateAirTransMode = async function(dataArray) {
           "mount-name": data.mount_name,
           "uuid": data.uuid,
           "local-id": data.local_id,
-  
+
           // Timestamp reference
           "timestamp": new Date(data.timestamp),
 
@@ -440,9 +440,9 @@ exports.updateAirTransMode = async function(dataArray) {
       }
 
     } catch(error) {
-        logger.error(error);
+      logger.error(error);
     }
-  }  
+  }
 }
 
 /*
@@ -464,7 +464,7 @@ exports.updateAirTransMode = async function(dataArray) {
 exports.updateEthernetContainer = async function (dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await ethernet_container_general_info.update({
@@ -491,7 +491,7 @@ exports.updateEthernetContainer = async function (dataArray) {
           "mount-name": data.mount_name,
           "uuid": data.uuid,
           "local-id": data.local_id,
-  
+
           // Timestamp reference
           "timestamp": new Date(data.timestamp),
 
@@ -510,7 +510,7 @@ exports.updateEthernetContainer = async function (dataArray) {
       }
 
     } catch(error) {
-        logger.error(error);
+      logger.error(error);
     }
   }
 }
@@ -538,7 +538,7 @@ exports.updateEthernetContainer = async function (dataArray) {
 exports.updateWireInterface = async function (dataArray) {
   let result = { added: 0, updated: 0 };
 
-  for (let i = 0; i< dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
       let cc = await wire_interface_general_info.update({
@@ -569,7 +569,7 @@ exports.updateWireInterface = async function (dataArray) {
           "mount-name": data.mount_name,
           "uuid": data.uuid,
           "local-id": data.local_id,
-  
+
           // Timestamp reference
           "timestamp": new Date(data.timestamp),
 
@@ -592,7 +592,7 @@ exports.updateWireInterface = async function (dataArray) {
       }
 
     } catch(error) {
-        logger.error(error);
+      logger.error(error);
     }
   }
 }
@@ -605,10 +605,10 @@ exports.updateWireInterface = async function (dataArray) {
  * 
  * isCSV: force the routine to extract raw data ready for CSV
  */
-exports.readListOfDevices = async function(isCSV=false) {
+exports.readListOfDevices = async function(isCSV = false) {
   let resultFetched = await devices_general_info.findAll({
     attributes: ['mount-name', 'timestamp'],
-    raw : isCSV
+    raw: isCSV
   });
 
   // if (isCSV) {
@@ -631,8 +631,8 @@ exports.readListOfDevices = async function(isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readDeviceInfo = async function(filters, isCSV=false) {
-  const attr = ['mount-name', 'timestamp', 'external-label', 'device-model-name', 'system-name' ];
+exports.readDeviceInfo = async function(filters, isCSV = false) {
+  const attr = ['mount-name', 'timestamp', 'external-label', 'device-model-name', 'system-name'];
 
   let resultFetched = await readGeneralData(devices_general_info, attr, filters, isCSV);
 
@@ -648,13 +648,13 @@ exports.readDeviceInfo = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readEquipmentInfo = async function(filters, isCSV=false) {
+exports.readEquipmentInfo = async function(filters, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
     'uuid',
     'local-id',
-    'timestamp', 
+    'timestamp',
     'version',
     'description',
     'model-identifier',
@@ -678,13 +678,13 @@ exports.readEquipmentInfo = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
+exports.readAirInterfaceInfo = async function(filters, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
     'uuid',
     'local-id',
-    'timestamp', 
+    'timestamp',
     'operational-state',
     'administrative-state',
     'original-ltp-name',
@@ -712,7 +712,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readAirTransMode = async function(filters, isCSV=false) {
+exports.readAirTransMode = async function(filters, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
@@ -743,13 +743,13 @@ exports.readAirTransMode = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readEthernetContInfo = async function(filters, isCSV=false) {
+exports.readEthernetContInfo = async function (filters, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
     'uuid',
     'local-id',
-    'timestamp', 
+    'timestamp',
     'operational-state',
     'administrative-state',
     'original-ltp-name',
@@ -773,7 +773,7 @@ exports.readEthernetContInfo = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
+exports.readWireInterfaceInfo = async function(filters, isCSV = false) {
   // Fields to read from DB
   const attr = [
     'mount-name',
@@ -813,7 +813,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV=false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
+exports.readInterfaceInfoPerDevice = async function(filters, isCSV = false) {
   // const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
@@ -844,13 +844,13 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV=false) {
 /*
  * This is internal general routine to read data from DB model
  */
-async function readGeneralData(tableModel, fields, filters, isCSV=false) {
+async function readGeneralData(tableModel, fields, filters, isCSV = false) {
   const whereCondition = getWhereConditionForRead(filters);
 
   let resultFetched = await tableModel.findAll({
     attributes: fields,
     where: whereCondition,
-    raw : isCSV
+    raw: isCSV
   });
 
   if (isCSV) { // Convert into CSV format
@@ -880,7 +880,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV=false) {
 exports.removeDeviceInfo = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await devices_general_info.destroy({ where: whereCondition});
+  let resultFetched = await devices_general_info.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -896,7 +896,7 @@ exports.removeDeviceInfo = async function(filters) {
 exports.removeEquipmentInfo = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await equipment_general_info.destroy({ where: whereCondition});
+  let resultFetched = await equipment_general_info.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -912,7 +912,7 @@ exports.removeEquipmentInfo = async function(filters) {
 exports.removeAirInterface = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await air_interface_general_info.destroy({ where: whereCondition});
+  let resultFetched = await air_interface_general_info.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -928,7 +928,7 @@ exports.removeAirInterface = async function(filters) {
 exports.removeAirTransMode = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await air_interface_transmission_mode.destroy({ where: whereCondition});
+  let resultFetched = await air_interface_transmission_mode.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -944,7 +944,7 @@ exports.removeAirTransMode = async function(filters) {
 exports.removeEthernetContInfo = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await ethernet_container_general_info.destroy({ where: whereCondition});
+  let resultFetched = await ethernet_container_general_info.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -960,7 +960,7 @@ exports.removeEthernetContInfo = async function(filters) {
 exports.removeWireInterfaceInfo = async function(filters) {
   // Retrieve where condition based on filters
   const whereCondition = getWhereConditionForDelete(filters);
-  let resultFetched = await wire_interface_general_info.destroy({ where: whereCondition});
+  let resultFetched = await wire_interface_general_info.destroy({ where: whereCondition });
 
   return resultFetched;
 }
@@ -1054,7 +1054,7 @@ function convertToCSV(arr) {
   let retValue = array.map(it => {
     return Object.values(it).toString();
   }).join(EOL);
-  
+
   retValue = retValue.replaceAll(',', SEPARATOR);
   return retValue;
 }
@@ -1062,24 +1062,24 @@ function convertToCSV(arr) {
 /*
  * Internal routine to convert the result into CSV format
  */
-function convertToCSVEnh(arr, onlyHeader=true) {
-    let csv = '';
+function convertToCSVEnh(arr, onlyHeader = true) {
+  let csv = '';
 
-    if (onlyHeader) {
-      // Extract headers
-      logger.debug("Extract only Headers");
-      const headers = Object.keys(arr[0]);
-      csv += headers.join(SEPARATOR) + EOL;
-    } else {
-      // Extract values
-      logger.debug("Extract only Data values");
-      arr.forEach(obj => {
-          const values = headers.map(header => obj[header]);
-          csv += values.join(SEPARATOR) + EOL;
-      });
-    }
+  if (onlyHeader) {
+    // Extract headers
+    logger.debug("Extract only Headers");
+    const headers = Object.keys(arr[0]);
+    csv += headers.join(SEPARATOR) + EOL;
+  } else {
+    // Extract values
+    logger.debug("Extract only Data values");
+    arr.forEach(obj => {
+      const values = headers.map(header => obj[header]);
+      csv += values.join(SEPARATOR) + EOL;
+    });
+  }
 
-    return csv;
+  return csv;
 }
 
 function convertTimeStamp(arr) {
@@ -1100,7 +1100,7 @@ const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-
 function fixBooleanValues(arr) {
   arr.map(entry => {
     boolean_fields.forEach(boolentry => {
-      if(entry[boolentry] != undefined) {
+      if (entry[boolentry] != undefined) {
         entry[boolentry] = entry[boolentry] == 0 ? "false" : "true";
       }
     });
