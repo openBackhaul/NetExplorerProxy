@@ -1,13 +1,16 @@
 'use strict';
 
+const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
+const responseCodeEnum = require("onf-core-model-ap/applicationPattern/rest/server/ResponseCode");
+
 const bequeathHandler = require('./individualServices/BequeathHandler');
 const requestHandler = require('./individualServices/RequestHandler');
 const {getLtpIfConfigFromUuid} = require("./individualServices/ControlConstructUtil");
-const responseCodeEnum = require("onf-core-model-ap/applicationPattern/rest/server/ResponseCode");
 const individualServicesUtility = require('./individualServices/IndividualServicesUtility');
 const requestUtil = require("./individualServices/RequestUtil");
 const restClient = require("./individualServices/RestClient");
 const {HTTP_CODES} = require("./individualServices/RestClient");
+
 const logger = require('./LoggingService.js').getLogger();
 const dbHandler = require('./db/dbHandler');
 
@@ -148,7 +151,11 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
   const operation = body["requestor-receive-operation"];
 
   // write NEP callback info into the request body
-  let ifConfig = await getLtpIfConfigFromUuid("nep-1-0-2-tcp-s-000");
+  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+  let prefix = forwardingConstruct.uuid.split('op')[0];
+
+  let ifConfig = await getLtpIfConfigFromUuid(prefix + "tcp-s-000");
 
   body["requestor-protocol"] = ifConfig["protocol"];
   body["requestor-address"] = {"ip-address": ifConfig["ip-address"]};
