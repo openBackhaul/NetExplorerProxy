@@ -216,8 +216,8 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
       await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
         .catch((err) => logger.error(err));
     }
-
-    if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]) {
+    if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"] &&
+      airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"].length !== 0) {
       await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
         .catch((err) => logger.error(err));
     }
@@ -351,11 +351,13 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
     ethObj["timestamp"] = timestamp;
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-      ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      ethObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-      ethObj["administrative_state"] = layerProtocol["administrative-state"];
+     const rawValue = layerProtocol["administrative-state"];
+     ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
@@ -415,18 +417,14 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
       // Trim the prefix
-      // airContObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-      let status = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
-      const lastUnderscore = status.lastIndexOf("_");
-      airContObj["operational_state"] = status.substring(lastUnderscore + 1);
+      const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      airContObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
       // Trim the prefix
-      // airContObj["administrative_state"] = layerProtocol["administrative-state"];
-      let status = layerProtocol["administrative-state"];
-      const lastUnderscore = status.lastIndexOf("_");
-      airContObj["administrative_state"] = status.substring(lastUnderscore + 1);
+      const rawValue = layerProtocol["administrative-state"];
+      airContObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
@@ -619,11 +617,13 @@ async function extractIfCapabilityNotFound(configuration, status, mountName, tim
   }
 
   if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-    ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+    const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+    ethObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
   }
 
   if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-    ethObj["administrative_state"] = layerProtocol["administrative-state"];
+    const rawValue = layerProtocol["administrative-state"];
+    ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
   }
 
   if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
