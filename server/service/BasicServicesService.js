@@ -1,13 +1,16 @@
 'use strict';
-const getDataFromOtherApp = require('./GetDataFromOtherApps');
-const ltpStructureUtility = require('./LtpStructureUtility');
+// ONF imports
 const onfAttributes = require('onf-core-model-ap/applicationPattern/onfModel/constants/OnfAttributes');
-const logger = require('./LoggingService.js').getLogger();
-const dbHandler = require('./db/dbHandler.js');
 const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
 const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
+const getDataFromOtherApp = require('./GetDataFromOtherApps');
+const ltpStructureUtility = require('./LtpStructureUtility');
+
+const dbHandler = require('./db/dbHandler.js');
 const processMountNames=require('./ProcessMountNames.js');
 
+const logger = require('./LoggingService.js').getLogger();
 
 
 const ETHERNET_INTERFACE = {
@@ -213,8 +216,8 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
       await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
         .catch((err) => logger.error(err));
     }
-
-    if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"]) {
+    if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"] &&
+      airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"].length !== 0) {
       await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
         .catch((err) => logger.error(err));
     }
@@ -348,11 +351,13 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
     ethObj["timestamp"] = timestamp;
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-      ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      ethObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-      ethObj["administrative_state"] = layerProtocol["administrative-state"];
+     const rawValue = layerProtocol["administrative-state"];
+     ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
@@ -400,27 +405,31 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
     const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
     const augumentContainerPac = ltp[LTP_AUG_PAC];
 
-    let ethObj = {
+    let airContObj = {
       "mount_name": mountName,
       "uuid": ltp[onfAttributes.GLOBAL_CLASS.UUID],
       "timestamp": timestamp
     };
 
     if (layerProtocol && layerProtocol.hasOwnProperty(onfAttributes.LOCAL_CLASS.LOCAL_ID)) {
-      ethObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
+      airContObj["local_id"] = layerProtocol[onfAttributes.LOCAL_CLASS.LOCAL_ID];
     }
 
     if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-      ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      // Trim the prefix
+      const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+      airContObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-      ethObj["administrative_state"] = layerProtocol["administrative-state"];
+      // Trim the prefix
+      const rawValue = layerProtocol["administrative-state"];
+      airContObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
       ltp[LTP_AUG_PAC].hasOwnProperty("original-ltp-name")) {
-      ethObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
+      airContObj["original_ltp_name"] = ltp[LTP_AUG_PAC]["original-ltp-name"];
     }
 
     // Add air container specific attributes
@@ -431,36 +440,41 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
       const transmissionList = capibility[AIR_INTERFACE.MODE_LIST];
 
       if (configuration && configuration.hasOwnProperty("transmission-mode-min")) {
-        ethObj["transmission_mode_min"] = configuration["transmission-mode-min"];
+        airContObj["transmission_mode_min"] = configuration["transmission-mode-min"];
       }
 
       if (configuration && configuration.hasOwnProperty("transmission-mode-max")) {
-        ethObj["transmission_mode_max"] = configuration["transmission-mode-max"];
+        airContObj["transmission_mode_max"] = configuration["transmission-mode-max"];
       }
 
       if (configuration && configuration.hasOwnProperty("xpic-is-on")) {
-        ethObj["xpic_is_on"] = configuration["xpic-is-on"];
+        airContObj["xpic_is_on"] = configuration["xpic-is-on"];
       }
 
       if (configuration && configuration.hasOwnProperty("power-is-on")) {
-        ethObj["power_is_on"] = configuration["power-is-on"];
+        airContObj["power_is_on"] = configuration["power-is-on"];
       }
 
       if (configuration && configuration.hasOwnProperty("transmitter-is-on")) {
-        ethObj["transmitter_is_on"] = configuration["transmitter-is-on"];
+        airContObj["transmitter_is_on"] = configuration["transmitter-is-on"];
       }
 
       if (status && status.hasOwnProperty("interface-status")) {
         const fullStatus = status["interface-status"];
         const lastUnderscore = fullStatus.lastIndexOf("_");
-        ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
+        airContObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
       }
       if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
-        ethObj["type_of_equipment"] = capibility["type-of-equipment"];
+        airContObj["type_of_equipment"] = capibility["type-of-equipment"];
       }
 
       if (transmissionList) {
         for (let transmissionListObj of transmissionList) {
+          // Skipping entries with code-rate = -1
+          if (transmissionListObj && transmissionListObj.hasOwnProperty("code-rate") &&
+            (transmissionListObj["code-rate"] == -1 || transmissionListObj["code-rate"] == "-1")) {
+            continue;
+          }
           let traMis = {};
           traMis["mount_name"] = mountName;
           traMis["uuid"] = ltp[onfAttributes.GLOBAL_CLASS.UUID];
@@ -506,7 +520,7 @@ async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpL
       }
     }
     if (augumentContainerPac) {
-      ethObj["external_label"] = augumentContainerPac["external-label"];
+      airContObj["external_label"] = augumentContainerPac["external-label"];
     }
     airContainerGeneralInfo.push(ethObj);
   }
@@ -603,11 +617,13 @@ async function extractIfCapabilityNotFound(configuration, status, mountName, tim
   }
 
   if (ltp && ltp.hasOwnProperty(onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE)) {
-    ethObj["operational_state"] = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+    const rawValue = ltp[onfAttributes.OPERATION_CLIENT.OPERATIONAL_STATE];
+    ethObj["operational_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
   }
 
   if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-    ethObj["administrative_state"] = layerProtocol["administrative-state"];
+    const rawValue = layerProtocol["administrative-state"];
+    ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
   }
 
   if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
@@ -712,6 +728,12 @@ function calculateCapaFactor(transmissionListObj) {
     !transmissionListObj["code-rate"]) {
     logger.warn("Missing required parameters for capa-factor calculation");
     return null;
+  }
+
+  if (transmissionListObj["code-rate"] == -1 ||
+    transmissionListObj["code-rate"] == "-1") {
+      logger.warn("Code Rate is -1, drop the entry");
+      return null;
   }
 
   // Extract values from transmissionList
