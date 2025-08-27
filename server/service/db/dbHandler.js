@@ -34,6 +34,27 @@ exports.closeDataBaseConnection = async function() {
   }
 }
 
+function openDBConnection(db_name, config) {
+  let seqInstance = new Sequelize(db_name, config.user, config.password, {
+    host: config.host,
+    port: config.port,
+    dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
+    pool: {
+      max: 2500,
+      min: 0,
+      acquire: 15000, // wait max 15 seconds for connection before throwing error
+      idle: 5000,    // release connection if idle for 5 seconds
+      evict: 5000    // evict idle connections after 5 seconds
+    },
+    dialectOptions: {
+      connectTimeout: 10000 // 10 seconds connect timeout 
+    },
+    logging: msg => logger.debug(msg)
+  });
+
+  return seqInstance;
+}
+
 /*
  * Init function
  * config contains all the info to initialize the DB
@@ -72,22 +93,7 @@ exports.initDB = async function(config) {
       logger.info('Connection has been established successfully.');
     } else {
       try {
-        sequelize = new Sequelize(db_name, config.user, config.password, {
-          host: config.host,
-          port: config.port,
-          dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-          pool: {
-            max: 2500,
-            min: 0,
-            acquire: 15000, // wait max 15 seconds for connection before throwing error
-            idle: 5000,    // release connection if idle for 5 seconds
-            evict: 5000    // evict idle connections after 5 seconds
-          },
-          dialectOptions: {
-            connectTimeout: 10000 // 10 seconds connect timeout 
-          },
-          logging: msg => logger.debug(msg)
-        });
+        sequelize = openDBConnection(db_name, config);
 
         // Try to connect to the DB
         await sequelize.authenticate();
@@ -98,25 +104,10 @@ exports.initDB = async function(config) {
         if (error.original.errno === 1049) {
           logger.error(error, "Error 1049 - DB doesn't exists");
           try {
-            sequelize = new Sequelize("", config.user, config.password, {
-              host: config.host,
-              port: config.port,
-              dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-              pool: {
-                max: 2500,
-                min: 0,
-                acquire: 15000, // wait max 15 seconds for connection before throwing error
-                idle: 5000,    // release connection if idle for 5 seconds
-                evict: 5000    // evict idle connections after 5 seconds
-              },
-
-              dialectOptions: {
-                connectTimeout: 10000 // 10 seconds connect timeout
-              },
-              logging: msg => logger.debug(msg)
-            });
-
+            // Open connection with DB without name
+            sequelize = openDBConnection("", config);
             await sequelize.authenticate();
+            logger.warn("Authenticate to DB Succeded without DB name");
 
             logger.warn("DB " + db_name + " doesn't exists, try to create it");
             let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
@@ -128,24 +119,7 @@ exports.initDB = async function(config) {
             sequelize.close();
             logger.info("Closing connection, and reopen using " + db_name + " Database");
 
-            sequelize = new Sequelize(db_name, config.user, config.password, {
-              host: config.host,
-              port: config.port,
-              dialect: config.dialect, /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-              pool: {
-                max: 2500,
-                min: 0,
-                acquire: 15000, // wait max 15 seconds for connection before throwing error
-                idle: 5000,    // release connection if idle for 5 seconds
-                evict: 5000    // evict idle connections after 5 seconds
-              },
-
-              dialectOptions: {
-                connectTimeout: 10000 // 10 seconds connect timeout 
-              },
-              logging: msg => logger.debug(msg)
-            });
-            
+            sequelize = openDBConnection(db_name, config);
             await sequelize.authenticate();
             logger.info("Authentication done with db name selected");
           } catch (db_error) {
@@ -159,6 +133,7 @@ exports.initDB = async function(config) {
           }
         } else {
           logger.error("Impossible to connect to DB.");
+          return false;
         }
       }
     }
@@ -225,12 +200,11 @@ exports.updateDeviceInfo = async function (dataArray) {
           "device-model-name": data.device_model_name,
           "system-name": data.system_name,
         });
-        logger.info("Entry devices_general_info Created with PK: " + data.mount_name);
+        logger.trace("Entry devices_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry devices_general_info Updated with PK: " + data.mount_name);
+        logger.trace("Entry devices_general_info Updated with PK: " + data.mount_name);
         result.updated = result.updated + 1;
-
       }
 
     } catch(error) {
@@ -303,10 +277,10 @@ exports.updateEquipmentInfo = async function (dataArray) {
           "manufacturer-name": data.manufacturer_name,
           "manufacturer-identifier": data.manufacturer_identifier
         });
-        logger.info("Entry equipment_general_info Created with PK: " + data.mount_name);
+        logger.trace("Entry equipment_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry equipment_general_info Updated with PK: " + data.mount_name);
+        logger.trace("Entry equipment_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
 
@@ -388,10 +362,10 @@ exports.updateAirInterface = async function(dataArray) {
           "interface-status": data.interface_status,
           "type-of-equipment": data.type_of_equipment
         });
-        logger.info("Entry air_interface_general_info Created with PK: " + data.mount_name);
+        logger.trace("Entry air_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry air_interface_general_info Updated with PK: " + data.mount_name);
+        logger.trace("Entry air_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
 
@@ -465,10 +439,10 @@ exports.updateAirTransMode = async function(dataArray) {
           "xpic-is-avail": data.xpic_is_avail,
           "capa-factor": data.capa_factor
         });
-        logger.info("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
+        logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name);
+        logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name);
         result.updated = result.updated + 1;
       }
 
@@ -535,10 +509,10 @@ exports.updateEthernetContainer = async function (dataArray) {
           "bundling-is-on": data.bundling_is_on,
           "interface-status": data.interface_status
         });
-        logger.info("Entry ethernet_container_general_info Created with PK: " + data.mount_name);
+        logger.trace("Entry ethernet_container_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry ethernet_container_general_info Updated with PK: " + data.mount_name);
+        logger.trace("Entry ethernet_container_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
 
@@ -617,10 +591,10 @@ exports.updateWireInterface = async function (dataArray) {
           "duplex": data.duplex,
           "speed": data.speed
         });
-        logger.info("Entry wire_interface_general_info Created with PK: " + data.mount_name);
+        logger.trace("Entry wire_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
-        logger.info("Entry wire_interface_general_info Updated with PK: " + data.mount_name);
+        logger.trace("Entry wire_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
 
