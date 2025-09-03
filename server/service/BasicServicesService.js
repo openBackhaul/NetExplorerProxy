@@ -155,20 +155,21 @@ module.exports.processTheccOfMountname = async function processTheccOfMountname(
     await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
     await processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
     await processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp);
+    logger.info(`Data has been processed for Mount-Name: ${mountName}`);
   } else {
     logger.error(`Not able to extract data from CC of ${mountName}`);
   }
-
-  logger.info(`Data has been processed for Mount-Name: ${mountName}`);
 };
 
 async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
   logger.debug(`Processing General info for ${mountName}`);
-  const deviceGenereInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp)
+  const deviceGeneralInfo = await extractGeneralInfo(ccOfMountname, mountName, timestamp)
     .catch((err) => logger.error(err));
 
-  if (deviceGenereInfo) {
-    await dbHandler.updateDeviceInfo(deviceGenereInfo).catch((err) => logger.error(err));
+  if (deviceGeneralInfo) {
+    await dbHandler.updateDeviceInfo(deviceGeneralInfo).catch((err) => logger.error(err));
+  } else {
+    logger.warn(`No deviceGeneralInfo for ${mountName}`);
   }
 }
 
@@ -179,16 +180,18 @@ async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) 
 
   if (equipmentGeneralInfo) {
     await dbHandler.updateEquipmentInfo(equipmentGeneralInfo).catch((err) => logger.error(err));
+  } else {
+    logger.warn(`No equipmentGeneralInfo for ${mountName}`);
   }
 }
 
 async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
   logger.debug(`Processing Wire interface info for ${mountName}`);
-  const wireinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+  const wireInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
 
   const wireInterfaceGeneralInfo = await extractWireInterfaceGeneralInfo(
-    wireinterfceLtpList,
+    wireInterfaceLtpList,
     mountName,
     timestamp
   ).catch((err) => logger.error(err));
@@ -196,16 +199,18 @@ async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timesta
   if (wireInterfaceGeneralInfo) {
     await dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
       .catch((err) => logger.error(err));
+  } else {
+    logger.warn(`No wireIfGeneralInfo for ${mountName}`);
   }
 }
 
 async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
   logger.debug(`Processing Air interface info for ${mountName}`);
-  const airinterfceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+  const airInterfaceLtpList = await ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
   const airContainerGeneralInfoAndTransmissionInfo = await extractAirContainerGeneralInfoAndTransmissionInfo(
-    airinterfceLtpList,
+    airInterfaceLtpList,
     mountName,
     timestamp
   ).catch((err) => logger.error(`${err}`));
@@ -214,12 +219,18 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
     if (airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]) {
       await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
         .catch((err) => logger.error(err));
+    } else {
+      logger.warn(`No airContainerGeneralInfo for ${mountName}`);
     }
     if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"] &&
       airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"].length !== 0) {
       await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
         .catch((err) => logger.error(err));
+    } else {
+      logger.warn(`No Transmission mode for ${mountName}`);
     }
+  } else {
+    logger.warn(`No airContainerGeneralInfo and Transmission for ${mountName}`);
   }
 }
 
@@ -237,6 +248,8 @@ async function processEthernetContainergeneralInfo(ccOfMountname, mountName, tim
   if (ethernetContainerGeneralInfo) {
     await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
       .catch((err) => logger.error(err));
+  } else {
+    logger.warn(`No ethContainerInfo and Transmission for ${mountName}`);
   }
 }
 
@@ -394,12 +407,12 @@ async function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, time
   return ethernetContainerGeneralInfo;
 }
 
-async function extractAirContainerGeneralInfoAndTransmissionInfo(airinterfceLtpList, mountName, timestamp) {
+async function extractAirContainerGeneralInfoAndTransmissionInfo(airInterfaceLtpList, mountName, timestamp) {
   const airContainerGeneralInfo = [];
   const returnObj = {};
   const transMissionListInfo = [];
 
-  for (let ltp of airinterfceLtpList) {
+  for (let ltp of airInterfaceLtpList) {
     const layerProtocol = ltp[onfAttributes.LOGICAL_TERMINATION_POINT.LAYER_PROTOCOL][0];
     const airContainerPac = layerProtocol["air-interface-2-0:air-interface-pac"];
     const augumentContainerPac = ltp[LTP_AUG_PAC];
