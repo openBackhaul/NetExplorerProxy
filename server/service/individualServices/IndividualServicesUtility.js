@@ -175,8 +175,7 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
 }
 
 exports.extractProfileConfiguration = async function (uuid) {
-  
-  let profile = await profileCollection.getProfileAsync(uuid);
+  let profile = await ProfileCollection.getProfileAsync(uuid);
   let objectKey = Object.keys(profile)[2];
   profile = profile[objectKey];
   return profile["integer-profile-configuration"]["integer-value"];
@@ -198,9 +197,8 @@ exports.resetCompleteFile = async function (coreModelJsonObject) {
     let result = writeToFile(coreModelJsonObject);
     return result;
 });
-        
 
-/** 
+/**
  * Write to the filesystem.<br>
  * @param {JSON} coreModelJsonObject json object that needs to be updated
  * @returns {Boolean} return true if the value is updated, otherwise returns false
