@@ -40,14 +40,14 @@ function openDBConnection(db_name, config) {
     port: config.port,
     dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
     pool: {
-      max: 2500,
-      min: 0,
-      acquire: 15000, // wait max 15 seconds for connection before throwing error
-      idle: 5000,    // release connection if idle for 5 seconds
-      evict: 5000    // evict idle connections after 5 seconds
+      max: config.pool.max,
+      min: config.pool.min,
+      acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
+      idle: config.pool.idle,    // release connection if idle for 5 seconds
+      evict: config.pool.evict    // evict idle connections after 5 seconds
     },
     dialectOptions: {
-      connectTimeout: 10000 // 10 seconds connect timeout 
+      connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
     },
     logging: msg => logger.debug(msg)
   });

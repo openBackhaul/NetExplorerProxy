@@ -1,7 +1,20 @@
 'use strict';
 
 // Examples of DB connection
-let db_config_default = { user: 'root', password: 'mypass', host: "localhost", port: 3306, dialect: "mariadb", db_name: "nep_db" };
+let db_config_default = { 
+    user: 'root', password: 'mypass', host: "localhost",
+    port: 3306, dialect: "mariadb", db_name: "nep_db",
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+        evict: 1000
+    },
+    dialectOptions: {
+        connectTimeout: 5000
+    }
+ };
 const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" }
 
 const logger = require('./service/LoggingService.js').getLogger();
@@ -19,7 +32,7 @@ const dummyData = require('./service/db/dummyData.js'); // Some dummy Data
 var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
-//appCommons.openApiValidatorOptions.validateSecurity = false;
+appCommons.openApiValidatorOptions.validateSecurity = false;
 
 // swaggerRouter configuration
 var options = {
@@ -67,7 +80,6 @@ if (process.env.DB && process.env.DB.toLowerCase() === "true") {
             db_config_default.port = 3306;
             logger.warn("Using default port for DB");
         }
-        db_config_default.port = process.env.PORT;
     }
     if (process.env.DIALECT) {
         db_config_default.dialect = process.env.DIALECT;
@@ -75,6 +87,58 @@ if (process.env.DB && process.env.DB.toLowerCase() === "true") {
     if (process.env.DB_NAME) {
         db_config_default.db_name = process.env.DB_NAME;
     }
+
+    // Extra pool parameters
+    if (process.env.POOL_MAX) {
+        try {
+            db_config_default.pool.max = parseInt(process.env.POOL_MAX);
+        } catch (e) {
+            db_config_default.pool.max = 5;
+            logger.warn("Using default value for pool.max");
+        }
+    }
+    if (process.env.POOL_MIN) {
+        try {
+            db_config_default.pool.min = parseInt(process.env.POOL_MIN);
+        } catch (e) {
+            db_config_default.pool.min = 0;
+            logger.warn("Using default value for pool.min");
+        }
+    }
+    if (process.env.POOL_ACQUIRE) {
+        try {
+            db_config_default.pool.acquire = parseInt(process.env.POOL_ACQUIRE);
+        } catch (e) {
+            db_config_default.pool.acquire = 30000;
+            logger.warn("Using default value for pool.acquire");
+        }
+    }
+    if (process.env.POOL_IDLE) {
+        try {
+            db_config_default.pool.idle = parseInt(process.env.POOL_IDLE);
+        } catch (e) {
+            db_config_default.pool.idle = 10000;
+            logger.warn("Using default value for pool.idle");
+        }
+    }
+    if (process.env.POOL_EVICT) {
+        try {
+            db_config_default.pool.evict = parseInt(process.env.POOL_EVICT);
+        } catch (e) {
+            db_config_default.pool.evict = 1000;
+            logger.warn("Using default value for pool.evict");
+        }
+    }
+
+    if (process.env.DIALECT_CONNTIMEOUT) {
+        try {
+            db_config_default.dialectOptions.connectTimeout = parseInt(process.env.DIALECT_CONNTIMEOUT);
+        } catch (e) {
+            db_config_default.dialectOptions.connectTimeout = 1000;
+            logger.warn("Using default value for dialect connection timeout");
+        }
+    }
+
     dbConfig = db_config_default;
 } else {
     logger.warn("No DB selected, using by default sqlite");
@@ -99,22 +163,20 @@ logger.info("Connecting to the DB");
 
 logger.info("NetExplorerProxy is up.");
 
-
-
 const gracefulShutdown = async () => {
-logger.info('Shutting down DB connection...');
-  await dbHandler.closeDataBaseConnection(); // properly close connection pool
-  process.exit();
+    logger.info('Shutting down DB connection...');
+    await dbHandler.closeDataBaseConnection(); // properly close connection pool
+    process.exit();
 };
 
 process.on('SIGINT', async () => {
-  await gracefulShutdown();
+    logger.info('Receiving SIGINT');
+    await gracefulShutdown();
 });
 
 process.on('SIGTERM', async () => {
-  await gracefulShutdown();
+    logger.info('Receiving SIGTERM');
+    await gracefulShutdown();
 });
 
-
 global.mountMap = new Map();
-
