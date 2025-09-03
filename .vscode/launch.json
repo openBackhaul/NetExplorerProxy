@@ -9,6 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
+            "outputCapture": "std",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -19,7 +20,13 @@
                 "HOST": "localhost",
                 "PORT": "3306",
                 "DIALECT": "mariadb",
-                "DB_NAME": "nep_database"
+                "DB_NAME": "nep_database",
+                "POOL_MAX": "2500",
+                "POOL_MIN": "0",
+                "POOL_ACQUIRE": "15000",
+                "POOL_IDLE": "5000",
+                "POOL_EVICT": "5000",
+                "DIALECT_CONNTIMEOUT": "1000"
             },
             "program": "${workspaceFolder}\\server\\index.js"
         }
