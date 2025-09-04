@@ -7,8 +7,8 @@ let db_config_default = {
     pool: {
         max: 5,
         min: 0,
-        acquire: 30000,
-        idle: 10000,
+        acquire: 3000,
+        idle: 1000,
         evict: 1000
     },
     dialectOptions: {
@@ -32,7 +32,7 @@ const dummyData = require('./service/db/dummyData.js'); // Some dummy Data
 var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
-appCommons.openApiValidatorOptions.validateSecurity = false;
+// appCommons.openApiValidatorOptions.validateSecurity = false;
 
 // swaggerRouter configuration
 var options = {
