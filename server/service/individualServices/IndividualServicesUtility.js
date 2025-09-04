@@ -86,8 +86,7 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
  */
 exports.getQueryAndPathParameter = async function (operationName, pathParamList, fields) {
   try {
-    logger.info("getQuery And Path Param");
-    logger.info(pathParamList);
+    logger.debug(pathParamList, "getQuery And Path Param");
     let pathParams = new Map();
     let queryParams = {};
     let params = {};
@@ -147,8 +146,7 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
  **/
 exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
   try {
-    logger.info("Trying to forward request:");
-    logger.info(`Traceindicator incrementer: ${traceIndicatorIncrementer}`);
+    logger.debug(`Forwarding request, Traceindicator incrementer: ${traceIndicatorIncrementer}`);
 
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
@@ -177,8 +175,7 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
 }
 
 exports.extractProfileConfiguration = async function (uuid) {
-  const profileCollection = require('onf-core-model-ap/applicationPattern/onfModel/models/ProfileCollection');
-  let profile = await profileCollection.getProfileAsync(uuid);
+  let profile = await ProfileCollection.getProfileAsync(uuid);
   let objectKey = Object.keys(profile)[2];
   profile = profile[objectKey];
   return profile["integer-profile-configuration"]["integer-value"];
@@ -200,9 +197,8 @@ exports.resetCompleteFile = async function (coreModelJsonObject) {
     let result = writeToFile(coreModelJsonObject);
     return result;
 });
-        
 
-/** 
+/**
  * Write to the filesystem.<br>
  * @param {JSON} coreModelJsonObject json object that needs to be updated
  * @returns {Boolean} return true if the value is updated, otherwise returns false
