@@ -1,5 +1,5 @@
 'use strict';
-// const { Sequelize, Model, DataTypes } = require('sequelize');
+
 const { Sequelize, Op } = require('sequelize');
 
 const logger = require('../LoggingService.js').getLogger();
@@ -34,23 +34,53 @@ exports.closeDataBaseConnection = async function() {
   }
 }
 
+
 function openDBConnection(db_name, config) {
-  let seqInstance = new Sequelize(db_name, config.user, config.password, {
-    host: config.host,
-    port: config.port,
-    dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
-      idle: config.pool.idle,    // release connection if idle for 5 seconds
-      evict: config.pool.evict    // evict idle connections after 5 seconds
-    },
-    dialectOptions: {
-      connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
-    },
-    logging: msg => logger.debug(msg)
-  });
+  let seqInstance;
+  if (config.dialect == "mariadb" || config.dialect == "mysql") {
+    // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#mariadb
+    seqInstance = new Sequelize(db_name, config.user, config.password, {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,  /* 'mariadb' | 'mysql' | */
+        pool: {
+          max: config.pool.max,
+          min: config.pool.min,
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
+          idle: config.pool.idle,    // release connection if idle for 5 seconds
+          evict: config.pool.evict    // evict idle connections after 5 seconds
+        },
+        dialectOptions: {
+          connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
+        },
+        logging: msg => logger.debug(msg)
+      });
+  } else if (config.dialect == "postgres" ) {
+    // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#postgresql
+    seqInstance = new Sequelize(db_name, config.user, config.password, {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,  /* 'postgres'*/
+        pool: {
+          max: config.pool.max,
+          min: config.pool.min,
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
+          idle: config.pool.idle,       // release connection if idle for 5 seconds
+          evict: config.pool.evict      // evict idle connections after 5 seconds
+        },
+//         dialectOptions: {
+//           application_name:                    // Name of application in pg_stat_activity.
+//           ssl:                                 // SSL options.
+//           client_encoding:                     // Setting 'auto' determines locale based on the client LC_CTYPE environment variable.
+//           keepAlive:                           // Boolean to enable TCP KeepAlive.
+//           statement_timeout:                   // Times out queries after a set time in milliseconds. Added in pg v7.3.
+//           idle_in_transaction_session_timeout: // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+//         },
+        logging: msg => logger.debug(msg)
+      });
+  } else {
+    logger.warn(`Dialect not managed: ${config.dialect}`);
+  }
 
   return seqInstance;
 }
@@ -617,14 +647,6 @@ exports.readListOfDevices = async function(isCSV = false) {
     attributes: ['mount-name', 'timestamp'],
     raw: isCSV
   });
-
-  // if (isCSV) {
-  //   if (resultFetched.length == 0) {
-  //     resultFetched = "";
-  //   } else {
-  //     resultFetched = convertToCSV(resultFetched);
-  //   }
-  // }
 
   return resultFetched;
 }

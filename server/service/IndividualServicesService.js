@@ -180,7 +180,7 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
       const operationKey = ret.operationKey;
       const appName = ret.appName;
       const appRelease = ret.appRelease;
-            const request = {mountName, protocol, address, port, operation, timestamp, operationKey, appName, appRelease};
+      const request = {mountName, protocol, address, port, operation, timestamp, operationKey, appName, appRelease};
       requestMap.set(requestId, request);
 //      ++numberOfParallelRequests;
     } else {
