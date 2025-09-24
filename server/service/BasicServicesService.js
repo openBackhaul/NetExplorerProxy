@@ -125,7 +125,7 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     //call for offline mountName processiong 
     await processMountNames.addNewDataInNEPdeviceList(mountNameList);
 
-    // ✅ Call the batch processor here
+    // Call the batch processor here
     traceIncrement += 1;
     await processMountNamesInBatches(
       mountNameList, requestHeaders, traceIncrement++, timestamp
@@ -142,7 +142,10 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
 
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
   let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
-  await exports.processTheccOfMountname(ccOfMountName, timestamp, mountName);
+  // Calculate Timestamp when data is retrieved from MWDI
+  let newTimeStamp = Date.now();
+  logger.debug(`Data retrieved from MWDI for Mountname: ${mountName} at the time: ${newTimeStamp}`);
+  await exports.processTheccOfMountname(ccOfMountName, newTimeStamp, mountName);
   return ccOfMountName;
 };
 
