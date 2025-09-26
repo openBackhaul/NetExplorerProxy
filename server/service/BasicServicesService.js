@@ -170,7 +170,7 @@ async function processGeneralInfo(ccOfMountname, mountName, timestamp) {
     .catch((err) => logger.error(err));
 
   if (deviceGeneralInfo) {
-    await dbHandler.updateDeviceInfo(deviceGeneralInfo).catch((err) => logger.error(err));
+    dbHandler.updateDeviceInfo(deviceGeneralInfo).catch((err) => logger.error(err));
   } else {
     logger.warn(`No deviceGeneralInfo for ${mountName}`);
   }
@@ -182,7 +182,7 @@ async function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) 
     .catch((err) => logger.error(`${err}`));
 
   if (equipmentGeneralInfo) {
-    await dbHandler.updateEquipmentInfo(equipmentGeneralInfo).catch((err) => logger.error(err));
+    dbHandler.updateEquipmentInfo(equipmentGeneralInfo).catch((err) => logger.error(err));
   } else {
     logger.warn(`No equipmentGeneralInfo for ${mountName}`);
   }
@@ -200,7 +200,7 @@ async function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timesta
   ).catch((err) => logger.error(err));
 
   if (wireInterfaceGeneralInfo) {
-    await dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
+    dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
       .catch((err) => logger.error(err));
   } else {
     logger.warn(`No wireIfGeneralInfo for ${mountName}`);
@@ -220,14 +220,14 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
 
   if (airContainerGeneralInfoAndTransmissionInfo) {
     if (airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"]) {
-      await dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
+      dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
         .catch((err) => logger.error(err));
     } else {
       logger.warn(`No airContainerGeneralInfo for ${mountName}`);
     }
     if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"] &&
       airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"].length !== 0) {
-      await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
+      dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
         .catch((err) => logger.error(err));
     } else {
       logger.warn(`No Transmission mode for ${mountName}`);
@@ -249,7 +249,7 @@ async function processEthernetContainergeneralInfo(ccOfMountname, mountName, tim
   ).catch((err) => logger.error(err));
 
   if (ethernetContainerGeneralInfo) {
-    await dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
+    dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
       .catch((err) => logger.error(err));
   } else {
     logger.warn(`No ethContainerInfo and Transmission for ${mountName}`);
