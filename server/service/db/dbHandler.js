@@ -375,6 +375,7 @@ exports.updateAirTransMode = async function(dataArray) {
     let data = dataArray[i];
 
     try {
+      logger.warn(`AirTransmode: Different timestamp: ${Date.now() - data.timestamp}`);
       let [cc, create] = await air_interface_transmission_mode.upsert({
         "mount-name": data.mount_name,
         "uuid": data.uuid,
