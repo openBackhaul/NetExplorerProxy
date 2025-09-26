@@ -22,27 +22,27 @@ exports.init = function(sequelize) {
       "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
   
       // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
   
       // Data
       "external-label": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "device-model-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "system-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       }
     },
     {

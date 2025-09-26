@@ -33,80 +33,79 @@ exports.init = function(sequelize) {
       "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "local-id": {
         type: DataTypes.STRING,
-        allowNull: true,
-        // primaryKey: true,
+        allowNull: true
       },
 
        // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
 
       // Data
       "operational-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "administrative-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "original-ltp-name" : {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "external-label": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "transmission-mode-min": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "transmission-mode-max": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "xpic-is-on": {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: true
       },
       "power-is-on": {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: true
       },
       "transmitter-is-on": {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: true
       },
       "interface-status": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "type-of-equipment": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-type": {
         type: DataTypes.STRING,
         defaultValue: "air-interface",
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
     {
       sequelize,
       modelName: 'air_interface_general_info'
-    },
+    }
   );
 
   return AirInterface;
