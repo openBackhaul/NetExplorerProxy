@@ -212,12 +212,12 @@ exports.updateDeviceInfo = async function (dataArray) {
     let data = dataArray[i];
     try {
       let [cc, create] = await devices_general_info.upsert({
-          "mount-name": data.mount_name,
-          "timestamp": new Date(data.timestamp),
-          "external-label": data.external_label,
-          "device-model-name": data.device_model_name,
-          "system-name": data.system_name,
-        });
+        "mount-name": data.mount_name,
+        "timestamp": new Date(data.timestamp),
+        "external-label": data.external_label,
+        "device-model-name": data.device_model_name,
+        "system-name": data.system_name,
+      });
       
       if (create) {
         logger.trace("Entry devices_general_info Created with PK: " + data.mount_name);
@@ -226,33 +226,6 @@ exports.updateDeviceInfo = async function (dataArray) {
         logger.trace("Entry devices_general_info Updated with PK: " + data.mount_name);
         result.updated = result.updated + 1;
       }
-
-      // let cc = await devices_general_info.update({
-      //   "timestamp": new Date(data.timestamp),
-      //   "external-label": data.external_label,
-      //   "device-model-name": data.device_model_name,
-      //   "system-name": data.system_name,
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await devices_general_info.create({
-      //     "mount-name": data.mount_name,
-      //     "timestamp": new Date(data.timestamp),
-      //     "external-label": data.external_label,
-      //     "device-model-name": data.device_model_name,
-      //     "system-name": data.system_name,
-      //   });
-      //   logger.trace("Entry devices_general_info Created with PK: " + data.mount_name);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry devices_general_info Updated with PK: " + data.mount_name);
-      //   result.updated = result.updated + 1;
-      // }
-
     } catch(error) {
       logger.error(error);
     }
@@ -309,52 +282,6 @@ exports.updateEquipmentInfo = async function (dataArray) {
         logger.trace("Entry equipment_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
-      // let cc = await equipment_general_info.update({
-      //   "local-id": data.local_id,
-
-      //   // Timestamp reference
-      //   "timestamp": new Date(data.timestamp),
-
-      //   "version": data.version,
-      //   "description": data.description,
-      //   "model-identifier": data.model_identifier,
-      //   "part-type-identifier": data.part_type_identifier,
-      //   "type-name": data.type_name,
-
-      //   "manufacturer-name": data.manufacturer_name,
-      //   "manufacturer-identifier": data.manufacturer_identifier
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await equipment_general_info.create({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     "timestamp": new Date(data.timestamp),
-
-      //     "version": data.version,
-      //     "description": data.description,
-      //     "model-identifier": data.model_identifier,
-      //     "part-type-identifier": data.part_type_identifier,
-      //     "type-name": data.type_name,
-
-      //     "manufacturer-name": data.manufacturer_name,
-      //     "manufacturer-identifier": data.manufacturer_identifier
-      //   });
-      //   logger.trace("Entry equipment_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry equipment_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.updated = result.updated + 1;
-      // }
 
     } catch(error) {
       logger.error(error);
@@ -417,59 +344,6 @@ exports.updateAirInterface = async function(dataArray) {
         logger.trace("Entry air_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
-      // let cc = await air_interface_general_info.update({
-      //   "local-id": data.local_id,
-
-      //   // Timestamp reference
-      //   "timestamp": new Date(data.timestamp),
-
-      //   "operational-state": data.operational_state,
-      //   "administrative-state": data.administrative_state,
-      //   "original-ltp-name": data.original_ltp_name,
-      //   "external-label": data.external_label,
-      //   "transmission-mode-min": data.transmission_mode_min,
-      //   "transmission-mode-max": data.transmission_mode_max,
-      //   "xpic-is-on": data.xpic_is_on,
-      //   "power-is-on": data.power_is_on,
-      //   "transmitter-is-on": data.transmitter_is_on,
-      //   "interface-status": data.interface_status,
-      //   "type-of-equipment": data.type_of_equipment
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await air_interface_general_info.create({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     "timestamp": new Date(data.timestamp),
-
-      //     "operational-state": data.operational_state,
-      //     "administrative-state": data.administrative_state,
-      //     "original-ltp-name": data.original_ltp_name,
-      //     "external-label": data.external_label,
-      //     "transmission-mode-min": data.transmission_mode_min,
-      //     "transmission-mode-max": data.transmission_mode_max,
-      //     "xpic-is-on": data.xpic_is_on,
-      //     "power-is-on": data.power_is_on,
-      //     "transmitter-is-on": data.transmitter_is_on,
-      //     "interface-status": data.interface_status,
-      //     "type-of-equipment": data.type_of_equipment
-      //   });
-      //   logger.trace("Entry air_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry air_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.updated = result.updated + 1;
-      // }
-
     } catch(error) {
       logger.error(error);
     }
@@ -501,120 +375,32 @@ exports.updateAirTransMode = async function(dataArray) {
     let data = dataArray[i];
 
     try {
-      let [airIfTransMode, create] = await air_interface_transmission_mode.findOrCreate({
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "transmission-mode-name": data.transmission_mode_name
-        },
-        defaults: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
+      logger.warn(`AirTransmode: Different timestamp: ${Date.now() - data.timestamp}`);
+      let [cc, create] = await air_interface_transmission_mode.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
+        "local-id": data.local_id,
 
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
+        // Timestamp reference
+        "timestamp": new Date(data.timestamp),
 
-          "transmission-mode-name": data.transmission_mode_name,
-          "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-          "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-          "modulation-scheme": data.modulation_scheme,
-          "code-rate": data.code_rate,
-          "channel-bandwidth": data.channel_bandwidth,
-          "xpic-is-avail": data.xpic_is_avail,
-          "capa-factor": data.capa_factor
-        }
+        "transmission-mode-name": data.transmission_mode_name,
+        "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
+        "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
+        "modulation-scheme": data.modulation_scheme,
+        "code-rate": data.code_rate,
+        "channel-bandwidth": data.channel_bandwidth,
+        "xpic-is-avail": data.xpic_is_avail,
+        "capa-factor": data.capa_factor
       });
-      // let [airIfTransMode, create] = await air_interface_transmission_mode.upsert({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     // "timestamp": new Date(data.timestamp),
-
-      //     "transmission-mode-name": data.transmission_mode_name,
-      //     "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-      //     "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-      //     "modulation-scheme": data.modulation_scheme,
-      //     "code-rate": data.code_rate,
-      //     "channel-bandwidth": data.channel_bandwidth,
-      //     "xpic-is-avail": data.xpic_is_avail,
-      //     "capa-factor": data.capa_factor
-
-      // });
-
+      
       if (create) {
+        logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
         result.added = result.added + 1;
       } else {
-        airIfTransMode.update({
-          "local-id": data.local_id,
-          "uuid": data.uuid,
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "transmission-mode-name": data.transmission_mode_name,
-          "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-          "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-          "modulation-scheme": data.modulation_scheme,
-          "code-rate": data.code_rate,
-          "channel-bandwidth": data.channel_bandwidth,
-          "xpic-is-avail": data.xpic_is_avail,
-          "capa-factor": data.capa_factor
-        });
+        logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
         result.updated = result.updated + 1;
       }
-
-
-
-      /////////////////////////////////////////
-      // let cc = await air_interface_transmission_mode.update({
-      //   "local-id": data.local_id,
-      //   "uuid": data.uuid,
-      //   // Timestamp reference
-      //   "timestamp": new Date(data.timestamp),
-
-      //   "transmission-mode-name": data.transmission_mode_name,
-      //   "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-      //   "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-      //   "modulation-scheme": data.modulation_scheme,
-      //   "code-rate": data.code_rate,
-      //   "channel-bandwidth": data.channel_bandwidth,
-      //   "xpic-is-avail": data.xpic_is_avail,
-      //   "capa-factor": data.capa_factor
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "transmission-mode-name": data.transmission_mode_name
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await air_interface_transmission_mode.create({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     "timestamp": new Date(data.timestamp),
-
-      //     "transmission-mode-name": data.transmission_mode_name,
-      //     "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-      //     "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-      //     "modulation-scheme": data.modulation_scheme,
-      //     "code-rate": data.code_rate,
-      //     "channel-bandwidth": data.channel_bandwidth,
-      //     "xpic-is-avail": data.xpic_is_avail,
-      //     "capa-factor": data.capa_factor
-      //   });
-      //   logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name);
-      //   result.updated = result.updated + 1;
-      // }
-
     } catch(error) {
       logger.error(error);
     }
@@ -645,18 +431,18 @@ exports.updateEthernetContainer = async function (dataArray) {
     try {
       let [cc, create] = await ethernet_container_general_info.upsert({
         "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
+        "uuid": data.uuid,
+        "local-id": data.local_id,
 
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
+        // Timestamp reference
+        "timestamp": new Date(data.timestamp),
 
-          "operational-state": data.operational_state,
-          "administrative-state": data.administrative_state,
-          "original-ltp-name": data.original_ltp_name,
-          "interface-name": data.interface_name,
-          "bundling-is-on": data.bundling_is_on,
-          "interface-status": data.interface_status
+        "operational-state": data.operational_state,
+        "administrative-state": data.administrative_state,
+        "original-ltp-name": data.original_ltp_name,
+        "interface-name": data.interface_name,
+        "bundling-is-on": data.bundling_is_on,
+        "interface-status": data.interface_status
       });
       
       if (create) {
@@ -666,49 +452,6 @@ exports.updateEthernetContainer = async function (dataArray) {
         logger.trace("Entry ethernet_container_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
-      // let cc = await ethernet_container_general_info.update({
-      //   "local-id": data.local_id,
-
-      //   // Timestamp reference
-      //   "timestamp": new Date(data.timestamp),
-
-      //   "operational-state": data.operational_state,
-      //   "administrative-state": data.administrative_state,
-      //   "original-ltp-name": data.original_ltp_name,
-      //   "interface-name": data.interface_name,
-      //   "bundling-is-on": data.bundling_is_on,
-      //   "interface-status": data.interface_status
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await ethernet_container_general_info.create({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     "timestamp": new Date(data.timestamp),
-
-      //     "operational-state": data.operational_state,
-      //     "administrative-state": data.administrative_state,
-      //     "original-ltp-name": data.original_ltp_name,
-      //     "interface-name": data.interface_name,
-      //     "bundling-is-on": data.bundling_is_on,
-      //     "interface-status": data.interface_status
-      //   });
-      //   logger.trace("Entry ethernet_container_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry ethernet_container_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.updated = result.updated + 1;
-      // }
-
     } catch(error) {
       logger.error(error);
     }
@@ -757,64 +500,13 @@ exports.updateWireInterface = async function (dataArray) {
         "interface-status": data.interface_status
       });
 
-       if (create) {
+      if (create) {
         logger.trace("Entry wire_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
         logger.trace("Entry wire_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
-      // let cc = await wire_interface_general_info.update({
-      //   "local-id": data.local_id,
-
-      //   // Timestamp reference
-      //   "timestamp": new Date(data.timestamp),
-
-      //   "operational-state": data.operational_state,
-      //   "administrative-state": data.administrative_state,
-      //   "original-ltp-name": data.original_ltp_name,
-      //   "interface-name": data.interface_name,
-      //   "fixed-pmd-kind": data.fixed_pmd_kind,
-      //   "interface-status": data.interface_status,
-      //   "pmd-kind-cur": data.pmd_kind_cur,
-      //   "pmd-name": data.pmd_name,
-      //   "duplex": data.duplex,
-      //   "speed": data.speed
-      // },{
-      //   where: {
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //   },
-      // });
-
-      // if (cc == 0) {
-      //   cc = await wire_interface_general_info.create({
-      //     "mount-name": data.mount_name,
-      //     "uuid": data.uuid,
-      //     "local-id": data.local_id,
-
-      //     // Timestamp reference
-      //     "timestamp": new Date(data.timestamp),
-
-      //     "operational-state": data.operational_state,
-      //     "administrative-state": data.administrative_state,
-      //     "original-ltp-name": data.original_ltp_name,
-      //     "interface-name": data.interface_name,
-      //     "fixed-pmd-kind": data.fixed_pmd_kind,
-      //     "interface-status": data.interface_status,
-      //     "pmd-kind-cur": data.pmd_kind_cur,
-      //     "pmd-name": data.pmd_name,
-      //     "duplex": data.duplex,
-      //     "speed": data.speed
-      //   });
-      //   logger.trace("Entry wire_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.added = result.added + 1;
-      // } else {
-      //   logger.trace("Entry wire_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
-      //   result.updated = result.updated + 1;
-      // }
-
     } catch(error) {
       logger.error(error);
     }

@@ -32,76 +32,75 @@ exports.init = function (sequelize) {
       "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "local-id": {
         type: DataTypes.STRING,
-        allowNull: true,
-        // primaryKey: true,
+        allowNull: true
       },
 
       // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
 
       // Data
       "operational-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "administrative-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "original-ltp-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "fixed-pmd-kind": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-status": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "pmd-kind-cur": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "pmd-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "duplex": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "speed": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-type": {
         type: DataTypes.STRING,
         defaultValue: "wire-interface",
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
     {
       sequelize,
       modelName: 'wire_interface_general_info'
-    },
+    }
   );
 
   return WireInterface;

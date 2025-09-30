@@ -5,11 +5,11 @@ const responseCodeEnum = require("onf-core-model-ap/applicationPattern/rest/serv
 
 const bequeathHandler = require('./individualServices/BequeathHandler');
 const requestHandler = require('./individualServices/RequestHandler');
-const {getLtpIfConfigFromUuid} = require("./individualServices/ControlConstructUtil");
+const { getLtpIfConfigFromUuid } = require("./individualServices/ControlConstructUtil");
 const individualServicesUtility = require('./individualServices/IndividualServicesUtility');
 const requestUtil = require("./individualServices/RequestUtil");
 const restClient = require("./individualServices/RestClient");
-const {HTTP_CODES} = require("./individualServices/RestClient");
+const { HTTP_CODES } = require("./individualServices/RestClient");
 
 const logger = require('./LoggingService.js').getLogger();
 const dbHandler = require('./db/dbHandler');
@@ -25,7 +25,7 @@ const dbHandler = require('./db/dbHandler');
  * customerJourney String Holds information supporting customer’s journey to which the execution applies
  * no response value expected for this operation
  **/
-exports.bequeathYourDataAndDie = function(requestUrl,body,user,originator,xCorrelator,traceIndicator,customerJourney) {
+exports.bequeathYourDataAndDie = function (requestUrl, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
   return new Promise(async function (resolve, reject) {
     try {
       let success = await bequeathHandler.handleRequest(body, requestUrl);
@@ -47,7 +47,7 @@ exports.bequeathYourDataAndDie = function(requestUrl,body,user,originator,xCorre
  * Provides list of devices that are connected to the controller
  * returns mount-name-list in ret.message
  **/
-exports.provideListOfConnectedDevices = async function(requestUrl) {
+exports.provideListOfConnectedDevices = async function (requestUrl) {
   const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
 
   return ret;
@@ -59,7 +59,7 @@ exports.provideListOfConnectedDevices = async function(requestUrl) {
  *
  * returns List in ret.message
  **/
-exports.provideMacTableOfAllDevices = async function(requestUrl) {
+exports.provideMacTableOfAllDevices = async function (requestUrl) {
   const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingAllMacTablesCausesReadingMacTablesFromMatrCache", {});
 
   return ret;
@@ -72,7 +72,7 @@ exports.provideMacTableOfAllDevices = async function(requestUrl) {
  * body V1_providemactableofspecificdevice_body 
  * returns List in ret.message
  **/
-exports.provideMacTableOfSpecificDevice = async function(requestUrl, body) {
+exports.provideMacTableOfSpecificDevice = async function (requestUrl, body) {
   const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache", body);
 
   return ret;
@@ -83,7 +83,7 @@ let callHistory = [];
 
 // remove all calls before date from the callHistory
 function removeOldCalls(date) {
-  while(callHistory.length>0 && callHistory[0] < date) {
+  while (callHistory.length > 0 && callHistory[0] < date) {
     callHistory.shift();
   }
 }
@@ -106,7 +106,7 @@ function cleanupRequestMap(date) {
  *
  * returns request ID in ret.message
  **/
-exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
+exports.readCurrentMacTableFromDevice = async function (requestUrl, body) {
 
   // Throttling
   let maxNumberOfParallelCcRequests = await individualServicesUtility.getIntegerProfileInstanceValue(
@@ -115,16 +115,16 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
     "maxNumberOfReadCurrentMacTableFromDeviceRequestsPerDay");  // Default 100
 
   let now = new Date();
-  removeOldCalls(now-24*3600000); // 24*3600 s
+  removeOldCalls(now - 24 * 3600000); // 24*3600 s
   callHistory.push(now);
 
   // Remaining requests older than 1 hour can also be deleted.
-  cleanupRequestMap(now-3600000);
+  cleanupRequestMap(now - 3600000);
 
   const numberOfParallelRequests = requestMap.size;
   const numberOfRequestsPerDay = callHistory.length;
 
-  if (numberOfParallelRequests+1 > maxNumberOfParallelCcRequests) {
+  if (numberOfParallelRequests + 1 > maxNumberOfParallelCcRequests) {
     // rejection due to throttling
     let requestHeader = requestUtil.createRequestHeader(undefined);
     return {
@@ -158,12 +158,12 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
   let ifConfig = await getLtpIfConfigFromUuid(prefix + "tcp-s-000");
 
   body["requestor-protocol"] = ifConfig["protocol"];
-  body["requestor-address"] = {"ip-address": ifConfig["ip-address"]};
+  body["requestor-address"] = { "ip-address": ifConfig["ip-address"] };
   body["requestor-port"] = ifConfig["port"];
   body["requestor-receive-operation"] = "/v1/receive-current-mac-table-of-device";
 
   const ret = await requestHandler.postRequestDataFromOtherApp(requestUrl, "PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache",
-                                                                body, "/v1/read-current-mac-table-from-device");
+    body, "/v1/read-current-mac-table-from-device");
 
   // check result code
   if (ret.code === 200) {
@@ -180,19 +180,19 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
       const operationKey = ret.operationKey;
       const appName = ret.appName;
       const appRelease = ret.appRelease;
-      const request = {mountName, protocol, address, port, operation, timestamp, operationKey, appName, appRelease};
+      const request = { mountName, protocol, address, port, operation, timestamp, operationKey, appName, appRelease };
       requestMap.set(requestId, request);
-//      ++numberOfParallelRequests;
+      //      ++numberOfParallelRequests;
     } else {
-      logger.error("Missing request ID in the MATR readCurrentMacTableFromDevice response, mountName="+mountName);
+      logger.error("Missing request ID in the MATR readCurrentMacTableFromDevice response, mountName=" + mountName);
     }
   } else {
     if (ret.code === 500 && String(ret.message).includes("Request failed with status code 404")) {
       // immediateErrorResponse
       ret.code = 404;
     } else {
-      let errorMessage  = ret.message?.message ? ret.message.message : JSON.stringify(ret.message);
-      logger.error(`Unexpected result code ${ret.code} for MATR readCurrentMacTableFromDevice call: ${errorMessage }`);
+      let errorMessage = ret.message?.message ? ret.message.message : JSON.stringify(ret.message);
+      logger.error(`Unexpected result code ${ret.code} for MATR readCurrentMacTableFromDevice call: ${errorMessage}`);
       ret.message = `MATR message: ${errorMessage}`;
     }
   }
@@ -207,7 +207,7 @@ exports.readCurrentMacTableFromDevice = async function(requestUrl, body) {
  * body List 
  * no response value expected for this operation
  **/
-exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
+exports.receiveCurrentMacTableOfDevice = async function (requestUrl, body) {
   let errorCode = undefined;
   let errorMessage = undefined;
 
@@ -251,7 +251,7 @@ exports.receiveCurrentMacTableOfDevice = async function(requestUrl, body) {
   if (errorMessage) {
     return {
       code: errorCode ?? responseCodeEnum.code.INTERNAL_SERVER_ERROR,
-      message: {code: 500, message: errorMessage}
+      message: { code: 500, message: errorMessage }
     };
   } else {
     return {
@@ -347,7 +347,7 @@ module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = as
  * - Ethernet container interfaces
  * - Wire interfaces
  */
-module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep (req, body) {
+module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep(req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
 
@@ -360,12 +360,12 @@ module.exports.provideListOfInterfacesPerDeviceInNep = async function provideLis
 /*
  * Function to retrieve the list of devices store in the nep cache
  */
-module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep (req, body) {
+module.exports.provideListOfDevicesInNep = async function provideListOfDevicesInNep(req, body) {
   // Get data from DB
   let result = await dbHandler.readListOfDevices(true);
 
   let dataArray = [];
-  for (let i=0; i< result.length; i++) {
+  for (let i = 0; i < result.length; i++) {
     let tmpData = result[i];
     let temp = {
       "mount-name": tmpData['mount-name'],
@@ -413,6 +413,6 @@ function convertDataAgeToTimeStamp(dataAge) {
   let millisec = (dataAge * 60 * 60 * 1000);
 
   date.setTime(Date.now() - millisec);
-  
+
   return date;
 }
