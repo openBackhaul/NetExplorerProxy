@@ -46,9 +46,9 @@ function openDBConnection(db_name, config) {
         pool: {
           max: config.pool.max,
           min: config.pool.min,
-          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
-          idle: config.pool.idle,    // release connection if idle for 5 seconds
-          evict: config.pool.evict    // evict idle connections after 5 seconds
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error//  TFN: 15 Seconds  
+          idle: config.pool.idle,    // release connection if idle for 5 seconds //  TFN: 60
+          evict: config.pool.evict    // evict idle connections after 5 seconds  //  TFN: 60
         },
         dialectOptions: {
           connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
@@ -61,13 +61,13 @@ function openDBConnection(db_name, config) {
         host: config.host,
         port: config.port,
         dialect: config.dialect,  /* 'postgres'*/
-        // pool: {
-        //   max: config.pool.max,
-        //   min: config.pool.min,
-        //   acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
-        //   idle: config.pool.idle,       // release connection if idle for 5 seconds
-        //   evict: config.pool.evict      // evict idle connections after 5 seconds
-        // },
+        pool: {
+          max: config.pool.max,
+          min: config.pool.min,
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
+          idle: config.pool.idle,       // release connection if idle for 5 seconds
+          evict: config.pool.evict      // evict idle connections after 5 seconds
+        },
 //         dialectOptions: {
 //           application_name:                    // Name of application in pg_stat_activity.
 //           ssl:                                 // SSL options.
