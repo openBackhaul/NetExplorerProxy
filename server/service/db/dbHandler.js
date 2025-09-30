@@ -68,14 +68,14 @@ function openDBConnection(db_name, config) {
           idle: config.pool.idle,       // release connection if idle for 5 seconds
           evict: config.pool.evict      // evict idle connections after 5 seconds
         },
-//         dialectOptions: {
-//           application_name:                    // Name of application in pg_stat_activity.
-//           ssl:                                 // SSL options.
-//           client_encoding:                     // Setting 'auto' determines locale based on the client LC_CTYPE environment variable.
-//           keepAlive:                           // Boolean to enable TCP KeepAlive.
-//           statement_timeout:                   // Times out queries after a set time in milliseconds. Added in pg v7.3.
-//           idle_in_transaction_session_timeout: // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
-//         },
+        // dialectOptions: {
+        //   application_name: config.dialectOptions.applicationName,    // Name of application in pg_stat_activity.
+        //   ssl: config.dialectOptions.ssl,                             // SSL options.
+        //   client_encoding: config.dialectOptions.clientEncoding,      // Setting 'auto' determines locale based on the client LC_CTYPE environment variable.
+        //   keepAlive: config.dialectOptions.keepAlive,                 // Boolean to enable TCP KeepAlive.
+        //   statement_timeout: config.dialectOptions.statementTimeout,  // Times out queries after a set time in milliseconds. Added in pg v7.3.
+        //   idle_in_transaction_session_timeout: config.dialectOptions.idleInTransactionSessionTimeout  // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+        // },
         logging: msg => logger.debug(msg)
       });
   } else {
@@ -131,7 +131,7 @@ exports.initDB = async function(config) {
       } catch (error) {
         logger.error(error, "There is a problem with the DB connection");
         // If DB doesn't exist I have to create a new one
-        if (error.original.errno === 1049) {
+        if (config.dialect == "mariadb" && error.original.errno === 1049) {
           logger.error(error, "Error 1049 - DB doesn't exists");
           try {
             // Open connection with DB without name
@@ -161,6 +161,20 @@ exports.initDB = async function(config) {
               logger.error("Impossible to connect to DB for the second time");
             }
           }
+        } else if (config.dialect == "postgres" && error.original.code == '3D000') {
+          logger.error(error, "Error 3D000 - DB doesn't exists");
+          sequelize = openDBConnection("", config);
+          await sequelize.authenticate();
+          logger.warn("Authenticate to DB Succeded without DB name");
+
+          logger.warn("DB " + db_name + " doesn't exists, try to create it");
+          await sequelize.query("CREATE DATABASE " + db_name + ";");
+
+          sequelize.close();
+          logger.info("Closing connection, and reopen using " + db_name + " Database");
+
+          sequelize = openDBConnection(db_name, config);
+          await sequelize.authenticate();
         } else {
           logger.error("Impossible to connect to DB.");
           return false;
@@ -375,7 +389,6 @@ exports.updateAirTransMode = async function(dataArray) {
     let data = dataArray[i];
 
     try {
-      logger.warn(`AirTransmode: Different timestamp: ${Date.now() - data.timestamp}`);
       let [cc, create] = await air_interface_transmission_mode.upsert({
         "mount-name": data.mount_name,
         "uuid": data.uuid,
