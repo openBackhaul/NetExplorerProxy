@@ -75,11 +75,11 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
     const mountName = mountNameList[index++];
     const start = Date.now();
 
-    logger.info(`Starting processing for mountName: ${mountName}  with time ${start}`);
+    logger.info(`Starting processing for Mount-Name: ${mountName}`);
     const promise = exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp)
       .then(ccOfMountname => {
-        const stop = Date.now();
-        logger.info(`Finished retrieving cc for mountName: ${mountName} with stopTime ${stop}`);
+        const stop = Date.now() - timestamp;
+        logger.info(`Finished retrieving cc for Mount-Name: ${mountName} with time: ${stop}`);
       })
       .finally(() => {
         activePromises.splice(activePromises.indexOf(promise), 1);
@@ -151,45 +151,45 @@ module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceI
 
 
 module.exports.processTheccOfMountname = async function processTheccOfMountname(ccOfMountname, timestamp, mountName) {
-  logger.info(`Retrieving data for ${mountName} with timestamp: ${timestamp}`);
+  logger.info(`Retrieving data for Mount-Name ${mountName}`);
   if (ccOfMountname.hasOwnProperty(CORE_MODEL_CC)) {
     processGeneralInfo(ccOfMountname, mountName, timestamp);
     processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
     processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
     processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp);
     await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
-    logger.info(`Data has been processed for Mount-Name: ${mountName}`);
+    logger.info(`Data has been commited in the DB for Mount-Name: ${mountName}`);
   } else {
-    logger.error(`Not able to extract data from CC of ${mountName}`);
+    logger.error(`Not able to extract data from CC of Mount-Name ${mountName}`);
   }
 };
 
 function processGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing General info for ${mountName}`);
+  logger.debug(`Processing General info for Mount-Name: ${mountName}`);
   const deviceGeneralInfo = extractGeneralInfo(ccOfMountname, mountName, timestamp);
     // .catch((err) => logger.error(err));
 
   if (deviceGeneralInfo) {
     dbHandler.updateDeviceInfo(deviceGeneralInfo).catch((err) => logger.error(err));
   } else {
-    logger.warn(`No deviceGeneralInfo for ${mountName}`);
+    logger.warn(`No deviceGeneralInfo for Mount-Name ${mountName}`);
   }
 }
 
 function processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing Equipment info for ${mountName}`);
+  logger.debug(`Processing Equipment info for Mount-Name: ${mountName}`);
   const equipmentGeneralInfo = extractEquipmentData(ccOfMountname, mountName, timestamp);
     // .catch((err) => logger.error(`${err}`));
 
   if (equipmentGeneralInfo) {
     dbHandler.updateEquipmentInfo(equipmentGeneralInfo).catch((err) => logger.error(err));
   } else {
-    logger.warn(`No equipmentGeneralInfo for ${mountName}`);
+    logger.warn(`No equipmentGeneralInfo for Mount-Name: ${mountName}`);
   }
 }
 
 function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing Wire interface info for ${mountName}`);
+  logger.debug(`Processing Wire interface info for Mount-Name: ${mountName}`);
   const wireInterfaceLtpList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     WIRE_INTERFACE.MODULE + ":" + WIRE_INTERFACE.PAC, ccOfMountname);
 
@@ -204,12 +204,12 @@ function processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp) {
     dbHandler.updateWireInterface(wireInterfaceGeneralInfo)
       .catch((err) => logger.error(err));
   } else {
-    logger.warn(`No wireIfGeneralInfo for ${mountName}`);
+    logger.warn(`No wireIfGeneralInfo for Mount-Name: ${mountName}`);
   }
 }
 
 async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing Air interface info for ${mountName}`);
+  logger.debug(`Processing Air interface info for Mount-Name: ${mountName}`);
   const airInterfaceLtpList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     AIR_INTERFACE.MODULE + ":" + AIR_INTERFACE.PAC, ccOfMountname);
 
@@ -225,22 +225,22 @@ async function processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, 
       dbHandler.updateAirInterface(airContainerGeneralInfoAndTransmissionInfo["airContainerGeneralInfo"])
         .catch((err) => logger.error(err));
     } else {
-      logger.warn(`No airContainerGeneralInfo for ${mountName}`);
+      logger.warn(`No airContainerGeneralInfo for Mount-Name: ${mountName}`);
     }
     if (airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"] &&
       airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"].length !== 0) {
       await dbHandler.updateAirTransMode(airContainerGeneralInfoAndTransmissionInfo["transMissionListInfo"])
         .catch((err) => logger.error(err));
     } else {
-      logger.warn(`No Transmission mode for ${mountName}`);
+      logger.warn(`No Transmission mode for Mount-Name: ${mountName}`);
     }
   } else {
-    logger.warn(`No airContainerGeneralInfo and Transmission for ${mountName}`);
+    logger.warn(`No airContainerGeneralInfo and Transmission for Mount-Name: ${mountName}`);
   }
 }
 
 function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing Ethernet info for ${mountName}`);
+  logger.debug(`Processing Ethernet info for Mount-Name: ${mountName}`);
   const ethInterfaceLtpList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
     ETHERNET_INTERFACE.MODULE + ":" + ETHERNET_INTERFACE.PAC, ccOfMountname);
 
@@ -255,7 +255,7 @@ function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp
     dbHandler.updateEthernetContainer(ethernetContainerGeneralInfo)
       .catch((err) => logger.error(err));
   } else {
-    logger.warn(`No ethContainerInfo and Transmission for ${mountName}`);
+    logger.warn(`No ethContainerInfo and Transmission for Mount-Name: ${mountName}`);
   }
 }
 

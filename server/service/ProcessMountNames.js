@@ -45,5 +45,5 @@ module.exports.deleteFromDb = async function(retentionTs) {
   };
   logger.info(`Data Retention, delete entries older than ${retentionTs}`);
   let res = await dbHandler.removeAllReferences(dateFilter);
-  logger.info(`Entries deleted in the DB: ${res}`);
+  logger.info(res, "Entries deleted in the DB");
 };
