@@ -53,7 +53,7 @@ function openDBConnection(db_name, config) {
         dialectOptions: {
           connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
         },
-        logging: msg => logger.debug(msg)
+        logging: msg => logger.trace(msg)
       });
   } else if (config.dialect == "postgres" ) {
     // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#postgresql
@@ -76,7 +76,7 @@ function openDBConnection(db_name, config) {
         //   statement_timeout: config.dialectOptions.statementTimeout,  // Times out queries after a set time in milliseconds. Added in pg v7.3.
         //   idle_in_transaction_session_timeout: config.dialectOptions.idleInTransactionSessionTimeout  // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
         // },
-        logging: msg => logger.debug(msg)
+        logging: msg => logger.trace(msg)
       });
   } else {
     logger.warn(`Dialect not managed: ${config.dialect}`);
