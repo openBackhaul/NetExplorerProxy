@@ -130,12 +130,51 @@ if (process.env.DB && process.env.DB.toLowerCase() === "true") {
         }
     }
 
-    if (process.env.DIALECT_CONNTIMEOUT) {
+    if (process.env.DIALECT_CONNTIMEOUT) {  // This properties is only for MariaDB
         try {
             db_config_default.dialectOptions.connectTimeout = parseInt(process.env.DIALECT_CONNTIMEOUT);
         } catch (e) {
             db_config_default.dialectOptions.connectTimeout = 1000;
             logger.warn("Using default value for dialect connection timeout");
+        }
+    }
+
+    if (process.env.DIALECT_APPLICATION_NAME) {  // This properties is only for PostreSQL
+        db_config_default.dialectOptions.applicationName = process.env.DIALECT_APPLICATION_NAME;
+    }
+
+    if (process.env.DIALECT_SSL) {  // This properties is only for PostreSQL
+        db_config_default.dialectOptions.ssl = (process.env.DIALECT_SSL.toLowerCase() == true);
+    }
+
+    if (process.env.DIALECT_CLIENT_ENCODING) {  // This properties is only for PostreSQL
+        db_config_default.dialectOptions.clientEncoding = process.env.DIALECT_CLIENT_ENCODING;
+    }
+
+    if (process.env.DIALECT_KEEPALIVE) {  // This properties is only for PostreSQL
+        try {
+            db_config_default.dialectOptions.keepAlive = process.env.DIALECT_KEEPALIVE;
+        } catch (e) {
+            // db_config_default.dialectOptions.applicationName = 1000;
+            logger.warn("Using default value for dialect connection timeout");
+        }
+    }
+
+    if (process.env.DIALECT_STATEMENT_TIMEOUT) {  // This properties is only for PostreSQL
+        try {
+            db_config_default.dialectOptions.statementTimeout = parseInt(process.env.DIALECT_STATEMENT_TIMEOUT);
+        } catch (e) {
+            db_config_default.dialectOptions.statementTimeout = 1000;
+            logger.warn("Using default value for dialect Statement Timeout");
+        }
+    }
+
+    if (process.env.DIALECT_IDLE_IN_TRANSACTION_SESSION_TIMEOUT) {  // This properties is only for PostreSQL
+        try {
+            db_config_default.dialectOptions.idleInTransactionSessionTimeout = parseInt(process.env.DIALECT_IDLE_IN_TRANSACTION_SESSION_TIMEOUT);
+        } catch (e) {
+            db_config_default.dialectOptions.idleInTransactionSessionTimeout = 1000;
+            logger.warn("Using default value for dialect Idle In Transaction Session Timeout");
         }
     }
 
