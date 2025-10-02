@@ -68,14 +68,11 @@ function openDBConnection(db_name, config) {
           idle: config.pool.idle,       // release connection if idle for 5 seconds
           evict: config.pool.evict      // evict idle connections after 5 seconds
         },
-        // dialectOptions: {
-        //   application_name: config.dialectOptions.applicationName,    // Name of application in pg_stat_activity.
-        //   ssl: config.dialectOptions.ssl,                             // SSL options.
-        //   client_encoding: config.dialectOptions.clientEncoding,      // Setting 'auto' determines locale based on the client LC_CTYPE environment variable.
-        //   keepAlive: config.dialectOptions.keepAlive,                 // Boolean to enable TCP KeepAlive.
-        //   statement_timeout: config.dialectOptions.statementTimeout,  // Times out queries after a set time in milliseconds. Added in pg v7.3.
-        //   idle_in_transaction_session_timeout: config.dialectOptions.idleInTransactionSessionTimeout  // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
-        // },
+        dialectOptions: {
+          // keepAlive: config.dialectOptions.keepAlive,                 // Boolean to enable TCP KeepAlive.
+          statement_timeout: config.dialectOptions.statementTimeout,  // Times out queries after a set time in milliseconds. Added in pg v7.3.
+          idle_in_transaction_session_timeout: config.dialectOptions.idleInTransactionSessionTimeout  // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+        },
         logging: msg => logger.trace(msg)
       });
   } else {
