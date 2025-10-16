@@ -84,7 +84,7 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
  * @param {String} fields query parameters.
  * @return {Object} params that contains query and path parameters.
  */
-exports.getQueryAndPathParameter = async function (operationName, pathParamList, fields) {
+exports.getQueryAndPathParameter = function (operationName, pathParamList, fields) {
   try {
     logger.debug(pathParamList, "getQuery And Path Param");
     let pathParams = new Map();
@@ -151,7 +151,7 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
-    let params = await IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
+    let params = IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
 
     let responseData = await eventDispatcher.dispatchEvent(
       operationClientUuid,
