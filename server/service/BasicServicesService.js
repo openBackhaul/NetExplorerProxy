@@ -60,43 +60,118 @@ const LTP_AUG_PAC = "ltp-augment-1-0:ltp-augment-pac";
 async function processMountNamesInBatches(mountNameList, requestHeaders, taskTraceId, timestamp) {
   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
-  let prefix = forwardingConstruct.uuid.split('op')[0];
-  let MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-002");
+  const prefix = forwardingConstruct.uuid.split('op')[0];
+  const MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-002");
+  const MAX_TIMEOUT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-003") * 1000;
+  const N_OF_RETRIES = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-004");
+  const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60; 
 
-  let activePromises = [];
+  const results = [];
+  const errors = [];
   let index = 0;
 
-  async function processNext() {
-    if (index >= mountNameList.length) {
-      logger.debug(`Index is > mountnamelist length, so return ${index} >= ${mountNameList.length}`);
-      return;
+  logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms`);
+
+  async function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function doWorkWithRetry(mountName) {
+    let attempt = 0;
+    while (attempt < N_OF_RETRIES) {
+      try {
+        const start = Date.now();
+        logger.info(`[${mountName}] Attempt ${attempt + 1}/${N_OF_RETRIES}`);
+        await exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp);
+
+        const elapsed = Date.now() - start;
+        logger.info(`[${mountName}] Completed in ${elapsed}ms`);
+        results.push({ mountName, elapsed, attempts: attempt + 1 });
+        return; // success, exit retry loop
+      } catch (err) {
+        attempt++;
+        logger.warn(`[${mountName}] Attempt ${attempt} failed: ${err.message || err}`);
+        if (attempt < N_OF_RETRIES) {
+          logger.info(`[${mountName}] Retrying in ${DELAY_RETRY} ms...`);
+          await delay(DELAY_RETRY);
+        } else {
+          logger.error(` [${mountName}] All ${N_OF_RETRIES} attempts failed`);
+          errors.push({ mountName, error: err });
+        }
+      }
     }
-
-    const mountName = mountNameList[index++];
-    const start = Date.now();
-
-    logger.info(`Starting processing for Mount-Name: ${mountName}`);
-    const promise = exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp)
-      .then(ccOfMountname => {
-        const stop = Date.now() - timestamp;
-        logger.info(`Finished retrieving cc for Mount-Name: ${mountName} with time: ${stop}`);
-      })
-      .finally(() => {
-        activePromises.splice(activePromises.indexOf(promise), 1);
-        return processNext();
-      });
-
-    activePromises.push(promise);
   }
 
-  // Start the first batch of concurrent tasks
-  for (let i = 0; i < MAX_CONCURRENT && i < mountNameList.length; i++) {
-    await processNext();
+  async function worker() {
+    while (true) {
+      const currentIndex = index++;
+      if (currentIndex >= mountNameList.length) {
+        break;
+      }
+
+      const mountName = mountNameList[currentIndex];
+      await doWorkWithRetry(mountName);
+    }
   }
 
-  // Wait for all remaining tasks to complete
-  await Promise.all(activePromises);
+  const workerCount = Math.min(MAX_CONCURRENT, mountNameList.length);
+  const workers = [];
+  for (let i = 0; i < workerCount; i++) {
+    workers.push(worker());
+  }
+
+  await Promise.all(workers);
+
+  logger.info(`All mount names processed. Success: ${results.length}, Failed: ${errors.length}`);
+  if (errors.length > 0) {
+    logger.warn(`Failed mount names: ${errors.map(e => e.mountName).join(", ")}`);
+  }
+
+  return { results, errors };
 }
+
+// OLD routine
+// async function processMountNamesInBatches(mountNameList, requestHeaders, taskTraceId, timestamp) {
+//   const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+//   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+//   let prefix = forwardingConstruct.uuid.split('op')[0];
+//   let MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-002");
+
+//   let activePromises = [];
+//   let index = 0;
+
+//   async function processNext() {
+//     if (index >= mountNameList.length) {
+//       logger.debug(`Index is > mountnamelist length, so return ${index} >= ${mountNameList.length}`);
+//       return;
+//     }
+
+//     const mountName = mountNameList[index++];
+//     const start = Date.now();
+
+//     logger.info(`Starting processing for Mount-Name: ${mountName}`);
+//     const promise = exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp)
+//       .then(ccOfMountname => {
+//         const stop = Date.now() - timestamp;
+//         logger.info(`Finished retrieving cc for Mount-Name: ${mountName} with time: ${stop}`);
+//       })
+//       .finally(() => {
+//         activePromises.splice(activePromises.indexOf(promise), 1);
+//         return processNext();
+//       });
+
+//     activePromises.push(promise);
+//   }
+
+//   // Start the first batch of concurrent tasks
+//   for (let i = 0; i < MAX_CONCURRENT && i < mountNameList.length; i++) {
+//     await processNext();
+//   }
+
+//   // Wait for all remaining tasks to complete
+//   await Promise.all(activePromises);
+// }
+//////
 
 let traceIncrement= 1;
 module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
