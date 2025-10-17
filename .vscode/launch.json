@@ -15,6 +15,7 @@
             ],
             "env": {
                 "DB": "true",
+                "MAX_ROWS_FETCHED": "100000",
                 "USER": "user",
                 "PASSWORD": "bXlwYXNzd29yZA==",
                 "HOST": "localhost",
@@ -26,7 +27,9 @@
                 "POOL_ACQUIRE": "15000",
                 "POOL_IDLE": "5000",
                 "POOL_EVICT": "5000",
-                "DIALECT_CONNTIMEOUT": "1000"
+                "DIALECT_CONNTIMEOUT": "10000",
+                "DIALECT_STATEMENT_TIMEOUT": "0",
+                "DIALECT_IDLE_IN_TRANSACTION_SESSION_TIMEOUT": "0"
             },
             "program": "${workspaceFolder}\\server\\index.js"
         }
