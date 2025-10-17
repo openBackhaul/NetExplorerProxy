@@ -4,6 +4,7 @@
 let db_config_default = { 
     user: 'root', password: 'mypass', host: "localhost",
     port: 3306, dialect: "mariadb", db_name: "nep_db",
+    max_rows_fetched: 100000,
     pool: {
         max: 5,
         min: 0,
@@ -38,7 +39,7 @@ const dummyData = require('./service/db/dummyData.js'); // Some dummy Data
 var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
-// appCommons.openApiValidatorOptions.validateSecurity = false;
+//appCommons.openApiValidatorOptions.validateSecurity = false;
 
 // swaggerRouter configuration
 var options = {
@@ -171,6 +172,16 @@ if (process.env.DB && process.env.DB.toLowerCase() === "true") {
         } catch (e) {
             db_config_default.dialectOptions.idleInTransactionSessionTimeout = 0;
             logger.warn("Using default value for dialect Idle In Transaction Session Timeout");
+        }
+    }
+
+    if (process.env.MAX_ROWS_FETCHED) {
+        try {
+            db_config_default.max_rows_fetched =
+                    parseInt(process.env.MAX_ROWS_FETCHED);
+        } catch (e) {
+            db_config_default.max_rows_fetched = 100000;
+            logger.warn("Using default value for max row fetched");
         }
     }
 

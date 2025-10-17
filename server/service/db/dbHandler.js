@@ -17,6 +17,8 @@ const NEP_DB = "nep_db"
 const SEPARATOR = ";"
 const EOL = "\n";
 
+let max_rows_fetched = 100000
+
 let devices_general_info;
 let equipment_general_info;
 let air_interface_general_info;
@@ -37,6 +39,7 @@ exports.closeDataBaseConnection = async function() {
 
 function openDBConnection(db_name, config) {
   let seqInstance;
+  max_rows_fetched = config.max_rows_fetched;
   if (config.dialect == "mariadb" || config.dialect == "mysql") {
     // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#mariadb
     seqInstance = new Sequelize(db_name, config.user, config.password, {
@@ -768,6 +771,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV = false) {
   let resultFetched = await tableModel.findAll({
     attributes: fields,
     where: whereCondition,
+    limit: max_rows_fetched,
     raw: isCSV
   });
 
@@ -1012,7 +1016,7 @@ function convertTimeStamp(arr) {
   return arr;
 }
 
-// Define fileds where is defined boolean values
+// Define filds where is defined boolean values
 const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail"];
 
 function fixBooleanValues(arr) {
