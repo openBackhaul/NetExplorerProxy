@@ -110,7 +110,9 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
+      logger.info(`Sliding Window - Index: ${currentIndex} - Mountname - ${mountName}`);
       await doWorkWithRetry(mountName);
+      logger.warn(`Sliding Window - done with ${mountName}`);
     }
   }
 
