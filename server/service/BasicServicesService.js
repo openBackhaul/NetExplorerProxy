@@ -110,24 +110,21 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
-      logger.info(`Sliding Window - Index: ${currentIndex} - Mountname - ${mountName}`);
       await doWorkWithRetry(mountName);
-      logger.warn(`Sliding Window - done with ${mountName}`);
     }
   }
 
   const workerCount = Math.min(MAX_CONCURRENT, mountNameList.length);
   const workers = [];
   for (let i = 0; i < workerCount; i++) {
-    logger.warn(`Couting Worker counts: ${i} - worker array length ${workers.length}`);
     workers.push(worker());
   }
 
   await Promise.all(workers);
 
-  logger.info(`All mount names processed. Success: ${results.length}, Failed: ${errors.length}`);
+  logger.info(`All Mount-Names processed. Success: ${results.length}, Failed: ${errors.length}`);
   if (errors.length > 0) {
-    logger.warn(`Failed mount names: ${errors.map(e => e.mountName).join(", ")}`);
+    logger.warn(`Failed Mount-Names: ${errors.map(e => e.mountName).join(", ")}`);
   }
 
   return { results, errors };
