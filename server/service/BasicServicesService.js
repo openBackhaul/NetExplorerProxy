@@ -119,6 +119,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const workerCount = Math.min(MAX_CONCURRENT, mountNameList.length);
   const workers = [];
   for (let i = 0; i < workerCount; i++) {
+    logger.warn(`Couting Worker counts: ${i} - worker array length ${workers.length}`);
     workers.push(worker());
   }
 
