@@ -552,10 +552,20 @@ exports.readListOfDevices = async function(isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readDeviceInfo = async function(filters, isCSV = false) {
-  const attr = ['mount-name', 'timestamp', 'external-label', 'device-model-name', 'system-name'];
+exports.readDeviceInfo = async function(filters, pagination, isCSV = false) {
+  const attr = [
+    'mount-name',
+    'timestamp',
+    'external-label',
+    'device-model-name',
+    'system-name'
+  ];
 
-  let resultFetched = await readGeneralData(devices_general_info, attr, filters, isCSV);
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
+  let resultFetched = await readGeneralData(devices_general_info, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -569,7 +579,7 @@ exports.readDeviceInfo = async function(filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readEquipmentInfo = async function(filters, isCSV = false) {
+exports.readEquipmentInfo = async function(filters, pagination, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
@@ -585,7 +595,11 @@ exports.readEquipmentInfo = async function(filters, isCSV = false) {
     'manufacturer-identifier'
   ];
 
-  let resultFetched = await readGeneralData(equipment_general_info, attr, filters, isCSV);
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
+  let resultFetched = await readGeneralData(equipment_general_info, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -599,7 +613,7 @@ exports.readEquipmentInfo = async function(filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readAirInterfaceInfo = async function(filters, isCSV = false) {
+exports.readAirInterfaceInfo = async function(filters, pagination, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
@@ -619,7 +633,11 @@ exports.readAirInterfaceInfo = async function(filters, isCSV = false) {
     'type-of-equipment',
   ];
 
-  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, isCSV);
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -633,7 +651,7 @@ exports.readAirInterfaceInfo = async function(filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readAirTransMode = async function(filters, isCSV = false) {
+exports.readAirTransMode = async function(filters, pagination, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
@@ -650,7 +668,11 @@ exports.readAirTransMode = async function(filters, isCSV = false) {
     'capa-factor'
   ];
 
-  let resultFetched = await readGeneralData(air_interface_transmission_mode, attr, filters, isCSV);
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
+  let resultFetched = await readGeneralData(air_interface_transmission_mode, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -664,7 +686,7 @@ exports.readAirTransMode = async function(filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readEthernetContInfo = async function (filters, isCSV = false) {
+exports.readEthernetContInfo = async function (filters, pagination, isCSV = false) {
   // DB fields to read
   const attr = [
     'mount-name',
@@ -679,8 +701,12 @@ exports.readEthernetContInfo = async function (filters, isCSV = false) {
     'interface-status'
   ];
 
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
   // Retrieve data
-  let resultFetched = await readGeneralData(ethernet_container_general_info, attr, filters, isCSV);
+  let resultFetched = await readGeneralData(ethernet_container_general_info, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -694,7 +720,7 @@ exports.readEthernetContInfo = async function (filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readWireInterfaceInfo = async function(filters, isCSV = false) {
+exports.readWireInterfaceInfo = async function(filters, pagination, isCSV = false) {
   // Fields to read from DB
   const attr = [
     'mount-name',
@@ -713,8 +739,12 @@ exports.readWireInterfaceInfo = async function(filters, isCSV = false) {
     'speed'
   ];
 
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
   // Retrieve data
-  let resultFetched = await readGeneralData(wire_interface_general_info, attr, filters, isCSV);
+  let resultFetched = await readGeneralData(wire_interface_general_info, attr, filters, pagination, isCSV);
 
   return resultFetched;
 }
@@ -734,7 +764,7 @@ exports.readWireInterfaceInfo = async function(filters, isCSV = false) {
  * }
  * isCSV: true/false with true return RAW data
  */
-exports.readInterfaceInfoPerDevice = async function(filters, isCSV = false) {
+exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV = false) {
   // const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
@@ -747,16 +777,20 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV = false) {
     'interface-type' // fake entry
   ];
 
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
   // Retrieve data
   // TODO @latta-siae this has to be reworked. It will not works properly with empty data
-  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, true);
+  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, pagination, true);
   let stringReplace = attr.toString();
   stringReplace = stringReplace.replaceAll(",", ";");
 
-  let resultData = await readGeneralData(ethernet_container_general_info, attr, filters, true);
+  let resultData = await readGeneralData(ethernet_container_general_info, attr, filters, pagination, true);
   resultFetched += resultData.replace(stringReplace, "");
 
-  resultData = await readGeneralData(wire_interface_general_info, attr, filters, true);
+  resultData = await readGeneralData(wire_interface_general_info, attr, filters, pagination, true);
   resultFetched += resultData.replace(stringReplace, "");
 
   return resultFetched;
@@ -765,13 +799,14 @@ exports.readInterfaceInfoPerDevice = async function(filters, isCSV = false) {
 /*
  * This is internal general routine to read data from DB model
  */
-async function readGeneralData(tableModel, fields, filters, isCSV = false) {
+async function readGeneralData(tableModel, fields, filters, pagination, isCSV = false) {
   const whereCondition = getWhereConditionForRead(filters);
 
   let resultFetched = await tableModel.findAll({
     attributes: fields,
     where: whereCondition,
-    limit: max_rows_fetched,
+    limit: pagination.rows,
+    offset: pagination.offset,
     raw: isCSV
   });
 
