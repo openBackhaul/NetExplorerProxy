@@ -14,6 +14,7 @@
                 "<node_internals>/**"
             ],
             "env": {
+                "DEBUG": "true",
                 "DB": "true",
                 "MAX_ROWS_FETCHED": "100000",
                 "USER": "user",
