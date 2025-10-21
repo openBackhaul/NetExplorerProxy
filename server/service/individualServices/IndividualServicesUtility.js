@@ -73,7 +73,7 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
 
   } catch (error) {
     console.log(`getStringProfileInstanceValue is not success with ${error}`);
-    return new createHttpError.InternalServerError(`${error}`);  
+    return new createHttpError.InternalServerError(`${error}`);
   }
 }
 
@@ -84,7 +84,7 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
  * @param {String} fields query parameters.
  * @return {Object} params that contains query and path parameters.
  */
-exports.getQueryAndPathParameter = async function (operationName, pathParamList, fields) {
+exports.getQueryAndPathParameter = function (operationName, pathParamList, fields) {
   try {
     logger.debug(pathParamList, "getQuery And Path Param");
     let pathParams = new Map();
@@ -128,7 +128,7 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
     let outputFcPortForFc = await ForwardingConstruct.getOutputFcPortsAsync(forwardingConstructInstance[onfAttributes.GLOBAL_CLASS.UUID]);
     consequentOperationClientAndFieldParams.operationClientUuid = outputFcPortForFc[0][onfAttributes.FC_PORT.LOGICAL_TERMINATION_POINT]; 
     consequentOperationClientAndFieldParams.operationName = await OperationClientInterface.getOperationNameAsync(consequentOperationClientAndFieldParams.operationClientUuid);
-    consequentOperationClientAndFieldParams.fields = await IndividualServiceUtility.getStringProfileInstanceValue(stringName);
+    consequentOperationClientAndFieldParams.fields = IndividualServiceUtility.getStringProfileInstanceValue(stringName);
   } catch(error) {
     logger.error(error, "getConsequentOperationClientAndFieldParams is not success");
     return new createHttpError.InternalServerError(`${error}`);
@@ -151,8 +151,8 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
     let operationName = operationClientAndFieldParams.operationName;
     let fields = operationClientAndFieldParams.fields;
     let operationClientUuid = operationClientAndFieldParams.operationClientUuid;
-    let params = await IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
-    // let incr = Math.random(3000);
+    let params = IndividualServiceUtility.getQueryAndPathParameter(operationName, pathParamList, fields);
+
     let responseData = await eventDispatcher.dispatchEvent(
       operationClientUuid,
       {},
@@ -165,7 +165,7 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
       params
     );
 
-    logger.debug(responseData);
+    // logger.debug(responseData); // Better to avoid printing
 
     return responseData;
   } catch (error) {
@@ -188,31 +188,31 @@ exports.extractProfileConfiguration = async function (uuid) {
  * @returns {Boolean} return true if the value is updated, otherwise returns false
  **/
 exports.resetCompleteFile = async function (coreModelJsonObject) { 
-   let controlConstructPath = onfPaths.CONTROL_CONSTRUCT;
-   let resultDel = await fileOperation.deletefromDatabaseAsync(controlConstructPath);
-   if(!resultDel) {
+  let controlConstructPath = onfPaths.CONTROL_CONSTRUCT;
+  let resultDel = await fileOperation.deletefromDatabaseAsync(controlConstructPath);
+  if (!resultDel) {
     return resultDel;
-   }
-    return await lock.acquire(global.databasePath, async () => {
+  }
+  
+  return await lock.acquire(global.databasePath, async () => {
     let result = writeToFile(coreModelJsonObject);
     return result;
-});
+  });
 
-/**
- * Write to the filesystem.<br>
- * @param {JSON} coreModelJsonObject json object that needs to be updated
- * @returns {Boolean} return true if the value is updated, otherwise returns false
- **/
-function writeToFile(coreModelJsonObject) {
-  try {
+  /**
+   * Write to the filesystem.<br>
+   * @param {JSON} coreModelJsonObject json object that needs to be updated
+   * @returns {Boolean} return true if the value is updated, otherwise returns false
+   **/
+  function writeToFile(coreModelJsonObject) {
+    try {
       fileSystem.writeFileSync(global.databasePath, JSON.stringify(coreModelJsonObject));
       return true;
-  } catch (error) {
+    } catch (error) {
       console.log('write failed:', error)
       return false;
+    }
   }
-}
-
 }
 
 exports.generateRequestIdForHistoricalPMDataAPI = async function () {

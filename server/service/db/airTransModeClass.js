@@ -1,8 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
 // Table air_interface_transmission_mode {
-//   id varchar [primary key]
-  
 //   // Primary key
 //   mount-name varchar 
 //   uuid varchar
@@ -27,21 +25,15 @@ exports.init = function (sequelize) {
 
   AirTransmissionMode.init(
     {
-      // Primary key
-      "id": {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-
       "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true
       },
       "uuid": {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
       },
       "local-id": {
         type: DataTypes.STRING,
@@ -51,47 +43,48 @@ exports.init = function (sequelize) {
       // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
 
       // Data
       "transmission-mode-name": {
         type: DataTypes.STRING,
         allowNull: true,
+        primaryKey: true
       },
       "symbol-rate-reduction-factor": {
         type: DataTypes.STRING, //integer
-        allowNull: true,
+        allowNull: true
       },
       "modulation-scheme-at-lct": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "modulation-scheme": {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: true
       },
       "code-rate": {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: true
       },
       "channel-bandwidth": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "xpic-is-avail": {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
+        allowNull: true
       },
       "capa-factor": {
         type: DataTypes.FLOAT,
-        allowNull: true,
-      },
+        allowNull: true
+      }
     },
     {
       sequelize,
       modelName: 'air_interface_transmission_mode'
-    },
+    }
   );
 
   return AirTransmissionMode;

@@ -27,60 +27,59 @@ exports.init = function (sequelize) {
       "mount-name": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "uuid": {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       "local-id": {
         type: DataTypes.STRING,
-        allowNull: true,
-        // primaryKey: true,
+        allowNull: true
       },
 
       // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
 
       // Data
       "operational-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "administrative-state": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "original-ltp-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "bundling-is-on": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-status": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "interface-type": {
         type: DataTypes.STRING,
         defaultValue: "ethernet-container",
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
     {
       sequelize,
       modelName: 'ethernet_container_general_info'
-    },
+    }
   );
 
   return EthContainer;

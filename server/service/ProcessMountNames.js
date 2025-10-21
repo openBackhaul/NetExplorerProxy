@@ -7,41 +7,29 @@ const dbHandler = require('./db/dbHandler.js');
 
 const logger = require('./LoggingService.js').getLogger();
 
-let currentTime, dataRetentionTime, dataRetention, thresholdTime, thresholdTimeinDate;
+let dataRetention = -1;
+let dataRetentionTime = -1;
 
 module.exports.addNewDataInNEPdeviceList = async function (mountNameList) {
-  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
-  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
-  let prefix = forwardingConstruct.uuid.split('op')[0];
-  dataRetention = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-007");
-  currentTime = Date.now();
-  dataRetentionTime = dataRetention * 24 * 60 * 60 * 1000;
-  thresholdTime = currentTime - dataRetentionTime;
-  thresholdTimeinDate = new Date(thresholdTime);
-
-  // Step 1: Update timestamps for received mount names
-  mountNameList.forEach(mountName => {
-    mountMap.set(mountName, currentTime);
-  });
-  // Step 2: Remove entries older than dataRetention time
-  // let offlinemountsToDeleteFromDB=[];
-  for (const [mountName, timestamp] of mountMap.entries()) {
-    if (currentTime - timestamp > dataRetentionTime) {
-      // Store for offline mountNames
-      //  offlinemountsToDeleteFromDB.push(mountName);
-      mountMap.delete(mountName);
-    }
+  if (dataRetention < 0) {
+    const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+    const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+    const prefix = forwardingConstruct.uuid.split('op')[0];
+    dataRetention = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-007");
+    dataRetentionTime = dataRetention * 24 * 60 * 60 * 1000; // Transform data retention into milliseconds
   }
 
-  await module.exports.deleteFromDb(thresholdTimeinDate);
+  let thresholdTimeinDate = new Date(Date.now() - dataRetentionTime);
+  await deleteFromDb(thresholdTimeinDate);
 };
 
-module.exports.deleteFromDb = async function(retentionTs) {
+async function deleteFromDb(retentionTs) {
   // Create a timefilter object
   let dateFilter = {
     timeStamp: retentionTs
   };
+
   logger.info(`Data Retention, delete entries older than ${retentionTs}`);
   let res = await dbHandler.removeAllReferences(dateFilter);
-  logger.info(`Entries deleted in the DB: ${res}`);
+  logger.info(res, "Entries deleted in the DB");
 };

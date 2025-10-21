@@ -38,50 +38,49 @@ exports.init = function (sequelize) {
       },
       "local-id": {
         type: DataTypes.STRING,
-        allowNull: true,
-        // primaryKey: true, ???
+        allowNull: true
       },
 
       // Time stamp
       "timestamp": {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: false
       },
 
       // Data
       "version": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "description": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "model-identifier": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "part-type-identifier": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "type-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "manufacturer-name": {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: true
       },
       "manufacturer-identifier": {
         type: DataTypes.STRING,
-        allowNull: true,
-      },
+        allowNull: true
+      }
     },
     {
       sequelize,
       modelName: 'equipment_general_info'
-    },
+    }
   );
 
   return EquipmentInfo;

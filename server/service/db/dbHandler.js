@@ -1,5 +1,5 @@
 'use strict';
-// const { Sequelize, Model, DataTypes } = require('sequelize');
+
 const { Sequelize, Op } = require('sequelize');
 
 const logger = require('../LoggingService.js').getLogger();
@@ -16,6 +16,8 @@ const NEP_DB = "nep_db"
 
 const SEPARATOR = ";"
 const EOL = "\n";
+
+let max_rows_fetched = 100000
 
 let devices_general_info;
 let equipment_general_info;
@@ -34,23 +36,51 @@ exports.closeDataBaseConnection = async function() {
   }
 }
 
+
 function openDBConnection(db_name, config) {
-  let seqInstance = new Sequelize(db_name, config.user, config.password, {
-    host: config.host,
-    port: config.port,
-    dialect: config.dialect,  /* | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
-      idle: config.pool.idle,    // release connection if idle for 5 seconds
-      evict: config.pool.evict    // evict idle connections after 5 seconds
-    },
-    dialectOptions: {
-      connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
-    },
-    logging: msg => logger.debug(msg)
-  });
+  let seqInstance;
+  max_rows_fetched = config.max_rows_fetched;
+  if (config.dialect == "mariadb" || config.dialect == "mysql") {
+    // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#mariadb
+    seqInstance = new Sequelize(db_name, config.user, config.password, {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,  /* 'mariadb' | 'mysql' | */
+        pool: {
+          max: config.pool.max,
+          min: config.pool.min,
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error//  TFN: 15 Seconds  
+          idle: config.pool.idle,    // release connection if idle for 5 seconds //  TFN: 60
+          evict: config.pool.evict    // evict idle connections after 5 seconds  //  TFN: 60
+        },
+        dialectOptions: {
+          connectTimeout: config.dialectOptions.connectTimeout // 10 seconds connect timeout 
+        },
+        logging: msg => logger.trace(msg)
+      });
+  } else if (config.dialect == "postgres" ) {
+    // For docs see: https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#postgresql
+    seqInstance = new Sequelize(db_name, config.user, config.password, {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,  /* 'postgres'*/
+        pool: {
+          max: config.pool.max,
+          min: config.pool.min,
+          acquire: config.pool.acquire, // wait max 15 seconds for connection before throwing error
+          idle: config.pool.idle,       // release connection if idle for 5 seconds
+          evict: config.pool.evict      // evict idle connections after 5 seconds
+        },
+        dialectOptions: {
+          // keepAlive: config.dialectOptions.keepAlive,                 // Boolean to enable TCP KeepAlive.
+          statement_timeout: config.dialectOptions.statementTimeout,  // Times out queries after a set time in milliseconds. Added in pg v7.3.
+          idle_in_transaction_session_timeout: config.dialectOptions.idleInTransactionSessionTimeout  // Terminate any session with an open transaction that has been idle for longer than the specified duration in milliseconds
+        },
+        logging: msg => logger.trace(msg)
+      });
+  } else {
+    logger.warn(`Dialect not managed: ${config.dialect}`);
+  }
 
   return seqInstance;
 }
@@ -101,7 +131,7 @@ exports.initDB = async function(config) {
       } catch (error) {
         logger.error(error, "There is a problem with the DB connection");
         // If DB doesn't exist I have to create a new one
-        if (error.original.errno === 1049) {
+        if (config.dialect == "mariadb" && error.original.errno === 1049) {
           logger.error(error, "Error 1049 - DB doesn't exists");
           try {
             // Open connection with DB without name
@@ -131,6 +161,20 @@ exports.initDB = async function(config) {
               logger.error("Impossible to connect to DB for the second time");
             }
           }
+        } else if (config.dialect == "postgres" && error.original.code == '3D000') {
+          logger.error(error, "Error 3D000 - DB doesn't exists");
+          sequelize = openDBConnection("", config);
+          await sequelize.authenticate();
+          logger.warn("Authenticate to DB Succeded without DB name");
+
+          logger.warn("DB " + db_name + " doesn't exists, try to create it");
+          await sequelize.query("CREATE DATABASE " + db_name + ";");
+
+          sequelize.close();
+          logger.info("Closing connection, and reopen using " + db_name + " Database");
+
+          sequelize = openDBConnection(db_name, config);
+          await sequelize.authenticate();
         } else {
           logger.error("Impossible to connect to DB.");
           return false;
@@ -181,32 +225,21 @@ exports.updateDeviceInfo = async function (dataArray) {
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
-      let cc = await devices_general_info.update({
+      let [cc, create] = await devices_general_info.upsert({
+        "mount-name": data.mount_name,
         "timestamp": new Date(data.timestamp),
         "external-label": data.external_label,
         "device-model-name": data.device_model_name,
         "system-name": data.system_name,
-      },{
-        where: {
-          "mount-name": data.mount_name,
-        },
       });
-
-      if (cc == 0) {
-        cc = await devices_general_info.create({
-          "mount-name": data.mount_name,
-          "timestamp": new Date(data.timestamp),
-          "external-label": data.external_label,
-          "device-model-name": data.device_model_name,
-          "system-name": data.system_name,
-        });
+      
+      if (create) {
         logger.trace("Entry devices_general_info Created with PK: " + data.mount_name);
         result.added = result.added + 1;
       } else {
         logger.trace("Entry devices_general_info Updated with PK: " + data.mount_name);
         result.updated = result.updated + 1;
       }
-
     } catch(error) {
       logger.error(error);
     }
@@ -238,7 +271,9 @@ exports.updateEquipmentInfo = async function (dataArray) {
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
-      let cc = await equipment_general_info.update({
+      let [cc, create] = await equipment_general_info.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
         "local-id": data.local_id,
 
         // Timestamp reference
@@ -252,31 +287,9 @@ exports.updateEquipmentInfo = async function (dataArray) {
 
         "manufacturer-name": data.manufacturer_name,
         "manufacturer-identifier": data.manufacturer_identifier
-      },{
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-        },
       });
-
-      if (cc == 0) {
-        cc = await equipment_general_info.create({
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
-
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "version": data.version,
-          "description": data.description,
-          "model-identifier": data.model_identifier,
-          "part-type-identifier": data.part_type_identifier,
-          "type-name": data.type_name,
-
-          "manufacturer-name": data.manufacturer_name,
-          "manufacturer-identifier": data.manufacturer_identifier
-        });
+      
+      if (create) {
         logger.trace("Entry equipment_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
@@ -317,7 +330,9 @@ exports.updateAirInterface = async function(dataArray) {
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
-      let cc = await air_interface_general_info.update({
+      let [cc, create] = await air_interface_general_info.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
         "local-id": data.local_id,
 
         // Timestamp reference
@@ -334,41 +349,15 @@ exports.updateAirInterface = async function(dataArray) {
         "transmitter-is-on": data.transmitter_is_on,
         "interface-status": data.interface_status,
         "type-of-equipment": data.type_of_equipment
-      },{
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-        },
       });
-
-      if (cc == 0) {
-        cc = await air_interface_general_info.create({
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
-
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "operational-state": data.operational_state,
-          "administrative-state": data.administrative_state,
-          "original-ltp-name": data.original_ltp_name,
-          "external-label": data.external_label,
-          "transmission-mode-min": data.transmission_mode_min,
-          "transmission-mode-max": data.transmission_mode_max,
-          "xpic-is-on": data.xpic_is_on,
-          "power-is-on": data.power_is_on,
-          "transmitter-is-on": data.transmitter_is_on,
-          "interface-status": data.interface_status,
-          "type-of-equipment": data.type_of_equipment
-        });
+      
+      if (create) {
         logger.trace("Entry air_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
         logger.trace("Entry air_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
     } catch(error) {
       logger.error(error);
     }
@@ -398,10 +387,13 @@ exports.updateAirTransMode = async function(dataArray) {
 
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
+
     try {
-      let cc = await air_interface_transmission_mode.update({
-        "local-id": data.local_id,
+      let [cc, create] = await air_interface_transmission_mode.upsert({
+        "mount-name": data.mount_name,
         "uuid": data.uuid,
+        "local-id": data.local_id,
+
         // Timestamp reference
         "timestamp": new Date(data.timestamp),
 
@@ -413,39 +405,15 @@ exports.updateAirTransMode = async function(dataArray) {
         "channel-bandwidth": data.channel_bandwidth,
         "xpic-is-avail": data.xpic_is_avail,
         "capa-factor": data.capa_factor
-      },{
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "transmission-mode-name": data.transmission_mode_name
-        },
       });
-
-      if (cc == 0) {
-        cc = await air_interface_transmission_mode.create({
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
-
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "transmission-mode-name": data.transmission_mode_name,
-          "symbol-rate-reduction-factor": data.symbol_rate_reduction_factor,
-          "modulation-scheme-at-lct": data.modulation_scheme_at_lct,
-          "modulation-scheme": data.modulation_scheme,
-          "code-rate": data.code_rate,
-          "channel-bandwidth": data.channel_bandwidth,
-          "xpic-is-avail": data.xpic_is_avail,
-          "capa-factor": data.capa_factor
-        });
-        logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name);
+      
+      if (create) {
+        logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name);
+        logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
         result.updated = result.updated + 1;
       }
-
     } catch(error) {
       logger.error(error);
     }
@@ -474,7 +442,9 @@ exports.updateEthernetContainer = async function (dataArray) {
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
-      let cc = await ethernet_container_general_info.update({
+      let [cc, create] = await ethernet_container_general_info.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
         "local-id": data.local_id,
 
         // Timestamp reference
@@ -486,36 +456,15 @@ exports.updateEthernetContainer = async function (dataArray) {
         "interface-name": data.interface_name,
         "bundling-is-on": data.bundling_is_on,
         "interface-status": data.interface_status
-      },{
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-        },
       });
-
-      if (cc == 0) {
-        cc = await ethernet_container_general_info.create({
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
-
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "operational-state": data.operational_state,
-          "administrative-state": data.administrative_state,
-          "original-ltp-name": data.original_ltp_name,
-          "interface-name": data.interface_name,
-          "bundling-is-on": data.bundling_is_on,
-          "interface-status": data.interface_status
-        });
+      
+      if (create) {
         logger.trace("Entry ethernet_container_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
         logger.trace("Entry ethernet_container_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
     } catch(error) {
       logger.error(error);
     }
@@ -548,7 +497,9 @@ exports.updateWireInterface = async function (dataArray) {
   for (let i = 0; i < dataArray.length; i++) {
     let data = dataArray[i];
     try {
-      let cc = await wire_interface_general_info.update({
+      let [cc, create] = await wire_interface_general_info.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
         "local-id": data.local_id,
 
         // Timestamp reference
@@ -558,46 +509,17 @@ exports.updateWireInterface = async function (dataArray) {
         "administrative-state": data.administrative_state,
         "original-ltp-name": data.original_ltp_name,
         "interface-name": data.interface_name,
-        "fixed-pmd-kind": data.fixed_pmd_kind,
-        "interface-status": data.interface_status,
-        "pmd-kind-cur": data.pmd_kind_cur,
-        "pmd-name": data.pmd_name,
-        "duplex": data.duplex,
-        "speed": data.speed
-      },{
-        where: {
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-        },
+        "bundling-is-on": data.bundling_is_on,
+        "interface-status": data.interface_status
       });
 
-      if (cc == 0) {
-        cc = await wire_interface_general_info.create({
-          "mount-name": data.mount_name,
-          "uuid": data.uuid,
-          "local-id": data.local_id,
-
-          // Timestamp reference
-          "timestamp": new Date(data.timestamp),
-
-          "operational-state": data.operational_state,
-          "administrative-state": data.administrative_state,
-          "original-ltp-name": data.original_ltp_name,
-          "interface-name": data.interface_name,
-          "fixed-pmd-kind": data.fixed_pmd_kind,
-          "interface-status": data.interface_status,
-          "pmd-kind-cur": data.pmd_kind_cur,
-          "pmd-name": data.pmd_name,
-          "duplex": data.duplex,
-          "speed": data.speed
-        });
+      if (create) {
         logger.trace("Entry wire_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
       } else {
         logger.trace("Entry wire_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
         result.updated = result.updated + 1;
       }
-
     } catch(error) {
       logger.error(error);
     }
@@ -617,14 +539,6 @@ exports.readListOfDevices = async function(isCSV = false) {
     attributes: ['mount-name', 'timestamp'],
     raw: isCSV
   });
-
-  // if (isCSV) {
-  //   if (resultFetched.length == 0) {
-  //     resultFetched = "";
-  //   } else {
-  //     resultFetched = convertToCSV(resultFetched);
-  //   }
-  // }
 
   return resultFetched;
 }
@@ -857,6 +771,7 @@ async function readGeneralData(tableModel, fields, filters, isCSV = false) {
   let resultFetched = await tableModel.findAll({
     attributes: fields,
     where: whereCondition,
+    limit: max_rows_fetched,
     raw: isCSV
   });
 
@@ -1101,7 +1016,7 @@ function convertTimeStamp(arr) {
   return arr;
 }
 
-// Define fileds where is defined boolean values
+// Define filds where is defined boolean values
 const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail"];
 
 function fixBooleanValues(arr) {
