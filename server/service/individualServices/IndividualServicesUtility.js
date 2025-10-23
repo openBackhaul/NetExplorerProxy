@@ -60,8 +60,6 @@ exports.getStringProfileInstanceValue = async function (expectedStringName) {
     if (stringProfileInstanceList == "") {
       let stringProfileName = "string-profile-1-0:PROFILE_NAME_TYPE_STRING_PROFILE";
       stringProfileInstanceList = await ProfileCollection.getProfileListForProfileNameAsync(stringProfileName);
-    } else {
-      logger.warn(`Hitting the cache for stringProfileInstanceList`);
     }
 
     for (let i = 0; i < stringProfileInstanceList.length; i++) {
