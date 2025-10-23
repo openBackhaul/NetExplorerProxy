@@ -128,7 +128,7 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
     let outputFcPortForFc = await ForwardingConstruct.getOutputFcPortsAsync(forwardingConstructInstance[onfAttributes.GLOBAL_CLASS.UUID]);
     consequentOperationClientAndFieldParams.operationClientUuid = outputFcPortForFc[0][onfAttributes.FC_PORT.LOGICAL_TERMINATION_POINT]; 
     consequentOperationClientAndFieldParams.operationName = await OperationClientInterface.getOperationNameAsync(consequentOperationClientAndFieldParams.operationClientUuid);
-    consequentOperationClientAndFieldParams.fields = IndividualServiceUtility.getStringProfileInstanceValue(stringName);
+    consequentOperationClientAndFieldParams.fields = await IndividualServiceUtility.getStringProfileInstanceValue(stringName);
   } catch(error) {
     logger.error(error, "getConsequentOperationClientAndFieldParams is not success");
     return new createHttpError.InternalServerError(`${error}`);
