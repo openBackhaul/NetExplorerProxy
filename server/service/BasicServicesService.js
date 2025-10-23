@@ -210,11 +210,6 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
   }
 };
 
-// function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
-
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
   let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
   // Calculate Timestamp when data is retrieved from MWDI
