@@ -47,6 +47,8 @@ exports.getIntegerProfileInstanceValue = async function(expectedIntegerName) {
   }
 }
 
+// Avoid to read everytime from file
+let stringProfileInstanceList = "";
 /**
  * This function fetches the string value from the string profile based on the expected string name.
  * @param {String} expectedStringName string name of the string profile.
@@ -55,8 +57,10 @@ exports.getIntegerProfileInstanceValue = async function(expectedIntegerName) {
 exports.getStringProfileInstanceValue = async function (expectedStringName) {
   let stringValue = "";
   try {
-    let stringProfileName = "string-profile-1-0:PROFILE_NAME_TYPE_STRING_PROFILE";
-    let stringProfileInstanceList = await ProfileCollection.getProfileListForProfileNameAsync(stringProfileName);
+    if (stringProfileInstanceList == "") {
+      let stringProfileName = "string-profile-1-0:PROFILE_NAME_TYPE_STRING_PROFILE";
+      stringProfileInstanceList = await ProfileCollection.getProfileListForProfileNameAsync(stringProfileName);
+    }
 
     for (let i = 0; i < stringProfileInstanceList.length; i++) {
       let stringProfileInstance = stringProfileInstanceList[i];
@@ -128,7 +132,7 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
     let outputFcPortForFc = await ForwardingConstruct.getOutputFcPortsAsync(forwardingConstructInstance[onfAttributes.GLOBAL_CLASS.UUID]);
     consequentOperationClientAndFieldParams.operationClientUuid = outputFcPortForFc[0][onfAttributes.FC_PORT.LOGICAL_TERMINATION_POINT]; 
     consequentOperationClientAndFieldParams.operationName = await OperationClientInterface.getOperationNameAsync(consequentOperationClientAndFieldParams.operationClientUuid);
-    consequentOperationClientAndFieldParams.fields = IndividualServiceUtility.getStringProfileInstanceValue(stringName);
+    consequentOperationClientAndFieldParams.fields = await IndividualServiceUtility.getStringProfileInstanceValue(stringName);
   } catch(error) {
     logger.error(error, "getConsequentOperationClientAndFieldParams is not success");
     return new createHttpError.InternalServerError(`${error}`);

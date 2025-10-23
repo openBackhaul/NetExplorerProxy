@@ -52,13 +52,13 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   try {
     const fetchFreshData = async () => {
       try {
-        const now = new Date().toLocaleString(); // Get current date and time in readable format
-        logger.info(`Data fetching starts ${now}`);
+        let now = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Cyclic process - Data fetching starts ${now}`);
         await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
-        const now1 = new Date().toLocaleString(); // Get current date and time in readable format
-        logger.info(`Data fetched successfully at ${now1}`);
+        now = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Cyclic process - Data fetched successfully at ${now}`);
       } catch (error) {
-        logger.error(error, "Error fetching data");
+        logger.error(error, "Cyclic process - Error fetching data");
       }
     };
 

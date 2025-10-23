@@ -287,9 +287,10 @@ exports.receiveCurrentMacTableOfDevice = async function (requestUrl, body) {
 module.exports.provideGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readDeviceInfo(filters, true);
+  let result = await dbHandler.readDeviceInfo(filters, pagination, true);
 
   return result;
 }
@@ -300,9 +301,10 @@ module.exports.provideGeneralInformationOfDevices = async function (req, body) {
 module.exports.provideActualEquipmentInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readEquipmentInfo(filters, true);
+  let result = await dbHandler.readEquipmentInfo(filters,  pagination, true);
 
   return result;
 }
@@ -313,9 +315,10 @@ module.exports.provideActualEquipmentInformationOfDevices = async function (req,
 module.exports.provideEthernetContainerGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readEthernetContInfo(filters, true);
+  let result = await dbHandler.readEthernetContInfo(filters, pagination, true);
 
   return result;
 }
@@ -326,9 +329,10 @@ module.exports.provideEthernetContainerGeneralInformationOfDevices = async funct
 module.exports.provideWireInterfaceGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readWireInterfaceInfo(filters, true);
+  let result = await dbHandler.readWireInterfaceInfo(filters, pagination, true);
 
   return result;
 }
@@ -339,9 +343,10 @@ module.exports.provideWireInterfaceGeneralInformationOfDevices = async function 
 module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readAirInterfaceInfo(filters, true);
+  let result = await dbHandler.readAirInterfaceInfo(filters, pagination, true);
 
   return result;
 }
@@ -352,9 +357,10 @@ module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (
 module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function (req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readAirTransMode(filters, true);
+  let result = await dbHandler.readAirTransMode(filters, pagination, true);
 
   return result;
 }
@@ -368,9 +374,10 @@ module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = as
 module.exports.provideListOfInterfacesPerDeviceInNep = async function provideListOfInterfacesPerDeviceInNep(req, body) {
   // Get filters structure from body
   const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
 
   // Get data from DB
-  let result = await dbHandler.readInterfaceInfoPerDevice(filters, true);
+  let result = await dbHandler.readInterfaceInfoPerDevice(filters, pagination, true);
 
   return result;
 }
@@ -403,7 +410,7 @@ function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";
   if (body && body !== undefined) {
-    mountNameList = body["mount-name-list"];
+    mountNameList = body["mount-name-list"] ? body["mount-name-list"] : "";
     const dataAge = body["data-age"];
 
     if (dataAge && dataAge != undefined) {
@@ -419,6 +426,24 @@ function getFiltersFromBody(body) {
   }
 
   return filters;
+}
+
+function getPaginationFromBody(body) {
+  let maxRowsFetched = 0;
+  let offset = 0;
+  if (body && body !== undefined) {
+    maxRowsFetched = body["rows"] ? body["rows"] : 0;
+    offset = body["offset"] ? body["offset"] : 0;
+  } else {
+    logger.debug("Body to parse is empty");
+  }
+
+  const pagination = {
+    rows: maxRowsFetched,
+    offset: offset
+  }
+
+  return pagination;
 }
 
 /*
