@@ -432,8 +432,8 @@ function getPaginationFromBody(body) {
   let maxRowsFetched = 0;
   let offset = 0;
   if (body && body !== undefined) {
-    maxRowsFetched = body["rows"];
-    offset = body["offset"];
+    maxRowsFetched = body["rows"] ? body["rows"] : 0;
+    offset = body["offset"] ? body["offset"] : 0;
   } else {
     logger.debug("Body to parse is empty");
   }

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Sequelize, Op } = require('sequelize');
+const { Sequelize, QueryTypes, Op } = require('sequelize');
 
 const logger = require('../LoggingService.js').getLogger();
 
@@ -782,18 +782,20 @@ exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV =
   }
 
   // Retrieve data
-  // TODO @latta-siae this has to be reworked. It will not works properly with empty data
-  let resultFetched = await readGeneralData(air_interface_general_info, attr, filters, pagination, true);
-  let stringReplace = attr.toString();
-  stringReplace = stringReplace.replaceAll(",", ";");
+  const fields = "`mount-name`, uuid,`local-id`,timestamp,`original-ltp-name`,`interface-status`,`interface-type`";
+  const sql = "SELECT " + fields + " from `air_interface_general_infos` UNION \
+               SELECT " + fields + " from `ethernet_container_general_infos` UNION \
+               SELECT " + fields + " from `wire_interface_general_infos` \
+               limit "  + pagination.rows + " offset " + pagination.offset;
 
-  let resultData = await readGeneralData(ethernet_container_general_info, attr, filters, pagination, true);
-  resultFetched += resultData.replace(stringReplace, "");
+  let results = await sequelize.query(sql, {
+    type: QueryTypes.SELECT,
+  });
 
-  resultData = await readGeneralData(wire_interface_general_info, attr, filters, pagination, true);
-  resultFetched += resultData.replace(stringReplace, "");
+  results = convertTimeStamp(results); // Fix timestamp format
+  results = convertToCSV(results);
 
-  return resultFetched;
+  return results;
 }
 
 /*
