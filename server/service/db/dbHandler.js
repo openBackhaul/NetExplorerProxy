@@ -802,8 +802,12 @@ exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV =
     type: QueryTypes.SELECT,
   });
 
-  results = convertTimeStamp(results); // Fix timestamp format
-  results = convertToCSV(results);
+  if (results.length == 0) { // Result is empty, so attach only the headers
+    results = attr.toString().replaceAll(",", ";") + "\n";
+  } else {
+    results = convertTimeStamp(results); // Fix timestamp format
+    results = convertToCSV(results);
+  }
 
   return results;
 }
