@@ -790,12 +790,13 @@ exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV =
     }
   }
 
+  // Get the time stamp related to applied filters
   let whereString = getWhereCondString(filters);
-  const sql = "SELECT " + fields + " from `air_interface_general_infos` UNION \
-               SELECT " + fields + " from `ethernet_container_general_infos` UNION \
-               SELECT " + fields + " from `wire_interface_general_infos` \
-               " + whereString + " \
-               limit "  + pagination.rows + " offset " + pagination.offset;
+
+  const sql = "SELECT " + fields + " from `air_interface_general_infos` " + whereString + " UNION \
+    SELECT " + fields + " from `ethernet_container_general_infos` " + whereString + " UNION \
+    SELECT " + fields + " from `wire_interface_general_infos` " + whereString + " \
+    limit "  + pagination.rows + " offset " + pagination.offset;
 
   let results = await sequelize.query(sql, {
     type: QueryTypes.SELECT,
@@ -811,22 +812,25 @@ function getWhereCondString(filters) {
 
   let { mountNames, timeStamp } = filters;
   let whereCondition = "";
+
+  // When timestamp is not defined setup the default date --> 0 milliseconds
   if (timeStamp == undefined || timeStamp == null || timeStamp == "") {
-    timeStamp = new Date(0).toISOString(); // from epoch
+    timeStamp = new Date(0); // from epoch
   }
 
+  // When mountnames are not defined
   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
-    whereCondition = "WHERE timestamp >= " + timeStamp.toISOString();
-  } else {
+    whereCondition = "WHERE timestamp >= '" + timeStamp.toISOString() + "' ";
+  } else {// When mountnames and timestamp are defined
     let mountnames_list = "";
     for (let i = 0; i < mountNames.length; i++) {
       mountnames_list += "'" + mountNames[i] + "'";
       if (i < mountNames.length -1) {
-        mountnames_list += ","
+        mountnames_list += ",";
       }
     }
 
-    whereCondition = "WHERE `mount-name` IN (" + mountnames_list + ") and timestamp >= " + timeStamp.toISOString();
+    whereCondition = "WHERE `mount-name` IN (" + mountnames_list + ") and timestamp >= '" + timeStamp.toISOString() + "' ";
   }
 
   return whereCondition;
