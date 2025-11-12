@@ -765,7 +765,7 @@ exports.readWireInterfaceInfo = async function(filters, pagination, isCSV = fals
  * isCSV: true/false with true return RAW data
  */
 exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV = false) {
-  // const whereCondition = getWhereConditionForRead(filters);
+  const whereCondition = getWhereConditionForRead(filters);
   // DB fields to read
   const attr = [
     'mount-name',
@@ -781,22 +781,77 @@ exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV =
     pagination.rows = max_rows_fetched;
   }
 
-  // Retrieve data
-  const fields = "`mount-name`, uuid,`local-id`,timestamp,`original-ltp-name`,`interface-status`,`interface-type`";
-  const sql = "SELECT " + fields + " from `air_interface_general_infos` UNION \
-               SELECT " + fields + " from `ethernet_container_general_infos` UNION \
-               SELECT " + fields + " from `wire_interface_general_infos` \
-               limit "  + pagination.rows + " offset " + pagination.offset;
+  // Air Interface General information
+  const airIfSql = air_interface_general_info.queryGenerator.selectQuery(
+    air_interface_general_info.getTableName(), {
+      where : whereCondition,
+      attributes: attr
+    },
+    air_interface_general_info
+  );
+
+  // Ethernet Container General information
+  const ethContSql = ethernet_container_general_info.queryGenerator.selectQuery(
+    ethernet_container_general_info.getTableName(), {
+      where: whereCondition,
+      attributes: attr
+    },
+    ethernet_container_general_info
+  );
+
+  // Wire Interface General information
+  const wireIfSql = wire_interface_general_info.queryGenerator.selectQuery(
+    wire_interface_general_info.getTableName(), {
+      where: whereCondition,
+      attributes: attr
+    },
+    wire_interface_general_info
+  );
+
+  let sql = airIfSql + " UNION " + ethContSql + " UNION " + wireIfSql + " limit "  + pagination.rows + " offset " + pagination.offset;
+  sql = sql.replace(";", "");
 
   let results = await sequelize.query(sql, {
     type: QueryTypes.SELECT,
   });
 
-  results = convertTimeStamp(results); // Fix timestamp format
-  results = convertToCSV(results);
+  if (results.length == 0) { // Result is empty, so attach only the headers
+    results = attr.toString().replaceAll(",", ";") + "\n";
+  } else {
+    results = convertTimeStamp(results); // Fix timestamp format
+    results = convertToCSV(results);
+  }
 
   return results;
 }
+
+// function getWhereCondString(filters) {
+
+//   let { mountNames, timeStamp } = filters;
+//   let whereCondition = "";
+
+//   // When timestamp is not defined setup the default date --> 0 milliseconds
+//   if (timeStamp == undefined || timeStamp == null || timeStamp == "") {
+//     timeStamp = new Date(0); // from epoch
+//   }
+
+//   // When mountnames are not defined
+//   if ((!mountNames || mountNames == undefined || mountNames.length == 0 || mountNames == "")) {
+//     whereCondition = "WHERE timestamp >= '" + timeStamp.toISOString() + "' ";
+//   } else {// When mountnames and timestamp are defined
+//     let mountnames_list = "";
+//     for (let i = 0; i < mountNames.length; i++) {
+//       mountnames_list += "'" + mountNames[i] + "'";
+//       if (i < mountNames.length -1) {
+//         mountnames_list += ",";
+//       }
+//     }
+
+//     whereCondition = "WHERE `mount-name` IN (" + mountnames_list + ") and timestamp >= '" + timeStamp.toISOString() + "' ";
+//   }
+
+//   return whereCondition;
+// }
 
 /*
  * This is internal general routine to read data from DB model
