@@ -782,34 +782,36 @@ exports.readInterfaceInfoPerDevice = async function(filters, pagination, isCSV =
   }
 
   // Air Interface General information
-  const airIfSql = air_interface_general_info.queryGenerator.selectQuery(
+  let airIfSql = air_interface_general_info.queryGenerator.selectQuery(
     air_interface_general_info.getTableName(), {
       where : whereCondition,
       attributes: attr
     },
     air_interface_general_info
   );
+  airIfSql = airIfSql.replace(";", "");
 
   // Ethernet Container General information
-  const ethContSql = ethernet_container_general_info.queryGenerator.selectQuery(
+  let ethContSql = ethernet_container_general_info.queryGenerator.selectQuery(
     ethernet_container_general_info.getTableName(), {
       where: whereCondition,
       attributes: attr
     },
     ethernet_container_general_info
   );
+  ethContSql = ethContSql.replace(";", "");
 
   // Wire Interface General information
-  const wireIfSql = wire_interface_general_info.queryGenerator.selectQuery(
+  let wireIfSql = wire_interface_general_info.queryGenerator.selectQuery(
     wire_interface_general_info.getTableName(), {
       where: whereCondition,
       attributes: attr
     },
     wire_interface_general_info
   );
+  wireIfSql = wireIfSql.replace(";", "");
 
   let sql = airIfSql + " UNION " + ethContSql + " UNION " + wireIfSql + " limit "  + pagination.rows + " offset " + pagination.offset;
-  sql = sql.replace(";", "");
 
   let results = await sequelize.query(sql, {
     type: QueryTypes.SELECT,
