@@ -44,29 +44,8 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
 
-  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
-  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
-  const prefix = forwardingConstruct.uuid.split('op')[0];
-  let deviceSyncPeriod = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-006");
-
   try {
-    const fetchFreshData = async () => {
-      try {
-        let now = new Date().toLocaleString(); // Get current date and time in readable format
-        logger.info(`Cyclic process - Data fetching starts ${now}`);
-        await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
-        now = new Date().toLocaleString(); // Get current date and time in readable format
-        logger.info(`Cyclic process - Data fetched successfully at ${now}`);
-      } catch (error) {
-        logger.error(error, "Cyclic process - Error fetching data");
-      }
-    };
-
-    fetchFreshData(); // Starting retrieving data
-    // Run every X seconds (e.g., every 10 seconds)
-    let deviceSyncPeriodMs = deviceSyncPeriod * 3600 * 1000; // X seconds in milliseconds
-    logger.info(`Set refresh data every ${deviceSyncPeriod} seconds`);
-    setInterval(fetchFreshData, deviceSyncPeriodMs);
+    let response = basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
   } catch (responseBody) {
