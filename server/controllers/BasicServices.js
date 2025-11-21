@@ -53,6 +53,8 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
 
   if (cyclicProcessIsRunning == true) {
     logger.warn("Cyclic process is already running. Return without actions");
+    let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
     return;
   }
 
