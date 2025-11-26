@@ -15,6 +15,8 @@ const IndividualServiceUtility = require('../service/individualServices/Individu
 const NEW_RELEASE_FORWARDING_NAME = undefined;
 const OLD_RELEASE_FORWARDING_NAME = 'PromptForEmbeddingCausesRequestForBequeathingData';
 
+let cyclicProcessIsRunning = false;
+
 // Aufruf von recordServiceRequest mit Protokollierung der Laufzeit
 async function recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, responseBodyToDocument) {
   let execTime = await restResponseHeader.executionTimeInMilliseconds(startTime);
@@ -48,6 +50,15 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
   const prefix = forwardingConstruct.uuid.split('op')[0];
   let deviceSyncPeriod = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-006");
+
+  if (cyclicProcessIsRunning == true) {
+    logger.warn("Cyclic process is already running. Return without actions");
+    let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
+    return;
+  }
+
+  cyclicProcessIsRunning = true;
 
   try {
     const fetchFreshData = async () => {
