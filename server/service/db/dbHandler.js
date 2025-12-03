@@ -350,7 +350,7 @@ exports.updateAirInterface = async function(dataArray) {
         "interface-status": data.interface_status,
         "type-of-equipment": data.type_of_equipment
       });
-      
+
       if (create) {
         logger.trace("Entry air_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
@@ -406,7 +406,7 @@ exports.updateAirTransMode = async function(dataArray) {
         "xpic-is-avail": data.xpic_is_avail,
         "capa-factor": data.capa_factor
       });
-      
+
       if (create) {
         logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
         result.added = result.added + 1;
@@ -457,7 +457,7 @@ exports.updateEthernetContainer = async function (dataArray) {
         "bundling-is-on": data.bundling_is_on,
         "interface-status": data.interface_status
       });
-      
+
       if (create) {
         logger.trace("Entry ethernet_container_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
         result.added = result.added + 1;
@@ -510,7 +510,12 @@ exports.updateWireInterface = async function (dataArray) {
         "original-ltp-name": data.original_ltp_name,
         "interface-name": data.interface_name,
         "bundling-is-on": data.bundling_is_on,
-        "interface-status": data.interface_status
+        "interface-status": data.interface_status,
+        'fixed-pmd-kind': data.fixed_pmd_kind,
+        'pmd-kind-cur': data.pmd_kind_cur,
+        'pmd-name': data.pmd_name,
+        'duplex': data.duplex,
+        'speed': data.speed
       });
 
       if (create) {
