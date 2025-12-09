@@ -63,7 +63,7 @@ exports.init = function (sequelize) {
         allowNull: true
       },
       "bundling-is-on": {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: true
       },
       "interface-status": {
