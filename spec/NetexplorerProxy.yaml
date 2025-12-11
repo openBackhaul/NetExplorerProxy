@@ -1778,6 +1778,93 @@ paths:
         default:
           $ref: '#/components/responses/responseForErroredServiceRequests'
 
+  /v1/provide-ltp-equipment-mappings:
+    post:
+      operationId: provideLtpEquipmentMappings
+      summary: 'Responses with ltp-equipment mapping info for all (target) devices/interfaces in the NetExplorerProxy cache.'
+      tags:
+        - IndividualServices
+      security:
+        - basicAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mount-name-list:
+                  type: array
+                  items:
+                    type: string
+                    description: 'Optional list of device names the reponse data shall be filtered for'
+                data-age:
+                  type: integer
+                  description: > 
+                    'Optional: if provided, found data is filtered for data that is not older than data-age hours.
+                    If not provided, all found data (for target devices) is returned.'
+              example:
+                mount-name-list: 
+                  - '305251234'
+                  - '100250001'
+                data-age: 48
+      responses:
+        '200':
+          description: 'Actual ltp-equipment information for all (target) devices/interfaces in the NetExplorerProxy cache in csv format.'
+          content:
+            text/csv:
+              schema:
+                type: string
+                description: >
+                  'The first line shall contain the following headers:
+                    mount-name;timestamp;uuid;connector;equipment
+                  There shall be a single line containing all relevant data per device and actualEquipment (missing information is to be left blank)
+                  from the cache/ElasticSearch (actualEquipmentInfo).
+                  Columns are:
+                    - mount-name: the device basekey
+                    - timestamp: the timestamp from when the data was gathered
+                    - uuid: the equipment uuid
+                    - connector: a connector id
+                    - equipment: a list of equipment uuids, separated by |'
+                example:
+                  'mount-name;timestamp;uuid;connector;equipment
+                  100250001;2024-12-11T16:00:00+01:00;RF-123456789;;819.1.1;SLOT-1
+                  100250001;2024-12-11T16:00:00+01:00;RF-234234234;234234234;;SLOT-2|xyz
+                  200250003;2024-12-11T18:00:00+01:00;ltpB-1;86.1.4;SFP-1.4'
+          headers:
+            life-cycle-state:
+              schema:
+                type: string
+                enum:
+                  - 'EXPERIMENTAL'
+                  - 'OPERATIONAL'
+                  - 'DEPRECATED'
+                  - 'OBSOLETE'
+                  - 'UNKNOWN'
+                  - 'NOT_YET_DEFINED'
+                example: 'EXPERIMENTAL'
+              description: >
+                'Life cycle state of the consumed service
+                find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-027/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+        '400':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '401':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '403':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '404':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '500':
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+        '502':
+          $ref: '#/components/responses/502'
+        '531':
+          $ref: '#/components/responses/531'
+        '532':
+          $ref: '#/components/responses/532'
+        default:
+          $ref: '#/components/responses/responseForErroredServiceRequests'
+
   /v1/provide-air-interface-general-information-of-devices:
     post:
       operationId: provideAirInterfaceGeneralInformationOfDevices
@@ -3140,6 +3227,14 @@ paths:
                                             description: > 
                                               'Data for air interface generalInformation, contains the unitId.
                                               To be ignored for other layer protocols.'
+                                          connector:
+                                            type: string
+                                            description: 'A connector ID for this LTP'
+                                          equipment:
+                                            type: array
+                                            items:
+                                              type: string
+                                              description: 'The uuid of an equipment object'
                                       layer-protocol:
                                         type: array
                                         items:
@@ -3275,6 +3370,9 @@ paths:
                               administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
                             ltp-augment-1-0:ltp-augment-pac:
                               original-ltp-name: 'E1 1/7/4D'
+                              external-label: 'External label not yet defined.'
+                              equipment:
+                                - 'SFP-1.2'
                           - uuid: 'ETH-3456789123'
                             operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
                             layer-protocol:
@@ -3288,6 +3386,9 @@ paths:
                               administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
                             ltp-augment-1-0:ltp-augment-pac:
                               original-ltp-name: 'LAN 1/5/3'
+                              external-label: ''
+                              equipment:
+                                - 'SFP-1.2'
                           - uuid: 'RF-2223335555'
                             operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
                             layer-protocol:
@@ -3312,6 +3413,12 @@ paths:
                                     code-rate: 97
                                   type-of-equipment: 'RAU2 XYZ'
                               administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
+                            ltp-augment-1-0:ltp-augment-pac:
+                              original-ltp-name: 'CT 1/1/1'
+                              external-label: '100551234A'
+                              connector: '819.1.1'
+                              equipment:
+                                - 'SLOT-1'
                           - uuid: 'ETY-8888999912'
                             operational-state: 'core-model-1-4:OPERATIONAL_STATE_ENABLED'
                             layer-protocol:
@@ -3331,6 +3438,9 @@ paths:
                               administrative-state: 'core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED'
                             ltp-augment-1-0:ltp-augment-pac:
                               original-ltp-name: 'LAN 1/9/5'
+                              external-label: 'External label not yet defined.'
+                              equipment:
+                                - 'SFP-1.3'
                           equipment:
                           - uuid: '1919191919'
                           - uuid: '1929394959'
