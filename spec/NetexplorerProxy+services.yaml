@@ -93,6 +93,9 @@ servers:
         - operation-name: /v1/provide-actual-equipment-information-of-devices
           uuid: nep-1-2-0-op-s-is-026
           operation-key: n.a.
+        - operation-name: /v1/provide-ltp-equipment-mapping
+          uuid: nep-1-2-0-op-s-is-027
+          operation-key: n.a.
 
         - operation-name: /v1/provide-air-interface-general-information-of-devices
           uuid: nep-1-2-0-op-s-is-030

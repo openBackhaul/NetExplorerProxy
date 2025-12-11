@@ -128,6 +128,8 @@ forwardings:
         uuid: nep-1-2-0-op-s-is-025
       - server-name: /v1/provide-actual-equipment-information-of-devices
         uuid: nep-1-2-0-op-s-is-026
+      - server-name: /v1/provide-ltp-equipment-mapping
+        uuid: nep-1-2-0-op-s-is-027
       - server-name: /v1/provide-air-interface-general-information-of-devices
         uuid: nep-1-2-0-op-s-is-030
       - server-name: /v1/provide-ethernet-container-general-information-of-devices
@@ -622,6 +624,21 @@ forwardings:
     initiating-requests:
       - server-name: /v1/provide-actual-equipment-information-of-devices
         uuid: nep-1-2-0-op-s-is-026
+    consequent-requests:
+      - client-name: ElasticSearch
+        uuid: nep-1-2-0-es-c-es-1-0-0-000
+
+  - forwarding-name: PromptForProvidingLtpEquipmentMappingsCausesReadingFromNepCache
+    uuid: nep-1-2-0-op-fc-is-027
+    forwarding-type: InvariantProcessSnippet
+    management-requests:
+      operation-client-update:
+      fc-port-update:
+      fc-port-deletion:
+      operation-client-deletion:
+    initiating-requests:
+      - server-name: /v1/provide-ltp-equipment-mapping
+        uuid: nep-1-2-0-op-s-is-027
     consequent-requests:
       - client-name: ElasticSearch
         uuid: nep-1-2-0-es-c-es-1-0-0-000
