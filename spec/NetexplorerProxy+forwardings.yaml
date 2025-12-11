@@ -128,7 +128,7 @@ forwardings:
         uuid: nep-1-2-0-op-s-is-025
       - server-name: /v1/provide-actual-equipment-information-of-devices
         uuid: nep-1-2-0-op-s-is-026
-      - server-name: /v1/provide-ltp-equipment-mapping
+      - server-name: /v1/provide-ltp-equipment-mappings
         uuid: nep-1-2-0-op-s-is-027
       - server-name: /v1/provide-air-interface-general-information-of-devices
         uuid: nep-1-2-0-op-s-is-030
@@ -637,7 +637,7 @@ forwardings:
       fc-port-deletion:
       operation-client-deletion:
     initiating-requests:
-      - server-name: /v1/provide-ltp-equipment-mapping
+      - server-name: /v1/provide-ltp-equipment-mappings
         uuid: nep-1-2-0-op-s-is-027
     consequent-requests:
       - client-name: ElasticSearch

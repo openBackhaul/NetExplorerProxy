@@ -31,6 +31,9 @@
 ![PromptForProvidingGeneralEquipmentDeviceInfoCausesReadingFromNepCache](./026_ProvideActualEquipmentDeviceInfo.png)  
 .  
 .  
+![PromptForProvidingLtpEquipmentMappingsCausesReadingFromNepCache](./027_ProvideLtpEquipmentMappings.png)  
+.  
+.  
 ![PromptForProvidingAirInterfaceGeneralInfoCausesReadingFromNepCache](./030_ProvideAirInterfaceGeneralInfo.png)  
 .  
 .  
