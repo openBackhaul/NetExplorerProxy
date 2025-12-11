@@ -30,4 +30,4 @@ The following table outlines, which services have been introduced with which spe
 | 1.0.1   | |
 | 1.0.2   | |
 | 1.1.0   | - */v1/provide-list-of-devices-in-nep*<br>- */v1/provide-list-of-interfaces-per-device-in-nep*<br>- */v1/provide-general-information-of-devices*<br>- */v1/provide-actual-equipment-information-of-devices*<br>- */v1/provide-air-interface-general-information-of-devices*<br>- */v1/provide-air-interface-transmission-mode-lists-of-devices*<br>- */v1/provide-ethernet-container-general-information-of-devices*<br>- */v1/provide-wire-interface-general-information-of-devices* |
-| 1.2.0+  | (currently planned)<br>- */v1/provide-air-interface-non-qam-pm-data-of-devices*<br>- */v1/provide-air-interface-qam-pm-data-of-devices*<br>- */v1/provide-ethernet-container-pm-data-of-devices* |
+| 1.2.0  | */v1/provide-ltp-equipment-mapping* |
