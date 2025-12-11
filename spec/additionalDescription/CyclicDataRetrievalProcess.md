@@ -1,5 +1,7 @@
 # Cyclic process for updating NEP cache by fetching device data from MWDI
 
+**TODO**: UPDATE THIS README
+
 The NetExplorerProxy will maintain an own deviceList and retrieve filtered ControlConstruct data from the MWDI periodically.
 
 ### Maintaining the deviceList and caching data  
@@ -235,6 +237,7 @@ As data provisioning shall be distributed across multiple services for the "logi
 - [Ethernet Container](./_EthernetContainerMappings.md)
 - [Wire Interface](./_WireInterfaceMappings.md)
 - [Equipment](./_EquipmentMappings.md)
+- [LtpEquipmentMapping](./_LtpEquipmentMappings.md)
 
 **No data found?**  
 The new services will only return data that is actually found in the NEP cache.  
