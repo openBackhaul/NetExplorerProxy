@@ -1116,7 +1116,7 @@ function convertTimeStamp(arr) {
 }
 
 // Define filds where is defined boolean values
-const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail"];
+const boolean_fields = ["xpic-is-on", "power-is-on", "transmitter-is-on", "xpic-is-avail", "bundling-is-on"];
 
 function fixBooleanValues(arr) {
   arr.map(entry => {
