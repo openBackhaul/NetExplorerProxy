@@ -1,7 +1,5 @@
 # Cyclic process for updating NEP cache by fetching device data from MWDI
 
-**TODO**: UPDATE THIS README
-
 The NetExplorerProxy will maintain an own deviceList and retrieve filtered ControlConstruct data from the MWDI periodically.
 
 ### Maintaining the deviceList and caching data  
@@ -11,9 +9,8 @@ The NetExplorerProxy will maintain an own deviceList and retrieve filtered Contr
 - For each device in the NEP deviceList, filtered ControlConstruct data is queried from MWDI periodically and written to the NEP cache
   - the data is kept for a configurable amount of time (*dataRetention*), after that time has passed, old data is deleted
   - note on historical performances data: 
-    - NEP will not retieve historical-performances data from MWDI. PM data will be included in a future NEP release and be fetched from a new PM data application (not yet specified).
-    - Some devices can only store data for up to 8 hours, i.e. MWDI will only have 8 hours of PM data in its cache for those devices. If NEP were to also fetch PM data from MWDI, the periodic retrieval would have been required to be done multiple times a day per device. Without the PM data, however, one periodic retrieval of device data per day will suffice (however depending on the sliding window, this can happen more often)
-
+    - NEP will not retieve historical-performances data from MWDI.
+    - This will be covered by the [DPMDP](https://github.com/openBackhaul/DevicePerformanceManagementDataProcessor)
 ---  
 
 ### Data retrieval interval  
