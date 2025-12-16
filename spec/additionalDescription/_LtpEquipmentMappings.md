@@ -35,7 +35,7 @@ Note:
 
 ---  
 
-As data is not to be taken from the filtered ControlConstruct data, but from the NEP cache, the sample input data shows the data in the output format of the services listed above (as how data is actually organized within the NEP cache is up to the implementer).  
+Data is not to be taken from the filtered ControlConstruct data, but from the NEP cache. The following sample shows an examplary output.  
 
 ```
 mount-name;timestamp;uuid;connector;equipment

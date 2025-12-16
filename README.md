@@ -11,8 +11,9 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 
 #### v1.2.0
 
-Adds service for providing information about mapping between LTPs and equipment.
-
+Adds service for providing information about mapping between LTPs and equipment: */v1/provide-ltp-equipment-mappings*.  
+Updates testcase collection.  
+See related issue collection [NEP v1.2.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/9).  
 
 #### v1.1.1
 Fixes findings from 1.1.0, see related issue collection [NEP v1.1.1_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/7).  
