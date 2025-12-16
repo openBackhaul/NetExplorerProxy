@@ -1,22 +1,14 @@
-@startuml NetExplorerProxy+diagram.completeness
+@startuml NetExplorerProxy+diagram.csv_response_validity
 skinparam responseMessageBelowArrow true
 
 title
-NetExplorerProxy+test.completeness
+NetExplorerProxy+test.csv_response_validity
 end title
 
 participant "Postman\n" as Postman #Orange 
 participant "Data\n" as Data
 participant "Collection\n" as Collection
 
-'mac-address services
-participant "/v1/provide-mac-table-\n     of-all-devices" as macAll #LightBlue
-participant "/v1/provide-mac-table-\n     of-specific-device" as macDev #LightBlue
-participant "/v1/read-current-mac-\n      table-from-device" as macRead #LightBlue
-participant "/v1/receive-current-mac-\n    table-of-device" as macRx #LightBlue
-'deviceLists
-participant "/v1/provide-list-of-\n     connected-devices" as devList #LightBlue
-participant "/v1/provide-list-of-\n     devices-in-nep" as nepList #LightBlue
 'interface-info
 participant "/v1/provide-list-of-\n     interfaces-per\n     device-in-nep" as ifList #LightBlue
 'device + equip info
@@ -32,71 +24,11 @@ participant "/v1/provide-wire-interface-\n     general-information-\n     of-dev
 'ltp-equipment mappings
 participant "/v1/provide-ltp-\n     equipment-mappings" as maps #LightBlue
 
+
 group Preparation
   Data --\\o Postman : {servers, mount-name}
   activate Postman
   Postman --\\o Collection : {servers, mount-name}
-end
-
-'mac-address services
-group /v1/provide-mac-table-of-all-devices
-  Collection --\\o Postman: {servers}
-  Postman -> macAll: {mount-name}
-  macAll <-- Postman: ResponseCode, {ResponseBody}
-  note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
-  end note
-end
-
-group /v1/provide-mac-table-of-specific-device
-  Collection --\\o Postman: {servers, mount-name}
-  Postman -> macDev: {mount-name}
-  Postman <-- macDev: ResponseCode, {ResponseBody: <i>mac-address-data</i>}
-  note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
-  end note
-end
-
-group /v1/read-current-mac-table-from-device
-  Collection --\\o Postman: {servers, mount-name}
-  Postman -> macRead: {mount-name, <i>dummy-requestor-info</i>}
-  Postman <-- macRead: ResponseCode, {ResponseBody: <i>mac-address-data</i>}
-  note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
-  end note
-end
-
-group /v1/receive-current-mac-table-of-device
-  Collection --\\o Postman: {servers}
-  Postman -> macRx: {request-id, <i>mac-address-data</i>}
-  Postman <-- macRx: ResponseCode, {ResponseBody}
-  note right Postman #Orange
-    check for ResponseCode == 204
-  end note
-end
-
-'---- deviceList  --------------------------------------------------------------------------------
-group /v1/provide-list-of-connected-devices
-  Collection --\\o Postman: {servers}
-  Postman -> devList
-  Postman <-- devList: ResponseCode, {ResponseBody: <i>mount-name-list</i>}
-  note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
-  end note
-end
-
-group /v1/provide-list-of-devices-in-nep
-  Collection --\\o Postman: {servers}
-  Postman -> nepList
-  Postman <-- nepList: ResponseCode, {ResponseBody: <i>mount-name-list</i>}
-  note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
-  end note
 end
 
 '---- interfaceInfo -----------------------------------------------------------------------------
@@ -105,8 +37,7 @@ group /v1/provide-list-of-interfaces-per-device-in-nep
   Postman -> ifList
   Postman <-- ifList: ResponseCode, {ResponseBody: <i>interfaceList</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -116,8 +47,7 @@ group /v1/provide-general-information-of-devices
   Postman -> devInfo: {mount-name-list, data-age} (both optional)
   Postman <-- devInfo: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -126,8 +56,7 @@ group /v1/provide-actual-equipment-of-devices
   Postman -> equip: {mount-name-list, data-age} (both optional)
   Postman <-- equip: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -137,8 +66,7 @@ group /v1/provide-air-interface-general-information-of-devices
   Postman -> air: {mount-name-list, data-age} (both optional)
   Postman <-- air: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -147,8 +75,8 @@ group /v1/provide-air-interface-transmission-mode-lists-of-devices
   Postman -> airTml: {mount-name-list, data-age} (both optional)
   Postman <-- airTml: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    1) check for responseBody.getLine(0) == expected header
+    2) check that response does not contain records with code-rate < 0
   end note
 end
 
@@ -158,8 +86,7 @@ group /v1/provide-ethernet-container-general-information-of-devices
   Postman -> eth: {mount-name-list, data-age} (both optional)
   Postman <-- eth: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -169,8 +96,7 @@ group /v1/provide-wire-interface-general-information-of-devices
   Postman -> wire: {mount-name-list, data-age} (both optional)
   Postman <-- wire: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
 
@@ -180,10 +106,10 @@ group /v1/provide-ltp-equipment-mappings
   Postman -> maps: {mount-name-list, data-age} (both optional)
   Postman <-- maps: ResponseCode, {ResponseBody: <i>csv</i>}
   note right Postman #Orange
-    check for ResponseCode == 200
-    check for ResponseBody matches reference schema
+    check for responseBody.getLine(0) == expected header
   end note
 end
+
 
 deactivate Postman
 
