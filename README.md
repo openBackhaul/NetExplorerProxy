@@ -11,8 +11,14 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 
 #### v1.2.0
 
-Adds service for providing information about mapping between LTPs and equipment: */v1/provide-ltp-equipment-mappings*.  
-Updates testcase collection.  
+This release adds the following changes:  
+- Adds service for providing information about mapping between LTPs and equipment: */v1/provide-ltp-equipment-mappings*.
+- Sets /v1/provide-list-of-connected-devices to deprecated
+  - in the future this service shall no longer be served by MWDI, but by CDM
+  - with introduction of API gateway, the service can be exposed to customers directly from the related CDM path
+- Changes cyclic data retrieval to use MWDI://v1/provide-list-of-cached-devices instead of MWDI://v1/provide-list-of-connected-devices to retrieve the list of relevant devices from MWDI
+- Updates testcase collection
+
 See related issue collection [NEP v1.2.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/9).  
 
 #### v1.1.1
