@@ -384,3 +384,5 @@ clients:
           # service to retrieve non-MAC-address data from MWDI, uses fields filter (nep-1-2-0-string-p-000)
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
             uuid: nep-1-2-0-op-c-is-mwdi-1-1-2-001
+          - operation-name: /v1/provide-list-of-cached-devices
+            uuid: nep-1-2-0-op-c-is-mwdi-1-1-2-002

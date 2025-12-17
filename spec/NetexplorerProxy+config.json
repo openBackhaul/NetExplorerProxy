@@ -2204,7 +2204,8 @@
         "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
         "client-ltp": [
           "nep-1-2-0-op-c-is-mwdi-1-1-2-000",
-          "nep-1-2-0-op-c-is-mwdi-1-1-2-001"
+          "nep-1-2-0-op-c-is-mwdi-1-1-2-001",
+          "nep-1-2-0-op-c-is-mwdi-1-1-2-002"
         ],
         "server-ltp": [
           "nep-1-2-0-tcp-c-mwdi-1-1-2-000"
@@ -3023,7 +3024,7 @@
               {
                 "local-id": "200",
                 "port-direction": "core-model-1-4:PORT_DIRECTION_TYPE_OUTPUT",
-                "logical-termination-point": "nep-1-2-0-op-c-is-mwdi-1-1-2-000"
+                "logical-termination-point": "nep-1-2-0-op-c-is-mwdi-1-1-2-002"
               }
             ]
           },

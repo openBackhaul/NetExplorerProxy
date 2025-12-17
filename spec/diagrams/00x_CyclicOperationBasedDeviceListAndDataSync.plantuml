@@ -10,7 +10,7 @@ end title
 
 participant "RO" as ro
 participant "NEP://v1/embed-yourself" as nep
-participant "MWDI://v1/provide-list-of-connected-devices" as mwdiDev
+participant "MWDI://v1/provide-list-of-cached-devices" as mwdiDev
 participant "MWDI://core-model-1-4:network-control-domain=cache/\ncontrol-construct={mountName}?fields={nep-x-x-x-string-p-000}" as mwdiCC
 participant "ElasticSearch" as es
 
@@ -28,7 +28,7 @@ end note
 'get deviceList from MWDI, update NEP deviceList
 note over nep
 <b>Update NEP deviceList</b>
-- MWDI deviceList sync interval according to 
+- MWDI (cached) deviceList sync interval according to 
   <i>deviceListSyncPeriod</i>
 - Compare deviceLists from MWDI and NEP:
    - <b><i>add</i></b> new devices from MWDI deviceList

@@ -2,10 +2,12 @@
 
 The NetExplorerProxy will maintain an own deviceList and retrieve filtered ControlConstruct data from the MWDI periodically.
 
-### Maintaining the deviceList and caching data  
-- The NEP will periodically retrieve the list of all connected devices from the MWDI.
+### Maintaining the deviceList and caching data
+- **updated with v1.2.0_spec**: NEP will no longer retrieve the list of *connected* devices for cyclic data retrieval, but the list of *cached* devices from MWDI.
+NEP will retrieve the list of *cached* devices from MWDI as base for cyclic data retrieval, not the list of *connected* devices.
+- The NEP will periodically retrieve the list of cached devices from the MWDI (this list will be referred to here as MWDI deviceList)
   - if there are new devices in the MWDI deviceList, which are not yet included in the NEP deviceList, those devices will be added to the NEP deviceList
-  - devices which are no longer in connected state on the Controller, will also no longer be included in the MWDI deviceList, but those shall be kept in the NEP deviceList for a configurable retention period (*dataRetention*). This shall minimize data loss in case of devices which are disconnected, but become connected again shortly after.
+  - devices previously included in the MWDI deviceList, which are no longer included, shall be kept in the NEP deviceList for a configurable retention period (*dataRetention*) to minimize data loss.
 - For each device in the NEP deviceList, filtered ControlConstruct data is queried from MWDI periodically and written to the NEP cache
   - the data is kept for a configurable amount of time (*dataRetention*), after that time has passed, old data is deleted
   - note on historical performances data: 
@@ -40,7 +42,7 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
 - `deviceListSyncPeriod`
 - `dataRetention`
   - the number of days for which old data shall be kept in NEP cache, before it is deleted
-  - also determines how long devices are kept in the NEP cache once they are no longer in connected state
+  - also determines how long devices are kept in the NEP cache once they are no longer in the MWDI list of cached devices
   - it is sufficient to delete on day granularity
 
 ---  
