@@ -445,8 +445,8 @@ forwardings:
       - server-name: /v1/embed-yourself
         uuid: nep-1-2-0-op-s-bm-001
     consequent-requests:
-      - client-name: MWDI://v1/provide-list-of-connected-devices
-        uuid: nep-1-2-0-op-c-is-mwdi-1-1-2-000
+      - client-name: MWDI://v1/provide-list-of-cached-devices
+        uuid: nep-1-2-0-op-c-is-mwdi-1-1-2-002
 
   - forwarding-name: PromptForEmbeddingCausesCyclicUpdateOfNepDeviceList
     uuid: nep-1-2-0-op-fc-bm-017
