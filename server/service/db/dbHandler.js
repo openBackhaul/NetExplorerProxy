@@ -1073,10 +1073,9 @@ function convertToCSV(arr) {
   const array = [Object.keys(arr[0])].concat(arr);
 
   let retValue = array.map(it => {
-    return Object.values(it).toString();
+    return Object.values(it).join(SEPARATOR);
   }).join(EOL);
 
-  retValue = retValue.replaceAll(',', SEPARATOR);
   return retValue;
 }
 
