@@ -371,6 +371,22 @@
           "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
+              "integer-name": "waitingTimeBetweenCcRetrievals",
+              "purpose": "The waiting time before the next ControlConstruct data can be retrieved by the slidingWindow",
+              "unit": "second",
+              "minimum": 0,
+              "maximum": 120
+            },
+            "integer-profile-configuration": {
+              "integer-value": 2
+            }
+          }
+        },
+        {
+          "uuid": "nep-1-2-0-integer-p-006",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
               "integer-name": "deviceListSyncPeriod",
               "purpose": "Time period between the sync of NEP deviceList with list of connected devices from MWDI.",
               "unit": "hour",

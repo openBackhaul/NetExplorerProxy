@@ -17,11 +17,15 @@ NEP will retrieve the list of *cached* devices from MWDI as base for cyclic data
 
 ### Data retrieval interval  
 The ControlConstruct data to be retrieved does not contain historical performances.  
-Some device types only store historical performance data for the last 8 hours. Therefore, if PM data were to be fetched here too, it would need to be fetched from the MWDI before the data is overwritten in MWDI. But as PM data will be retrieved from a dedicated PM data application (still to be specified) in a future NEP release, it suffices to update the device data less often (still at least once a day).  
+ControlConstruct data shall be retrieved at least once per day.  
 
 The retrieval interval is determined by the sliding window size. If new devices are added to the NEP deviceList, they are to queried with priority.
-
 In case the data retrieval from MWDI fails for a device, retrieval retries shall be applied under consideration of the related retry profileInstances.
+
+MWDI overloading shall be prevented by:
+- sufficiently configured slidingWindow size
+- sufficiently configured waiting time between two consequent CC retrievals (waitingTime profileInstance added with 1.2.1)
+- sufficiently set retry configuration
 
 #### Consideration of notifications
 MWDI offers notifications about device status changes and changes to stored ControlConstruct data.  

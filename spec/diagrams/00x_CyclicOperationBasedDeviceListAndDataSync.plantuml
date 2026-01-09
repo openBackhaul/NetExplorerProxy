@@ -47,7 +47,11 @@ note over nep
   in case of failure, retry according to retry config,
   consider retrieval treshold times for prioritization;
   before writing to NEP cache apply further filtering
-  and preprocessing
+  and preprocessing.
+
+  The slidingWindow needs to wait for a configurable
+  amount of time (<i>waitingTimeBetweenCcRetrievals</i>)
+  between retrieval of two ControlConstructs.
 end note
   nep -> mwdiCC: {mount-name}
   mwdiCC --> nep: {filtered ControlConstruct}

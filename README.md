@@ -9,6 +9,14 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 
 ### Latest Update
 
+#### v1.2.1
+
+This release adds updates for findings in v1.2.0_spec.  
+This includes the following changes:  
+- introduction of waitingTime between two ControlConstruct retrievals by slidingWindow (integerProfile)
+
+See related issue collection [NEP v1.2.1_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/10).  
+
 #### v1.2.0
 
 This release adds the following changes:  
@@ -19,7 +27,7 @@ This release adds the following changes:
 - Changes cyclic data retrieval to use MWDI://v1/provide-list-of-cached-devices instead of MWDI://v1/provide-list-of-connected-devices to retrieve the list of relevant devices from MWDI
 - Updates testcase collection
 
-See related issue collection [NEP v1.2.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/9).  
+See related issue collection [NEP v1.2.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/9?closed=1).  
 
 #### v1.1.1
 Fixes findings from 1.1.0, see related issue collection [NEP v1.1.1_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/7).  
