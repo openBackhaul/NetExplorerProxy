@@ -838,11 +838,11 @@ function extractInterfaceStatus(interfaceStatus) {
 
 function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist
-  if (!transmissionListObj ||
-    !transmissionListObj["channel-bandwidth"] ||
-    !transmissionListObj["symbol-rate-reduction-factor"] ||
-    !transmissionListObj["modulation-scheme"] ||
-    !transmissionListObj["code-rate"]) {
+  if (!transmissionListObj == undefined ||
+    !transmissionListObj["channel-bandwidth"] == undefined ||
+    !transmissionListObj["symbol-rate-reduction-factor"] == undefined ||
+    !transmissionListObj["modulation-scheme"] == undefined ||
+    !transmissionListObj["code-rate"] == undefined) {
     logger.warn("Missing required parameters for capa-factor calculation");
     return null;
   }
