@@ -51,6 +51,16 @@ const WIRE_INTERFACE = {
 };
 
 
+const INTERFACE_STATUS = {
+  UP: "INTERFACE_STATUS_TYPE_UP",
+  DOWN: "INTERFACE_STATUS_TYPE_DOWN",
+  TESTING: "INTERFACE_STATUS_TYPE_TESTING",
+  UNKNOWN: "INTERFACE_STATUS_TYPE_UNKNOWN",
+  DORMANT: "INTERFACE_STATUS_TYPE_DORMANT",
+  NOT_PRESENT: "INTERFACE_STATUS_TYPE_NOT_PRESENT",
+  NOT_YET_DEFINED: "INTERFACE_STATUS_TYPE_NOT_YET_DEFINED"
+}
+
 // --------------  Constant Strings Definition----------------------
 const CORE_MODEL_CC = "core-model-1-4:control-construct";
 const EQUIP_AUG_PC = "equipment-augment-1-0:protocol-collection";
@@ -467,11 +477,10 @@ function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, timestamp)
 
     if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.STATUS)) {
       const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
-
+      
+      // Trim interface status
       if (status && status.hasOwnProperty("interface-status")) {
-        const fullStatus = status["interface-status"];
-        const lastUnderscore = fullStatus.lastIndexOf("_");
-        ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1);
+        ethObj["interface_status"] = extractInterfaceStatus(status["interface-status"]);
       }
     }
 
@@ -545,10 +554,9 @@ function extractAirContainerGeneralInfoAndTransmissionInfo(airInterfaceLtpList, 
         airContObj["transmitter_is_on"] = configuration["transmitter-is-on"];
       }
 
+      // Trim interface status
       if (status && status.hasOwnProperty("interface-status")) {
-        const fullStatus = status["interface-status"];
-        const lastUnderscore = fullStatus.lastIndexOf("_");
-        airContObj["interface_status"] = fullStatus.substring(lastUnderscore + 1); // e.g., "UP" or "DOWN"
+        airContObj["interface_status"] = extractInterfaceStatus(status["interface-status"]);
       }
       if (capibility && capibility.hasOwnProperty("type-of-equipment")) {
         airContObj["type_of_equipment"] = capibility["type-of-equipment"];
@@ -680,10 +688,9 @@ function extractIfCapabilityNotFound(configuration, status, mountName, timestamp
     ethObj["fixed_pmd_kind"] = configuration["fixed-pmd-kind"];
   }
 
+  // Trim interface status
   if (status && status.hasOwnProperty("interface-status")) {
-    const fullStatus = status["interface-status"];
-    const lastUnderscore = fullStatus.lastIndexOf("_");
-    ethObj["interface_status"] = fullStatus.substring(lastUnderscore + 1);
+    ethObj["interface_status"] = extractInterfaceStatus(status["interface-status"]);
   }
 
   if (status && status.hasOwnProperty("pmd-kind-cur")) {
@@ -805,13 +812,37 @@ function extractGeneralInfo(ccOfMountname, mountName, timestamp) {
   return result;
 }
 
+// Trim interface status
+function extractInterfaceStatus(interfaceStatus) {
+  let status = "";
+  if (interfaceStatus.endsWith(INTERFACE_STATUS.UP)) {
+    status = "UP";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.DOWN)) {
+    status = "DOWN";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.TESTING)) {
+    status = "TESTING";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.UNKNOWN)) {
+    status = "UNKNOWN";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.DORMANT)) {
+    status = "DORMANT";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.NOT_PRESENT)) {
+    status = "NOT_YET_DEFINED";
+  } else if (interfaceStatus.endsWith(INTERFACE_STATUS.NOT_YET_DEFINED)) {
+    status = "NOT_YET_DEFINED";
+  } else {
+    status = "-----------"
+  }
+
+  return status;
+}
+
 function calculateCapaFactor(transmissionListObj) {
   // Check if all required properties exist
-  if (!transmissionListObj ||
-    !transmissionListObj["channel-bandwidth"] ||
-    !transmissionListObj["symbol-rate-reduction-factor"] ||
-    !transmissionListObj["modulation-scheme"] ||
-    !transmissionListObj["code-rate"]) {
+  if (!transmissionListObj == undefined ||
+    !transmissionListObj["channel-bandwidth"] == undefined ||
+    !transmissionListObj["symbol-rate-reduction-factor"] == undefined ||
+    !transmissionListObj["modulation-scheme"] == undefined ||
+    !transmissionListObj["code-rate"] == undefined) {
     logger.warn("Missing required parameters for capa-factor calculation");
     return null;
   }
