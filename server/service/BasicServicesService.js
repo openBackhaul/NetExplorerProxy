@@ -237,6 +237,7 @@ module.exports.processTheccOfMountname = async function processTheccOfMountname(
     processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
     processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
     processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp);
+    // Add processLtpEquipmentMappings(ccOfMountname, mountName, timestamp); // From NEP 1.2.0
     await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
     logger.info(`Data has been commited in the DB for Mount-Name: ${mountName}`);
   } else {
