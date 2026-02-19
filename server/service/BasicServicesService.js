@@ -50,6 +50,11 @@ const WIRE_INTERFACE = {
   CONFIGURATION: "wire-interface-configuration"
 };
 
+// From NEP 1.2.0
+const LTP_INTERFACE = {
+  MODULE: "ltp-augment-1-0",
+  PAC: "ltp-augment-pac",
+};
 
 const INTERFACE_STATUS = {
   UP: "INTERFACE_STATUS_TYPE_UP",
@@ -339,6 +344,27 @@ function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp
     logger.warn(`No ethContainerInfo and Transmission for Mount-Name: ${mountName}`);
   }
 }
+
+// Added from NEP 1.2.0
+async function processLtpEquipmentMappings(ccOfMountname, mountName, timestamp) {
+  logger.debug(`Processing LTP Equipment for Mount-Name: ${mountName}`);
+  const ltpEquipmentList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+    LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC, ccOfMountname);
+
+  const ltpEquipmentListData = extractLtpEquipmentData(
+    ltpEquipmentList,
+    mountName,
+    timestamp
+  );
+
+  if (ltpEquipmentListData) {
+    dbHandler.updateLtpEqpMap(ltpEquipmentListData)
+      .catch((err) => logger.error(err));
+  } else {
+    logger.warn(`No LTP Equipment Mappings for Mount-Name: ${mountName}`);
+  }
+}
+// ---------------
 
 function extractEquipmentData(ccOfMountname, mountName, timestamp) {
   const result = [];
@@ -812,6 +838,45 @@ function extractGeneralInfo(ccOfMountname, mountName, timestamp) {
   result.push(deviceGeneralObj);
   return result;
 }
+
+// From NEP 1.2.0
+function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
+  const result = [];
+
+  // Check if ccOfMountname has the required properties
+  if (ccOfMountname &&
+    ccOfMountname.hasOwnProperty(CORE_MODEL_CC) &&
+    Array.isArray(ccOfMountname[CORE_MODEL_CC]) &&
+    ccOfMountname[CORE_MODEL_CC].length > 0) {
+
+    const ltpEquipmentArray = ccOfMountname[CORE_MODEL_CC][0] &&
+      ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty("logical-termination-point");
+      //  &&
+      // Array.isArray(ccOfMountname[CORE_MODEL_CC][0].) ?
+      // ccOfMountname[CORE_MODEL_CC][0].equipment : [];
+
+    for (const ltpEqp of ltpEquipmentArray) {
+      const uuid = ltpEqp["UUID"];
+      const connector = ltpEqp["connector"];
+      const equipment = ltpEqp["equipment"];
+    
+
+      // Create object with only properties that exist
+      const ltpEquipmentObj = {
+        "mount_name": mountName,
+        "timestamp": timestamp,
+        "uuid": ltpEqp["UUID"],
+        "connector": ltpEqp["connector"],
+        "equipment": ltpEqp["equipment"]
+      };
+
+      result.push(ltpEquipmentObj);
+    }
+  }
+
+  return result;
+}
+// --------------------
 
 // Trim interface status
 function extractInterfaceStatus(interfaceStatus) {
