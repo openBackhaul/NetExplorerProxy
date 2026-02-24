@@ -31,12 +31,12 @@ exports.fillDB = async function () {
 
     // Wire
     dataFile = fs.readFileSync(dataPrefix + 'dummyDataWire.json', 'utf8');// load from file
-    wireArray = JSON.parse(dataFile);
+    let wireArray = JSON.parse(dataFile);
     await dbHandler.updateWireInterface(wireArray);
 
     // Ethernet Container
     dataFile = fs.readFileSync(dataPrefix + 'dummyDataEth.json', 'utf8');// load from file
-    ethArray = JSON.parse(dataFile);
+    let ethArray = JSON.parse(dataFile);
     await dbHandler.updateEthernetContainer(ethArray);
 
     // Air Interface
@@ -45,21 +45,29 @@ exports.fillDB = async function () {
     await dbHandler.updateAirInterface(airArray);
 
     dataFile = fs.readFileSync(dataPrefix + "dummyDataAirTransMode.json", 'utf8');
-    airTransArray = JSON.parse(dataFile);
+    let airTransArray = JSON.parse(dataFile);
     await dbHandler.updateAirTransMode(airTransArray);
 
+    dataFile = fs.readFileSync(dataPrefix + "dummyDataLtpEquipment.json", 'utf8');
+    let ltpEqpArray = JSON.parse(dataFile);
+    await dbHandler.updateLtpEqpMap(ltpEqpArray);
 }
 
 exports.readData = async function() {
     // Read part
     try {
+        const pagination = {
+            rows: 10000,
+            offset: 0
+        };
+
         let filters = {
             mountNames: [],
             // timeStamp: new Date(0),
         }
-        let res = await dbHandler.readEquipmentInfo(filters, true);
+        let res = await dbHandler.readEquipmentInfo(filters, pagination, true);
         fs.writeFileSync('./Equipment.csv', res, 'utf8');
-        res = await dbHandler.readAirInterfaceInfo(filters, true);
+        res = await dbHandler.readAirInterfaceInfo(filters, pagination, true);
         fs.writeFileSync('./AirInterface.csv', res, 'utf8');
 
 
@@ -67,18 +75,18 @@ exports.readData = async function() {
             mountNames: ['100000', '200000'],
             timeStamp: new Date(Date.now()),
         }
-        res = await dbHandler.readEquipmentInfo(filters, false);
+        res = await dbHandler.readEquipmentInfo(filters, pagination, false);
 
         filters = {
             mountNames: ['100000', '200000'],
             timeStamp: new Date(0),
         }
-        res = await dbHandler.readDeviceInfo(filters, true);
+        res = await dbHandler.readDeviceInfo(filters, pagination, true);
         filters = {
             mountNames: [],
             // timeStamp: new Date(0),
         }
-        res = await dbHandler.readDeviceInfo(filters, true);
+        res = await dbHandler.readDeviceInfo(filters, pagination, true);
         console.log(res)
 
         // Try to get union
@@ -86,8 +94,11 @@ exports.readData = async function() {
             mountNames: [],
             timeStamp: new Date(0),
         }
-        res = await dbHandler.readInterfaceInfoPerDevice(filters, true);
+        res = await dbHandler.readInterfaceInfoPerDevice(filters, pagination, true);
         fs.writeFileSync('./GeneralInterface.csv', res, 'utf8');
+
+        res =  await dbHandler.readLtpEquipmentMappings(filters, pagination, true);
+        fs.writeFileSync('./LtpEqp.csv', res, 'utf8');
 
     } catch (err) {
         console.error(err);
@@ -123,6 +134,13 @@ exports.deleteData = async function() {
         console.log(dataDeleted);
         res = await dbHandler.readAirInterfaceInfo(filters, true);
         console.log(res);
+
+        filters = {
+            mountNames: ['100250001', '200250003'],
+            timeStamp: new Date(Date.now()),
+        }
+        dataDeleted = await dbHandler.removeAllReferences(filters);
+        res = await dbHandler.readLtpEquipmentMappings(filters, true);
 
     } catch (err) {
         console.error(err);
