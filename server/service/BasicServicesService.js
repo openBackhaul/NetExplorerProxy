@@ -826,7 +826,7 @@ function extractInterfaceStatus(interfaceStatus) {
   } else if (interfaceStatus.endsWith(INTERFACE_STATUS.DORMANT)) {
     status = "DORMANT";
   } else if (interfaceStatus.endsWith(INTERFACE_STATUS.NOT_PRESENT)) {
-    status = "NOT_YET_DEFINED";
+    status = "NOT_PRESENT";
   } else if (interfaceStatus.endsWith(INTERFACE_STATUS.NOT_YET_DEFINED)) {
     status = "NOT_YET_DEFINED";
   } else {
