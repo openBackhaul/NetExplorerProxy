@@ -1,0 +1,26 @@
+[
+    {
+        "mount_name": "10000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "RF-123456789",
+
+        "connector": "819.1.1",
+        "equipment": "SLOT-1"
+    },
+    {
+        "mount_name": "10000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "RF-234234234",
+
+        "connector": "234234234",
+        "equipment": "SLOT-2|xyz"
+    },
+    {
+        "mount_name": "20000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "ltpB-1",
+
+        "connector": "86.1.4",
+        "equipment": "SFP-1.4"
+    }
+]
