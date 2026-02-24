@@ -559,8 +559,8 @@ exports.updateLtpEqpMap = async function (dataArray) {
         // Timestamp reference
         "timestamp": new Date(data.timestamp),
 
-        "connector": data.operational_state,
-        "equipment": data.administrative_state
+        "connector": data.connector,
+        "equipment": data.equipment
       });
       
       if (create) {
