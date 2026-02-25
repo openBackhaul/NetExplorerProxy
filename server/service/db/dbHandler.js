@@ -197,8 +197,8 @@ exports.initDB = async function(config) {
     logger.debug("Ethernet container general info Table created");
     wire_interface_general_info = wireIf.init(sequelize);
     logger.debug("Wire interface general info Table created");
-    // ltp_equipment_mappings = ltpEqpMap.init(sequelize);   // From NEP 1.2.0
-    // logger.debug("LTP Equipment Mappings Table created");
+    ltp_equipment_mappings = ltpEqpMap.init(sequelize);   // From NEP 1.2.0
+    logger.debug("LTP Equipment Mappings Table created");
 
     // Synchronize the DB
     await sequelize.sync({alter: true});
