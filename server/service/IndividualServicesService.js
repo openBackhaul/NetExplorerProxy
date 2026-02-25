@@ -406,6 +406,21 @@ module.exports.provideListOfDevicesInNep = async function provideListOfDevicesIn
   return returnValue;
 }
 
+
+/*
+ * Function that retrieve LTP Equipment Mappings from DB and return data in CSV format
+ */
+module.exports.provideLtpEquipmentMappings = async function (req, body) {
+  // Get filters structure from body
+  const filters = getFiltersFromBody(body);
+  const pagination = getPaginationFromBody(body);
+
+  // Get data from DB
+  let result = await dbHandler.readLtpEquipmentMappings(filters,  pagination, true);
+
+  return result;
+}
+
 function getFiltersFromBody(body) {
   let mountNameList = "";
   let timeStampFilter = "";

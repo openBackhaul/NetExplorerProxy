@@ -524,3 +524,30 @@ module.exports.provideListOfDevicesInNep = async function (req, res, next, body,
     return handleError(startTime, error, req, res);
   }
 }
+
+// From NEP 1.2.0
+/**
+ * Handler for /v1/provide-ltp-equipment-mappings
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideLtpEquipmentMappings = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideLtpEquipmentMappings(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}

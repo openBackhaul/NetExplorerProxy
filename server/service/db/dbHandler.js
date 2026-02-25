@@ -10,6 +10,7 @@ const airIf = require('./airIfClass');
 const airTransMode = require('./airTransModeClass');
 const ethContIf = require('./ethContClass');
 const wireIf = require('./wireIfClass');
+const ltpEqpMap = require("./ltpEqpMapClass.js"); // From NEP 1.2.0
 
 // Default name of NEP DB
 const NEP_DB = "nep_db"
@@ -25,6 +26,7 @@ let air_interface_general_info;
 let air_interface_transmission_mode;
 let ethernet_container_general_info;
 let wire_interface_general_info;
+let ltp_equipment_mappings;  // From NEP 1.2.0
 let sequelize;
 
 exports.closeDataBaseConnection = async function() {
@@ -195,6 +197,8 @@ exports.initDB = async function(config) {
     logger.debug("Ethernet container general info Table created");
     wire_interface_general_info = wireIf.init(sequelize);
     logger.debug("Wire interface general info Table created");
+    // ltp_equipment_mappings = ltpEqpMap.init(sequelize);   // From NEP 1.2.0
+    // logger.debug("LTP Equipment Mappings Table created");
 
     // Synchronize the DB
     await sequelize.sync({alter: true});
@@ -531,6 +535,48 @@ exports.updateWireInterface = async function (dataArray) {
   }
 }
 
+/*
+ * Function to create/update LTP Equipment Mappings table
+ * dataArray is an array with fields to be store in the DB:
+ * {
+ *    mount_name,
+ *    uuid
+ *    timestamp,
+ *    connector,
+ *    equipment
+ * }
+ */
+exports.updateLtpEqpMap = async function (dataArray) {
+  let result = { added: 0, updated: 0 };
+
+  for (let i = 0; i < dataArray.length; i++) {
+    let data = dataArray[i];
+    try {
+      let [cc, create] = await ltp_equipment_mappings.upsert({
+        "mount-name": data.mount_name,
+        "uuid": data.uuid,
+
+        // Timestamp reference
+        "timestamp": new Date(data.timestamp),
+
+        "connector": data.connector,
+        "equipment": data.equipment
+      });
+      
+      if (create) {
+        logger.trace("Entry ltp_equipment_mappings Created with PK: " + data.mount_name);
+        result.added = result.added + 1;
+      } else {
+        logger.trace("Entry ltp_equipment_mappings Updated with PK: " + data.mount_name);
+        result.updated = result.updated + 1;
+      }
+    } catch(error) {
+      logger.error(error);
+    }
+  }
+
+  return result;
+}
 
 // Read elements from DB =====================================================================
 
@@ -754,6 +800,34 @@ exports.readWireInterfaceInfo = async function(filters, pagination, isCSV = fals
   return resultFetched;
 }
 
+/*
+ * Read from LTP Equipment Mappings table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be greater than
+ * }
+ * isCSV: true/false with true return RAW data
+ */
+exports.readLtpEquipmentMappings = async function(filters, pagination, isCSV = false) {
+  // Fields to read from DB
+  const attr = [
+    'mount-name',
+    'uuid',
+    'timestamp',
+    'connector',
+    'equipment'
+  ];
+
+  if (pagination.rows == 0) {
+    pagination.rows = max_rows_fetched;
+  }
+
+  // Retrieve data
+  let resultFetched = await readGeneralData(ltp_equipment_mappings, attr, filters, pagination, isCSV);
+
+  return resultFetched;
+}
 
 /*
  * Read data for Interface info per Device
@@ -987,6 +1061,23 @@ exports.removeWireInterfaceInfo = async function(filters) {
 }
 
 /*
+ * Delete entries from LTP Equipment Mappings table
+ * 
+ * filters: {
+ *    mountNames: [list of mountname],
+ *    timeStamp: timeStamp to filter, time that must be lower than
+ * }
+ */
+exports.removeLtpEquipmentMappings = async function(filters) {
+  // Retrieve where condition based on filters
+  const whereCondition = getWhereConditionForDelete(filters);
+  let resultFetched = await ltp_equipment_mappings.destroy({ where: whereCondition });
+
+  return resultFetched;
+}
+
+
+/*
  * Delete all references in the DB Tables if match the filters provide
  * filters: {
  *   mountNames: [list of mountname],
@@ -1002,6 +1093,7 @@ exports.removeAllReferences = async function(filters) {
     'air_interface_transmission_mode': 0,
     'ethernet_container_general_info': 0,
     'wire_interface_general_info': 0,
+    'ltp_equipment_mappings': 0,   // From NEP 1.2.0
   }
   let whereCondition = getWhereConditionForDelete(filters);
 
@@ -1011,6 +1103,7 @@ exports.removeAllReferences = async function(filters) {
   resultFetched.air_interface_transmission_mode = await air_interface_transmission_mode.destroy({ where: whereCondition});
   resultFetched.ethernet_container_general_info = await ethernet_container_general_info.destroy({ where: whereCondition});
   resultFetched.wire_interface_general_info = await wire_interface_general_info.destroy({ where: whereCondition});
+  resultFetched.ltp_equipment_mappings = await ltp_equipment_mappings.destroy({ where: whereCondition}); // From NEP 1.2.0
 
   return resultFetched;
 }
