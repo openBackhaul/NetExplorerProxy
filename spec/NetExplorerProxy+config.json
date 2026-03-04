@@ -371,22 +371,6 @@
           "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
             "integer-profile-capability": {
-              "integer-name": "waitingTimeBetweenCcRetrievals",
-              "purpose": "The waiting time before the next ControlConstruct data can be retrieved by the slidingWindow",
-              "unit": "second",
-              "minimum": 0,
-              "maximum": 120
-            },
-            "integer-profile-configuration": {
-              "integer-value": 2
-            }
-          }
-        },
-        {
-          "uuid": "nep-1-2-0-integer-p-006",
-          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
-          "integer-profile-1-0:integer-profile-pac": {
-            "integer-profile-capability": {
               "integer-name": "deviceListSyncPeriod",
               "purpose": "Time period between the sync of NEP deviceList with list of connected devices from MWDI.",
               "unit": "hour",
@@ -411,6 +395,22 @@
             },
             "integer-profile-configuration": {
               "integer-value": 1
+            }
+          }
+        },
+        {
+          "uuid": "nep-1-2-0-integer-p-008",
+          "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
+          "integer-profile-1-0:integer-profile-pac": {
+            "integer-profile-capability": {
+              "integer-name": "waitingTimeBetweenCcRetrievals",
+              "purpose": "The waiting time before the next ControlConstruct data can be retrieved by the slidingWindow",
+              "unit": "millisecond",
+              "minimum": 0,
+              "maximum": 10000
+            },
+            "integer-profile-configuration": {
+              "integer-value": 1400
             }
           }
         },
@@ -2205,6 +2205,30 @@
             "operation-client-interface-1-0:operation-client-interface-pac": {
               "operation-client-interface-configuration": {
                 "operation-name": "/core-model-1-4:network-control-domain=cache/control-construct={mountName}",
+                "operation-key": "Operation key not yet provided."
+              },
+              "operation-client-interface-status": {
+                "operational-state": "operation-client-interface-1-0:OPERATIONAL_STATE_TYPE_NOT_YET_DEFINED",
+                "life-cycle-state": "operation-client-interface-1-0:LIFE_CYCLE_STATE_TYPE_EXPERIMENTAL"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uuid": "nep-1-2-0-op-c-is-mwdi-1-1-2-002",
+        "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_SINK",
+        "client-ltp": [],
+        "server-ltp": [
+          "nep-1-2-0-http-c-mwdi-1-1-2-000"
+        ],
+        "layer-protocol": [
+          {
+            "local-id": "0",
+            "layer-protocol-name": "operation-client-interface-1-0:LAYER_PROTOCOL_NAME_TYPE_OPERATION_LAYER",
+            "operation-client-interface-1-0:operation-client-interface-pac": {
+              "operation-client-interface-configuration": {
+                "operation-name": "/v1/provide-list-of-cached-devices",
                 "operation-key": "Operation key not yet provided."
               },
               "operation-client-interface-status": {
