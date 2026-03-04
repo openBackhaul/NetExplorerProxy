@@ -79,7 +79,9 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const MAX_CONCURRENT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-002");
   const MAX_TIMEOUT = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-003") * 1000;
   const N_OF_RETRIES = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-004");
-  const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60; 
+  const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60;
+  // From NEP 1.2.0
+  const TIME_BTW_CC_RETRIVALS =  await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-008");
 
   const results = [];
   const errors = [];
