@@ -82,13 +82,16 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60;
   // From NEP 1.2.0
   const TIME_BTW_CC_RETRIVALS =  await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-008");
-  logger.error(`Time between retr ${TIME_BTW_CC_RETRIVALS} milliseconds`);
 
   const results = [];
   const errors = [];
   let index = 0;
 
-  logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms`);
+  if (global.throttle && global.throttle == true) {
+    logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms\n- Waiting Time Between CC Retrievals: ${TIME_BTW_CC_RETRIVALS}ms`);
+  } else {
+    logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms`);
+  }
 
   async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -107,7 +110,6 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
 
       if (timeSinceLast < timeRetrival) {
         const waitTime = timeRetrival - timeSinceLast;
-        // logger.warn(`Need to wait for ${waitTime}`);
         await delay(waitTime);
       } 
     } while (timeSinceLast < TIME_BTW_CC_RETRIVALS);
@@ -149,7 +151,10 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
-      // await throttle(mountName);
+      // Managing the TIME_BTW_CC_RETRIVALS parameters
+      if (global.throttle && global.throttle == true) {
+        await throttle(mountName);
+      }
       await doWorkWithRetry(mountName);
     }
   }
