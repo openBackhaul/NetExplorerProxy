@@ -26,6 +26,11 @@ const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" 
 
 exports.readDBSettings = function (process) {
   let dbConfig;
+
+  if (process.env.TIME_CC_RETR && process.env.TIME_CC_RETR.toLowerCase() === "true") {
+    global.throttle = true;
+  }
+
   if (process.env.DB && process.env.DB.toLowerCase() === "true") {
     logger.warn("Working using external DB");
     if (process.env.USER) {
