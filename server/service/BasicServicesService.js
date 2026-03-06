@@ -82,6 +82,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60;
   // From NEP 1.2.0
   const TIME_BTW_CC_RETRIVALS =  await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-008");
+  logger.error(`Time between retr ${TIME_BTW_CC_RETRIVALS} milliseconds`);
 
   const results = [];
   const errors = [];
@@ -91,6 +92,27 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
 
   async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  let timeSinceLast = 0;
+  let lastExecutionTime = 0;
+
+  async function throttle() {
+    do {
+      const now = Date.now();
+      timeSinceLast = lastExecutionTime == 0 ?
+        TIME_BTW_CC_RETRIVALS : now - lastExecutionTime;
+      
+      let timeRetrival = TIME_BTW_CC_RETRIVALS;
+
+      if (timeSinceLast < timeRetrival) {
+        const waitTime = timeRetrival - timeSinceLast;
+        // logger.warn(`Need to wait for ${waitTime}`);
+        await delay(waitTime);
+      } 
+    } while (timeSinceLast < TIME_BTW_CC_RETRIVALS);
+    timeSinceLast = 0;
+    lastExecutionTime = Date.now();
   }
 
   async function doWorkWithRetry(mountName) {
@@ -127,6 +149,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
+      // await throttle(mountName);
       await doWorkWithRetry(mountName);
     }
   }
