@@ -10,8 +10,8 @@ end title
 
 participant "RO" as ro
 participant "NEP://v1/embed-yourself" as nep
-participant "MWDI://v1/provide-list-of-connected-devices" as mwdiDev
-participant "MWDI://core-model-1-4:network-control-domain=cache/\ncontrol-construct={mountName}?fields={nep-1-1-0-string-p-000}" as mwdiCC
+participant "MWDI://v1/provide-list-of-cached-devices" as mwdiDev
+participant "MWDI://core-model-1-4:network-control-domain=cache/\ncontrol-construct={mountName}?fields={nep-x-x-x-string-p-000}" as mwdiCC
 participant "ElasticSearch" as es
 
 ro -> nep
@@ -28,7 +28,7 @@ end note
 'get deviceList from MWDI, update NEP deviceList
 note over nep
 <b>Update NEP deviceList</b>
-- MWDI deviceList sync interval according to 
+- MWDI (cached) deviceList sync interval according to 
   <i>deviceListSyncPeriod</i>
 - Compare deviceLists from MWDI and NEP:
    - <b><i>add</i></b> new devices from MWDI deviceList
@@ -47,7 +47,11 @@ note over nep
   in case of failure, retry according to retry config,
   consider retrieval treshold times for prioritization;
   before writing to NEP cache apply further filtering
-  and preprocessing
+  and preprocessing.
+
+  The slidingWindow needs to wait for a configurable
+  amount of time (<i>waitingTimeBetweenCcRetrievals</i>)
+  between retrieval of two ControlConstructs.
 end note
   nep -> mwdiCC: {mount-name}
   mwdiCC --> nep: {filtered ControlConstruct}

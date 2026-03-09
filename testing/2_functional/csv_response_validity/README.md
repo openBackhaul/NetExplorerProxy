@@ -4,8 +4,8 @@
 ![Components](./diagrams/nep-csv_response_validity-components.png)
 
 
-## v1.0.0 
-![Sequence](./v1.0.0/diagrams/NetExplorerProxy+diagram.csv_response_validity.png)
+## v1.2.0 
+![Sequence](./v1.2.0/diagrams/NetExplorerProxy+diagram.csv_response_validity.png)
 
 ## Additional notes
 
@@ -41,5 +41,5 @@ The following additional tests therefore are applied:
 Notes:
 - Note that there is a problem with the import to Mockoon, which requires the data to be returned to be copied manually into the Mockoon response bodies.  
   For easier usage, the respective examples to be copied have also been provided in a separate file:  
-  [NetExplorerProxy+simu.examples.csv_response-validity](./v1.0.0/simulators/NetExplorerProxy+simu.examples.txt)  
+  [NetExplorerProxy+simu.examples.csv_response_validity](./v1.2.0/simulators/NetExplorerProxy+simu.examples.txt)  
 - If the completness simulator has already been imported to Mockoon, this simulator could be used instead.

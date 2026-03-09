@@ -10,7 +10,7 @@ const transports = pino.transport({
       options: { colorize: true }
     },
     {
-      level: 'trace',
+      level: 'debug',
       target: 'pino-roll',
       options: { file: path.join(__dirname, '../logs/NetExplorerProxy'), extension: '.log', mkdir: true,
         frequency: 'daily', dateFormat: 'yyyy-MM-dd', size: "1m", "limit.count": 15 }
@@ -19,7 +19,7 @@ const transports = pino.transport({
 });
 
 // create pino logger instance
-const logger = pino({level: 'trace'}, transports);
+const logger = pino({level: 'debug'}, transports);
 
 exports.getLogger = function getLogger() {
   return logger;

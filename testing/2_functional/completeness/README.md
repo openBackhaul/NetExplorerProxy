@@ -4,8 +4,8 @@
 ![Components](./diagrams/nep-completeness-components.png)
 
 
-## v1.0.0 
-![Sequence](./v1.0.0/diagrams/NetExplorerProxy+diagram.completeness.png)
+## v1.2.0 
+![Sequence](./v1.2.0/diagrams/NetExplorerProxy+diagram.completeness.png)
 
 ## Additional notes
 Some of the services shall return their data not with application/json, but with text/csv format.  
@@ -21,6 +21,7 @@ The affected services are:
 - /v1/provide-air-interface-transmission-mode-lists-of-devices
 - /v1/provide-ethernet-container-general-information-of-devices
 - /v1/provide-wire-interface-general-information-of-devices
+- /v1/provide-ltp-equipment-mappings
 
 For easier usage, the respective examples to be copied have also been provided in a separate file:  
-[NetExplorerProxy+simu.examples.completeness](./v1.0.0/simulators/NetExplorerProxy+simu.examples.txt)  
+[NetExplorerProxy+simu.examples.completeness](./v1.2.0/simulators/NetExplorerProxy+simu.examples.txt)  

@@ -1,5 +1,6 @@
-//@ts-check
+-//@ts-check
 'use strict';
+const basicServiceImpl = require('../service/BasicServicesService');
 
 const basicServices = require('onf-core-model-ap-bs/basicServices/BasicServicesService');
 const responseCodeEnum = require('onf-core-model-ap/applicationPattern/rest/server/ResponseCode');
@@ -7,9 +8,14 @@ const restResponseHeader = require('onf-core-model-ap/applicationPattern/rest/se
 const restResponseBuilder = require('onf-core-model-ap/applicationPattern/rest/server/ResponseBuilder');
 const executionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
 const logger = require('../service/LoggingService.js').getLogger();
+const forwardingDomain = require('onf-core-model-ap/applicationPattern/onfModel/models/ForwardingDomain');
+const IndividualServiceUtility = require('../service/individualServices/IndividualServicesUtility.js');
+
 
 const NEW_RELEASE_FORWARDING_NAME = undefined;
 const OLD_RELEASE_FORWARDING_NAME = 'PromptForEmbeddingCausesRequestForBequeathingData';
+
+let cyclicProcessIsRunning = false;
 
 // Aufruf von recordServiceRequest mit Protokollierung der Laufzeit
 async function recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, responseBodyToDocument) {
@@ -39,10 +45,41 @@ module.exports.embedYourself = async function embedYourself(req, res, next, body
   let startTime = process.hrtime();
   let responseCode = responseCodeEnum.code.NO_CONTENT;
   let responseBodyToDocument = {};
-  try {
-    responseBodyToDocument = await basicServices.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+
+  const forwardingName = "PromptForRegisteringCausesRegistrationRequest";
+  const forwardingConstruct = await forwardingDomain.getForwardingConstructForTheForwardingNameAsync(forwardingName);
+  const prefix = forwardingConstruct.uuid.split('op')[0];
+  let deviceSyncPeriod = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-006");
+
+  if (cyclicProcessIsRunning == true) {
+    logger.warn("Cyclic process is already running. Return without actions");
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
-    restResponseBuilder.buildResponse(res, responseCode, responseBodyToDocument, responseHeader);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
+    return;
+  }
+
+  cyclicProcessIsRunning = true;
+
+  try {
+    const fetchFreshData = async () => {
+      try {
+        let now = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Cyclic process - Data fetching starts ${now}`);
+        await basicServiceImpl.embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, req.url);
+        now = new Date().toLocaleString(); // Get current date and time in readable format
+        logger.info(`Cyclic process - Data fetched successfully at ${now}`);
+      } catch (error) {
+        logger.error(error, "Cyclic process - Error fetching data");
+      }
+    };
+
+    fetchFreshData(); // Starting retrieving data
+    // Run every X seconds (e.g., every 10 seconds)
+    let deviceSyncPeriodMs = deviceSyncPeriod * 3600 * 1000; // X seconds in milliseconds
+    logger.info(`Set refresh data every ${deviceSyncPeriod} seconds`);
+    setInterval(fetchFreshData, deviceSyncPeriodMs);
+    let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
+    restResponseBuilder.buildResponse(res, responseCode, undefined, responseHeader);
   } catch (responseBody) {
     let responseHeader = restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url, -1);
     let sentResp = restResponseBuilder.buildResponse(res, undefined, responseBody, responseHeader);

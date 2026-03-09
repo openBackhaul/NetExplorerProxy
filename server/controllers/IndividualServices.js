@@ -11,6 +11,7 @@ const requestUtil = require("../service/individualServices/RequestUtil");
 const logger = require('../service/LoggingService.js').getLogger();
 const httpErrors = require('http-errors');
 
+const csvResponse = { "Content-Type": "text/csv", "Content-Disposition": 'inline' }
 
 function removeParametersFromString(str) {
   const tokens = str.split('?');
@@ -49,7 +50,7 @@ const handleError = async function handleError(startTime, error, req, res) {
   if (responseHeader) {
     let requestHeader = requestUtil.createRequestHeader();
 
-    await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetworkDataLakeProxy",
+    await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetExplorerProxy",
       requestHeader.originator, req, errorResponse.code, errorResponse.body)
   }
 }
@@ -87,7 +88,7 @@ const handleForwardedResult = async function handleForwardedResult(startTime, re
   let forwardResponse = buildForwardedResponse(res, ret.code, ret.message, responseHeader);
 
   let requestHeader = requestUtil.createRequestHeader();
-  await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetworkDataLakeProxy",
+  await recordSvcRequest(startTime, requestHeader.xCorrelator, requestHeader.traceIndicator, "NetExplorerProxy",
     requestHeader.originator, req, ret.code, ret.message)
 
   return forwardResponse;
@@ -199,7 +200,7 @@ module.exports.bequeathYourDataAndDie = async function bequeathYourDataAndDie(re
     const responseCode = responseCodeEnum.code.NO_CONTENT;
 
     responseBuilder.buildResponse(res, responseCode, response, responseHeader);
-    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response)
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
   } catch (error) {
     return handleError(startTime, error, req, res);
   }
@@ -313,3 +314,240 @@ module.exports.receiveCurrentMacTableOfDevice = async function receiveCurrentMac
     return handleError(startTime, error, req, res);
   }
 };
+
+/**
+ * Handler for /v1/provide-general-information-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+
+  try {
+    // Query the DB
+    let response = await individualServices.provideGeneralInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-actual-equipment-information-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideActualEquipmentInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideActualEquipmentInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-ethernet-container-general-information-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideEthernetContainerGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideEthernetContainerGeneralInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-wire-interface-general-information-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideWireInterfaceGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideWireInterfaceGeneralInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-air-interface-general-information-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideAirInterfaceGeneralInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideAirInterfaceGeneralInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-air-interface-transmission-mode-lists-of-devices
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideAirInterfaceTransmissionModeListsInformationOfDevices = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideAirInterfaceTransmissionModeListsInformationOfDevices(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-list-of-interfaces-per-device-in-nep
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideListOfInterfacesPerDeviceInNep = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideListOfInterfacesPerDeviceInNep(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+/**
+ * Handler for /v1/provide-list-of-devices-in-nep
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideListOfDevicesInNep = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideListOfDevicesInNep(req.url, body);
+
+    const responseHeader = await restResponseHeader.createResponseHeader(xCorrelator, startTime, req.url);
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+
+    responseBuilder.buildResponse(res, responseCode, response, responseHeader);
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);;
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}
+
+// From NEP 1.2.0
+/**
+ * Handler for /v1/provide-ltp-equipment-mappings
+ * @param req
+ * @param res
+ * @param next
+ * @param body
+ * results:
+ * 200 result of content
+ * 500 Internal server error - internal NEP error
+ */
+module.exports.provideLtpEquipmentMappings = async function (req, res, next, body, user, originator, xCorrelator, traceIndicator, customerJourney) {
+  let startTime = process.hrtime();
+  try {
+    // Query the DB
+    let response = await individualServices.provideLtpEquipmentMappings(req.url, body);
+
+    res.set(csvResponse).send(response);
+    
+    const responseCode = responseCodeEnum.code.OK; // if no error return OK
+    await recordSvcRequest(startTime, xCorrelator, traceIndicator, user, originator, req, responseCode, response);
+  } catch (error) {
+    // const responseCode = responseCodeEnum.code.INTERNAL_SERVER_ERROR; // if error return 500
+    return handleError(startTime, error, req, res);
+  }
+}

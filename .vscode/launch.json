@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "DEBUG": "true",
+                "DB": "true",
+                "MAX_ROWS_FETCHED": "100000",
+                "USER": "user",
+                "PASSWORD": "bXlwYXNzd29yZA==",
+                "HOST": "localhost",
+                "PORT": "3306",
+                "DIALECT": "mariadb",
+                "DB_NAME": "nep_database",
+                "POOL_MAX": "2500",
+                "POOL_MIN": "0",
+                "POOL_ACQUIRE": "15000",
+                "POOL_IDLE": "5000",
+                "POOL_EVICT": "5000",
+                "DIALECT_CONNTIMEOUT": "10000",
+                "DIALECT_STATEMENT_TIMEOUT": "0",
+                "DIALECT_IDLE_IN_TRANSACTION_SESSION_TIMEOUT": "0"
+            },
+            "program": "${workspaceFolder}\\server\\index.js"
+        }
+    ]
+}

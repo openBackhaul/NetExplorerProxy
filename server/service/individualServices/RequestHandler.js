@@ -60,10 +60,13 @@ exports.postRequestDataFromOtherApp = async function(requestUrl, callbackName, p
 
     logger.debug(`Forwarding post data request to '${targetUrl}'`);
 
-    const ret = await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey);
+    const ret = await restClient.startPostDataRequest(targetUrl, payload, requestUrl, opData.operationKey, opData.appName, opData.appRelease);
 
     return {
         ...ret,
-        operationName: opData.operationName
+        operationName: opData.operationName,
+        operationKey: opData.operationKey,
+        appName: opData.appName,
+        appRelease: opData.appRelease
     };
 }

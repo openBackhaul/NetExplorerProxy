@@ -1,0 +1,54 @@
+[
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T18:00:00+01:00",
+        "uuid": "1921282559",
+        "local_id": "",
+        "version": "R1C",
+        "description": "Removable Memory Module",
+        "model_identifier": "RRM",
+        "part_type_identifier": "RYS 110 243/1",
+        "type_name": "RRM",
+        "manufacturer_name": "Ericsson",
+        "manufacturer_identifier": ""
+    },
+    {
+        "mount_name": "100000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "LAN-1 SFP",
+        "local_id": "LAN-1 SFP",
+        "version": "V2.0",
+        "description": "SFP module in LAN-1 SFP connector",
+        "model_identifier": "Generic",
+        "part_type_identifier": "AXGD-1354-0533",
+        "type_name": "SFP module",
+        "manufacturer_name": "Axcen Photonics",
+        "manufacturer_identifier": ""
+    },
+    {
+        "mount_name": "300000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "LAN-1 SFP",
+        "local_id": "LAN-1 SFP",
+        "version": "V2.0",
+        "description": "SFP module in LAN-1 SFP connector",
+        "model_identifier": "Generic",
+        "part_type_identifier": "AXGD-1354-0533",
+        "type_name": "SFP module",
+        "manufacturer_name": "Axcen Photonics",
+        "manufacturer_identifier": ""
+    },
+    {
+        "mount_name": "400000",
+        "timestamp": "2024-12-11T16:00:00+01:00",
+        "uuid": "LAN-1 SFP",
+        "local_id": "LAN-1 SFP",
+        "version": "V2.0",
+        "description": "SFP module in LAN-1 SFP connector",
+        "model_identifier": "Generic",
+        "part_type_identifier": "AXGD-1354-0533",
+        "type_name": "SFP module",
+        "manufacturer_name": "Axcen Photonics",
+        "manufacturer_identifier": ""
+    }
+]

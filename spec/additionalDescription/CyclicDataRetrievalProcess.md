@@ -2,25 +2,30 @@
 
 The NetExplorerProxy will maintain an own deviceList and retrieve filtered ControlConstruct data from the MWDI periodically.
 
-### Maintaining the deviceList and caching data  
-- The NEP will periodically retrieve the list of all connected devices from the MWDI.
+### Maintaining the deviceList and caching data
+- **updated with v1.2.0_spec**: NEP will no longer retrieve the list of *connected* devices for cyclic data retrieval, but the list of *cached* devices from MWDI.
+NEP will retrieve the list of *cached* devices from MWDI as base for cyclic data retrieval, not the list of *connected* devices.
+- The NEP will periodically retrieve the list of cached devices from the MWDI (this list will be referred to here as MWDI deviceList)
   - if there are new devices in the MWDI deviceList, which are not yet included in the NEP deviceList, those devices will be added to the NEP deviceList
-  - devices which are no longer in connected state on the Controller, will also no longer be included in the MWDI deviceList, but those shall be kept in the NEP deviceList for a configurable retention period (*dataRetention*). This shall minimize data loss in case of devices which are disconnected, but become connected again shortly after.
+  - devices previously included in the MWDI deviceList, which are no longer included, shall be kept in the NEP deviceList for a configurable retention period (*dataRetention*) to minimize data loss.
 - For each device in the NEP deviceList, filtered ControlConstruct data is queried from MWDI periodically and written to the NEP cache
   - the data is kept for a configurable amount of time (*dataRetention*), after that time has passed, old data is deleted
   - note on historical performances data: 
-    - NEP will not retieve historical-performances data from MWDI. PM data will be included in a future NEP release and be fetched from a new PM data application (not yet specified).
-    - Some devices can only store data for up to 8 hours, i.e. MWDI will only have 8 hours of PM data in its cache for those devices. If NEP were to also fetch PM data from MWDI, the periodic retrieval would have been required to be done multiple times a day per device. Without the PM data, however, one periodic retrieval of device data per day will suffice (however depending on the sliding window, this can happen more often)
-
+    - NEP will not retieve historical-performances data from MWDI.
+    - This will be covered by the [DPMDP](https://github.com/openBackhaul/DevicePerformanceManagementDataProcessor)
 ---  
 
 ### Data retrieval interval  
 The ControlConstruct data to be retrieved does not contain historical performances.  
-Some device types only store historical performance data for the last 8 hours. Therefore, if PM data were to be fetched here too, it would need to be fetched from the MWDI before the data is overwritten in MWDI. But as PM data will be retrieved from a dedicated PM data application (still to be specified) in a future NEP release, it suffices to update the device data less often (still at least once a day).  
+ControlConstruct data shall be retrieved at least once per day.  
 
 The retrieval interval is determined by the sliding window size. If new devices are added to the NEP deviceList, they are to queried with priority.
-
 In case the data retrieval from MWDI fails for a device, retrieval retries shall be applied under consideration of the related retry profileInstances.
+
+MWDI overloading shall be prevented by:
+- sufficiently configured slidingWindow size
+- sufficiently configured waiting time between two consequent CC retrievals (waitingTime profileInstance added with 1.2.1)
+- sufficiently set retry configuration
 
 #### Consideration of notifications
 MWDI offers notifications about device status changes and changes to stored ControlConstruct data.  
@@ -41,7 +46,7 @@ The profileInstances directly relevant to the cyclic data retrieval process are 
 - `deviceListSyncPeriod`
 - `dataRetention`
   - the number of days for which old data shall be kept in NEP cache, before it is deleted
-  - also determines how long devices are kept in the NEP cache once they are no longer in connected state
+  - also determines how long devices are kept in the NEP cache once they are no longer in the MWDI list of cached devices
   - it is sufficient to delete on day granularity
 
 ---  
@@ -235,6 +240,7 @@ As data provisioning shall be distributed across multiple services for the "logi
 - [Ethernet Container](./_EthernetContainerMappings.md)
 - [Wire Interface](./_WireInterfaceMappings.md)
 - [Equipment](./_EquipmentMappings.md)
+- [LtpEquipmentMapping](./_LtpEquipmentMappings.md)
 
 **No data found?**  
 The new services will only return data that is actually found in the NEP cache.  

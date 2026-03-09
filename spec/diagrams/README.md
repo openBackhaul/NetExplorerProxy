@@ -22,13 +22,16 @@
 ![PromptForProvidingListOfDevicesInNepCausesReadingFromNepCache](./021_ProvideListOfDevicesInNep.png)  
 .  
 .  
-![PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache](./022_ProvideGeneralDeviceInfo.png)  
+![PromptForProvidingListOfInterfacesPerDeviceCausesReadingFromNepCache](./022_ProvideListOfInterfacesPerDevice.png)  
 .  
 .  
 ![PromptForProvidingGeneralDeviceInfoCausesReadingFromNepCache](./025_ProvideGeneralDeviceInfo.png)  
 .  
 .  
 ![PromptForProvidingGeneralEquipmentDeviceInfoCausesReadingFromNepCache](./026_ProvideActualEquipmentDeviceInfo.png)  
+.  
+.  
+![PromptForProvidingLtpEquipmentMappingsCausesReadingFromNepCache](./027_ProvideLtpEquipmentMappings.png)  
 .  
 .  
 ![PromptForProvidingAirInterfaceGeneralInfoCausesReadingFromNepCache](./030_ProvideAirInterfaceGeneralInfo.png)  
