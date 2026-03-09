@@ -135,6 +135,9 @@ servers:
       - release-number: 1.2.0
         release-date: 12.12.2025
         changes: Add mapping between LTPs and equipment
+      - release-number: 1.2.1
+        release-date: 09.03.2026
+        changes: Fixes findings from 1.2.0
   tcp-server:
     - description: Without TLS layer
       local-protocol: http

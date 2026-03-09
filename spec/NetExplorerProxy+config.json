@@ -275,6 +275,25 @@
           }
         },
         {
+          "uuid": "nep-1-2-0-response-p-012",
+          "profile-name": "response-profile-1-0:PROFILE_NAME_TYPE_GENERIC_RESPONSE_PROFILE",
+          "response-profile-1-0:response-profile-pac": {
+            "response-profile-capability": {
+              "operation-name": "/v1/inform-about-release-history-in-generic-representation",
+              "field-name": {
+                "field-name-reference": "/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=5/release-number"
+              },
+              "description": "Represents the 6th entry in the list of releases",
+              "datatype": "string"
+            },
+            "response-profile-configuration": {
+              "value": {
+                "value-reference": "/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=5/changes"
+              }
+            }
+          }
+        },
+        {
           "uuid": "nep-1-2-0-integer-p-000",
           "profile-name": "integer-profile-1-0:PROFILE_NAME_TYPE_INTEGER_PROFILE",
           "integer-profile-1-0:integer-profile-pac": {
@@ -1343,6 +1362,12 @@
                     "release-number": "1.2.0",
                     "release-date": "12.12.2025",
                     "changes": "Add mapping between LTPs and equipment"
+                  },
+                  {
+                    "local-id": "5",
+                    "release-number": "1.2.1",
+                    "release-date": "09.03.2026",
+                    "changes": "Fixes findings from 1.2.0"
                   }
                 ]
               }
