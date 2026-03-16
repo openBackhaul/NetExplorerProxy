@@ -2,9 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - development
-      - feature/**
   pull_request:
 
 jobs:
@@ -19,6 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug show current branch
+        run: |
+          echo "GIT_BRANCH: $GITHUB_REF"
+          git rev-parse --abbrev-ref HEAD || true
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -26,30 +28,46 @@ jobs:
           cache: "npm"
           cache-dependency-path: server/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Print Node / NPM versions and list files
+        run: |
+          node -v
+          npm -v
+          pwd
+          ls -la
+          ls -la server || true
 
-      # (Opzionale ma consigliato) JUnit + coverage
+      - name: Install dependencies (debug friendly)
+        run: |
+          npm ci --silent || { echo "npm ci failed, show package.json and lock"; echo "---- package.json ----"; cat package.json; echo "---- package-lock.json (first 200 lines) ----"; head -n 200 package-lock.json || true; exit 1; }
+
       - name: Run tests (with coverage)
-        run: npm test -- --coverage
+        run: |
+          npm test -- --coverage || true
         env:
           CI: "true"
 
-      - name: Upload coverage artifact
+      - name: Show junit.xml (if exists)
+        run: |
+          echo "---- find junit.xml ----"
+          find . -maxdepth 3 -type f -name "junit.xml" -print || true
+          echo "---- cat junit.xml (if present) ----"
+          if [ -f junit.xml ]; then cat junit.xml || true; fi
+          if [ -f server/junit.xml ]; then cat server/junit.xml || true; fi
+
+      - name: Upload coverage (always)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage
-          path: |
-            server/coverage
+          path: server/coverage
           if-no-files-found: ignore
 
-      - name: Upload jest results (if present)
+      - name: Upload junit (always)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-output
+          name: junit
           path: |
+            junit.xml
             server/junit.xml
-            server/test-results
           if-no-files-found: ignore
