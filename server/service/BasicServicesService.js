@@ -87,10 +87,38 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const errors = [];
   let index = 0;
 
-  logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms`);
+  logger.info(`Doing Cyclic process with:`);
+  logger.info(`- Sliding Windows: ${MAX_CONCURRENT}`);
+  logger.info(`- Max Req Timeout: ${MAX_TIMEOUT}ms`);
+  logger.info(`- N Of Retries: ${N_OF_RETRIES}`);
+  logger.info(`- Delay Retry: ${DELAY_RETRY}ms`);
+
+  if (global.throttle && global.throttle == true) {
+    logger.info(`- Waiting Time Between CC Retrievals: ${TIME_BTW_CC_RETRIVALS}ms`);
+  }
 
   async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  let timeSinceLast = 0;
+  let lastExecutionTime = 0;
+
+  async function throttle() {
+    do {
+      const now = Date.now();
+      timeSinceLast = lastExecutionTime == 0 ?
+        TIME_BTW_CC_RETRIVALS : now - lastExecutionTime;
+      
+      let timeRetrival = TIME_BTW_CC_RETRIVALS;
+
+      if (timeSinceLast < timeRetrival) {
+        const waitTime = timeRetrival - timeSinceLast;
+        await delay(waitTime);
+      } 
+    } while (timeSinceLast < TIME_BTW_CC_RETRIVALS);
+    timeSinceLast = 0;
+    lastExecutionTime = Date.now();
   }
 
   async function doWorkWithRetry(mountName) {
@@ -127,6 +155,10 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
+      // Managing the TIME_BTW_CC_RETRIVALS parameters
+      if (global.throttle && global.throttle == true) {
+        await throttle(mountName);
+      }
       await doWorkWithRetry(mountName);
     }
   }

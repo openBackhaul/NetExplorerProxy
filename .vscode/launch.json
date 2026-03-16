@@ -15,7 +15,8 @@
             ],
             "env": {
                 "DEBUG": "true",
-                "DB": "true",
+                "TIME_CC_RETR": "true",
+                "DB": "false",
                 "MAX_ROWS_FETCHED": "100000",
                 "USER": "user",
                 "PASSWORD": "bXlwYXNzd29yZA==",
