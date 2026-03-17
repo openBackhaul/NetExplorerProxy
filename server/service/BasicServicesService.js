@@ -276,7 +276,7 @@ module.exports.processTheccOfMountname = async function processTheccOfMountname(
     processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
     processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
     processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp);
-    // Add processLtpEquipmentMappings(ccOfMountname, mountName, timestamp); // From NEP 1.2.0
+    processLtpEquipmentMappings(ccOfMountname, mountName, timestamp); // From NEP 1.2.0
     await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
     logger.info(`Data has been commited in the DB for Mount-Name: ${mountName}`);
   } else {
@@ -381,14 +381,14 @@ function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp
 
 // Added from NEP 1.2.0
 async function processLtpEquipmentMappings(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing LTP Equipment for Mount-Name: ${mountName}`);
-  const ltpEquipmentList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+  logger.info(`Processing LTP Equipment for Mount-Name: ${mountName}`);
+  const ltpEquipmentList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructureAugment(
     LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC, ccOfMountname);
 
   const ltpEquipmentListData = extractLtpEquipmentData(
     ltpEquipmentList,
     mountName,
-    timestamp
+    timestamp,
   );
 
   if (ltpEquipmentListData) {
@@ -877,32 +877,40 @@ function extractGeneralInfo(ccOfMountname, mountName, timestamp) {
 function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
   const result = [];
 
-  // Check if ccOfMountname has the required properties
-  if (ccOfMountname &&
-    ccOfMountname.hasOwnProperty(CORE_MODEL_CC) &&
-    Array.isArray(ccOfMountname[CORE_MODEL_CC]) &&
-    ccOfMountname[CORE_MODEL_CC].length > 0) {
+  if (Array.isArray(ccOfMountname) && ccOfMountname.length > 0) {
+    const ltpEquipmentList =
+      ltpStructureUtility.getLtpsContainsObjectFromLtpStructureAugment(
+        LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC,
+        ccOfMountname
+      );
 
-    const ltpEquipmentArray = ccOfMountname[CORE_MODEL_CC][0] &&
-      ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty("logical-termination-point");
-      //  &&
-      // Array.isArray(ccOfMountname[CORE_MODEL_CC][0].) ?
-      // ccOfMountname[CORE_MODEL_CC][0].equipment : [];
+    for (const ltpEqp of ltpEquipmentList) {
+      const uuid = ltpEqp["uuid"];
+      const augmentPac = ltpEqp[LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC];
 
-    for (const ltpEqp of ltpEquipmentArray) {
-      const uuid = ltpEqp["UUID"];
-      const connector = ltpEqp["connector"];
-      const equipment = ltpEqp["equipment"];
-    
+      if (!uuid || !augmentPac) {
+        continue;
+      }
 
-      // Create object with only properties that exist
       const ltpEquipmentObj = {
-        "mount_name": mountName,
-        "timestamp": timestamp,
-        "uuid": ltpEqp["UUID"],
-        "connector": ltpEqp["connector"],
-        "equipment": ltpEqp["equipment"]
+        mount_name: mountName,
+        timestamp: timestamp,
+        uuid: uuid
       };
+
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector")) {
+        ltpEquipmentObj["connector"] = augmentPac["connector"];
+      }
+
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment")) {
+        const equipmentValue = augmentPac["equipment"];
+
+        if (Array.isArray(equipmentValue)) {
+          ltpEquipmentObj["equipment"] = equipmentValue.join("|");
+        } else if (equipmentValue != null) {
+          ltpEquipmentObj["equipment"] = String(equipmentValue);
+        }
+      }
 
       result.push(ltpEquipmentObj);
     }
