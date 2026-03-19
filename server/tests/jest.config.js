@@ -13,7 +13,8 @@ const config = {
   testSequencer: '<rootDir>/server/tests/setup/orderedSequencer.js',
   moduleDirectories: ['node_modules', '<rootDir>/server/node_modules'],
   testPathIgnorePatterns: ['/node_modules/', '/coverage/'],
-  forceExit: true
+  forceExit: true,
+  modulePathIgnorePatterns: ["./tests/"]
 };
 
 module.exports = config;
