@@ -5,3 +5,4 @@ describe('Test 0: Pre-run embed-yourself', () => {
     await ensureDataLoaded({ allowEmbed: true });
   });
 });
+

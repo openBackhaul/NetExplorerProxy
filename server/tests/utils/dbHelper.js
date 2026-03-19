@@ -34,13 +34,13 @@ function createTestDatabase() {
  * @returns {Object} Object containing all models
  */
 function initializeModels(sequelize) {
-  const devicesGeneralInfo = require('../../server/service/db/devicesGeneralInfoClass').init(sequelize);
-  const wireInterface = require('../../server/service/db/wireIfClass').init(sequelize);
-  const airInterface = require('../../server/service/db/airIfClass').init(sequelize);
-  const equipment = require('../../server/service/db/equipmentClass').init(sequelize);
-  const airTransmission = require('../../server/service/db/airTransModeClass').init(sequelize);
-  const ethernetContainer = require('../../server/service/db/ethContClass').init(sequelize);
-  const ltpEquipment = require('../../server/service/db/ltpEqpMapClass').init(sequelize);
+  const devicesGeneralInfo = require('../../service/db/devicesGeneralInfoClass').init(sequelize);
+  const wireInterface = require('../../service/db/wireIfClass').init(sequelize);
+  const airInterface = require('../../service/db/airIfClass').init(sequelize);
+  const equipment = require('../../service/db/equipmentClass').init(sequelize);
+  const airTransmission = require('../../service/db/airTransModeClass').init(sequelize);
+  const ethernetContainer = require('../../service/db/ethContClass').init(sequelize);
+  const ltpEquipment = require('../../service/db/ltpEqpMapClass').init(sequelize);
 
   return {
     devicesGeneralInfo,

@@ -8,7 +8,7 @@ const BASE_URL = process.env.NEP_BASE_URL || 'http://127.0.0.1:4018';
 const OPERATION_KEY = process.env.NEP_OPERATION_KEY || 'Operation key not yet provided.';
 const AUTHORIZATION = process.env.NEP_AUTHORIZATION;
 
-const DB_FILE_PATH = path.join(__dirname, '..', '..', '..', 'server', 'database', 'neb_db.db');
+const DB_FILE_PATH = path.join(__dirname, '..', '..', '..', 'database', 'neb_db.db');
 const LOGS_DIR_PATH = path.join(__dirname, '..', '..', 'logs');
 const initializedLogFiles = new Set();
 const logFileLineNumbers = new Map();
@@ -125,10 +125,24 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function httpRequest(method, requestPath, body) {
+function httpRequest(method, requestPath, body, options = {}) {
+  const { rawBody, headers: extraHeaders } = options;
+
   return new Promise((resolve, reject) => {
     const url = new URL(requestPath, BASE_URL);
-    const payload = body ? JSON.stringify(body) : undefined;
+    const payload = rawBody !== undefined
+      ? String(rawBody)
+      : body == null
+        ? undefined
+        : typeof body === 'string'
+          ? body
+          : JSON.stringify(body);
+
+    const headers = {
+      ...HEADERS,
+      ...(extraHeaders || {}),
+      ...(payload ? { 'Content-Length': Buffer.byteLength(payload) } : {})
+    };
 
     const req = http.request(
       {
@@ -136,10 +150,7 @@ function httpRequest(method, requestPath, body) {
         port: url.port,
         path: url.pathname + url.search,
         method,
-        headers: {
-          ...HEADERS,
-          ...(payload ? { 'Content-Length': Buffer.byteLength(payload) } : {})
-        }
+        headers
       },
       (res) => {
         let raw = '';
@@ -154,7 +165,7 @@ function httpRequest(method, requestPath, body) {
             // Keep raw string when JSON parsing fails.
           }
 
-          resolve({ status: res.statusCode, body: parsed, raw });
+          resolve({ status: res.statusCode, body: parsed, raw, headers: res.headers || {} });
         });
       }
     );
@@ -649,7 +660,28 @@ async function runApiDbCase(testCase) {
   }
 }
 
+async function runInvalidJsonCase(testCase) {
+  const method = testCase.method || 'POST';
+  const response = await httpRequest(method, testCase.endpoint, null, {
+    rawBody: '{"bad":'
+  });
+
+  expect(response.status).toBe(400);
+  return response;
+}
+
+async function runInvalidFieldTypeCase(testCase, invalidBody, expectedStatus = 400) {
+  const method = testCase.method || 'POST';
+  const response = await httpRequest(method, testCase.endpoint, invalidBody);
+
+  expect(response.status).toBe(expectedStatus);
+  return response;
+}
+
 module.exports = {
   runApiDbCase,
-  ensureDataLoaded
+  ensureDataLoaded,
+  httpRequest,
+  runInvalidJsonCase,
+  runInvalidFieldTypeCase
 };
