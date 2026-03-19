@@ -86,10 +86,38 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const errors = [];
   let index = 0;
 
-  logger.info(`Doing Cyclic process with:\n- Max Concurrent: ${MAX_CONCURRENT}\n- Max Timeout: ${MAX_TIMEOUT}ms\n- N Of Retries: ${N_OF_RETRIES}\n- Delay Retry: ${DELAY_RETRY}ms`);
+  logger.info(`Doing Cyclic process with:`);
+  logger.info(`- Sliding Windows: ${MAX_CONCURRENT}`);
+  logger.info(`- Max Req Timeout: ${MAX_TIMEOUT}ms`);
+  logger.info(`- N Of Retries: ${N_OF_RETRIES}`);
+  logger.info(`- Delay Retry: ${DELAY_RETRY}ms`);
+
+  if (global.throttle && global.throttle == true) {
+    logger.info(`- Waiting Time Between CC Retrievals: ${TIME_BTW_CC_RETRIVALS}ms`);
+  }
 
   async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  let timeSinceLast = 0;
+  let lastExecutionTime = 0;
+
+  async function throttle() {
+    do {
+      const now = Date.now();
+      timeSinceLast = lastExecutionTime == 0 ?
+        TIME_BTW_CC_RETRIVALS : now - lastExecutionTime;
+      
+      let timeRetrival = TIME_BTW_CC_RETRIVALS;
+
+      if (timeSinceLast < timeRetrival) {
+        const waitTime = timeRetrival - timeSinceLast;
+        await delay(waitTime);
+      } 
+    } while (timeSinceLast < TIME_BTW_CC_RETRIVALS);
+    timeSinceLast = 0;
+    lastExecutionTime = Date.now();
   }
 
   async function doWorkWithRetry(mountName) {
@@ -126,6 +154,10 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       }
 
       const mountName = mountNameList[currentIndex];
+      // Managing the TIME_BTW_CC_RETRIVALS parameters
+      if (global.throttle && global.throttle == true) {
+        await throttle(mountName);
+      }
       await doWorkWithRetry(mountName);
     }
   }
@@ -246,7 +278,7 @@ module.exports.processTheccOfMountname = async function processTheccOfMountname(
     processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp);
     processWireInterfaceGeneralInfo(ccOfMountname, mountName, timestamp);
     processEquipmentGeneralInfo(ccOfMountname, mountName, timestamp);
- //   processLtpEquipmentMappings(ccOfMountname, mountName, timestamp); // From NEP 1.2.0
+    processLtpEquipmentMappings(ccOfMountname, mountName, timestamp); // From NEP 1.2.0
     await processAirContainerGeneralInfoAndTransmissionInfo(ccOfMountname, mountName, timestamp);
     logger.info(`Data has been commited in the DB for Mount-Name: ${mountName}`);
   } else {
@@ -351,14 +383,14 @@ function processEthernetContainergeneralInfo(ccOfMountname, mountName, timestamp
 
 // Added from NEP 1.2.0
 async function processLtpEquipmentMappings(ccOfMountname, mountName, timestamp) {
-  logger.debug(`Processing LTP Equipment for Mount-Name: ${mountName}`);
-  const ltpEquipmentList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructure(
+  logger.info(`Processing LTP Equipment for Mount-Name: ${mountName}`);
+  const ltpEquipmentList = ltpStructureUtility.getLtpsContainsObjectFromLtpStructureAugment(
     LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC, ccOfMountname);
 
   const ltpEquipmentListData = extractLtpEquipmentData(
     ltpEquipmentList,
     mountName,
-    timestamp
+    timestamp,
   );
 
   if (ltpEquipmentListData) {
@@ -847,32 +879,40 @@ function extractGeneralInfo(ccOfMountname, mountName, timestamp) {
 function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
   const result = [];
 
-  // Check if ccOfMountname has the required properties
-  if (ccOfMountname &&
-    ccOfMountname.hasOwnProperty(CORE_MODEL_CC) &&
-    Array.isArray(ccOfMountname[CORE_MODEL_CC]) &&
-    ccOfMountname[CORE_MODEL_CC].length > 0) {
+  if (Array.isArray(ccOfMountname) && ccOfMountname.length > 0) {
+    const ltpEquipmentList =
+      ltpStructureUtility.getLtpsContainsObjectFromLtpStructureAugment(
+        LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC,
+        ccOfMountname
+      );
 
-    const ltpEquipmentArray = ccOfMountname[CORE_MODEL_CC][0] &&
-      ccOfMountname[CORE_MODEL_CC][0].hasOwnProperty("logical-termination-point");
-      //  &&
-      // Array.isArray(ccOfMountname[CORE_MODEL_CC][0].) ?
-      // ccOfMountname[CORE_MODEL_CC][0].equipment : [];
+    for (const ltpEqp of ltpEquipmentList) {
+      const uuid = ltpEqp["uuid"];
+      const augmentPac = ltpEqp[LTP_INTERFACE.MODULE + ":" + LTP_INTERFACE.PAC];
 
-    for (const ltpEqp of ltpEquipmentArray) {
-      const uuid = ltpEqp["UUID"];
-      const connector = ltpEqp["connector"];
-      const equipment = ltpEqp["equipment"];
-    
+      if (!uuid || !augmentPac) {
+        continue;
+      }
 
-      // Create object with only properties that exist
       const ltpEquipmentObj = {
-        "mount_name": mountName,
-        "timestamp": timestamp,
-        "uuid": ltpEqp["UUID"],
-        "connector": ltpEqp["connector"],
-        "equipment": ltpEqp["equipment"]
+        mount_name: mountName,
+        timestamp: timestamp,
+        uuid: uuid
       };
+
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector")) {
+        ltpEquipmentObj["connector"] = augmentPac["connector"];
+      }
+
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment")) {
+        const equipmentValue = augmentPac["equipment"];
+
+        if (Array.isArray(equipmentValue)) {
+          ltpEquipmentObj["equipment"] = equipmentValue.join("|");
+        } else if (equipmentValue != null) {
+          ltpEquipmentObj["equipment"] = String(equipmentValue);
+        }
+      }
 
       result.push(ltpEquipmentObj);
     }
