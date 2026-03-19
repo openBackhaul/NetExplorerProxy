@@ -1,4 +1,4 @@
 server/node_modules/
 server/logs/
-tests/coverage/*
-tests/logs/*
+server/tests/coverage/*
+server/tests/logs/*
