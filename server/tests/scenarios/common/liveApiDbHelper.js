@@ -578,10 +578,6 @@ async function runApiDbCase(testCase) {
   activeLogContextKey = `${testCase.method || 'POST'} ${testCase.endpoint || 'unknown-endpoint'}`;
 
   try {
-    if (!fs.existsSync(DB_FILE_PATH)) {
-      throw new Error(`SQLite DB file not found: ${DB_FILE_PATH}`);
-    }
-
     await ensureDataLoaded({ allowEmbed: false });
 
     const requestBody = testCase.requestBody || {};
@@ -610,50 +606,65 @@ async function runApiDbCase(testCase) {
       });
     }
 
-    const db = openSqlite(DB_FILE_PATH);
-    try {
-      for (const tableCheck of testCase.tableChecks) {
-        const columns = await getTableColumns(db, tableCheck.table);
-        logLine(`Table ${tableCheck.table} columns: ${columns.join(', ')}`);
-        for (const expectedColumn of tableCheck.expectedColumns) {
-          expect(columns).toContain(expectedColumn);
+    const skipDbCheck = testCase.skipDbCheck || process.env.NEP_SKIP_DB_CHECK === 'true';
+    const dbOptional = testCase.dbOptional || process.env.NEP_DB_OPTIONAL === 'true';
+
+    if (!skipDbCheck && (Array.isArray(testCase.tableChecks) || Array.isArray(testCase.apiDbMatchChecks))) {
+      if (!fs.existsSync(DB_FILE_PATH)) {
+        if (dbOptional) {
+          logLine(`SQLite DB file not found: ${DB_FILE_PATH} — skipping DB checks (dbOptional=true).`);
+        } else {
+          throw new Error(`SQLite DB file not found: ${DB_FILE_PATH}`);
         }
+      } else {
+        const db = openSqlite(DB_FILE_PATH);
+        try {
+          if (Array.isArray(testCase.tableChecks)) {
+            for (const tableCheck of testCase.tableChecks) {
+              const columns = await getTableColumns(db, tableCheck.table);
+              logLine(`Table ${tableCheck.table} columns: ${columns.join(', ')}`);
+              for (const expectedColumn of tableCheck.expectedColumns) {
+                expect(columns).toContain(expectedColumn);
+              }
 
-        const rowCount = await getTableRowCount(db, tableCheck.table);
-        const minRows = tableCheck.minRows ?? 1;
-        logLine(`Table ${tableCheck.table} row count=${rowCount}, expected >= ${minRows}`);
-        expect(rowCount).toBeGreaterThanOrEqual(minRows);
+              const rowCount = await getTableRowCount(db, tableCheck.table);
+              const minRows = tableCheck.minRows ?? 1;
+              logLine(`Table ${tableCheck.table} row count=${rowCount}, expected >= ${minRows}`);
+              expect(rowCount).toBeGreaterThanOrEqual(minRows);
 
-        if (tableCheck.matchApiResponse === true) {
-          const compareColumns = tableCheck.compareColumns || tableCheck.expectedColumns;
-          await assertResponseMatchesTable({
-            db,
-            responseRows: getResponseRowsForTableCheck(response, tableCheck),
-            tableName: tableCheck.table,
-            tableCheck,
-            compareColumns,
-            endpoint: testCase.endpoint,
-            logLine
-          });
+              if (tableCheck.matchApiResponse === true) {
+                const compareColumns = tableCheck.compareColumns || tableCheck.expectedColumns;
+                await assertResponseMatchesTable({
+                  db,
+                  responseRows: getResponseRowsForTableCheck(response, tableCheck),
+                  tableName: tableCheck.table,
+                  tableCheck,
+                  compareColumns,
+                  endpoint: testCase.endpoint,
+                  logLine
+                });
+              }
+            }
+          }
+
+          if (Array.isArray(testCase.apiDbMatchChecks)) {
+            for (const matchCheck of testCase.apiDbMatchChecks) {
+              const compareColumns = matchCheck.compareColumns;
+              await assertResponseMatchesTable({
+                db,
+                responseRows: getResponseRowsForTableCheck(response, matchCheck),
+                tableName: matchCheck.name || 'custom-match',
+                tableCheck: matchCheck,
+                compareColumns,
+                endpoint: testCase.endpoint,
+                logLine
+              });
+            }
+          }
+        } finally {
+          db.close();
         }
       }
-
-      if (Array.isArray(testCase.apiDbMatchChecks)) {
-        for (const matchCheck of testCase.apiDbMatchChecks) {
-          const compareColumns = matchCheck.compareColumns;
-          await assertResponseMatchesTable({
-            db,
-            responseRows: getResponseRowsForTableCheck(response, matchCheck),
-            tableName: matchCheck.name || 'custom-match',
-            tableCheck: matchCheck,
-            compareColumns,
-            endpoint: testCase.endpoint,
-            logLine
-          });
-        }
-      }
-    } finally {
-      db.close();
     }
   } finally {
     activeLogContextKey = previousLogContext;

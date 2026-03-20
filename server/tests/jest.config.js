@@ -14,7 +14,11 @@ const config = {
   moduleDirectories: ['node_modules', '<rootDir>/server/node_modules'],
   testPathIgnorePatterns: ['/node_modules/', '/coverage/'],
   forceExit: true,
-  modulePathIgnorePatterns: ["./tests/"]
+  setupFiles: ['<rootDir>/server/tests/setup/testConfig.js'],
+  globals: {
+    SKIP_DB_CHECK: false,
+    DB_OPTIONAL: false
+  }
 };
 
 module.exports = config;
