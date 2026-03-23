@@ -9,7 +9,6 @@ const ltpStructureUtility = require('./LtpStructureUtility');
 
 const dbHandler = require('./db/dbHandler.js');
 const processMountNames=require('./ProcessMountNames.js');
-
 const logger = require('./LoggingService.js').getLogger();
 
 
@@ -245,14 +244,17 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
       traceIndicator,
       customerJourney
     };
-
-    //call for offline mountName processiong 
-    await processMountNames.addNewDataInNEPdeviceList(mountNameList);
-
+     
+const dbMountNames = (await dbHandler.readListOfDevices()).map(d => d['mount-name']);
+const newMounts = mountNameList.filter(m => !dbMountNames.includes(m));
+const existingMounts = mountNameList.filter(m => dbMountNames.includes(m));
+const prioritizedMountNames = [...newMounts, ...existingMounts];
+await processMountNames.addNewDataInNEPdeviceList(prioritizedMountNames);
+   
     // Call the batch processor here
     traceIncrement += 1;
     await processMountNamesInBatches(
-      mountNameList, requestHeaders, traceIncrement++, timestamp
+      prioritizedMountNames, requestHeaders, traceIncrement++, timestamp
     );
   } else {
     logger.warn(listOfConnectedDevices, "List of connected device is empty or wrong");
@@ -260,7 +262,7 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
 };
 
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
-  let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
+let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
   // Calculate Timestamp when data is retrieved from MWDI
   let newTimeStamp = Date.now();
   logger.debug(`Data retrieved from MWDI for Mountname: ${mountName} at the time: ${newTimeStamp}`);
