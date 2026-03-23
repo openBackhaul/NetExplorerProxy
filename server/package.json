@@ -6,7 +6,8 @@
   "scripts": {
     "prestart": "npm install",
     "start": "node index.js",
-    "test": "jest --passWithNoTests"
+    "test": "jest --config ../testing/jest.config.js --passWithNoTests",
+    "test:integration": "jest --config tests/jest.config.js --passWithNoTests"
   },
   "keywords": [
     "swagger"
