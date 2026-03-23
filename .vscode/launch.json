@@ -15,6 +15,7 @@
             ],
             "env": {
                 "DEBUG": "true",
+                "DB_SQLITE_PATH": "",
                 "TIME_CC_RETR": "true",
                 "DB": "false",
                 "MAX_ROWS_FETCHED": "100000",
