@@ -6,11 +6,86 @@ import aiohttp
 import logging
 import hashlib
 import re
+import base64
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Union
 
+try:
+    import pymysql
+
+    PYMysql_AVAILABLE = True
+except ImportError:
+    PYMysql_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
+
+DEV_ENV_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "server", "dev.env"
+)
+
+SQLITE_DB_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+    "server",
+    "database",
+    "nep_db.db",
+)
+
+
+def parse_launch_json():
+    """Parse .vscode/launch.json and return config dict."""
+    import json
+    import re
+
+    launch_path = Path(__file__).parent.parent / ".vscode" / "launch.json"
+    config = {}
+    if launch_path.exists():
+        with open(launch_path, encoding="utf-8") as f:
+            content = f.read()
+            content = re.sub(r"//.*", "", content)
+            content = re.sub(r"/\*.*?\*/", "", content, flags=re.DOTALL)
+            data = json.loads(content)
+            for cfg in data.get("configurations", []):
+                if cfg.get("name") == "Launch Program":
+                    config = cfg.get("env", {})
+                    break
+    return config
+
+
+def is_mariadb_mode():
+    """Check if DB mode is MariaDB based on environment variable (matches app behavior)."""
+    return os.environ.get("DB", "false").lower() == "true"
+
+
+def get_mariadb_connection():
+    """Get MariaDB connection using launch.json settings."""
+    import pymysql
+
+    config = parse_launch_json()
+
+    password = config.get("PASSWORD", "mypassword")
+    try:
+        password = base64.b64decode(password).decode("utf-8")
+    except Exception:
+        password = config.get("PASSWORD", "mypassword")
+
+    return pymysql.connect(
+        host=config.get("HOST", "localhost"),
+        port=int(config.get("PORT", 3306)),
+        user=config.get("USER", "user"),
+        password=password,
+        database=config.get("DB_NAME", "nep_database"),
+        charset="utf8mb4",
+        cursorclass=pymysql.cursors.DictCursor,
+    )
+
+
+def open_db_connection():
+    """Open database connection based on launch.json DB setting."""
+    if is_mariadb_mode():
+        return get_mariadb_connection()
+    return sqlite3.connect(SQLITE_DB_PATH)
+
 
 # Environment variables
 BASE_URL = os.environ.get("NEP_BASE_URL", "http://127.0.0.1:4018")
@@ -198,8 +273,12 @@ def get_table_rows_by_columns(
     db: sqlite3.Connection, table_name: str, columns: List[str]
 ) -> List[Dict[str, Any]]:
     """Get rows from table with specific columns."""
-    quoted_columns = [f'"{col}"' for col in columns]
-    query = f'SELECT {", ".join(quoted_columns)} FROM "{table_name}";'
+    if is_mariadb_mode():
+        quoted_columns = [f"`{col}`" for col in columns]
+        query = f"SELECT {', '.join(quoted_columns)} FROM `{table_name}`;"
+    else:
+        quoted_columns = [f'"{col}"' for col in columns]
+        query = f'SELECT {", ".join(quoted_columns)} FROM "{table_name}";'
 
     cursor = db.cursor()
     cursor.execute(query)
@@ -208,8 +287,12 @@ def get_table_rows_by_columns(
     result = []
     for row in rows:
         row_dict = {}
-        for i, col in enumerate(columns):
-            row_dict[col] = row[i]
+        if isinstance(row, dict):
+            for col in columns:
+                row_dict[col] = row.get(col)
+        else:
+            for i, col in enumerate(columns):
+                row_dict[col] = row[i]
         result.append(row_dict)
 
     return result
@@ -397,16 +480,27 @@ async def get_db_rows_for_table_check(
 ) -> List[Dict[str, Any]]:
     """Get database rows for table check."""
     if table_check and table_check.get("dbQuery"):
+        db_query = table_check["dbQuery"]
+
+        if isinstance(db_query, dict):
+            if is_mariadb_mode():
+                db_query = db_query.get("mariadb", db_query.get("sqlite", ""))
+            else:
+                db_query = db_query.get("sqlite", "")
+
         cursor = db.cursor()
-        cursor.execute(table_check["dbQuery"])
+        cursor.execute(db_query)
         rows = cursor.fetchall()
 
-        # Convert to list of dicts
         result = []
         for row in rows:
             row_dict = {}
-            for i, col in enumerate(compare_columns):
-                row_dict[col] = row[i]
+            if isinstance(row, dict):
+                for col in compare_columns:
+                    row_dict[col] = row.get(col)
+            else:
+                for i, col in enumerate(compare_columns):
+                    row_dict[col] = row[i]
             result.append(row_dict)
 
         return result
@@ -415,7 +509,7 @@ async def get_db_rows_for_table_check(
 
 
 async def assert_response_matches_table(
-    db: sqlite3.Connection,
+    db: Any,
     response_rows: List[Dict[str, Any]],
     table_name: str,
     table_check: Dict[str, Any],
@@ -455,19 +549,28 @@ async def assert_response_matches_table(
         )
 
 
-async def get_table_columns(db: sqlite3.Connection, table_name: str) -> List[str]:
+async def get_table_columns(db, table_name: str) -> List[str]:
     """Get column names for a table."""
     cursor = db.cursor()
-    cursor.execute(f'PRAGMA table_info("{table_name}");')
-    rows = cursor.fetchall()
-    return [row[1] for row in rows]
+    if is_mariadb_mode():
+        cursor.execute(f"SHOW COLUMNS FROM `{table_name}`")
+        rows = cursor.fetchall()
+        return [row["Field"] for row in rows]
+    else:
+        cursor.execute(f'PRAGMA table_info("{table_name}");')
+        rows = cursor.fetchall()
+        return [row[1] for row in rows]
 
 
-async def get_table_row_count(db: sqlite3.Connection, table_name: str) -> int:
+async def get_table_row_count(db, table_name: str) -> int:
     """Get row count for a table."""
     cursor = db.cursor()
-    cursor.execute(f'SELECT COUNT(*) as cnt FROM "{table_name}";')
+    cursor.execute(f"SELECT COUNT(*) as cnt FROM `{table_name}`")
     row = cursor.fetchone()
+    if row is None:
+        return 0
+    if isinstance(row, dict):
+        return row["cnt"]
     return row[0] if row else 0
 
 
@@ -801,20 +904,51 @@ async def run_api_db_case(
         api_db_match_checks = test_case.get("apiDbMatchChecks", [])
 
         if not skip_db_check and (table_checks or api_db_match_checks):
-            if not os.path.exists(DB_FILE_PATH):
-                if db_optional:
+            db = None
+            db_available = False
+
+            if is_mariadb_mode():
+                try:
+                    db = open_db_connection()
+                    db_available = True
                     log_line(
-                        f"SQLite DB file not found: {DB_FILE_PATH} — "
-                        "skipping DB checks (dbOptional=true).",
+                        "Using MariaDB for DB checks",
                         test_file,
                         test_name,
                     )
-                else:
-                    raise FileNotFoundError(f"SQLite DB file not found: {DB_FILE_PATH}")
+                except Exception as e:
+                    if db_optional:
+                        log_line(
+                            f"MariaDB connection failed: {e} — skipping DB checks (dbOptional=true)",
+                            test_file,
+                            test_name,
+                        )
+                    else:
+                        raise
             else:
-                db = open_sqlite(DB_FILE_PATH)
+                if not os.path.exists(SQLITE_DB_PATH):
+                    if db_optional:
+                        log_line(
+                            f"SQLite DB file not found: {SQLITE_DB_PATH} — "
+                            "skipping DB checks (dbOptional=true).",
+                            test_file,
+                            test_name,
+                        )
+                    else:
+                        raise FileNotFoundError(
+                            f"SQLite DB file not found: {SQLITE_DB_PATH}"
+                        )
+                else:
+                    db = open_sqlite(SQLITE_DB_PATH)
+                    db_available = True
+                    log_line(
+                        f"Using SQLite at {SQLITE_DB_PATH} for DB checks",
+                        test_file,
+                        test_name,
+                    )
+
+            if db_available and db:
                 try:
-                    # Table checks
                     for table_check in table_checks:
                         columns = await get_table_columns(db, table_check["table"])
                         log_line(
@@ -860,7 +994,6 @@ async def run_api_db_case(
                                 test_name=test_name,
                             )
 
-                    # API-DB match checks
                     for match_check in api_db_match_checks:
                         compare_columns = match_check.get("compareColumns", [])
                         response_rows_for_check = get_response_rows_for_table_check(

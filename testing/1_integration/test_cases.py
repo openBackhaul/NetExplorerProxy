@@ -338,13 +338,22 @@ PROVIDE_INTERFACES_PER_DEVICE = {
                 "interface-type",
                 "interface-status",
             ],
-            "dbQuery": """
-                SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "air-interface" as "interface-type", "interface-status" FROM "air_interface_general_infos"
-                UNION ALL
-                SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "wire-interface" as "interface-type", "interface-status" FROM "wire_interface_general_infos"
-                UNION ALL
-                SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "ethernet-container" as "interface-type", "interface-status" FROM "ethernet_container_general_infos"
-            """,
+            "dbQuery": {
+                "sqlite": """
+                    SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "air-interface" as "interface-type", "interface-status" FROM "air_interface_general_infos"
+                    UNION ALL
+                    SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "wire-interface" as "interface-type", "interface-status" FROM "wire_interface_general_infos"
+                    UNION ALL
+                    SELECT "mount-name", "timestamp", "uuid", "local-id", "original-ltp-name", "ethernet-container" as "interface-type", "interface-status" FROM "ethernet_container_general_infos"
+                """,
+                "mariadb": """
+                    SELECT `mount-name`, `timestamp`, `uuid`, `local-id`, `original-ltp-name`, 'air-interface' as `interface-type`, `interface-status` FROM `air_interface_general_infos`
+                    UNION ALL
+                    SELECT `mount-name`, `timestamp`, `uuid`, `local-id`, `original-ltp-name`, 'wire-interface' as `interface-type`, `interface-status` FROM `wire_interface_general_infos`
+                    UNION ALL
+                    SELECT `mount-name`, `timestamp`, `uuid`, `local-id`, `original-ltp-name`, 'ethernet-container' as `interface-type`, `interface-status` FROM `ethernet_container_general_infos`
+                """,
+            },
         }
     ],
     "tableChecks": [
