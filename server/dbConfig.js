@@ -22,7 +22,7 @@ let db_config_default = {
         idleInTransactionSessionTimeout: 0
     }
  };
-const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" }
+const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite", sqlite_path: "" };
 
 exports.readDBSettings = function (process) {
   let dbConfig;
@@ -151,6 +151,9 @@ exports.readDBSettings = function (process) {
     dbConfig = db_config_default;
   } else {
     logger.warn("No DB selected, using by default sqlite");
+    if (process.env.DB_SQLITE_PATH) {
+      db_config_sqlLite.sqlite_path = process.env.DB_SQLITE_PATH;
+    }
     dbConfig = db_config_sqlLite;
   }
 
