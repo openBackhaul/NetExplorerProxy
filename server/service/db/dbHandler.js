@@ -117,9 +117,10 @@ exports.initDB = async function(config) {
     logger.info(`- Port: ${config.port}`);
     logger.info(`- Dialect: ${config.dialect}`);
     if (config.dialect == 'sqlite') {
+      logger.info(`- SQLite Path: ${config.sqlite_path}`);
       sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: '', //':memory:', // or ''
+        storage: config.sqlite_path, //':memory:', // or ''
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
         logging: msg => logger.debug(msg)
       });
