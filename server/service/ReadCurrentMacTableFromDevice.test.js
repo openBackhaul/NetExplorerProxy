@@ -55,7 +55,7 @@ describe('readCurrentMacTableFromDevice', () => {
             "mount-name": "305251234",
             "requestor-protocol": "HTTP",
             "requestor-address": {"ip-address": {"ipv-4-address": "127.0.0.1"}},
-            "requestor-port": 4018,
+            "requestor-port": 4032,
             "requestor-receive-operation": "/v1/receive-current-mac-table-of-device"
           },
           "/v1/read-current-mac-table-from-device"
