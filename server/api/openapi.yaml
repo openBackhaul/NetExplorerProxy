@@ -3,7 +3,7 @@ info:
   title: NetExplorerProxy
   description: NetExplorerProxy gathers data from MATR and MWDI and passes it through
     to NetExplorer.
-  version: 1.2.0
+  version: 1.2.1
   x-api-id: u-1792-sdn-microwave-netexplorerproxy
 servers:
 - url: /
@@ -107,7 +107,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-im-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-im-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -357,23 +357,23 @@ paths:
                         current-application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         current-release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         future-application-name:
                           type: string
                           description: |
-                            'Future name of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+                            'Future name of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
                         future-release-number:
                           type: string
                           description: |
-                            'Future release number of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+                            'Future release number of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
                         future-protocol:
                           type: string
                           description: |
-                            'Protocol to be used in future for addressing the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+                            'Protocol to be used in future for addressing the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
                         future-address:
                           type: object
                           properties:
@@ -383,15 +383,15 @@ paths:
                                 ipv-4-address:
                                   type: string
                                   description: |
-                                    'Future IPv4 address of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+                                    'Future IPv4 address of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
                             domain-name:
                               type: string
                               description: |
-                                'Future domain name of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+                                'Future domain name of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
                         future-port:
                           type: integer
                           description: |
-                            'Future port of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+                            'Future port of the application that has updated connection data from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
                 required: true
               responses:
                 "204":
@@ -670,11 +670,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                 required: true
               responses:
                 "204":
@@ -957,19 +957,19 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         old-operation-name:
                           type: string
                           description: |
-                            'Name of the deprecated operation from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of the deprecated operation from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         new-operation-name:
                           type: string
                           description: |
-                            'Name of the replacing operation from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of the replacing operation from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                 required: true
               responses:
                 "204":
@@ -1194,7 +1194,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -1737,7 +1737,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -2299,7 +2299,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -2675,7 +2675,7 @@ paths:
                         example: 850
                     life-cycle-state:
                       description: |
-                        'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                        'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
                       style: simple
                       explode: false
                       schema:
@@ -2947,7 +2947,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -3515,7 +3515,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-020/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-020/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -4040,7 +4040,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-021/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-021/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -4266,7 +4266,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-032/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-032/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -4514,7 +4514,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-025/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-025/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -4754,7 +4754,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-026/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-026/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -5001,7 +5001,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-027/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-027/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -5240,7 +5240,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-030/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-030/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -5495,7 +5495,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-031/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-031/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -5742,7 +5742,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-040/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-040/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -5986,7 +5986,7 @@ paths:
           headers:
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-is-045/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-is-045/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -6333,7 +6333,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -6587,11 +6587,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         preceding-application-name:
                           type: string
                           description: |
@@ -6603,34 +6603,34 @@ paths:
                         embedding-operation:
                           type: string
                           description: |
-                            'Name of service for initiating embedding process from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for initiating embedding process from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         client-update-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting server changes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting server changes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         operation-client-update-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting replacements of operations by backward compatible substitutes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting replacements of operations by backward compatible substitutes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         dispose-remainders-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-013/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-013/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         preceding-release-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-014/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-014/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         subsequent-release-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-015/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting de-registrations of applications from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-015/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         tcp-server:
                           type: object
                           properties:
                             protocol:
                               type: string
                               description: |
-                                'Own protocol (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
+                                'Own protocol (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
                             address:
                               type: object
                               properties:
@@ -6640,15 +6640,15 @@ paths:
                                     ipv-4-address:
                                       type: string
                                       description: |
-                                        'Own IPv4 address (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
+                                        'Own IPv4 address (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
                                 domain-name:
                                   type: string
                                   description: |
-                                    'Own domain name (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
+                                    'Own domain name (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
                             port:
                               type: integer
                               description: |
-                                'Own TCP port (shall be taken from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
+                                'Own TCP port (shall be taken from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
                 required: true
               responses:
                 "204":
@@ -6906,11 +6906,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         preceding-application-name:
                           type: string
                           description: |
@@ -6922,15 +6922,15 @@ paths:
                         embedding-operation:
                           type: string
                           description: |
-                            'Name of service for initiating embedding process from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for initiating embedding process from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         client-update-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting server changes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting server changes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         operation-client-update-operation:
                           type: string
                           description: |
-                            'Name of service for broadcasting replacements of operations by backward compatible substitutes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+                            'Name of service for broadcasting replacements of operations by backward compatible substitutes from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
                         tcp-server-list:
                           type: array
                           items:
@@ -6943,7 +6943,7 @@ paths:
                               protocol:
                                 type: string
                                 description: |
-                                  'Own protocol (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
+                                  'Own protocol (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
                               address:
                                 type: object
                                 properties:
@@ -6953,15 +6953,15 @@ paths:
                                       ipv-4-address:
                                         type: string
                                         description: |
-                                          'Own IPv4 address (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
+                                          'Own IPv4 address (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
                                   domain-name:
                                     type: string
                                     description: |
-                                      'Own domain name (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
+                                      'Own domain name (shall be taken (if available) from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
                               port:
                                 type: integer
                                 description: |
-                                  'Own TCP port (shall be taken from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
+                                  'Own TCP port (shall be taken from the stored data, but not from the initiating request body, because attribute is not mandatory in the request body definition) from[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
                 required: true
               responses:
                 "204":
@@ -7246,7 +7246,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -7494,15 +7494,15 @@ paths:
                         new-application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         new-application-release:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         new-application-protocol:
                           type: string
                           description: |
-                            'Protocol expected by this application from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
+                            'Protocol expected by this application from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol]'
                         new-application-address:
                           type: object
                           properties:
@@ -7512,15 +7512,15 @@ paths:
                                 ipv-4-address:
                                   type: string
                                   description: |
-                                    'Own IPv4 address from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
+                                    'Own IPv4 address from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
                             domain-name:
                               type: string
                               description: |
-                                'Own domain-name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
+                                'Own domain-name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
                         new-application-port:
                           type: integer
                           description: |
-                            'Own TCP port from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
+                            'Own TCP port from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
                 required: true
               responses:
                 "204":
@@ -8107,7 +8107,7 @@ paths:
               - name: fields
                 in: query
                 description: |
-                  'Query parameter to filter ressources according to RFC8040 fields filter spec from string profile instance nep-1-2-0-string-p-000'
+                  'Query parameter to filter ressources according to RFC8040 fields filter spec from string profile instance nep-1-2-1-string-p-000'
                 required: false
                 style: form
                 explode: true
@@ -8790,7 +8790,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -9057,13 +9057,13 @@ paths:
                             \ in all service headers [originator]"
                         application-name:
                           type: string
-                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]"
+                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]"
                         release-number:
                           type: string
-                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]"
+                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]"
                         operation-name:
                           type: string
-                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]"
+                          description: "[/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]"
                         response-code:
                           type: integer
                           description: "Response code sent to [originator] after invoking\
@@ -9071,18 +9071,18 @@ paths:
                         timestamp:
                           type: string
                           description: "Date and time when [application-name] sent\
-                            \ response to [originator]; only to be provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
+                            \ response to [originator]; only to be provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
                             \ == true"
                         stringified-body:
                           type: string
                           description: "Stringified body of the request addressed\
                             \ from [originator] to [application-name]; only to be\
-                            \ provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
+                            \ provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
                             \ == true"
                         stringified-response:
                           type: string
                           description: "Stringified response sent from [application-name]\
-                            \ to [originator]; only to be provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
+                            \ to [originator]; only to be provided, if [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/detailed-logging-is-on]\
                             \ == true"
                         url:
                           type: string
@@ -9407,7 +9407,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -9658,11 +9658,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         method:
                           type: string
                           description: "Method applied in the OaM request, which is\
@@ -9998,7 +9998,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -10277,7 +10277,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -10529,11 +10529,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own application release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own application release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         operation-name:
                           type: string
                           description: |
@@ -10879,7 +10879,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-007/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -11150,7 +11150,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-008/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-008/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -11433,7 +11433,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-009/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-009/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -14581,7 +14581,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-010/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-010/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -14859,7 +14859,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-011/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -15136,7 +15136,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-005/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -15388,11 +15388,11 @@ paths:
                         application-name:
                           type: string
                           description: |
-                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+                            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
                         release-number:
                           type: string
                           description: |
-                            'Own application release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+                            'Own application release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
                         operation-name:
                           type: string
                           description: |
@@ -15725,7 +15725,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-013/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service find in [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-013/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -15996,7 +15996,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-014/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-014/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -16221,7 +16221,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bm-015/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bm-015/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -16442,7 +16442,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -16688,7 +16688,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-001/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -16907,7 +16907,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -17126,7 +17126,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-003/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -17353,7 +17353,7 @@ paths:
                 example: 850
             life-cycle-state:
               description: |
-                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
+                'Life cycle state of the consumed service from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-004/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-configuration/life-cycle-state]'
               style: simple
               explode: false
               schema:
@@ -17567,7 +17567,7 @@ paths:
                         unit: Unit at input field
                       display-in-new-browser-window: false
                     action-profile-configuration:
-                      consequent-operation-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name
+                      consequent-operation-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name
         "400":
           description: Response in case of errored OaM requests
           content:
@@ -18312,7 +18312,7 @@ paths:
               $ref: "#/components/schemas/responseprofileconfiguration_value_body"
             example:
               response-profile-1-0:value:
-                value-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name
+                value-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name
         required: true
       responses:
         "204":
@@ -22329,7 +22329,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1bequeathyourdataanddie_newapplicationaddress:
       maxProperties: 1
@@ -22342,7 +22342,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_bequeathyourdataanddie_body:
       required:
@@ -22356,16 +22356,16 @@ components:
         new-application-name:
           type: string
           description: |
-            'Name of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         new-application-release:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         new-application-protocol:
           type: string
           description: |
-            'Protocol to be used for addressing the application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addressing the application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -22376,7 +22376,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of application that shall be target of the handover process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         new-application-name: NewApplicationName
         new-application-release: 32.6.3
@@ -22865,7 +22865,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'If body provided, IPv4 address of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'If body provided, IPv4 address of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1registeryourself_registryofficeaddress:
       maxProperties: 1
@@ -22878,7 +22878,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'If body provided, domain name of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'If body provided, domain name of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1registeryourself_httpaddress_ipaddress:
       minProperties: 1
@@ -22888,7 +22888,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'If provided, own IPv4 address, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
+            'If provided, own IPv4 address, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address]'
       additionalProperties: false
     v1registeryourself_httpaddress:
       maxProperties: 1
@@ -22901,7 +22901,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'If provided, own domain name, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
+            'If provided, own domain name, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name]'
       additionalProperties: false
     v1_registeryourself_body:
       oneOf:
@@ -22921,21 +22921,21 @@ components:
             minLength: 3
             type: string
             description: |
-              'If body provided, name of RegistryOffice application find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+              'If body provided, name of RegistryOffice application find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
           registry-office-application-release-number:
             pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
             type: string
             description: |
-              'If body provided, release of RegistryOffice application find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+              'If body provided, release of RegistryOffice application find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
           registration-operation:
             minLength: 6
             type: string
             description: |
-              'If body provided, operation for registering update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-ro-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+              'If body provided, operation for registering update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-ro-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
           registry-office-protocol:
             type: string
             description: |
-              'If body provided, protocol for addressing the RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+              'If body provided, protocol for addressing the RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
             enum:
             - HTTP
             - HTTPS
@@ -22946,7 +22946,7 @@ components:
             minimum: 0
             type: integer
             description: |
-              'If body provided, port of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+              'If body provided, port of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
           http-address:
             $ref: "#/components/schemas/v1registeryourself_httpaddress"
           http-port:
@@ -22954,7 +22954,7 @@ components:
             minimum: 0
             type: integer
             description: |
-              'If provided, own TCP port, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
+              'If provided, own TCP port, which has to be documented (but not be directly used for formulating the callback) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port]'
           preceding-application-name:
             minLength: 3
             type: string
@@ -22974,7 +22974,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1embedyourself_registryofficeaddress:
       maxProperties: 1
@@ -22987,7 +22987,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1embedyourself_oldreleaseaddress_ipaddress:
       minProperties: 1
@@ -22997,7 +22997,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1embedyourself_oldreleaseaddress:
       maxProperties: 1
@@ -23010,7 +23010,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_embedyourself_body:
       required:
@@ -23027,31 +23027,31 @@ components:
         registry-office-application:
           type: string
           description: |
-            'Name of RegistryOffice application find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of RegistryOffice application find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         registry-office-application-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of RegistryOffice application find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of RegistryOffice application find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ro-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         relay-server-replacement-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for requesting for broadcasting a new server address update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-ro-2-1-2-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for requesting for broadcasting a new server address update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-ro-2-1-2-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         relay-operation-update-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for requesting for broadcasting a backward compatible replacement of an operation update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-ro-2-1-2-003/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for requesting for broadcasting a backward compatible replacement of an operation update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-ro-2-1-2-003/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         deregistration-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for deregistering from the application layer update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-ro-2-1-2-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for deregistering from the application layer update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-ro-2-1-2-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         registry-office-protocol:
           type: string
           description: |
-            'Protocol for addressing RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol for addressing RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23062,11 +23062,11 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of RegistryOffice application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ro-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
         old-release-protocol:
           type: string
           description: |
-            'Protocol for addressing the currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol for addressing the currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23077,7 +23077,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of currently running old release of the same application update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-or-1-1-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         registry-office-application: RegistrationApplication
         registry-office-application-release-number: 43.2.5
@@ -23102,7 +23102,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1redirectservicerequestinformation_servicelogaddress:
       maxProperties: 1
@@ -23115,7 +23115,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_redirectservicerequestinformation_body:
       required:
@@ -23130,21 +23130,21 @@ components:
         service-log-application:
           type: string
           description: |
-            'Name of application that shall record the service requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-eatl-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that shall record the service requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-eatl-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         service-log-application-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that shall record the service requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-eatl-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that shall record the service requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-eatl-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         service-log-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for recording the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for recording the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-eatl-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         service-log-protocol:
           type: string
           description: |
-            'Protocol to be used for addressing the application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addressing the application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23155,7 +23155,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of application that shall record the service requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-eatl-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         service-log-application: LoggingApplication
         service-log-application-release-number: 34.2.6
@@ -23173,7 +23173,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1redirectoamrequestinformation_oamlogaddress:
       maxProperties: 1
@@ -23186,7 +23186,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_redirectoamrequestinformation_body:
       required:
@@ -23201,21 +23201,21 @@ components:
         oam-log-application:
           type: string
           description: |
-            'Name of application that shall record the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ol-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that shall record the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ol-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         oam-log-application-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that shall record the OaM request find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-ol-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that shall record the OaM request find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-ol-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         oam-log-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for recording the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-ol-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for recording the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-ol-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         oam-log-protocol:
           type: string
           description: |
-            'Protocol to be used for addressing the application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addressing the application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23226,7 +23226,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of application that shall record the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-ol-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         oam-log-application: LoggingApplication
         oam-log-application-release-number: 54.3.2
@@ -23246,17 +23246,17 @@ components:
         subscriber-application:
           type: string
           description: |
-            'Name of application that no longer wants to receive notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that no longer wants to receive notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         subscriber-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that no longer wants to receive notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that no longer wants to receive notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         subscription:
           minLength: 6
           type: string
           description: |
-            'Name of operation that had been addressed for starting getting notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+            'Name of operation that had been addressed for starting getting notifications find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-*/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
       example:
         subscriber-application: AlreadySubscribingApplication
         subscriber-release-number: 38.4.3
@@ -23269,7 +23269,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1inquireoamrequestapprovals_oamapprovaladdress:
       maxProperties: 1
@@ -23282,7 +23282,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_inquireoamrequestapprovals_body:
       required:
@@ -23297,21 +23297,21 @@ components:
         oam-approval-application:
           type: string
           description: |
-            'Name of application that shall approve the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that shall approve the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         oam-approval-application-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that shall approve the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that shall approve the OaM requests find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         oam-approval-operation:
           minLength: 6
           type: string
           description: |
-            'Operation for approving the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-aa-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for approving the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-aa-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         oam-approval-protocol:
           type: string
           description: |
-            'Protocol to be used for addressing the application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addressing the application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23322,7 +23322,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of application that shall approve the OaM requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         oam-approval-application: AccessApprover
         oam-approval-application-release-number: 34.3.3
@@ -23340,7 +23340,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'Future IPv4 address of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'Future IPv4 address of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1updateclient_futureaddress:
       maxProperties: 1
@@ -23353,7 +23353,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Future domain name of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Future domain name of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_updateclient_body:
       required:
@@ -23369,25 +23369,25 @@ components:
         current-application-name:
           type: string
           description: |
-            'Current name of the application that has updated connection data find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Current name of the application that has updated connection data find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         current-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Current release number of the application that has updated connection data find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Current release number of the application that has updated connection data find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         future-application-name:
           type: string
           description: |
-            'Future name of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Future name of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         future-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Future release number of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Future release number of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         future-protocol:
           type: string
           description: |
-            'Protocol to be used in future for addressing the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used in future for addressing the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23398,7 +23398,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Future port of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Future port of the application that has updated connection data update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-*/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         current-application-name: CurrentApplicationName
         current-release-number: 43.5.5
@@ -23483,7 +23483,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1redirecttopologychangeinformation_topologyapplicationaddress:
       maxProperties: 1
@@ -23496,7 +23496,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_redirecttopologychangeinformation_body:
       required:
@@ -23515,41 +23515,41 @@ components:
         topology-application:
           type: string
           description: |
-            'Name of application that shall document the application layer topology find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-alt-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of application that shall document the application layer topology find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-alt-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         topology-application-release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of application that shall document the application layer topology find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-alt-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of application that shall document the application layer topology find or update, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-alt-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         topology-operation-ltp-update:
           minLength: 6
           type: string
           description: |
-            'Operation for updating an LTP update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-alt-2-1-2-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for updating an LTP update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-alt-2-1-2-001/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         topology-operation-ltp-deletion:
           minLength: 6
           type: string
           description: |
-            'Operation for deleting an LTP and its dependents like FC port and Link (if applicable) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-alt-2-1-2-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for deleting an LTP and its dependents like FC port and Link (if applicable) update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-alt-2-1-2-002/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         topology-operation-fc-update:
           minLength: 6
           type: string
           description: |
-            'Operation for updating a ForwardingConstruct instance update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-alt-2-1-2-003/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for updating a ForwardingConstruct instance update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-alt-2-1-2-003/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         topology-operation-fc-port-update:
           minLength: 6
           type: string
           description: |
-            'Operation for updating an FC port update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-alt-2-1-2-004/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for updating an FC port update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-alt-2-1-2-004/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         topology-operation-fc-port-deletion:
           minLength: 6
           type: string
           description: |
-            'Operation for deleting an FC port update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bm-alt-2-1-2-005/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for deleting an FC port update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bm-alt-2-1-2-005/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         topology-application-protocol:
           type: string
           description: |
-            'Protocol to be used for addresing the application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addresing the application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23560,7 +23560,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of application that shall document the application layer topology update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-alt-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         topology-application: InventoryApplication
         topology-application-release-number: 54.1.3
@@ -23670,22 +23670,22 @@ components:
         application-name:
           type: string
           description: |
-            'Name of the application that has an updated operation find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of the application that has an updated operation find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release number of the application that has an updated operation find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release number of the application that has an updated operation find, but not at OldRelease or NewRelease, [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-*/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         old-operation-name:
           minLength: 6
           type: string
           description: |
-            'Name of the deprecated operation find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Name of the deprecated operation find [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         new-operation-name:
           minLength: 6
           type: string
           description: |
-            'Name of the replacing operation update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Name of the replacing operation update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
       example:
         application-name: ApplicationName
         release-number: 75.4.3
@@ -23699,7 +23699,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1inquirebasicauthapprovals_address:
       maxProperties: 1
@@ -23712,7 +23712,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_inquirebasicauthapprovals_body:
       required:
@@ -23727,21 +23727,21 @@ components:
         application-name:
           type: string
           description: |
-            'Name of the application that approves the BasicAuth requests find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of the application that approves the BasicAuth requests find or update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-aa-2-1-2-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         operation-name:
           minLength: 6
           type: string
           description: |
-            'Operation for approving the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-bs-aa-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'Operation for approving the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-bs-aa-2-1-2-000/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
         protocol:
           type: string
           description: |
-            'Protocol to be used for addressing the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used for addressing the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23752,7 +23752,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port of the application that approves the BasicAuth requests update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-aa-2-1-2-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         application-name: AccessApplication
         release-number: 43.2.4
@@ -23788,11 +23788,11 @@ components:
         application-name:
           type: string
           description: |
-            'ApplicationName of the OldRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-or-1-1-1-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+            'ApplicationName of the OldRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-or-1-1-1-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
         release-number:
           type: string
           description: |
-            'ReleaseNumber of the OldRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-or-1-1-1-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+            'ReleaseNumber of the OldRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-or-1-1-1-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
       example:
         application-name: ApplicationNameOfTheOldRelease
         release-number: 45.4.7
@@ -23804,7 +23804,7 @@ components:
           pattern: "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
           type: string
           description: |
-            'IPv4 address to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
+            'IPv4 address to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/ip-address/ipv-4-address]'
       additionalProperties: false
     v1updateclientofsubsequentrelease_address:
       maxProperties: 1
@@ -23817,7 +23817,7 @@ components:
           pattern: "^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
           type: string
           description: |
-            'Domain name to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
+            'Domain name to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-address/domain-name]'
       additionalProperties: false
     v1_updateclientofsubsequentrelease_body:
       required:
@@ -23831,16 +23831,16 @@ components:
         application-name:
           type: string
           description: |
-            'Name of the application that is target of the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
+            'Name of the application that is target of the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/application-name]'
         release-number:
           pattern: "^([0-9]{1,2})\\.([0-9]{1,2})\\.([0-9]{1,2})$"
           type: string
           description: |
-            'Release of the application that is target of the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-c-nr-1-2-0-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
+            'Release of the application that is target of the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-c-nr-1-2-1-000/layer-protocol=0/http-client-interface-1-0:http-client-interface-pac/http-client-interface-configuration/release-number]'
         protocol:
           type: string
           description: |
-            'Protocol to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
+            'Protocol to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-protocol]'
           enum:
           - HTTP
           - HTTPS
@@ -23851,7 +23851,7 @@ components:
           minimum: 0
           type: integer
           description: |
-            'Port to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-c-nr-1-2-0-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
+            'Port to be used during the bequeath-your-data-and-die process update [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-c-nr-1-2-1-000/layer-protocol=0/tcp-client-interface-1-0:tcp-client-interface-pac/tcp-client-interface-configuration/remote-port]'
       example:
         application-name: ApplicationNameOfNewRelease
         release-number: 17.1.2
@@ -23869,11 +23869,11 @@ components:
         bequeath-your-data-and-die-operation:
           type: string
           description: |
-            'Operation for starting the handover process on the already existing application from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-im-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
+            'Operation for starting the handover process on the already existing application from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-im-000/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name]'
         data-transfer-operations-list:
           type: array
           description: |
-            'List of operations required for transferring data from the oldRelease to the newRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-c-im-nr-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
+            'List of operations required for transferring data from the oldRelease to the newRelease from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-c-im-nr-*/layer-protocol=0/operation-client-interface-1-0:operation-client-interface-pac/operation-client-interface-configuration/operation-name]'
           items:
             type: string
       example:
@@ -23894,18 +23894,18 @@ components:
         application-name:
           type: string
           description: |
-            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
+            'Own application name from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name]'
         release-number:
           type: string
           description: |
-            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
+            'Own release number from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-number]'
         application-purpose:
           type: string
           description: |
-            'Own application purpose from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-purpose]'
+            'Own application purpose from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-purpose]'
         data-update-period:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/data-update-period]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/data-update-period]"
           enum:
           - real-time
           - 1h-period
@@ -23913,10 +23913,10 @@ components:
           - manual
         owner-name:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-name]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-name]"
         owner-email-address:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-email-address]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/owner-email-address]"
       example:
         application-name: OwnApplicationName
         release-number: 34.3.6
@@ -23933,13 +23933,13 @@ components:
       properties:
         release-number:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/release-number]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/release-number]"
         release-date:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/release-date]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/release-date]"
         changes:
           type: string
-          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/changes]"
+          description: "from [/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=*/changes]"
     inline_response_200_11:
       required:
       - core-model-1-4:control-construct
@@ -24345,7 +24345,7 @@ components:
       properties:
         action-profile-1-0:consequent-operation-reference:
           type: string
-          example: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name
+          example: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-op-s-bs-002/layer-protocol=0/operation-server-interface-1-0:operation-server-interface-pac/operation-server-interface-capability/operation-name
     inline_response_200_18:
       required:
       - response-profile-1-0:operation-name
@@ -24395,7 +24395,7 @@ components:
           $ref: "#/components/schemas/coremodel14controlconstructprofilecollectionprofileuuidresponseprofile10responseprofilepacresponseprofileconfigurationvalue_responseprofile10value"
       example:
         response-profile-1-0:value:
-          value-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name
+          value-reference: /core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/application-name
     ? coremodel14controlconstructprofilecollectionprofileuuidresponseprofile10responseprofilepacresponseprofileconfigurationvalue_responseprofile10value
     : maxProperties: 1
       minProperties: 1
@@ -25359,15 +25359,15 @@ components:
         field-name:
           type: string
           description: |
-            'Field name from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/field-name]'
+            'Field name from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/field-name]'
         value:
           type: string
           description: |
-            'Field value from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-response-p-*/response-profile-1-0:response-profile-pac/response-profile-configuration/value]'
+            'Field value from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-configuration/value]'
         datatype:
           type: string
           description: |
-            'Field datatype from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/datatype]'
+            'Field datatype from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-response-p-*/response-profile-1-0:response-profile-pac/response-profile-capability/datatype]'
       example:
         field-name: field-name
         datatype: datatype
@@ -25380,11 +25380,11 @@ components:
         field-name:
           type: string
           description: |
-            'Name of an input value required for executing the Request from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/name]'
+            'Name of an input value required for executing the Request from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/name]'
         unit:
           type: string
           description: |
-            'Unit of an input value required for executing the Request from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/unit]'
+            'Unit of an input value required for executing the Request from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/input-value-list=*/unit]'
       example:
         field-name: field-name
         unit: unit
@@ -25398,11 +25398,11 @@ components:
         label:
           type: string
           description: |
-            'Label that shall be presented on the button from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/label]'
+            'Label that shall be presented on the button from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/label]'
         request:
           type: string
           description: |
-            'Request that shall be called, when button gets pressed from [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol}] :// [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address} or {/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name}] : [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-0-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port}] [{/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-action-p-*/action-profile-1-0:action-profile-pac/action-profile-configuration/consequent-operation-reference}]'
+            'Request that shall be called, when button gets pressed from [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-protocol}] :// [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/ipv-4-address} or {/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-address/domain-name}] : [{/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-tcp-s-000/layer-protocol=0/tcp-server-interface-1-0:tcp-server-interface-pac/tcp-server-interface-configuration/local-port}] [{/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-configuration/consequent-operation-reference}]'
         input-value-list:
           type: array
           items:
@@ -25410,7 +25410,7 @@ components:
         display-in-new-browser-window:
           type: boolean
           description: |
-            'True in case Request shall be represented in a new browser window from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-0-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/display-in-new-browser-window]'
+            'True in case Request shall be represented in a new browser window from [/core-model-1-4:control-construct/profile-collection/profile=nep-1-2-1-action-p-*/action-profile-1-0:action-profile-pac/action-profile-capability/display-in-new-browser-window]'
       example:
         request: request
         input-value-list:
