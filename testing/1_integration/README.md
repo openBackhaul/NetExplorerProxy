@@ -40,6 +40,11 @@ cd testing/1_integration
 pytest -v
 ```
 
+if pytest is not recognize in your cli, try to use 
+```bash
+python -m pytest -v
+```
+
 ## Test Coverage
 
 Tests validate 9 API endpoints:
