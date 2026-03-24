@@ -29,6 +29,10 @@ exports.readDBSettings = function (process) {
 
   if (process.env.TIME_CC_RETR && process.env.TIME_CC_RETR.toLowerCase() === "true") {
     global.throttle = true;
+  } else if (process.env.TIME_CC_RETR && process.env.TIME_CC_RETR.toLowerCase() === "false") {
+    global.throttle = false;
+  } else {
+    global.throttle = true; // If is not specified, enabled by default
   }
 
   if (process.env.DB && process.env.DB.toLowerCase() === "true") {
