@@ -225,9 +225,11 @@ let traceIncrement= 1;
 module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
 
   const timestamp = Date.now();
-  const listOfConnectedDevices = await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(
-    body, user, xCorrelator, traceIndicator, customerJourney, url
-  );
+
+  // Retrieved the list of Mountnames, depending on the config
+  const listOfConnectedDevices = global.cache_cc == true ?
+    await getDataFromOtherApp.provideListOfCachedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) :
+    await getDataFromOtherApp.provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url);
 
   if (
     listOfConnectedDevices &&
@@ -244,13 +246,13 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
       traceIndicator,
       customerJourney
     };
-     
-const dbMountNames = (await dbHandler.readListOfDevices()).map(d => d['mount-name']);
-const newMounts = mountNameList.filter(m => !dbMountNames.includes(m));
-const existingMounts = mountNameList.filter(m => dbMountNames.includes(m));
-const prioritizedMountNames = [...newMounts, ...existingMounts];
-await processMountNames.addNewDataInNEPdeviceList(prioritizedMountNames);
-   
+
+    const dbMountNames = (await dbHandler.readListOfDevices()).map(d => d['mount-name']);
+    const newMounts = mountNameList.filter(m => !dbMountNames.includes(m));
+    const existingMounts = mountNameList.filter(m => dbMountNames.includes(m));
+    const prioritizedMountNames = [...newMounts, ...existingMounts];
+    await processMountNames.addNewDataInNEPdeviceList(prioritizedMountNames);
+
     // Call the batch processor here
     traceIncrement += 1;
     await processMountNamesInBatches(

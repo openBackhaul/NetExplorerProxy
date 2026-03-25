@@ -17,6 +17,7 @@
                 "DEBUG": "true",
                 "DB_SQLITE_PATH": "",
                 "TIME_CC_RETR": "true",
+                "RETR_CACHED_CC": "false",
                 "DB": "false",
                 "MAX_ROWS_FETCHED": "100000",
                 "USER": "user",
