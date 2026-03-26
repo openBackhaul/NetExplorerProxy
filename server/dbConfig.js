@@ -42,7 +42,7 @@ exports.readDBSettings = function (process) {
   } else if (process.env.RETR_CACHED_CC && process.env.RETR_CACHED_CC.toLowerCase() === "false") {
     global.cache_cc = false;
   } else { 
-    global.cache_cc = false; // If is not specified, false by default
+    global.cache_cc = true; // If is not specified, true by default
   }
 
   if (process.env.DB && process.env.DB.toLowerCase() === "true") {
