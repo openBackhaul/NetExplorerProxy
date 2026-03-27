@@ -22,10 +22,29 @@ let db_config_default = {
         idleInTransactionSessionTimeout: 0
     }
  };
-const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite" }
+const db_config_sqlLite = { user: 'root', password: 'mypass', dialect: "sqlite", sqlite_path: "" };
 
 exports.readDBSettings = function (process) {
   let dbConfig;
+
+  // Throttle configuration (Waiting time before retrival from MWDI)
+  if (process.env.TIME_CC_RETR && process.env.TIME_CC_RETR.toLowerCase() === "true") {
+    global.throttle = true;
+  } else if (process.env.TIME_CC_RETR && process.env.TIME_CC_RETR.toLowerCase() === "false") {
+    global.throttle = false;
+  } else {
+    global.throttle = true; // If is not specified, enabled by default
+  }
+
+  // Retrieve mountname list from MWDI://v1/provide-list-of-cached-devices
+  if (process.env.RETR_CACHED_CC && process.env.RETR_CACHED_CC.toLowerCase() === "true") {
+    global.cache_cc = true;
+  } else if (process.env.RETR_CACHED_CC && process.env.RETR_CACHED_CC.toLowerCase() === "false") {
+    global.cache_cc = false;
+  } else { 
+    global.cache_cc = true; // If is not specified, true by default
+  }
+
   if (process.env.DB && process.env.DB.toLowerCase() === "true") {
     logger.warn("Working using external DB");
     if (process.env.USER) {
@@ -146,6 +165,9 @@ exports.readDBSettings = function (process) {
     dbConfig = db_config_default;
   } else {
     logger.warn("No DB selected, using by default sqlite");
+    if (process.env.DB_SQLITE_PATH) {
+      db_config_sqlLite.sqlite_path = process.env.DB_SQLITE_PATH;
+    }
     dbConfig = db_config_sqlLite;
   }
 
