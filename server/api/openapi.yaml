@@ -3509,7 +3509,6 @@ paths:
       - IndividualServices
       summary: Provides list of devices that are connected to the controller
       operationId: provideListOfConnectedDevices
-      deprecated: true
       responses:
         "200":
           description: List of connected devices provided
