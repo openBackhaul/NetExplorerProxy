@@ -5,6 +5,7 @@ const logger = require('./LoggingService.js').getLogger();
 
 // Used on old MWDI < 2.0.0 - MWDI://v1/provide-list-of-connected-devices
 module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
+    logger.info("Get list of mountname from MWDI://v1/provide-list-of-connected-devices");
     const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(
         url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
 
@@ -13,6 +14,7 @@ module.exports.provideListOfConnectedDevicesfromMWDI = async function provideLis
 
 // From MWDI 2.0.0 - MWDI://v1/provide-list-of-cached-devices
 module.exports.provideListOfCachedDevicesfromMWDI = async function provideListOfCachedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
+    logger.info("Get list of mountname from MWDI://v1/provide-list-of-cached-devices");
     const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(
         url, "PromptForEmbeddingCausesCyclicLoadingOfDeviceListFromMwdi", {});
 
