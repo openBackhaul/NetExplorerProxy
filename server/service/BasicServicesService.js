@@ -250,6 +250,10 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     const dbMountNames = (await dbHandler.readListOfDevices()).map(d => d['mount-name']);
     const newMounts = mountNameList.filter(m => !dbMountNames.includes(m));
     const existingMounts = mountNameList.filter(m => dbMountNames.includes(m));
+    logger.info("Retrieving mountname list:");
+    logger.info(` - Receiving list: ${mountNameList.length} Mountnames`);
+    logger.info(` - ${newMounts.length} mountnames are new, respect to DB`);
+    logger.info(` - Mountnames that are currently in the DB: ${existingMounts.length}`);
     const prioritizedMountNames = [...newMounts, ...existingMounts];
     await processMountNames.addNewDataInNEPdeviceList(prioritizedMountNames);
 
