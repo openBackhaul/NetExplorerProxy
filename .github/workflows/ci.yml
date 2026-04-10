@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,10 +17,10 @@ jobs:
         working-directory: server
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -31,7 +35,7 @@ jobs:
         env:
           CI: "true"
 
-      - name: Publish Test Report
+      - name: Publish Jest test report
         if: always()
         uses: dorny/test-reporter@v1
         with:
@@ -47,7 +51,7 @@ jobs:
           path: server/coverage
           if-no-files-found: ignore
 
-      - name: Upload junit artifact
+      - name: Upload JUnit artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
