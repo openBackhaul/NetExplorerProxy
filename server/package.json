@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "node index.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
     "test": "jest --config ./jest.config.js --passWithNoTests"
   },
   "keywords": [
