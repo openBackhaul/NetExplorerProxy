@@ -19,6 +19,27 @@ exports.getLtpsContainsObjectFromLtpStructure = function (objectName, ltpStructu
   return ltpsOfLayerProtocolName;
 }
 
+exports.getLtpsContainsObjectFromLtpStructureAugment = function (objectName, ltpStructure) {
+  let ltpList = [];
+
+  if (Array.isArray(ltpStructure)) {
+    ltpList = ltpStructure;
+  } else if (
+    ltpStructure &&
+    ltpStructure["core-model-1-4:control-construct"] &&
+    Array.isArray(ltpStructure["core-model-1-4:control-construct"]) &&
+    ltpStructure["core-model-1-4:control-construct"].length > 0
+  ) {
+    ltpList =
+      ltpStructure["core-model-1-4:control-construct"][0][
+        onfAttributes.CONTROL_CONSTRUCT.LOGICAL_TERMINATION_POINT
+      ] || [];
+  }
+
+  return ltpList.filter(
+    ltp => ltp && Object.prototype.hasOwnProperty.call(ltp, objectName)
+  );
+};
 
 /**
  * This function fetches LTP list from LtpStructure if layerProtocolName is equal to given.

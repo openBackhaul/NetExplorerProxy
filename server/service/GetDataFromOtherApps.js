@@ -3,10 +3,18 @@ const requestHandler = require('./individualServices/RequestHandler');
 const IndividualServiceUtility = require('./individualServices/IndividualServicesUtility');
 const logger = require('./LoggingService.js').getLogger();
 
-
+// Used on old MWDI < 2.0.0 - MWDI://v1/provide-list-of-connected-devices
 module.exports.provideListOfConnectedDevicesfromMWDI = async function provideListOfConnectedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
     const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(
         url, "PromptForProvidingListOfConnectedDeviceCausesReadingMwdiDeviceList", {});
+
+    return ListOfConnectedDevices;
+}
+
+// From MWDI 2.0.0 - MWDI://v1/provide-list-of-cached-devices
+module.exports.provideListOfCachedDevicesfromMWDI = async function provideListOfCachedDevicesfromMWDI(body, user, xCorrelator, traceIndicator, customerJourney, url) {
+    const ListOfConnectedDevices = await requestHandler.postRequestDataFromOtherApp(
+        url, "PromptForEmbeddingCausesCyclicLoadingOfDeviceListFromMwdi", {});
 
     return ListOfConnectedDevices;
 }
