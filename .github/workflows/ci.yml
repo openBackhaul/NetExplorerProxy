@@ -3,9 +3,42 @@ name: CI
 on:
   push:
   pull_request:
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+  checks: write
+  issues: write
 
 jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
   test:
+    name: Test & Coverage
     runs-on: ubuntu-latest
 
     defaults:
@@ -13,48 +46,34 @@ jobs:
         working-directory: server
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug show current branch
-        run: |
-          echo "GIT_BRANCH: $GITHUB_REF"
-          git rev-parse --abbrev-ref HEAD || true
-
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: server/package-lock.json
 
-      - name: Print Node / NPM versions and list files
-        run: |
-          node -v
-          npm -v
-          pwd
-          ls -la
-          ls -la server || true
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Install dependencies (debug friendly)
-        run: |
-          npm ci --silent || { echo "npm ci failed, show package.json and lock"; echo "---- package.json ----"; cat package.json; echo "---- package-lock.json (first 200 lines) ----"; head -n 200 package-lock.json || true; exit 1; }
-
-      - name: Run tests (with coverage)
-        run: |
-          npm test -- --coverage || true
+      - name: Run tests with coverage
+        run: npm test -- --coverage
         env:
           CI: "true"
 
-      - name: Show junit.xml (if exists)
-        run: |
-          echo "---- find junit.xml ----"
-          find . -maxdepth 3 -type f -name "junit.xml" -print || true
-          echo "---- cat junit.xml (if present) ----"
-          if [ -f junit.xml ]; then cat junit.xml || true; fi
-          if [ -f server/junit.xml ]; then cat server/junit.xml || true; fi
+      - name: Publish Jest test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Jest Tests
+          path: server/junit.xml
+          reporter: jest-junit
+          fail-on-error: "false"
 
-      - name: Upload coverage (always)
+      - name: Upload coverage artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -62,12 +81,37 @@ jobs:
           path: server/coverage
           if-no-files-found: ignore
 
-      - name: Upload junit (always)
+      - name: Upload JUnit artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: junit
-          path: |
-            junit.xml
-            server/junit.xml
+          path: server/junit.xml
           if-no-files-found: ignore
+
+      - name: Comment coverage on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coverageFile = 'server/coverage/coverage-summary.json';
+            if (fs.existsSync(coverageFile)) {
+              const coverage = JSON.parse(fs.readFileSync(coverageFile, 'utf8'));
+              const total = coverage.total;
+              const comment = `## Code Coverage
+
+            | Metric | Coverage |
+            |--------|----------|
+            | Lines | ${total.lines.pct}% |
+            | Statements | ${total.statements.pct}% |
+            | Functions | ${total.functions.pct}% |
+            | Branches | ${total.branches.pct}% |`;
+
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }

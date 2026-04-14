@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Coverage reports
+coverage/
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+*.env
+
+# Build / temp files
+dist/
+build/
+tmp/
+temp/
+
+# Generated code (Swagger / OpenAPI)
+api/
+controllers/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test output
+junit.xml

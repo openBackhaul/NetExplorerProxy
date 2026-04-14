@@ -1,0 +1,33 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_|^next$|^uuid$|^req$|^res$" }],
+    "no-console": "warn",
+    "semi": ["error", "always"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "indent": "off",
+    "comma-dangle": ["error", "never"],
+    "no-trailing-spaces": "error",
+    "eol-last": ["error", "always"],
+    "prefer-const": "warn"
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "coverage/",
+    "logs/",
+    ".swagger-codegen/",
+    "start-newman.bat",
+    "api/",
+    "controllers/",
+    "service/"
+  ]
+}
+
