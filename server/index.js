@@ -2,6 +2,7 @@
 
 const logger = require('./service/LoggingService.js').getLogger();
 
+// eslint-disable-next-line
 var initConfig = require('./initConfig');
 var dbConf = require('./dbConfig');
 
@@ -11,6 +12,7 @@ var http = require('http');
 var oas3Tools = require('oas3-tools');
 var appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommons');
 var dbHandler = require('./service/db/dbHandler');
+// eslint-disable-next-line
 const dummyData = require('./service/db/dummyData.js'); // Some dummy Data
 
 var serverPort = 4018;
@@ -52,11 +54,13 @@ http.createServer(app).listen(serverPort, function () {
 // perform application registration
 appCommons.performApplicationRegistration();
 
+// eslint-disable-next-line
 const dbConfig = dbConf.readDBSettings(process);
 
 logger.info('Connecting to the DB');
 (async () => {
     try {
+        // eslint-disable-next-line
         const dbResult = await dbHandler.initDB(dbConfig);
 
         // Enable the code to test dummy data update / read data from DB
