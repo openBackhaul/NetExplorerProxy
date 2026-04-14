@@ -17,15 +17,15 @@ var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
 //appCommons.openApiValidatorOptions.validateSecurity = false;
-if (process.env.DEBUG && process.env.DEBUG.toLowerCase() === "true") {
-    logger.warn("Working in debug mode");
-    logger.warn("Checking validation")
+if (process.env.DEBUG && process.env.DEBUG.toLowerCase() === 'true') {
+    logger.warn('Working in debug mode');
+    logger.warn('Checking validation');
     appCommons.openApiValidatorOptions.validateSecurity = false;
     // appCommons.openApiValidatorOptions.validateResponses = false;
     // appCommons.openApiValidatorOptions.validateRequests = false;
-    logger.warn("Validate Security: " + appCommons.openApiValidatorOptions.validateSecurity);
-    logger.warn("Validate Responses: " + appCommons.openApiValidatorOptions.validateResponses);
-    logger.warn("Validate Requests: " + appCommons.openApiValidatorOptions.validateRequests);
+    logger.warn('Validate Security: ' + appCommons.openApiValidatorOptions.validateSecurity);
+    logger.warn('Validate Responses: ' + appCommons.openApiValidatorOptions.validateResponses);
+    logger.warn('Validate Requests: ' + appCommons.openApiValidatorOptions.validateRequests);
 }
 
 // swaggerRouter configuration
@@ -39,7 +39,7 @@ var options = {
 var expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
 var app = expressAppConfig.getApp();
 
-logger.debug("NetExplorerProxy starting.");
+logger.debug('NetExplorerProxy starting.');
 
 appCommons.setupExpressApp(app);
 
@@ -52,12 +52,12 @@ http.createServer(app).listen(serverPort, function () {
 // perform application registration
 appCommons.performApplicationRegistration();
 
-let dbConfig = dbConf.readDBSettings(process);
+const dbConfig = dbConf.readDBSettings(process);
 
-logger.info("Connecting to the DB");
+logger.info('Connecting to the DB');
 (async () => {
     try {
-        let dbResult = await dbHandler.initDB(dbConfig);
+        const dbResult = await dbHandler.initDB(dbConfig);
 
         // Enable the code to test dummy data update / read data from DB
         // if (dbResult) {
@@ -70,7 +70,7 @@ logger.info("Connecting to the DB");
     }
 })();
 
-logger.info("NetExplorerProxy is up.");
+logger.info('NetExplorerProxy is up.');
 
 const gracefulShutdown = async () => {
     logger.info('Shutting down DB connection...');
