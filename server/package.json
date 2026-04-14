@@ -39,6 +39,11 @@
     "rewire": "^7.0.0"
   },
   "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ],
     "reporters": [
       "default",
       [

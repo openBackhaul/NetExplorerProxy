@@ -8,6 +8,7 @@ on:
 permissions:
   contents: read
   checks: write
+  issues: write
 
 jobs:
   lint:
@@ -26,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: server/package-lock.json
 
@@ -51,7 +52,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: server/package-lock.json
 
@@ -98,8 +99,16 @@ jobs:
             if (fs.existsSync(coverageFile)) {
               const coverage = JSON.parse(fs.readFileSync(coverageFile, 'utf8'));
               const total = coverage.total;
-              const comment = `## 📊 Code Coverage\n\n| Metric | Coverage |\n|--------|----------|\n| Lines | ${total.lines.pct}% |\n| Statements | ${total.statements.pct}% |\n| Functions | ${total.functions.pct}% |\n| Branches | ${total.branches.pct}% |`;
-              github.rest.issues.createComment({
+              const comment = `## Code Coverage
+
+            | Metric | Coverage |
+            |--------|----------|
+            | Lines | ${total.lines.pct}% |
+            | Statements | ${total.statements.pct}% |
+            | Functions | ${total.functions.pct}% |
+            | Branches | ${total.branches.pct}% |`;
+
+              await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
