@@ -8,7 +8,7 @@
     "start": "node index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest --config ./jest.config.js --passWithNoTests"
+    "test": "jest --passWithNoTests"
   },
   "keywords": [
     "swagger"
@@ -39,6 +39,10 @@
     "rewire": "^7.0.0"
   },
   "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageProvider": "v8",
     "coverageReporters": [
       "json-summary",
       "text",
