@@ -25,8 +25,20 @@ The following data for all devices should be gathered into the following columns
   - `uuid`: this is the *logical-termination-point/uuid*
   - `connector`: this is the value from *ltp-augment-1-0:ltp-augment-pac/connector*
     - not every ltp-augment contains this attribute; in such cases leave the output field empty
-  - `equipment`: this is the value from *ltp-augment-1-0:ltp-augment-pac/equipment*
-    - equipment is an array, if the attribute contains multiple array items, the values shall be delimited by "|"
+  - `equipment`: this is the value is to be extracted from *ltp-augment-1-0:ltp-augment-pac/equipment-identifier*
+    - equipmentIdentifier is an array, if the attribute contains multiple array items, the values shall be delimited by "|"
+    - equipmentIdentifier contains the uuid as a substring inside a path, the uuid must be extracted from that path
+
+**EquipmentIdentifier uuid extraction**  
+The equipmentIdentifier contains the equipment uuids in a path format, the uuid must be extracted from it.
+E.g. from
+```
+  "equipment-identifier": [
+    "/core-model-1-4:control-construct/equipment[uuid='1921261567']"
+  ]
+```
+uuid `1921261567` must be extracted.
+
 
 Note:  
 - for (1) see description of service [*/v1/provide-general-information-of-devices*](./_GeneralDeviceInfoMappings.md)
