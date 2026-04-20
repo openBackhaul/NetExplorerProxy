@@ -902,17 +902,17 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
         uuid: uuid
       };
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector")) {
-        ltpEquipmentObj["connector"] = augmentPac["connector"];
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "connectorIdentifier")) {
+        ltpEquipmentObj["connectorIdentifier"] = augmentPac["connectorIdentifier"];
       }
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment")) {
-        const equipmentValue = augmentPac["equipment"];
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipmentIdentifier")) {
+        const equipmentValue = augmentPac["equipmentIdentifier"];
 
         if (Array.isArray(equipmentValue)) {
-          ltpEquipmentObj["equipment"] = equipmentValue.join("|");
+          ltpEquipmentObj["equipmentIdentifier"] = equipmentValue.join("|");
         } else if (equipmentValue != null) {
-          ltpEquipmentObj["equipment"] = String(equipmentValue);
+          ltpEquipmentObj["equipmentIdentifier"] = String(equipmentValue);
         }
       }
 
