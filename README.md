@@ -9,7 +9,7 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 
 ### Latest Update
 
-#### v1.2.1
+#### v1.2.2
 
 This release udpates the input source for /v1/provide-ltp-equipment-mappings data.
 This service was added in 1.2.0_spec with ltpAugment::equipment being the input source for related equipment uuids.
@@ -57,6 +57,22 @@ i.e. there will be no retrieval of data on demand.
   - a new application will be introduced, which will gather the PM data from MWDI and cache it
   - NEP and other applications (e.g. MycomButler) then can retrieve the data they need from this new application
   - this application has not been specified, yet 
+
+See related issue collection [NEP v1.1.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/3).  
+
+#### v1.0.1: MAC address data
+The following data shall be provided:  
+  - MAC address table content of the devices
+
+The following performance criteria shall be kept:  
+  - No real-time data required (Information to be taken from MATR)  
+  - Retrieval of the data at least once a day  
+  - Throttling accepted:
+    - Maximum 10 requests for current (live network) MAC address tables in parallel
+    - Maximum 100 requests for current (live network) MAC address tables per day
+  - Data integrity according to quality of MATR content  
+
+See related issue collections [NEP v1.0.1_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/2) and [NEP v1.0.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/1).  
 
 See related issue collection [NEP v1.1.0_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/3).  
 
