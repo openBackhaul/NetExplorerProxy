@@ -12,9 +12,9 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 #### v1.2.2
 
 This release udpates the input source for /v1/provide-ltp-equipment-mappings data.
-This service was added in 1.2.0_spec with ltpAugment::equipment being the input source for related equipment uuids.
-This attribute has been marked as deprecated and therefore should no longer be used.
-This release instead uses ltpAugment::equipmentIdentifier information (equipment uuids have to be extracted).
+This service was added in 1.2.0_spec with ltpAugment::equipment and ltpAugment::connector being the input source for related equipment uuids and connector localIds.
+These attributes have been marked as deprecated and therefore should no longer be used.
+This release instead uses ltpAugment::equipmentIdentifier and ltpAugment::connectorIdentifier information (IDs have to be extracted).
 
 See related issue collection [NEP v1.2.2_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/13).  
 
