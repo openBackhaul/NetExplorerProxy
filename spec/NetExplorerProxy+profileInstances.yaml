@@ -159,6 +159,18 @@ profile-instances:
       value-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=5/changes'
 
 
+  - profile-name: 'GenericResponseProfile'
+    uuid: 'nep-1-2-1-response-p-013'
+    capability:
+      operation-name: '/v1/inform-about-release-history-in-generic-representation'
+      field-name-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=6/release-number'
+      description: 'Represents the 7th entry in the list of releases'
+      datatype: string
+    configuration:
+      value-reference: '/core-model-1-4:control-construct/logical-termination-point=nep-1-2-1-http-s-000/layer-protocol=0/http-server-interface-1-0:http-server-interface-pac/http-server-interface-capability/release-list=6/changes'
+
+
+
   - profile-name: 'IntegerProfile'
     uuid: 'nep-1-2-1-integer-p-000'
     capability:

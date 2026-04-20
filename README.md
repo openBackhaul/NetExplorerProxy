@@ -11,6 +11,15 @@ In principle, the NetExplorerProxy is a passthrough of data from the MWDI (Micro
 
 #### v1.2.1
 
+This release udpates the input source for /v1/provide-ltp-equipment-mappings data.
+This service was added in 1.2.0_spec with ltpAugment::equipment being the input source for related equipment uuids.
+This attribute has been marked as deprecated and therefore should no longer be used.
+This release instead uses ltpAugment::equipmentIdentifier information (equipment uuids have to be extracted).
+
+See related issue collection [NEP v1.2.2_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/13).  
+
+#### v1.2.1
+
 This release adds updates for findings in v1.2.0_spec.  
 This includes the following changes:  
 - introduction of waitingTime between two ControlConstruct retrievals by slidingWindow (integerProfile)
