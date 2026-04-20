@@ -4,118 +4,118 @@ servers:
     own-oam:
       basic:
         - operation-name: /v1/register-yourself
-          uuid: nep-1-2-1-op-s-bm-000
+          uuid: nep-1-2-2-op-s-bm-000
         - operation-name: /v1/embed-yourself
-          uuid: nep-1-2-1-op-s-bm-001
+          uuid: nep-1-2-2-op-s-bm-001
         - operation-name: /v1/redirect-service-request-information
-          uuid: nep-1-2-1-op-s-bm-002
+          uuid: nep-1-2-2-op-s-bm-002
         - operation-name: /v1/redirect-oam-request-information
-          uuid: nep-1-2-1-op-s-bm-003
+          uuid: nep-1-2-2-op-s-bm-003
         - operation-name: /v1/end-subscription
-          uuid: nep-1-2-1-op-s-bm-004
+          uuid: nep-1-2-2-op-s-bm-004
         - operation-name: /v1/inquire-oam-request-approvals
-          uuid: nep-1-2-1-op-s-bm-005
+          uuid: nep-1-2-2-op-s-bm-005
         - operation-name: /v1/update-client
-          uuid: nep-1-2-1-op-s-bm-007
+          uuid: nep-1-2-2-op-s-bm-007
         - operation-name: /v1/list-ltps-and-fcs
-          uuid: nep-1-2-1-op-s-bm-008
+          uuid: nep-1-2-2-op-s-bm-008
         - operation-name: /v1/redirect-topology-change-information
-          uuid: nep-1-2-1-op-s-bm-009
+          uuid: nep-1-2-2-op-s-bm-009
         - operation-name: /v1/update-operation-key
-          uuid: nep-1-2-1-op-s-bm-010
+          uuid: nep-1-2-2-op-s-bm-010
         - operation-name: /v1/update-operation-client
-          uuid: nep-1-2-1-op-s-bm-011
+          uuid: nep-1-2-2-op-s-bm-011
         - operation-name: /v1/inquire-basic-auth-approvals
-          uuid: nep-1-2-1-op-s-bm-012
+          uuid: nep-1-2-2-op-s-bm-012
         - operation-name: /v1/dispose-remainders-of-deregistered-application
-          uuid: nep-1-2-1-op-s-bm-013
+          uuid: nep-1-2-2-op-s-bm-013
         - operation-name: /v1/inform-about-preceding-release
-          uuid: nep-1-2-1-op-s-bm-014
+          uuid: nep-1-2-2-op-s-bm-014
           operation-key: n.a.
         - operation-name: /v1/update-client-of-subsequent-release
-          uuid: nep-1-2-1-op-s-bm-015
+          uuid: nep-1-2-2-op-s-bm-015
       individual:
         - operation-name: /v1/bequeath-your-data-and-die
-          uuid: nep-1-2-1-op-s-im-000
+          uuid: nep-1-2-2-op-s-im-000
     service:
       basic:
         - operation-name: /v1/start-application-in-generic-representation
-          uuid: nep-1-2-1-op-s-bs-000
+          uuid: nep-1-2-2-op-s-bs-000
           operation-key: n.a.
         - operation-name: /v1/inform-about-application
-          uuid: nep-1-2-1-op-s-bs-001
+          uuid: nep-1-2-2-op-s-bs-001
           operation-key: n.a.
         - operation-name: /v1/inform-about-application-in-generic-representation
-          uuid: nep-1-2-1-op-s-bs-002
+          uuid: nep-1-2-2-op-s-bs-002
           operation-key: n.a.
         - operation-name: /v1/inform-about-release-history
-          uuid: nep-1-2-1-op-s-bs-003
+          uuid: nep-1-2-2-op-s-bs-003
           operation-key: n.a.
         - operation-name: /v1/inform-about-release-history-in-generic-representation
-          uuid: nep-1-2-1-op-s-bs-004
+          uuid: nep-1-2-2-op-s-bs-004
           operation-key: n.a.
         - operation-name: /docs
-          uuid: nep-1-2-1-op-s-bs-005
+          uuid: nep-1-2-2-op-s-bs-005
           operation-key: n.a.
       individual:
         # mac address data from cache (000,001) and live data (002) (MATR)
         - operation-name: /v1/provide-mac-table-of-all-devices
-          uuid: nep-1-2-1-op-s-is-000
+          uuid: nep-1-2-2-op-s-is-000
           operation-key: n.a.
         - operation-name: /v1/provide-mac-table-of-specific-device
-          uuid: nep-1-2-1-op-s-is-001
+          uuid: nep-1-2-2-op-s-is-001
           operation-key: n.a.
         - operation-name: /v1/read-current-mac-table-from-device
-          uuid: nep-1-2-1-op-s-is-002
+          uuid: nep-1-2-2-op-s-is-002
           operation-key: n.a.
         # receive operation for live MATR data
         - operation-name: /v1/receive-current-mac-table-of-device
-          uuid: nep-1-2-1-op-s-is-003
+          uuid: nep-1-2-2-op-s-is-003
 
         # list of devices connected to the Controller (MWDI), deprecated with 1.2.0
         - operation-name: /v1/provide-list-of-connected-devices
-          uuid: nep-1-2-1-op-s-is-020
+          uuid: nep-1-2-2-op-s-is-020
           operation-key: n.a.
 
         # provide list of devices in NEP cache for non-MAC data provisioning
         - operation-name: /v1/provide-list-of-devices-in-nep
-          uuid: nep-1-2-1-op-s-is-021
+          uuid: nep-1-2-2-op-s-is-021
           operation-key: n.a.
 
         - operation-name: /v1/provide-list-of-interfaces-per-device-in-nep
-          uuid: nep-1-2-1-op-s-is-022
+          uuid: nep-1-2-2-op-s-is-022
           operation-key: n.a.
 
         # services to provide non-MAC data from MWDI
         - operation-name: /v1/provide-general-information-of-devices
-          uuid: nep-1-2-1-op-s-is-025
+          uuid: nep-1-2-2-op-s-is-025
           operation-key: n.a.
         - operation-name: /v1/provide-actual-equipment-information-of-devices
-          uuid: nep-1-2-1-op-s-is-026
+          uuid: nep-1-2-2-op-s-is-026
           operation-key: n.a.
         - operation-name: /v1/provide-ltp-equipment-mappings
-          uuid: nep-1-2-1-op-s-is-027
+          uuid: nep-1-2-2-op-s-is-027
           operation-key: n.a.
 
         - operation-name: /v1/provide-air-interface-general-information-of-devices
-          uuid: nep-1-2-1-op-s-is-030
+          uuid: nep-1-2-2-op-s-is-030
           operation-key: n.a.
         - operation-name: /v1/provide-air-interface-transmission-mode-lists-of-devices
-          uuid: nep-1-2-1-op-s-is-031
+          uuid: nep-1-2-2-op-s-is-031
           operation-key: n.a.
 
         - operation-name: /v1/provide-ethernet-container-general-information-of-devices
-          uuid: nep-1-2-1-op-s-is-040
+          uuid: nep-1-2-2-op-s-is-040
           operation-key: n.a.
 
         - operation-name: /v1/provide-wire-interface-general-information-of-devices
-          uuid: nep-1-2-1-op-s-is-045
+          uuid: nep-1-2-2-op-s-is-045
           operation-key: n.a.
 
   http-server:
     own-application-name: NetExplorerProxy
-    own-release-number: 1.2.1
-    uuid: nep-1-2-1-http-s-000
+    own-release-number: 1.2.2
+    uuid: nep-1-2-2-http-s-000
     application-purpose: The application is the interface towards the NetExplorer
     owner-name: Katharina Mohr
     owner-email-address: Katharina.Mohr.external@telefonica.de
@@ -138,12 +138,15 @@ servers:
       - release-number: 1.2.1
         release-date: 09.03.2026
         changes: Fixes findings from 1.2.0
+      - release-number: 1.2.2
+        release-date: 20.04.2026
+        changes: Changes input source for equipment mappings
   tcp-server:
     - description: Without TLS layer
       local-protocol: http
       own-ip-address: 127.0.0.1
       own-tcp-port: 4032
-      uuid: nep-1-2-1-tcp-s-000
+      uuid: nep-1-2-2-tcp-s-000
 
 
 clients:
@@ -151,30 +154,30 @@ clients:
   - http-client:
       application-name: ElasticSearch
       release-number: 1.0.0
-      uuid: nep-1-2-1-http-c-es-1-0-0-000
+      uuid: nep-1-2-2-http-c-es-1-0-0-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3015
-      uuid: nep-1-2-1-tcp-c-es-1-0-0-000
+      uuid: nep-1-2-2-tcp-c-es-1-0-0-000
     elasticsearch-client:
-      uuid: nep-1-2-1-es-c-es-1-0-0-000
+      uuid: nep-1-2-2-es-c-es-1-0-0-000
       index-alias: 10
 
   - http-client:
       application-name: OldRelease
       release-number: 1.1.1
-      uuid: nep-1-2-1-http-c-or-1-1-1-000
+      uuid: nep-1-2-2-http-c-or-1-1-1-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4018
-      uuid: nep-1-2-1-tcp-c-or-1-1-1-000
+      uuid: nep-1-2-2-tcp-c-or-1-1-1-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/bequeath-your-data-and-die
-            uuid: nep-1-2-1-op-c-bm-or-1-1-1-000
+            uuid: nep-1-2-2-op-c-bm-or-1-1-1-000
         individual:
       service:
         basic:
@@ -182,13 +185,13 @@ clients:
 
   - http-client:
       application-name: NewRelease
-      release-number: 1.2.1
-      uuid: nep-1-2-1-http-c-nr-1-2-1-000
+      release-number: 1.2.2
+      uuid: nep-1-2-2-http-c-nr-1-2-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4032
-      uuid: nep-1-2-1-tcp-c-nr-1-2-1-000
+      uuid: nep-1-2-2-tcp-c-nr-1-2-2-000
     operation-clients:
       own-oam:
         basic:
@@ -200,23 +203,23 @@ clients:
   - http-client:
       application-name: RegistryOffice
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-ro-2-1-2-000
+      uuid: nep-1-2-2-http-c-ro-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3031
-      uuid: nep-1-2-1-tcp-c-ro-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-ro-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v2/register-application
-            uuid: nep-1-2-1-op-c-bm-ro-2-1-2-000
+            uuid: nep-1-2-2-op-c-bm-ro-2-1-2-000
           - operation-name: /v1/relay-server-replacement
-            uuid: nep-1-2-1-op-c-bm-ro-2-1-2-001
+            uuid: nep-1-2-2-op-c-bm-ro-2-1-2-001
           - operation-name: /v1/deregister-application
-            uuid: nep-1-2-1-op-c-bm-ro-2-1-2-002
+            uuid: nep-1-2-2-op-c-bm-ro-2-1-2-002
           - operation-name: /v1/relay-operation-update
-            uuid: nep-1-2-1-op-c-bm-ro-2-1-2-003
+            uuid: nep-1-2-2-op-c-bm-ro-2-1-2-003
         individual:
       service:
         basic:
@@ -225,12 +228,12 @@ clients:
   - http-client:
       application-name: TypeApprovalRegister
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-tar-2-1-2-000
+      uuid: nep-1-2-2-http-c-tar-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3032
-      uuid: nep-1-2-1-tcp-c-tar-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-tar-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -242,12 +245,12 @@ clients:
   - http-client:
       application-name: ExecutionAndTraceLog
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-eatl-2-1-2-000
+      uuid: nep-1-2-2-http-c-eatl-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3033
-      uuid: nep-1-2-1-tcp-c-eatl-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-eatl-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -255,19 +258,19 @@ clients:
       service:
         basic:
           - operation-name: /v1/record-service-request
-            uuid: nep-1-2-1-op-c-bs-eatl-2-1-2-000
+            uuid: nep-1-2-2-op-c-bs-eatl-2-1-2-000
             detailed-logging-is-on: false
         individual:
 
   - http-client:
       application-name: OamLog
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-ol-2-1-2-000
+      uuid: nep-1-2-2-http-c-ol-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3034
-      uuid: nep-1-2-1-tcp-c-ol-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-ol-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -275,18 +278,18 @@ clients:
       service:
         basic:
           - operation-name: /v1/record-oam-request
-            uuid: nep-1-2-1-op-c-bs-ol-2-1-2-000
+            uuid: nep-1-2-2-op-c-bs-ol-2-1-2-000
         individual:
 
   - http-client:
       application-name: AccessAdministration
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-aa-2-1-2-000
+      uuid: nep-1-2-2-http-c-aa-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3035
-      uuid: nep-1-2-1-tcp-c-aa-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-aa-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -294,33 +297,33 @@ clients:
       service:
         basic:
           - operation-name: /v1/approve-basic-auth-request
-            uuid: nep-1-2-1-op-c-bs-aa-2-1-2-000
+            uuid: nep-1-2-2-op-c-bs-aa-2-1-2-000
         individual:
 
   - http-client:
       application-name: ApplicationLayerTopology
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-alt-2-1-2-000
+      uuid: nep-1-2-2-http-c-alt-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3036
-      uuid: nep-1-2-1-tcp-c-alt-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-alt-2-1-2-000
     operation-clients:
       own-oam:
         basic:
           - operation-name: /v1/update-all-ltps-and-fcs
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-000
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-000
           - operation-name: /v1/update-ltp
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-001
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-001
           - operation-name: /v1/delete-ltp-and-dependents
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-002
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-002
           - operation-name: /v1/update-fc
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-003
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-003
           - operation-name: /v1/update-fc-port
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-004
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-004
           - operation-name: /v1/delete-fc-port
-            uuid: nep-1-2-1-op-c-bm-alt-2-1-2-005
+            uuid: nep-1-2-2-op-c-bm-alt-2-1-2-005
         individual:
       service:
         basic:
@@ -329,12 +332,12 @@ clients:
   - http-client:
       application-name: OperationKeyManagement
       release-number: 2.1.2
-      uuid: nep-1-2-1-http-c-okm-2-1-2-000
+      uuid: nep-1-2-2-http-c-okm-2-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 3037
-      uuid: nep-1-2-1-tcp-c-okm-2-1-2-000
+      uuid: nep-1-2-2-tcp-c-okm-2-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -346,12 +349,12 @@ clients:
   - http-client:
       application-name: MacAddressTableRecorder
       release-number: 1.0.3
-      uuid: nep-1-2-1-http-c-matr-1-0-3-000
+      uuid: nep-1-2-2-http-c-matr-1-0-3-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4005
-      uuid: nep-1-2-1-tcp-c-matr-1-0-3-000
+      uuid: nep-1-2-2-tcp-c-matr-1-0-3-000
     operation-clients:
       own-oam:
         basic:
@@ -360,21 +363,21 @@ clients:
         basic:
         individual:
           - operation-name: /v1/provide-mac-table-of-all-devices
-            uuid: nep-1-2-1-op-c-is-matr-1-0-3-000
+            uuid: nep-1-2-2-op-c-is-matr-1-0-3-000
           - operation-name: /v1/provide-mac-table-of-specific-device
-            uuid: nep-1-2-1-op-c-is-matr-1-0-3-001
+            uuid: nep-1-2-2-op-c-is-matr-1-0-3-001
           - operation-name: /v1/read-current-mac-table-from-device
-            uuid: nep-1-2-1-op-c-is-matr-1-0-3-002
+            uuid: nep-1-2-2-op-c-is-matr-1-0-3-002
 
   - http-client:
       application-name: MicroWaveDeviceInventory
       release-number: 1.1.2
-      uuid: nep-1-2-1-http-c-mwdi-1-1-2-000
+      uuid: nep-1-2-2-http-c-mwdi-1-1-2-000
     tcp-client:
       remote-protocol: http
       ip-address: 127.0.0.1
       tcp-port: 4015
-      uuid: nep-1-2-1-tcp-c-mwdi-1-1-2-000
+      uuid: nep-1-2-2-tcp-c-mwdi-1-1-2-000
     operation-clients:
       own-oam:
         basic:
@@ -383,9 +386,9 @@ clients:
         basic:
         individual:
           - operation-name: /v1/provide-list-of-connected-devices
-            uuid: nep-1-2-1-op-c-is-mwdi-1-1-2-000
-          # service to retrieve non-MAC-address data from MWDI, uses fields filter (nep-1-2-1-string-p-000)
+            uuid: nep-1-2-2-op-c-is-mwdi-1-1-2-000
+          # service to retrieve non-MAC-address data from MWDI, uses fields filter (nep-1-2-2-string-p-000)
           - operation-name: /core-model-1-4:network-control-domain=cache/control-construct={mountName}
-            uuid: nep-1-2-1-op-c-is-mwdi-1-1-2-001
+            uuid: nep-1-2-2-op-c-is-mwdi-1-1-2-001
           - operation-name: /v1/provide-list-of-cached-devices
-            uuid: nep-1-2-1-op-c-is-mwdi-1-1-2-002
+            uuid: nep-1-2-2-op-c-is-mwdi-1-1-2-002
