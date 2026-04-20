@@ -2,6 +2,7 @@
 
 const logger = require('./service/LoggingService.js').getLogger();
 
+// eslint-disable-next-line
 var initConfig = require('./initConfig');
 var dbConf = require('./dbConfig');
 
@@ -11,21 +12,22 @@ var http = require('http');
 var oas3Tools = require('oas3-tools');
 var appCommons = require('onf-core-model-ap/applicationPattern/commons/AppCommons');
 var dbHandler = require('./service/db/dbHandler');
+// eslint-disable-next-line
 const dummyData = require('./service/db/dummyData.js'); // Some dummy Data
 
 var serverPort = 4018;
 
 // uncomment if you do not want to validate security e.g. operation-key, basic auth, etc
 //appCommons.openApiValidatorOptions.validateSecurity = false;
-if (process.env.DEBUG && process.env.DEBUG.toLowerCase() === "true") {
-    logger.warn("Working in debug mode");
-    logger.warn("Checking validation")
+if (process.env.DEBUG && process.env.DEBUG.toLowerCase() === 'true') {
+    logger.warn('Working in debug mode');
+    logger.warn('Checking validation');
     appCommons.openApiValidatorOptions.validateSecurity = false;
     // appCommons.openApiValidatorOptions.validateResponses = false;
     // appCommons.openApiValidatorOptions.validateRequests = false;
-    logger.warn("Validate Security: " + appCommons.openApiValidatorOptions.validateSecurity);
-    logger.warn("Validate Responses: " + appCommons.openApiValidatorOptions.validateResponses);
-    logger.warn("Validate Requests: " + appCommons.openApiValidatorOptions.validateRequests);
+    logger.warn('Validate Security: ' + appCommons.openApiValidatorOptions.validateSecurity);
+    logger.warn('Validate Responses: ' + appCommons.openApiValidatorOptions.validateResponses);
+    logger.warn('Validate Requests: ' + appCommons.openApiValidatorOptions.validateRequests);
 }
 
 // swaggerRouter configuration
@@ -39,7 +41,7 @@ var options = {
 var expressAppConfig = oas3Tools.expressAppConfig(path.join(__dirname, 'api/openapi.yaml'), options);
 var app = expressAppConfig.getApp();
 
-logger.debug("NetExplorerProxy starting.");
+logger.debug('NetExplorerProxy starting.');
 
 appCommons.setupExpressApp(app);
 
@@ -52,12 +54,14 @@ http.createServer(app).listen(serverPort, function () {
 // perform application registration
 appCommons.performApplicationRegistration();
 
-let dbConfig = dbConf.readDBSettings(process);
+// eslint-disable-next-line
+const dbConfig = dbConf.readDBSettings(process);
 
-logger.info("Connecting to the DB");
+logger.info('Connecting to the DB');
 (async () => {
     try {
-        let dbResult = await dbHandler.initDB(dbConfig);
+        // eslint-disable-next-line
+        const dbResult = await dbHandler.initDB(dbConfig);
 
         // Enable the code to test dummy data update / read data from DB
         // if (dbResult) {
@@ -70,7 +74,7 @@ logger.info("Connecting to the DB");
     }
 })();
 
-logger.info("NetExplorerProxy is up.");
+logger.info('NetExplorerProxy is up.');
 
 const gracefulShutdown = async () => {
     logger.info('Shutting down DB connection...');

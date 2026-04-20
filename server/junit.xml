@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="39" failures="8" errors="0" time="0.865">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2026-04-10T07:58:39" time="0.223" tests="2">
+    <testcase classname=" putIntegerProfileIntegerValue - 12345" name=" putIntegerProfileIntegerValue - 12345" time="0.002">
+    </testcase>
+    <testcase classname=" putIntegerProfileIntegerValue - 23456" name=" putIntegerProfileIntegerValue - 23456" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="provideListOfConnectedDevices" errors="0" failures="0" skipped="0" timestamp="2026-04-10T07:58:39" time="0.469" tests="2">
+    <testcase classname="provideListOfConnectedDevices should call postRequestDataFromMWDI with correct arguments and return the result" name="provideListOfConnectedDevices should call postRequestDataFromMWDI with correct arguments and return the result" time="0.003">
+    </testcase>
+    <testcase classname="provideListOfConnectedDevices should handle errors and throw an exception if postRequestDataFromOtherApp fails" name="provideListOfConnectedDevices should handle errors and throw an exception if postRequestDataFromOtherApp fails" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="provideListOfConnectedDevices" errors="0" failures="0" skipped="0" timestamp="2026-04-10T07:58:39" time="0.489" tests="2">
+    <testcase classname="provideListOfConnectedDevices should call axios.post with correct arguments and return the result" name="provideListOfConnectedDevices should call axios.post with correct arguments and return the result" time="0.007">
+    </testcase>
+    <testcase classname="checkErrorTranslation should call axios.post and return the translated result" name="checkErrorTranslation should call axios.post and return the translated result" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="extractWireInterfaceGeneralInfo" errors="0" failures="7" skipped="0" timestamp="2026-04-10T07:58:39" time="0.491" tests="29">
+    <testcase classname="extractWireInterfaceGeneralInfo should return an empty array when wireinterfceLtpList is empty" name="extractWireInterfaceGeneralInfo should return an empty array when wireinterfceLtpList is empty" time="0.002">
+    </testcase>
+    <testcase classname="extractWireInterfaceGeneralInfo should return an empty array when LTP has no layer protocol" name="extractWireInterfaceGeneralInfo should return an empty array when LTP has no layer protocol" time="0">
+    </testcase>
+    <testcase classname="extractWireInterfaceGeneralInfo should return an empty array when layer protocol does not contain wire-interface-pac" name="extractWireInterfaceGeneralInfo should return an empty array when layer protocol does not contain wire-interface-pac" time="0">
+    </testcase>
+    <testcase classname="extractWireInterfaceGeneralInfo should extract basic wire interface configuration, status, and capability" name="extractWireInterfaceGeneralInfo should extract basic wire interface configuration, status, and capability" time="0.003">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+- Expected  - 16
++ Received  + 16
+
+@@ -1,63 +1,63 @@
+  Array [
+    Object {
+-     &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-     &quot;duplex&quot;: &quot;wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED&quot;,
++     &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++     &quot;duplex&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;fixed_pmd_kind&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;interface_name&quot;: &quot;&quot;,
+-     &quot;interface_status&quot;: &quot;wire-interface-2-0:INTERFACE_STATUS_TYPE_UP&quot;,
++     &quot;interface_status&quot;: &quot;UP&quot;,
+      &quot;local_id&quot;: &quot;86.1.4&quot;,
+      &quot;mount_name&quot;: &quot;CO12123&quot;,
+-     &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++     &quot;operational_state&quot;: &quot;ENABLED&quot;,
+      &quot;original_ltp_name&quot;: &quot;LAN:1/4&quot;,
+      &quot;pmd_kind_cur&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;pmd_name&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;speed&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;timestamp&quot;: 1748327909254,
+      &quot;uuid&quot;: &quot;ETY-86.1.4&quot;,
+    },
+    Object {
+-     &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-     &quot;duplex&quot;: &quot;wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED&quot;,
++     &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++     &quot;duplex&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;fixed_pmd_kind&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;interface_name&quot;: &quot;&quot;,
+-     &quot;interface_status&quot;: &quot;wire-interface-2-0:INTERFACE_STATUS_TYPE_UP&quot;,
++     &quot;interface_status&quot;: &quot;UP&quot;,
+      &quot;local_id&quot;: &quot;86.1.4&quot;,
+      &quot;mount_name&quot;: &quot;CO12123&quot;,
+-     &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++     &quot;operational_state&quot;: &quot;ENABLED&quot;,
+      &quot;original_ltp_name&quot;: &quot;LAN:1/4&quot;,
+      &quot;pmd_kind_cur&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;pmd_name&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;speed&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;timestamp&quot;: 1748327909254,
+      &quot;uuid&quot;: &quot;ETY-86.1.4&quot;,
+    },
+    Object {
+-     &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-     &quot;duplex&quot;: &quot;wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED&quot;,
++     &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++     &quot;duplex&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;fixed_pmd_kind&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;interface_name&quot;: &quot;Y-cable  to 6691&quot;,
+-     &quot;interface_status&quot;: &quot;wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN&quot;,
++     &quot;interface_status&quot;: &quot;DOWN&quot;,
+      &quot;local_id&quot;: &quot;86.1.2&quot;,
+      &quot;mount_name&quot;: &quot;CO12123&quot;,
+-     &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_DISABLED&quot;,
++     &quot;operational_state&quot;: &quot;DISABLED&quot;,
+      &quot;original_ltp_name&quot;: &quot;LAN:1/2&quot;,
+      &quot;pmd_kind_cur&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;pmd_name&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;speed&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;timestamp&quot;: 1748327909254,
+      &quot;uuid&quot;: &quot;ETY-86.1.2&quot;,
+    },
+    Object {
+-     &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-     &quot;duplex&quot;: &quot;wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED&quot;,
++     &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++     &quot;duplex&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;fixed_pmd_kind&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;interface_name&quot;: &quot;Y-cable  to 6691&quot;,
+-     &quot;interface_status&quot;: &quot;wire-interface-2-0:INTERFACE_STATUS_TYPE_DOWN&quot;,
++     &quot;interface_status&quot;: &quot;DOWN&quot;,
+      &quot;local_id&quot;: &quot;86.1.2&quot;,
+      &quot;mount_name&quot;: &quot;CO12123&quot;,
+-     &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_DISABLED&quot;,
++     &quot;operational_state&quot;: &quot;DISABLED&quot;,
+      &quot;original_ltp_name&quot;: &quot;LAN:1/2&quot;,
+      &quot;pmd_kind_cur&quot;: &quot;10GBASE-LR-LW&quot;,
+      &quot;pmd_name&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;speed&quot;: &quot;NOT_YET_DEFINED&quot;,
+      &quot;timestamp&quot;: 1748327909254,
+    at Object.toMatchObject (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:137:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractWireInterfaceGeneralInfo should handle missing configuration/status/capability blocks gracefully" name="extractWireInterfaceGeneralInfo should handle missing configuration/status/capability blocks gracefully" time="0.001">
+    </testcase>
+    <testcase classname="extractWireInterfaceGeneralInfo should handle multiple wire interface LTPs correctly" name="extractWireInterfaceGeneralInfo should handle multiple wire interface LTPs correctly" time="0">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+- Expected  - 4
++ Received  + 4
+
+@@ -1,14 +1,14 @@
+  Object {
+-   &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-   &quot;duplex&quot;: &quot;wire-interface-2-0:DUPLEX_TYPE_NOT_YET_DEFINED&quot;,
++   &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++   &quot;duplex&quot;: &quot;NOT_YET_DEFINED&quot;,
+    &quot;fixed_pmd_kind&quot;: &quot;NOT_YET_DEFINED&quot;,
+    &quot;interface_name&quot;: &quot;&quot;,
+-   &quot;interface_status&quot;: &quot;wire-interface-2-0:INTERFACE_STATUS_TYPE_UP&quot;,
++   &quot;interface_status&quot;: &quot;UP&quot;,
+    &quot;local_id&quot;: &quot;86.1.4&quot;,
+    &quot;mount_name&quot;: &quot;CO12123&quot;,
+-   &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++   &quot;operational_state&quot;: &quot;ENABLED&quot;,
+    &quot;original_ltp_name&quot;: &quot;LAN:1/4&quot;,
+    &quot;pmd_kind_cur&quot;: &quot;10GBASE-LR-LW&quot;,
+    &quot;pmd_name&quot;: &quot;10GBASE-LR-LW&quot;,
+    &quot;speed&quot;: &quot;NOT_YET_DEFINED&quot;,
+    &quot;timestamp&quot;: 1748327909254,
+    at Object.toMatchObject (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:386:27)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should return an empty array when ethInterfaceLtpList is empty" name="extractEthernetContainerInfo should return an empty array when ethInterfaceLtpList is empty" time="0">
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should extract basic information from LTP without ethernet-container-pac" name="extractEthernetContainerInfo should extract basic information from LTP without ethernet-container-pac" time="0">
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should extract complete information including ethernet-container-pac data" name="extractEthernetContainerInfo should extract complete information including ethernet-container-pac data" time="0">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+- Expected  - 1
++ Received  + 1
+
+@@ -1,10 +1,10 @@
+  Object {
+    &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
+    &quot;bundling_is_on&quot;: true,
+    &quot;interface_name&quot;: &quot;eth0&quot;,
+-   &quot;interface_status&quot;: &quot;UP&quot;,
++   &quot;interface_status&quot;: &quot;-----------&quot;,
+    &quot;local_id&quot;: &quot;test-local-id&quot;,
+    &quot;mount_name&quot;: &quot;test-mount&quot;,
+    &quot;operational_state&quot;: &quot;ENABLED&quot;,
+    &quot;original_ltp_name&quot;: &quot;test-ltp-name&quot;,
+    &quot;timestamp&quot;: 12345,
+    at Object.toMatchObject (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:566:23)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should handle multiple LTPs correctly" name="extractEthernetContainerInfo should handle multiple LTPs correctly" time="0">
+      <failure>Error: expect(received).toMatchObject(expected)
+
+- Expected  - 1
++ Received  + 1
+
+@@ -1,10 +1,10 @@
+  Object {
+    &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
+    &quot;bundling_is_on&quot;: true,
+    &quot;interface_name&quot;: &quot;eth0&quot;,
+-   &quot;interface_status&quot;: &quot;UP&quot;,
++   &quot;interface_status&quot;: &quot;-----------&quot;,
+    &quot;local_id&quot;: &quot;local-id-1&quot;,
+    &quot;mount_name&quot;: &quot;test-mount&quot;,
+    &quot;operational_state&quot;: &quot;ENABLED&quot;,
+    &quot;original_ltp_name&quot;: &quot;ltp-name-1&quot;,
+    &quot;timestamp&quot;: 12345,
+    at Object.toMatchObject (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:632:23)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should handle missing ltp-augment-pac gracefully" name="extractEthernetContainerInfo should handle missing ltp-augment-pac gracefully" time="0">
+    </testcase>
+    <testcase classname="extractEthernetContainerInfo should handle malformed LTP data gracefully" name="extractEthernetContainerInfo should handle malformed LTP data gracefully" time="0">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return all values when all fields are present" name="extractGeneralInfo should return all values when all fields are present" time="0.001">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return only device_model_name and external_label when system_name is missing" name="extractGeneralInfo should return only device_model_name and external_label when system_name is missing" time="0">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return only system_name when device-model-name and external-label are missing" name="extractGeneralInfo should return only system_name when device-model-name and external-label are missing" time="0">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return only mount_name and timestamp when all optional fields are missing" name="extractGeneralInfo should return only mount_name and timestamp when all optional fields are missing" time="0">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return empty object with only mount_name and timestamp when input is empty" name="extractGeneralInfo should return empty object with only mount_name and timestamp when input is empty" time="0">
+    </testcase>
+    <testcase classname="extractGeneralInfo should return empty object with only mount_name and timestamp when input is null" name="extractGeneralInfo should return empty object with only mount_name and timestamp when input is null" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should return full mapped equipment data when all fields are present" name="extractEquipmentData should return full mapped equipment data when all fields are present" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should skip equipment without &apos;actual-equipment&apos;" name="extractEquipmentData should skip equipment without &apos;actual-equipment&apos;" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should skip equipment without &apos;manufactured-thing&apos;" name="extractEquipmentData should skip equipment without &apos;manufactured-thing&apos;" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should return equipment object with only available fields" name="extractEquipmentData should return equipment object with only available fields" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should return empty array if input is empty" name="extractEquipmentData should return empty array if input is empty" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should return empty array if input is null" name="extractEquipmentData should return empty array if input is null" time="0">
+    </testcase>
+    <testcase classname="extractEquipmentData should return empty array if equipment is not an array" name="extractEquipmentData should return empty array if equipment is not an array" time="0.001">
+    </testcase>
+    <testcase classname="extractAirContainerGeneralInfoAndTransmissionInfo should return full airContainerGeneralInfo and transmissionListInfo when all properties exist" name="extractAirContainerGeneralInfoAndTransmissionInfo should return full airContainerGeneralInfo and transmissionListInfo when all properties exist" time="0">
+      <failure>Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 3
++ Received  + 3
+
+@@ -1,14 +1,14 @@
+  Object {
+    &quot;airContainerGeneralInfo&quot;: Array [
+      Object {
+-       &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
++       &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
+        &quot;external_label&quot;: &quot;External label not yet defined.&quot;,
+-       &quot;interface_status&quot;: &quot;air-interface-2-0:INTERFACE_STATUS_TYPE_UP&quot;,
++       &quot;interface_status&quot;: &quot;UP&quot;,
+        &quot;local_id&quot;: &quot;819.1.1&quot;,
+        &quot;mount_name&quot;: &quot;CO12123&quot;,
+-       &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++       &quot;operational_state&quot;: &quot;ENABLED&quot;,
+        &quot;original_ltp_name&quot;: &quot;CT 1/1/1&quot;,
+        &quot;power_is_on&quot;: true,
+        &quot;timestamp&quot;: &quot;1747995605012&quot;,
+        &quot;transmission_mode_max&quot;: &quot;782.1.1.16.19&quot;,
+        &quot;transmission_mode_min&quot;: &quot;782.1.1.16.3&quot;,
+    at Object.toEqual (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:1151:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractAirContainerGeneralInfoAndTransmissionInfo should return empty arrays when input is empty" name="extractAirContainerGeneralInfoAndTransmissionInfo should return empty arrays when input is empty" time="0">
+    </testcase>
+    <testcase classname="extractAirContainerGeneralInfoAndTransmissionInfo should handle missing air-interface-pac properties" name="extractAirContainerGeneralInfoAndTransmissionInfo should handle missing air-interface-pac properties" time="0">
+      <failure>Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 2
++ Received  + 2
+
+@@ -1,13 +1,13 @@
+  Object {
+    &quot;airContainerGeneralInfo&quot;: Array [
+      Object {
+-       &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
++       &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
+        &quot;external_label&quot;: &quot;External label not yet defined.&quot;,
+        &quot;local_id&quot;: &quot;819.1.1&quot;,
+        &quot;mount_name&quot;: &quot;CO12123&quot;,
+-       &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++       &quot;operational_state&quot;: &quot;ENABLED&quot;,
+        &quot;original_ltp_name&quot;: &quot;CT 1/1/1&quot;,
+        &quot;timestamp&quot;: &quot;1747995605012&quot;,
+        &quot;type_of_equipment&quot;: &quot;UKL 501 003/21L R1A CXP9026371_3 R29E117&quot;,
+        &quot;uuid&quot;: &quot;RF-819.1.1&quot;,
+      },
+    at Object.toEqual (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:1204:18)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+    <testcase classname="extractAirContainerGeneralInfoAndTransmissionInfo should handle missing transmission-mode-list" name="extractAirContainerGeneralInfoAndTransmissionInfo should handle missing transmission-mode-list" time="0">
+      <failure>Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 3
++ Received  + 3
+
+@@ -1,13 +1,13 @@
+  Object {
+    &quot;airContainerGeneralInfo&quot;: Array [
+      Object {
+-       &quot;administrative_state&quot;: &quot;core-model-1-4:ADMINISTRATIVE_STATE_UNLOCKED&quot;,
+-       &quot;interface_status&quot;: &quot;air-interface-2-0:INTERFACE_STATUS_TYPE_UP&quot;,
++       &quot;administrative_state&quot;: &quot;UNLOCKED&quot;,
++       &quot;interface_status&quot;: &quot;UP&quot;,
+        &quot;local_id&quot;: &quot;819.1.1&quot;,
+        &quot;mount_name&quot;: &quot;CO12123&quot;,
+-       &quot;operational_state&quot;: &quot;core-model-1-4:OPERATIONAL_STATE_ENABLED&quot;,
++       &quot;operational_state&quot;: &quot;ENABLED&quot;,
+        &quot;timestamp&quot;: &quot;1747995605012&quot;,
+        &quot;transmission_mode_min&quot;: &quot;782.1.1.16.3&quot;,
+        &quot;transmitter_is_on&quot;: true,
+        &quot;type_of_equipment&quot;: &quot;UKL 501 003/21L R1A CXP9026371_3 R29E117&quot;,
+        &quot;uuid&quot;: &quot;RF-819.1.1&quot;,
+    at Object.toEqual (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/test/BasicServicesService.test.js:1252:20)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="readCurrentMacTableFromDevice" errors="0" failures="1" skipped="0" timestamp="2026-04-10T07:58:39" time="0.655" tests="4">
+    <testcase classname="readCurrentMacTableFromDevice should call postRequestDataFromOtherApp with correct arguments and return the result" name="readCurrentMacTableFromDevice should call postRequestDataFromOtherApp with correct arguments and return the result" time="0.01">
+      <failure>Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+- Expected
++ Received
+
+  &quot;http://localhost:4018/v1/read-current-mac-table-from-device&quot;,
+  &quot;PromptForProvidingMacTableOfSpecificDeviceCausesReadingMacTableFromMatrCache&quot;,
+@@ -3,9 +3,9 @@
+    &quot;requestor-address&quot;: Object {
+      &quot;ip-address&quot;: Object {
+        &quot;ipv-4-address&quot;: &quot;127.0.0.1&quot;,
+      },
+    },
+-   &quot;requestor-port&quot;: 4018,
++   &quot;requestor-port&quot;: 4032,
+    &quot;requestor-protocol&quot;: &quot;HTTP&quot;,
+    &quot;requestor-receive-operation&quot;: &quot;/v1/receive-current-mac-table-of-device&quot;,
+  },
+  &quot;/v1/read-current-mac-table-from-device&quot;,
+
+Number of calls: 1
+    at Object.toHaveBeenCalledWith (/Users/mady/Downloads/projects/siaemic/NetExplorerProxy/server/service/ReadCurrentMacTableFromDevice.test.js:51:60)</failure>
+    </testcase>
+    <testcase classname="readCurrentMacTableFromDevice should handle errors and throw an exception if postRequestDataFromOtherApp fails" name="readCurrentMacTableFromDevice should handle errors and throw an exception if postRequestDataFromOtherApp fails" time="0.005">
+    </testcase>
+    <testcase classname="readCurrentMacTableFromDevice throttling should call postRequestDataFromOtherApp with correct arguments and return the result" name="readCurrentMacTableFromDevice throttling should call postRequestDataFromOtherApp with correct arguments and return the result" time="0.025">
+    </testcase>
+    <testcase classname="readCurrentMacTableFromDevice maximum call check should refuse calls after 100 per day" name="readCurrentMacTableFromDevice maximum call check should refuse calls after 100 per day" time="0.136">
+    </testcase>
+  </testsuite>
+</testsuites>

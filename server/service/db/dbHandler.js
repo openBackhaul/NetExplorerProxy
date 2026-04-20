@@ -105,17 +105,22 @@ exports.initDB = async function(config) {
     // Extract DB name, if doesn't exist use default
     let db_name = config.db_name;
     if (config.db_name == "" || config.db_name == undefined) {
-      logger.warn("DB name is not defined, so using default: " + NEP_DB);
+      logger.warn(`DB name is not defined, so using default: ${NEP_DB}`);
       db_name = NEP_DB;
     }
 
     // Init sequelize with DB params
-    logger.info("Init DB with:\nUsername: " + config.user + "\nDB Name: " + config.db_name + 
-      "\nHost: " + config.host + "\nPort: " + config.port + "\nDialect: " + config.dialect);
+    logger.info("Init DB with:");
+    logger.info(`- Username: ${config.user}`);
+    logger.info(`- DB Name: ${config.db_name}`);
+    logger.info(`- Host: ${config.host}`);
+    logger.info(`- Port: ${config.port}`);
+    logger.info(`- Dialect: ${config.dialect}`);
     if (config.dialect == 'sqlite') {
+      logger.info(`- SQLite Path: ${config.sqlite_path}`);
       sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: '', //':memory:', // or ''
+        storage: config.sqlite_path, //':memory:', // or ''
         pool: { max: 1, idle: Infinity, maxUses: Infinity },
         logging: msg => logger.debug(msg)
       });
@@ -141,15 +146,15 @@ exports.initDB = async function(config) {
             await sequelize.authenticate();
             logger.warn("Authenticate to DB Succeded without DB name");
 
-            logger.warn("DB " + db_name + " doesn't exists, try to create it");
+            logger.warn(`DB ${db_name} doesn't exists, try to create it`);
             let res = await sequelize.query("CREATE DATABASE " + db_name + ";");
 
             logger.info("Using DB: " + db_name);
             res = await sequelize.query("USE " + db_name + ";");
-            logger.info("DB " + db_name + " exists");
+            logger.info(`DB ${db_name} exists`);
 
             sequelize.close();
-            logger.info("Closing connection, and reopen using " + db_name + " Database");
+            logger.info(`Closing connection, and reopen using ${db_name} Database`);
 
             sequelize = openDBConnection(db_name, config);
             await sequelize.authenticate();
@@ -158,7 +163,7 @@ exports.initDB = async function(config) {
             logger.error("Impossible to connect dabase, maybe we have to abort it");
             logger.error(db_error, "There is a problem with the DB connection");
             if (db_error.original.errno === 1049) {
-              logger.error("DB " + db_name + " doesn't exists, but this is the second time failing.");
+              logger.error(`DB ${db_name} doesn't exists, but this is the second time failing.`);
             } else {
               logger.error("Impossible to connect to DB for the second time");
             }
@@ -173,7 +178,7 @@ exports.initDB = async function(config) {
           await sequelize.query("CREATE DATABASE " + db_name + ";");
 
           sequelize.close();
-          logger.info("Closing connection, and reopen using " + db_name + " Database");
+          logger.info(`Closing connection, and reopen using ${db_name} Database`);
 
           sequelize = openDBConnection(db_name, config);
           await sequelize.authenticate();
@@ -197,8 +202,8 @@ exports.initDB = async function(config) {
     logger.debug("Ethernet container general info Table created");
     wire_interface_general_info = wireIf.init(sequelize);
     logger.debug("Wire interface general info Table created");
-    // ltp_equipment_mappings = ltpEqpMap.init(sequelize);   // From NEP 1.2.0
-    // logger.debug("LTP Equipment Mappings Table created");
+    ltp_equipment_mappings = ltpEqpMap.init(sequelize);   // From NEP 1.2.0
+    logger.debug("LTP Equipment Mappings Table created");
 
     // Synchronize the DB
     await sequelize.sync({alter: true});
@@ -238,10 +243,10 @@ exports.updateDeviceInfo = async function (dataArray) {
       });
       
       if (create) {
-        logger.trace("Entry devices_general_info Created with PK: " + data.mount_name);
+        logger.trace(`Entry devices_general_info Created with PK: ${data.mount_name}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry devices_general_info Updated with PK: " + data.mount_name);
+        logger.trace(`Entry devices_general_info Updated with PK: ${data.mount_name}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
@@ -294,10 +299,10 @@ exports.updateEquipmentInfo = async function (dataArray) {
       });
       
       if (create) {
-        logger.trace("Entry equipment_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry equipment_general_info Created with PK: ${data.mount_name} - ${data.uuid}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry equipment_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry equipment_general_info Updated with PK: ${data.mount_name} - ${data.uuid}`);
         result.updated = result.updated + 1;
       }
 
@@ -356,10 +361,10 @@ exports.updateAirInterface = async function(dataArray) {
       });
 
       if (create) {
-        logger.trace("Entry air_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry air_interface_general_info Created with PK: ${data.mount_name} - ${data.uuid}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry air_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry air_interface_general_info Updated with PK: ${data.mount_name} - ${data.uuid}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
@@ -412,10 +417,10 @@ exports.updateAirTransMode = async function(dataArray) {
       });
 
       if (create) {
-        logger.trace("Entry air_interface_transmission_mode Created with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
+        logger.trace(`Entry air_interface_transmission_mode Created with PK: ${data.mount_name} - ${data.uuid} - ${data.transmission_mode_name}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry air_interface_transmission_mode Updated with PK: " + data.mount_name + " - " + data.uuid + " - " + data.transmission_mode_name);
+        logger.trace(`Entry air_interface_transmission_mode Updated with PK: ${data.mount_name} - ${data.uuid} - ${data.transmission_mode_name}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
@@ -463,10 +468,10 @@ exports.updateEthernetContainer = async function (dataArray) {
       });
 
       if (create) {
-        logger.trace("Entry ethernet_container_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry ethernet_container_general_info Created with PK: ${data.mount_name} - ${data.uuid}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry ethernet_container_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry ethernet_container_general_info Updated with PK: ${data.mount_name} - ${data.uuid}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
@@ -523,10 +528,10 @@ exports.updateWireInterface = async function (dataArray) {
       });
 
       if (create) {
-        logger.trace("Entry wire_interface_general_info Created with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry wire_interface_general_info Created with PK: ${data.mount_name} - ${data.uuid}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry wire_interface_general_info Updated with PK: " + data.mount_name + " - " + data.uuid);
+        logger.trace(`Entry wire_interface_general_info Updated with PK: ${data.mount_name} - ${data.uuid}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
@@ -564,10 +569,10 @@ exports.updateLtpEqpMap = async function (dataArray) {
       });
       
       if (create) {
-        logger.trace("Entry ltp_equipment_mappings Created with PK: " + data.mount_name);
+        logger.trace(`Entry ltp_equipment_mappings Created with PK: ${data.mount_name} - ${data.uuid}`);
         result.added = result.added + 1;
       } else {
-        logger.trace("Entry ltp_equipment_mappings Updated with PK: " + data.mount_name);
+        logger.trace(`Entry ltp_equipment_mappings Updated with PK: ${data.mount_name} - ${data.uuid}`);
         result.updated = result.updated + 1;
       }
     } catch(error) {
