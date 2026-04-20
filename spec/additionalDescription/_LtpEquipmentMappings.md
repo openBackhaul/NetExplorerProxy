@@ -23,22 +23,28 @@ The following data for all devices should be gathered into the following columns
   - `timestamp`: the timestamp from when the data was gathered by the cyclic process and written to NEP cache.
 - from *ltpAugment* (2):
   - `uuid`: this is the *logical-termination-point/uuid*
-  - `connector`: this is the value from *ltp-augment-1-0:ltp-augment-pac/connector*
-    - not every ltp-augment contains this attribute; in such cases leave the output field empty
+  - `connector`: this is the value from *ltp-augment-1-0:ltp-augment-pac/connector-identifier*
+    - not every ltpAugment contains this attribute; in such cases leave the output field empty
+    - connectorIdentifier contains the localId as a substing inside a path, the localId must be extracted from that path
   - `equipment`: this is the value is to be extracted from *ltp-augment-1-0:ltp-augment-pac/equipment-identifier*
     - equipmentIdentifier is an array, if the attribute contains multiple array items, the values shall be delimited by "|"
     - equipmentIdentifier contains the uuid as a substring inside a path, the uuid must be extracted from that path
 
-**EquipmentIdentifier uuid extraction**  
+**LtpAugment connector and equipment ID extraction**  
 The equipmentIdentifier contains the equipment uuids in a path format, the uuid must be extracted from it.
+The connectorIdentifier contains the connector localId in a path format, the local-id must be extracted from it.
+
 E.g. from
 ```
+  (1)
   "equipment-identifier": [
-    "/core-model-1-4:control-construct/equipment[uuid='1921261567']"
-  ]
+      "/core-model-1-4:control-construct/equipment[uuid='CTRL IduBoard Xpic 32E1']"
+  ],
+  (2)
+  "connector-identifier": "/core-model-1-4:control-construct/equipment[uuid='CTRL IduBoard Xpic 32E1']/connector[local-id='LAN-2-RJ45-Connector']"
 ```
-uuid `1921261567` must be extracted.
-
+The equipment uuid must be extracted from (1) as "CTRL IduBoard Xpic 32E1".
+The connector localId must be extracted from (2) as "LAN-2-RJ45-Connector"
 
 Note:  
 - for (1) see description of service [*/v1/provide-general-information-of-devices*](./_GeneralDeviceInfoMappings.md)
