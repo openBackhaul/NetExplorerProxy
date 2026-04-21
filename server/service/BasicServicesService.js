@@ -902,18 +902,35 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
         uuid: uuid
       };
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "connectorIdentifier")) {
-        ltpEquipmentObj["connectorIdentifier"] = augmentPac["connectorIdentifier"];
+      // To re-write to support connectorIdentifier and equipmentIndentifier
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector-identifier")) {
+        if (augmentPac["connector-identifier"] == "") {
+          ltpEquipmentObj["connector"] == "";
+        } else {
+          const tmpConnector = augmentPac["connector-identifier"];
+          // Trim the string
+          ltpEquipmentObj["connector"] == tmpConnector.substring(tmpConnector.indexOf('local-id='), tmpConnector.length -2);
+        }
       }
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipmentIdentifier")) {
-        const equipmentValue = augmentPac["equipmentIdentifier"];
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment-identifier")) {
+        // "equipment-identifier": [ "/core-model-1-4:control-construct/equipment[uuid='CTRL IduBoard Xpic 32E1']" ],
 
+        const equipmentValue = augmentPac["equipment-identifier"];
+        let tempEquipString = "";
         if (Array.isArray(equipmentValue)) {
-          ltpEquipmentObj["equipmentIdentifier"] = equipmentValue.join("|");
-        } else if (equipmentValue != null) {
-          ltpEquipmentObj["equipmentIdentifier"] = String(equipmentValue);
+          equipmentValue.forEach(eqpValue => {
+            if (eqpValue == "") {
+              tempEquipString += "|";
+            } else {
+              tempEquipString += eqpValue.substring(eqpValue.indexOf("uuid='") + "uuid='".length, eqpValue.length - 2) + "|";
+            }
+          });
         }
+        if (tempEquipString.endsWith("|")) {
+          tempEquipString = tempEquipString.substring(0, tempEquipString.length -1);
+        }
+        ltpEquipmentObj["equipment"] = tempEquipString;
       }
 
       result.push(ltpEquipmentObj);
