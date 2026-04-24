@@ -896,10 +896,12 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
         continue;
       }
 
-      const ltpEquipmentObj = {
-        mount_name: mountName,
-        timestamp: timestamp,
-        uuid: uuid
+      let ltpEquipmentObj = {
+        'mount_name': mountName,
+        'timestamp': timestamp,
+        'uuid': uuid,
+        'connector': "",
+        'equipment': ""
       };
 
       // To re-write to support connectorIdentifier and equipmentIndentifier
@@ -909,7 +911,7 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
         } else {
           const tmpConnector = augmentPac["connector-identifier"];
           // Trim the string
-          ltpEquipmentObj["connector"] == tmpConnector.substring(tmpConnector.indexOf('local-id='), tmpConnector.length -2);
+          ltpEquipmentObj["connector"] = tmpConnector.substring(tmpConnector.indexOf("local-id=") + "local-id=".length + 1, tmpConnector.length -2);
         }
       }
 
@@ -923,7 +925,7 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
             if (eqpValue == "") {
               tempEquipString += "|";
             } else {
-              tempEquipString += eqpValue.substring(eqpValue.indexOf("uuid='") + "uuid='".length, eqpValue.length - 2) + "|";
+              tempEquipString += eqpValue.substring(eqpValue.indexOf("uuid='") + "uuid=".length + 1, eqpValue.length - 2) + "|";
             }
           });
         }
