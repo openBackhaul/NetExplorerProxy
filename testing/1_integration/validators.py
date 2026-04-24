@@ -244,6 +244,13 @@ async def provide_ltp_equipment_mappings_validator(
         assert has_valid_timestamp(row.get("timestamp")), (
             "timestamp should be valid timestamp"
         )
+    assert any(row.get("connector") is not None for row in response_rows), (
+        "at least one row should have non-null connector"
+    )
+    assert any(row.get("equipment") is not None for row in response_rows), (
+        "at least one row should have non-null equipment"
+    )
+
 
 
 async def provide_interfaces_per_device_validator(

@@ -900,24 +900,43 @@ function extractLtpEquipmentData(ccOfMountname, mountName, timestamp) {
         continue;
       }
 
-      const ltpEquipmentObj = {
-        mount_name: mountName,
-        timestamp: timestamp,
-        uuid: uuid
+      let ltpEquipmentObj = {
+        'mount_name': mountName,
+        'timestamp': timestamp,
+        'uuid': uuid,
+        'connector': "",
+        'equipment': ""
       };
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector")) {
-        ltpEquipmentObj["connector"] = augmentPac["connector"];
+      // To re-write to support connectorIdentifier and equipmentIndentifier
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "connector-identifier")) {
+        if (augmentPac["connector-identifier"] == "") {
+          ltpEquipmentObj["connector"] == "";
+        } else {
+          const tmpConnector = augmentPac["connector-identifier"];
+          // Trim the string
+          ltpEquipmentObj["connector"] = tmpConnector.substring(tmpConnector.indexOf("local-id=") + "local-id=".length + 1, tmpConnector.length -2);
+        }
       }
 
-      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment")) {
-        const equipmentValue = augmentPac["equipment"];
+      if (Object.prototype.hasOwnProperty.call(augmentPac, "equipment-identifier")) {
+        // "equipment-identifier": [ "/core-model-1-4:control-construct/equipment[uuid='CTRL IduBoard Xpic 32E1']" ],
 
+        const equipmentValue = augmentPac["equipment-identifier"];
+        let tempEquipString = "";
         if (Array.isArray(equipmentValue)) {
-          ltpEquipmentObj["equipment"] = equipmentValue.join("|");
-        } else if (equipmentValue != null) {
-          ltpEquipmentObj["equipment"] = String(equipmentValue);
+          equipmentValue.forEach(eqpValue => {
+            if (eqpValue == "") {
+              tempEquipString += "|";
+            } else {
+              tempEquipString += eqpValue.substring(eqpValue.indexOf("uuid='") + "uuid=".length + 1, eqpValue.length - 2) + "|";
+            }
+          });
         }
+        if (tempEquipString.endsWith("|")) {
+          tempEquipString = tempEquipString.substring(0, tempEquipString.length -1);
+        }
+        ltpEquipmentObj["equipment"] = tempEquipString;
       }
 
       result.push(ltpEquipmentObj);
