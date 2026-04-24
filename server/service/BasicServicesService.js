@@ -8,7 +8,7 @@ const getDataFromOtherApp = require('./GetDataFromOtherApps');
 const ltpStructureUtility = require('./LtpStructureUtility');
 
 const dbHandler = require('./db/dbHandler.js');
-const processMountNames=require('./ProcessMountNames.js');
+const processMountNames = require('./ProcessMountNames.js');
 const logger = require('./LoggingService.js').getLogger();
 
 
@@ -80,7 +80,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
   const N_OF_RETRIES = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-004");
   const DELAY_RETRY = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-005") * 1000 * 60;
   // From NEP 1.2.0
-  const TIME_BTW_CC_RETRIVALS =  await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-008");
+  const TIME_BTW_CC_RETRIVALS = await IndividualServiceUtility.extractProfileConfiguration(prefix + "integer-p-008");
 
   const results = [];
   const errors = [];
@@ -108,13 +108,13 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       const now = Date.now();
       timeSinceLast = lastExecutionTime == 0 ?
         TIME_BTW_CC_RETRIVALS : now - lastExecutionTime;
-      
+
       let timeRetrival = TIME_BTW_CC_RETRIVALS;
 
       if (timeSinceLast < timeRetrival) {
         const waitTime = timeRetrival - timeSinceLast;
         await delay(waitTime);
-      } 
+      }
     } while (timeSinceLast < TIME_BTW_CC_RETRIVALS);
     timeSinceLast = 0;
     lastExecutionTime = Date.now();
@@ -221,7 +221,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
 // }
 //////
 
-let traceIncrement= 1;
+let traceIncrement = 1;
 module.exports.embedYourself = async function embedYourself(body, user, xCorrelator, traceIndicator, customerJourney, url) {
 
   const timestamp = Date.now();
@@ -250,6 +250,10 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
     const dbMountNames = (await dbHandler.readListOfDevices()).map(d => d['mount-name']);
     const newMounts = mountNameList.filter(m => !dbMountNames.includes(m));
     const existingMounts = mountNameList.filter(m => dbMountNames.includes(m));
+    logger.info("Retrieving mountname list:");
+    logger.info(` - Receiving list: ${mountNameList.length} Mountnames`);
+    logger.info(` - ${newMounts.length} mountnames are new, respect to DB`);
+    logger.info(` - Mountnames that are currently in the DB: ${existingMounts.length}`);
     const prioritizedMountNames = [...newMounts, ...existingMounts];
     await processMountNames.addNewDataInNEPdeviceList(prioritizedMountNames);
 
@@ -264,7 +268,7 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
 };
 
 module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
-let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
+  let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
   // Calculate Timestamp when data is retrieved from MWDI
   let newTimeStamp = Date.now();
   logger.debug(`Data retrieved from MWDI for Mountname: ${mountName} at the time: ${newTimeStamp}`);
@@ -517,8 +521,8 @@ function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, timestamp)
     }
 
     if (layerProtocol && layerProtocol.hasOwnProperty("administrative-state")) {
-     const rawValue = layerProtocol["administrative-state"];
-     ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
+      const rawValue = layerProtocol["administrative-state"];
+      ethObj["administrative_state"] = rawValue.substring(rawValue.lastIndexOf("_") + 1);
     }
 
     if (ltp && ltp.hasOwnProperty(LTP_AUG_PAC) &&
@@ -542,7 +546,7 @@ function extractEthernetContainerInfo(ethInterfaceLtpList, mountName, timestamp)
 
     if (ethernetContainerPac && ethernetContainerPac.hasOwnProperty(ETHERNET_INTERFACE.STATUS)) {
       const status = ethernetContainerPac[ETHERNET_INTERFACE.STATUS];
-      
+
       // Trim interface status
       if (status && status.hasOwnProperty("interface-status")) {
         ethObj["interface_status"] = extractInterfaceStatus(status["interface-status"]);
@@ -961,8 +965,8 @@ function calculateCapaFactor(transmissionListObj) {
 
   if (transmissionListObj["code-rate"] == -1 ||
     transmissionListObj["code-rate"] == "-1") {
-      logger.warn("Code Rate is -1, drop the entry");
-      return null;
+    logger.warn("Code Rate is -1, drop the entry");
+    return null;
   }
 
   // Extract values from transmissionList
