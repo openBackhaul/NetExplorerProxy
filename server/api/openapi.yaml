@@ -3,7 +3,7 @@ info:
   title: NetExplorerProxy
   description: NetExplorerProxy gathers data from MATR and MWDI and passes it through
     to NetExplorer.
-  version: 1.2.1
+  version: 1.2.2
   x-api-id: u-1792-sdn-microwave-netexplorerproxy
 servers:
 - url: /
