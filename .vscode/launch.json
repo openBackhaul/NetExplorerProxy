@@ -13,6 +13,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "cwd": "${workspaceFolder}/server",
             "env": {
                 "DEBUG": "true",
                 "DB_SQLITE_PATH": "",
@@ -35,7 +36,7 @@
                 "DIALECT_STATEMENT_TIMEOUT": "0",
                 "DIALECT_IDLE_IN_TRANSACTION_SESSION_TIMEOUT": "0"
             },
-            "program": "${workspaceFolder}\\server\\index.js"
+            "program": "${workspaceFolder}/server/index.js"
         }
     ]
 }
