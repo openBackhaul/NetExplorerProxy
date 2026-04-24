@@ -244,6 +244,8 @@ async def provide_ltp_equipment_mappings_validator(
         assert has_valid_timestamp(row.get("timestamp")), (
             "timestamp should be valid timestamp"
         )
+        assert "connector" in row, "connector should exist"
+        assert "equipment" in row, "equipment should exist"
 
 
 async def provide_interfaces_per_device_validator(
