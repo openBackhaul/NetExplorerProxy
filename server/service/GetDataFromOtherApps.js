@@ -19,7 +19,7 @@ module.exports.provideListOfCachedDevicesfromMWDI = async function provideListOf
     return ListOfConnectedDevices;
 }
 
-module.exports.retriveTheCC = async function retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName) {
+module.exports.retriveTheCC = async function retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName, timeout) {
     const CyclicDeviceDataRetrievalFromMwdi = "PromptForEmbeddingCausesCyclicDeviceDataRetrievalFromMwdi";
     const DeviceDataFromMwdi = "EmbeddingCausesRequestForDeviceDataFromMwdi";
     let consequentOperationClientAndFieldParams = await IndividualServiceUtility.getConsequentOperationClientAndFieldParams(
@@ -30,7 +30,7 @@ module.exports.retriveTheCC = async function retriveTheCC(requestHeaders, traceI
 
     logger.debug(`Forward request for mountname ${mountName}`);
     let ccOfMountname = await IndividualServiceUtility.forwardRequest(
-        consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer);
+        consequentOperationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer, timeout);
 
     return ccOfMountname;
 }

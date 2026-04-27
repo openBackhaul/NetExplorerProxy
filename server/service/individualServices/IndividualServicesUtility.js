@@ -148,7 +148,7 @@ exports.getConsequentOperationClientAndFieldParams = async function(forwardingCo
  * @param {Integer} traceIndicatorIncrementer incrementer value to increment the trace indicator.
  * @returns {Object} response data fetched for the forwarded request
  **/
-exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer) {
+exports.forwardRequest = async function (operationClientAndFieldParams, pathParamList, requestHeaders, traceIndicatorIncrementer, timeout) {
   try {
     logger.debug(`Forwarding request, Traceindicator incrementer: ${traceIndicatorIncrementer}`);
 
@@ -166,7 +166,8 @@ exports.forwardRequest = async function (operationClientAndFieldParams, pathPara
       requestHeaders.traceIndicator + "." + traceIndicatorIncrementer,
       requestHeaders.customerJourney,
       "GET",
-      params
+      params,
+      timeout
     );
 
     // logger.debug(responseData); // Better to avoid printing

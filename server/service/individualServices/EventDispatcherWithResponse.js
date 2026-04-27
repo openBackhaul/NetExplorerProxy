@@ -8,8 +8,63 @@ const OnfAttributeFormatter = require('onf-core-model-ap/applicationPattern/onfM
 const RequestHeader = require('onf-core-model-ap/applicationPattern/rest/client/RequestHeader');
 const RestRequestBuilder = require('onf-core-model-ap/applicationPattern/rest/client/RequestBuilder');
 const ExecutionAndTraceService = require('onf-core-model-ap/applicationPattern/services/ExecutionAndTraceService');
+const Qs = require('qs');
+const restClient = require('onf-core-model-ap/applicationPattern/rest/client/Client');
+const createHttpError = require('http-errors');
 
 const logger = require('../LoggingService.js').getLogger();
+
+/**
+ * Monkey-patch for RestRequestBuilder.BuildAndTriggerRestRequest to support timeout
+ */
+const originalBuildAndTriggerRestRequest = RestRequestBuilder.BuildAndTriggerRestRequest;
+RestRequestBuilder.BuildAndTriggerRestRequest = async function (operationClientUuid, method, requestHeader, requestBody, params, timeout) {
+    try {
+        let queryParams;
+        let pathParams;
+        let operationName = await OperationClientInterface.getOperationNameAsync(operationClientUuid);
+        if (params) {
+            queryParams = params.query;
+            pathParams = params.path;
+            if (pathParams) {
+                pathParams.forEach((value, param) => {
+                    operationName = operationName.replace(param, value)
+                });
+            }
+        }
+        if (operationName.indexOf("/") !== 0) {
+            operationName = "/" + operationName
+        }
+        let clientConnectionInfo = await OperationClientInterface.getTcpClientConnectionInfoAsync(operationClientUuid);
+        let url = clientConnectionInfo + operationName;
+        let request = {
+            params: queryParams,
+            method: method,
+            url: url,
+            headers: requestHeader,
+            data: requestBody,
+            timeout: timeout,
+            paramsSerializer: function (params) {
+                return Qs.stringify(params, { arrayFormat: 'brackets' })
+            }
+        }
+        let response = await restClient.post(request);
+        console.log("\n callback : " + method + " " + url + " header :" + JSON.stringify(requestHeader) +
+            "body :" + JSON.stringify(requestBody) + "response code:" + response.status)
+        return response;
+    } catch (error) {
+        if (error.response) {
+            return error.response;
+        } else if (error.request) {
+            console.log(`Request errored with ${error}`);
+            let requestTimeoutError = new createHttpError.RequestTimeout();
+            requestTimeoutError.url = error.config ? error.config.url ? error.config.url : undefined : undefined;
+            return requestTimeoutError;
+        }
+        console.log(`Unknown request error: ${error}`);
+        return new createHttpError.InternalServerError();
+    }
+};
 
 /**
  * This function formulates the request body based on the operation name and application 
@@ -21,8 +76,9 @@ const logger = require('../LoggingService.js').getLogger();
  * @param {String} customerJourney Holds information supporting customer’s journey to which the execution applies.
  * @param {String} httpMethod method of the request if undefined defaults to POST
  * @param {Object} params path and query parameters
+ * @param {Integer} timeout request timeout in milliseconds
  */
-exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, user, xCorrelator, traceIndicator, customerJourney, httpMethod, params) {
+exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, user, xCorrelator, traceIndicator, customerJourney, httpMethod, params, timeout) {
     let responseData = {};
     let operationKey = await OperationClientInterface.getOperationKeyAsync(
         operationClientUuid);
@@ -54,7 +110,8 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         httpMethod,
         httpRequestHeader,
         httpRequestBody,
-        params
+        params,
+        timeout
     );
 
     let responseCode = response.status;
@@ -81,6 +138,7 @@ exports.dispatchEvent = async function(operationClientUuid, httpRequestBody, use
         } else {
             logger.error(responseCode);
         }
+        throw response;
     }
 
     return responseData;

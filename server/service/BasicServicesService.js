@@ -126,7 +126,7 @@ async function processMountNamesInBatches(mountNameList, requestHeaders, taskTra
       try {
         const start = Date.now();
         logger.info(`[${mountName}] Attempt ${attempt + 1}/${N_OF_RETRIES}`);
-        await exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp);
+        await exports.doWorkThread(requestHeaders, taskTraceId, mountName, timestamp, MAX_TIMEOUT);
 
         const elapsed = Date.now() - start;
         logger.info(`[${mountName}] Completed in ${elapsed}ms`);
@@ -263,8 +263,14 @@ module.exports.embedYourself = async function embedYourself(body, user, xCorrela
   }
 };
 
-module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp) {
-let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName);
+module.exports.doWorkThread = async function doWorkThread(requestHeaders, traceIndicatorIncrementer, mountName, timestamp, timeout) {
+  let ccOfMountName = await getDataFromOtherApp.retriveTheCC(requestHeaders, traceIndicatorIncrementer, mountName, timeout);
+
+  // Check if the retrieval returned an error object
+  if (ccOfMountName && (ccOfMountName instanceof Error || ccOfMountName.status === 408 || ccOfMountName.statusCode === 500)) {
+    throw ccOfMountName instanceof Error ? ccOfMountName : new Error(`Request failed with status ${ccOfMountName.status || ccOfMountName.statusCode}`);
+  }
+
   // Calculate Timestamp when data is retrieved from MWDI
   let newTimeStamp = Date.now();
   logger.debug(`Data retrieved from MWDI for Mountname: ${mountName} at the time: ${newTimeStamp}`);
