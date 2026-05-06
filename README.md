@@ -18,6 +18,8 @@ This release instead uses ltpAugment::equipmentIdentifier and ltpAugment::connec
 
 See related issue collection [NEP v1.2.2_spec](https://github.com/openBackhaul/NetExplorerProxy/milestone/13).  
 
+Note: a small bugfix for #337 has been added to develop for release v1.2.2 spec, but not yet been merged to main (would require re-issue of 1.2.2_spec release).
+
 #### v1.2.1
 
 This release adds updates for findings in v1.2.0_spec.  
