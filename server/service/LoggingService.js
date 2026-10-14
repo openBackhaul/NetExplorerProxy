@@ -12,14 +12,19 @@ const transports = pino.transport({
     {
       level: 'debug',
       target: 'pino-roll',
-      options: { file: path.join(__dirname, '../logs/NetExplorerProxy'), extension: '.log', mkdir: true,
-        frequency: 'daily', dateFormat: 'yyyy-MM-dd', size: "1m", "limit.count": 15 }
+      options: {
+        file: path.join(__dirname, '../logs/NetExplorerProxy'), extension: '.log', mkdir: true,
+        frequency: 'daily', dateFormat: 'yyyy-MM-dd', size: "1m",
+        limit: {
+          count: 15
+        }
+      }
     }
   ]
 });
 
 // create pino logger instance
-const logger = pino({level: 'debug'}, transports);
+const logger = pino({ level: 'debug' }, transports);
 
 exports.getLogger = function getLogger() {
   return logger;
